@@ -51,10 +51,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           margin: const EdgeInsets.all(10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text("Playlists",
+              style: TextStyle(
+                fontFamily: 'Salsa'
+              )),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: MediaQuery.of(context).size.height * 0.2,
                 width: double.infinity,
                 child: ListView.builder(
                     shrinkWrap: true,
@@ -62,13 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemCount: 10,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
-                        padding: EdgeInsets.only(right: 30),
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width * 0.030,),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: Colors.blue,
                           ),
-                          width: MediaQuery.of(context).size.width * 0.4,
+                          width: MediaQuery.of(context).size.width * 0.3,
                         ),
                       );
                     }),
