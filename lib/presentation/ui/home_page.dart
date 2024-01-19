@@ -22,14 +22,17 @@ class _MyHomePageState extends State<MyHomePage> {
         body: SafeArea(
           child: Container(
             margin: const EdgeInsets.all(10),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TitleText(title: "Playlists", haveSeeAll: false),
-                PlaylistContainer(),
-                FeaturedContainer(),
-                NewSong(),
-              ],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TitleText(title: "Playlists", haveSeeAll: false),
+                  PlaylistContainer(),
+                  FeaturedContainer(),
+                  NewSong(),
+                ],
+              ),
             ),
           ),
         )// This trailing comma makes auto-formatting nicer for build methods.
