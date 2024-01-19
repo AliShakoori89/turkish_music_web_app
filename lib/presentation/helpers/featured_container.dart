@@ -9,13 +9,22 @@ class FeaturedContainer extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleText(title: "Featured"),
+        const TitleText(title: "Featured", haveSeeAll: true),
+        SizedBox(
+          height: MediaQuery.of(context).size.width * 0.055,
+        ),
         Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.0052,
+              vertical: MediaQuery.of(context).size.width * 0.055),
           height: MediaQuery.of(context).size.height * 0.2,
           decoration: BoxDecoration(
             color: Colors.blueAccent,
             borderRadius: BorderRadius.circular(15)
           ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.width * 0.055,
         ),
       ],
     );

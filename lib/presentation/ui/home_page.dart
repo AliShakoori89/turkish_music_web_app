@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/featured_container.dart';
+import 'package:turkish_music_app/presentation/helpers/new_song.dart';
 
 import '../const/title.dart';
 import '../helpers/playlist_containers.dart';
@@ -23,9 +24,10 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(title: "Playlists"),
+                TitleText(title: "Playlists", haveSeeAll: false),
                 PlaylistContainer(),
-                FeaturedContainer()
+                FeaturedContainer(),
+                NewSong()
               ],
             ),
           ),

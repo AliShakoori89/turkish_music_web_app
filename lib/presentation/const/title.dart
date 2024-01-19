@@ -3,13 +3,23 @@ import 'package:flutter/material.dart';
 class TitleText extends StatelessWidget {
 
   final String title;
-  const TitleText({super.key, required this.title});
+  final bool haveSeeAll;
+  const TitleText({super.key, required this.title, required this.haveSeeAll});
 
   @override
   Widget build(BuildContext context) {
-    return Text(title,
-        style: const TextStyle(
-            fontFamily: 'Salsa'
-        ));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title,
+            style: const TextStyle(
+                fontFamily: 'Salsa'
+            )),
+        haveSeeAll == true
+            ? const Text(
+            "see all >>")
+            : const Text("")
+      ],
+    );
   }
 }
