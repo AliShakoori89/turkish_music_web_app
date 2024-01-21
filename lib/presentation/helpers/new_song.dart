@@ -16,25 +16,32 @@ class NewSong extends StatelessWidget {
             top: MediaQuery.of(context).size.width * 0.055,
           ),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.35,
+            height: MediaQuery.of(context).size.height * 0.8,
             child: AnimatedGridView(
                 duration: 100,
                 crossAxisCount: 2,
                 mainAxisExtent: 256,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
                 children: List.generate(
                     4,
-                        (index) => Card(
-                      elevation: 50,
-                      shadowColor: Colors.black,
-                      color: Colors.grey[700],
-                      child: const SizedBox(
-                        width: double.infinity,
-                      ),
-                    ))),
+                        (index) =>
+                            Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          elevation: 50,
+                          shadowColor: Colors.black,
+                          color: Colors.grey[700],
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              image: DecorationImage(image: AssetImage("assets/images/tarkan.png"),
+                              fit: BoxFit.cover)
+                            ),
+                            width: double.infinity,
+                          ),
+                        ))),
           ),
         )
       ],

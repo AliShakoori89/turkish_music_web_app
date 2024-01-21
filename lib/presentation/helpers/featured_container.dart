@@ -20,7 +20,10 @@ class FeaturedContainer extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.2,
           decoration: BoxDecoration(
             color: Colors.blueAccent,
-            borderRadius: BorderRadius.circular(15)
+            borderRadius: BorderRadius.circular(15),
+            image: const DecorationImage(
+              image: AssetImage("assets/images/tarkan1.png")
+            )
           ),
         ),
         SizedBox(

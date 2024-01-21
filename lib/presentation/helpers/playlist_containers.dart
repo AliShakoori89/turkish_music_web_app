@@ -25,6 +25,9 @@ class PlaylistContainer extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.blue,
+                      image: const DecorationImage(
+                        image: AssetImage("assets/images/tarkan.png")
+                      )
                     ),
                     width: MediaQuery.of(context).size.width * 0.3,
                   ),
