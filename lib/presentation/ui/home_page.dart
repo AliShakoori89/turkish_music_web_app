@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/presentation/helpers/featured_container.dart';
-import 'package:turkish_music_app/presentation/helpers/new_song.dart';
-import 'package:shaky_animated_listview/scroll_animator.dart';
+import 'package:turkish_music_app/presentation/helpers/new_song_contaner.dart';
 import '../const/custom_icon/music_icons.dart';
-import '../const/title.dart';
-import '../helpers/playlist_containers.dart';
+import '../helpers/header.dart';
+import '../helpers/must_listen_contaner.dart';
+import '../helpers/playlist_container.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -37,10 +36,11 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TitleText(title: "Playlists", haveSeeAll: false),
+                  AppHeader(),
                   PlaylistContainer(),
                   FeaturedContainer(),
                   NewSong(),
+                  MustListenContainer()
                 ],
               ),
             ),
@@ -52,6 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   BottomNavigationBar customBottomNavigationBar() {
     return BottomNavigationBar(
       currentIndex: _selectedIndex,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
       onTap: _onItemTapped,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -65,6 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
         BottomNavigationBarItem(
           icon: Icon(MusicIcon.music, size: 18),
           label: 'My Music',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
         ),
       ],
     );

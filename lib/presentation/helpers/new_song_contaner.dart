@@ -10,13 +10,13 @@ class NewSong extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleText(title: "New Song", haveSeeAll: true),
+        const TitleText(title: "New Song", haveSeeAll: false),
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.width * 0.055,
           ),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.67,
             child: AnimatedGridView(
                 duration: 100,
                 crossAxisCount: 2,
