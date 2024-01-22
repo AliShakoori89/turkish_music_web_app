@@ -25,9 +25,9 @@ class LoginPage extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'Please enter email';
                     }
-                    // if (EmailValidator.validate(value)){
-                    //   return "Please enter a valid email";
-                    // }
+                    if (EmailValidator.validate(value)){
+                      return "Please enter a valid email";
+                    }
                     return null ;
 
                   },
