@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/ui/home_page.dart';
+import 'package:turkish_music_app/presentation/ui/login_page.dart';
 
 void main() {
   runApp( const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.dark,
-      home: const MyHomePage(),
+      home: const LoginPage(),
     );
   }
 }
