@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   shaky_animated_listview: ^0.0.5
   email_validator: ^2.1.17
+  flutter_otp_text_field: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
   assets:
     - assets/images/
     - assets/logo/tMusic.png
+    - assets/gif/animation1.gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -84,7 +86,6 @@ flutter:
     - family: Dancing Script
       fonts:
         - asset: assets/fonts/DancingScript-VariableFont_wght.ttf
-
 
     - family: musicIcon
       fonts:
