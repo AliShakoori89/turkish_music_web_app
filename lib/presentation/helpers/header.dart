@@ -6,7 +6,7 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -19,7 +19,6 @@ class AppHeader extends StatelessWidget {
             fontFamily: "Dancing Script",
             fontSize: 35
           )),
-
         ],
       ),
     );
