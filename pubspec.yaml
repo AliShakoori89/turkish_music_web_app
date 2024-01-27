@@ -38,6 +38,7 @@ dependencies:
   shaky_animated_listview: ^0.0.5
   email_validator: ^2.1.17
   flutter_otp_text_field: ^1.1.1
+  flutter_expandable_fab: ^2.0.0
 
 dev_dependencies:
   flutter_test:
