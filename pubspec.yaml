@@ -39,6 +39,10 @@ dependencies:
   email_validator: ^2.1.17
   flutter_otp_text_field: ^1.1.1
   flutter_expandable_fab: ^2.0.0
+  simple_audio: ^1.9.0
+  file_picker: ^6.1.1
+  permission_handler: ^11.2.0
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +71,8 @@ flutter:
     - assets/images/
     - assets/logo/tMusic.png
     - assets/gif/animation1.gif
+    - assets/custom_icons/normalize.png
+    - assets/custom_icons/normalize_off.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

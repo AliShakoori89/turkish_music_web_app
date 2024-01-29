@@ -24,10 +24,10 @@ class _MainPageState extends State<MainPage> {
   }
 
   final List<Widget> _children = [
-    HomePage(),
-    SearchPage(),
-    MusicPage(),
-    ProfilePage()
+    const HomePage(),
+    const SearchPage(),
+    const MusicPage(),
+    const ProfilePage()
   ];
 
   @override
