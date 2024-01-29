@@ -31,7 +31,8 @@ class MustListenContainer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blue,
                         image: const DecorationImage(
-                            image: AssetImage("assets/images/tarkan.png")
+                            image: AssetImage("assets/images/tarkan.png"),
+                            fit: BoxFit.fill
                         )
                     ),
                     width: MediaQuery.of(context).size.width * 0.3,

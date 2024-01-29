@@ -37,7 +37,7 @@ class NewSong extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                               image: DecorationImage(image: AssetImage("assets/images/tarkan.png"),
-                              fit: BoxFit.cover)
+                                  fit: BoxFit.fill)
                             ),
                             width: double.infinity,
                           ),
