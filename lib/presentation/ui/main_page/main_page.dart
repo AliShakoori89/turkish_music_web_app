@@ -3,6 +3,8 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
+import 'package:vertical_nav_bar/vertical_nav_bar.dart';
+
 import '../../const/custom_icon/music_icons.dart';
 
 class MainPage extends StatefulWidget {
@@ -15,54 +17,80 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  final List<Widget> _children = [
-    const HomePage(),
-    const SearchPage(),
-    const MusicPage(),
-    const ProfilePage()
-  ];
+  int currentRoute = 0;
 
   @override
   Widget build(BuildContext context) {
+
+    void navigateRoutes(int selectedIndex) {
+      setState(() {
+        currentRoute = selectedIndex;
+      });
+    }
+
+    List myRoutes = [
+      SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: const HomePage()
+      ),
+      SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: const SearchPage(),
+      ),
+      SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: const MusicPage(),
+      ),
+      SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: const ProfilePage()
+      ),
+    ];
     return Scaffold(
-      bottomNavigationBar: customBottomNavigationBar(),
-        body: _children[_selectedIndex]
-
-    );
-  }
-
-  BottomNavigationBar customBottomNavigationBar() {
-    return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white,
-      onTap: _onItemTapped,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+        body: Center(
+          child: Row(
+            children: [
+              Stack(
+                children: [
+                  myRoutes[currentRoute],
+                  Align(
+                    alignment: Alignment.center,
+                    child: VerticalNavBar(
+                      selectedIndex: currentRoute,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.10,
+                      backgroundColor: Colors.black.withOpacity(0.4),
+                      borderRadius: 15,
+                      onItemSelected: (value) {
+                        setState(() {
+                          navigateRoutes(value);
+                        });
+                      },
+                      items: const [
+                        VerticalNavBarItem(
+                          customIcon: Icons.home,
+                          iconSize: 25.0
+                        ),
+                        VerticalNavBarItem(
+                          customIcon: Icons.person,
+                          iconSize:25.0
+                        ),
+                        VerticalNavBarItem(
+                          customIcon: MusicIcon.music,
+                          iconSize:18.0
+                        ),
+                        VerticalNavBarItem(
+                          customIcon: Icons.search,
+                          iconSize:25.0
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(MusicIcon.music, size: 18),
-          label: 'My Music',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
     );
   }
 }

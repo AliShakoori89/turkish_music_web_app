@@ -76,252 +76,252 @@ class _MusicPageState extends State<MusicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Simple Audio Example'),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (Platform.isAndroid || Platform.isIOS) ...{
-              Builder(
-                builder: (context) => ElevatedButton(
-                  child: const Text("Get Storage Perms"),
-                  onPressed: () async {
-                    PermissionStatus status =
-                    await Permission.storage.request();
+        child: SizedBox(
+          height: 300,
+          width: 400,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // if (Platform.isAndroid || Platform.isIOS) ...{
+              //   Builder(
+              //     builder: (context) => ElevatedButton(
+              //       child: const Text("Get Storage Perms"),
+              //       onPressed: () async {
+              //         PermissionStatus status =
+              //         await Permission.storage.request();
+              //
+              //         if (!mounted) return;
+              //         ScaffoldMessenger.of(context).showSnackBar(
+              //           SnackBar(
+              //             content: Text("Storage Permissions: ${status.name}"),
+              //           ),
+              //         );
+              //       },
+              //     ),
+              //   ),
+              // },
+              // const SizedBox(height: 5),
+              // ElevatedButton(
+              //   child: const Text("Open File"),
+              //   onPressed: () async {
+              //     String path = await pickFile();
+              //
+              //     await player.setMetadata(
+              //       const Metadata(
+              //         title: "Title",
+              //         artist: "Artist",
+              //         album: "Album",
+              //         artUri: "https://picsum.photos/200",
+              //       ),
+              //     );
+              //     await player.stop();
+              //     await player.open(path);
+              //   },
+              // ),
+              // const SizedBox(height: 10),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     ElevatedButton(
+              //       child: const Text("Preload File"),
+              //       onPressed: () async {
+              //         String path = await pickFile();
+              //         await player.preload(path);
+              //       },
+              //     ),
+              //     const SizedBox(width: 5),
+              //     ElevatedButton(
+              //       child: const Text("Play Preload"),
+              //       onPressed: () async {
+              //         if (!await player.hasPreloaded) {
+              //           debugPrint("No preloaded file to play!");
+              //           return;
+              //         }
+              //
+              //         debugPrint("Playing preloaded file.");
+              //         await player.stop();
+              //         await player.playPreload();
+              //       },
+              //     ),
+              //     const SizedBox(width: 5),
+              //     ElevatedButton(
+              //       child: const Text("Clear Preload"),
+              //       onPressed: () async {
+              //         if (!await player.hasPreloaded) {
+              //           debugPrint("No preloaded file to clear!");
+              //           return;
+              //         }
+              //
+              //         debugPrint("Cleared preloaded file.");
+              //         await player.clearPreload();
+              //       },
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(height: 30),
 
-                    if (!mounted) return;
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Storage Permissions: ${status.name}"),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            },
-            const SizedBox(height: 5),
-            ElevatedButton(
-              child: const Text("Open File"),
-              onPressed: () async {
-                String path = await pickFile();
+              // Toggle volume normalization
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Checkbox(
+              //       value: normalize,
+              //       onChanged: (value) {
+              //         setState(() => normalize = value!);
+              //         player.normalizeVolume(normalize);
+              //       },
+              //     ),
+              //     const Text("Normalize Volume"),
+              //   ],
+              // ),
 
-                await player.setMetadata(
-                  const Metadata(
-                    title: "Title",
-                    artist: "Artist",
-                    album: "Album",
-                    artUri: "https://picsum.photos/200",
-                  ),
-                );
-                await player.stop();
-                await player.open(path);
-              },
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  child: const Text("Preload File"),
-                  onPressed: () async {
-                    String path = await pickFile();
-                    await player.preload(path);
-                  },
-                ),
-                const SizedBox(width: 5),
-                ElevatedButton(
-                  child: const Text("Play Preload"),
-                  onPressed: () async {
-                    if (!await player.hasPreloaded) {
-                      debugPrint("No preloaded file to play!");
-                      return;
-                    }
-
-                    debugPrint("Playing preloaded file.");
-                    await player.stop();
-                    await player.playPreload();
-                  },
-                ),
-                const SizedBox(width: 5),
-                ElevatedButton(
-                  child: const Text("Clear Preload"),
-                  onPressed: () async {
-                    if (!await player.hasPreloaded) {
-                      debugPrint("No preloaded file to clear!");
-                      return;
-                    }
-
-                    debugPrint("Cleared preloaded file.");
-                    await player.clearPreload();
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-
-            // Toggle volume normalization
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: normalize,
-                  onChanged: (value) {
-                    setState(() => normalize = value!);
-                    player.normalizeVolume(normalize);
-                  },
-                ),
-                const Text("Normalize Volume"),
-              ],
-            ),
-
-            // Progress bar with time.
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(convertSecondsToReadableString(position.floor())),
-                  Flexible(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 450),
-                      child: Slider(
-                        value: min(position, duration),
-                        max: duration,
-                        onChanged: (value) {
-                          player.seek(value.floor());
-                        },
+              // Progress bar with time.
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(convertSecondsToReadableString(position.floor())),
+                    Flexible(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 450),
+                        child: SliderTheme(
+                          data: SliderThemeData(
+                            activeTickMarkColor: Colors.red,
+                            activeTrackColor: Colors.grey,
+                            thumbColor: Colors.grey.withOpacity(0.8)
+                          ),
+                          child: Slider(
+                            value: min(position, duration),
+                            max: duration,
+                            onChanged: (value) {
+                              player.seek(value.floor());
+                            },
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Text(convertSecondsToReadableString(duration.floor())),
-                ],
+                    Text(convertSecondsToReadableString(duration.floor())),
+                  ],
+                ),
               ),
-            ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(width: 1,),
-                Center(
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          loop = !loop;
-                          player.loopPlayback(loop);
-                        });
-                      },
-                      child: Container(
-                        width: 25,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: loop ? Colors.white : Colors.white30.withOpacity(0.2)),
-                        padding: const EdgeInsets.all(5),
-                        child: loop
-                            ? const Icon(
-                          Icons.repeat,
-                          size: 15.0,
-                          color: Colors.black,
-                        )
-                            : const Icon(
-                          Icons.repeat,
-                          size: 15.0,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox(width: 1,),
+                  Center(
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            loop = !loop;
+                            player.loopPlayback(loop);
+                          });
+                        },
+                        child: Container(
+                          width: 25,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: loop ? Colors.white : Colors.white30.withOpacity(0.2)),
+                          padding: const EdgeInsets.all(5),
+                          child: loop
+                              ? const Icon(
+                            Icons.repeat,
+                            size: 15.0,
+                            color: Colors.black,
+                          )
+                              : const Icon(
+                            Icons.repeat,
+                            size: 15.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Stop button.
+                      CircleButton(
+                        color: Colors.white30.withOpacity(0.2),
+                        size: 35,
+                        onPressed: playbackState != PlaybackState.done
+                            ? player.stop
+                            : null,
+                        child: const Icon(Icons.stop, color: Colors.white),
+                      ),
+                      const SizedBox(width: 10),
+
+                      // Play/pause button.
+                      CircleButton(
+                        color: Colors.white30.withOpacity(0.2),
+                        size: 40,
+                        onPressed: () {
+                          if (isPlaying) {
+                            player.pause();
+                          } else {
+                            player.play();
+                          }
+                        },
+                        child: Icon(
+                          isPlaying
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
                           color: Colors.white,
                         ),
                       ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Stop button.
-                    CircleButton(
-                      color: Colors.white30.withOpacity(0.2),
-                      size: 35,
-                      onPressed: playbackState != PlaybackState.done
-                          ? player.stop
-                          : null,
-                      child: const Icon(Icons.stop, color: Colors.white),
-                    ),
-                    const SizedBox(width: 10),
+                      const SizedBox(width: 10),
 
-                    // Play/pause button.
-                    CircleButton(
-                      color: Colors.white30.withOpacity(0.2),
-                      size: 40,
-                      onPressed: () {
-                        if (isPlaying) {
-                          player.pause();
-                        } else {
-                          player.play();
-                        }
-                      },
-                      child: Icon(
-                        isPlaying
-                            ? Icons.pause_rounded
-                            : Icons.play_arrow_rounded,
-                        color: Colors.white,
+                      // Toggle mute button.
+                      CircleButton(
+                        color: Colors.white30.withOpacity(0.2),
+                        size: 35,
+                        onPressed: () {
+                          if (!isMuted) {
+                            player.setVolume(0);
+                            setState(() => volume = 0);
+                          } else {
+                            player.setVolume(trueVolume);
+                            setState(() => volume = trueVolume);
+                          }
+                        },
+                        child: Icon(
+                          isMuted ? Icons.volume_off : Icons.volume_up,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
+                    ],
+                  ),
 
-                    // Toggle mute button.
-                    CircleButton(
-                      color: Colors.white30.withOpacity(0.2),
-                      size: 35,
-                      onPressed: () {
-                        if (!isMuted) {
-                          player.setVolume(0);
-                          setState(() => volume = 0);
-                        } else {
-                          player.setVolume(trueVolume);
-                          setState(() => volume = trueVolume);
-                        }
-                      },
-                      child: Icon(
-                        isMuted ? Icons.volume_off : Icons.volume_up,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                CircleButton(
-                  color: Colors.white30.withOpacity(0.2),
-                  size: 25,
-                  onPressed: playbackState != PlaybackState.done
-                      ? player.stop
-                      : null,
-                  child: const Icon(Icons.stop, color: Colors.white,
-                  size: 15),
-                ),
-                Center(
-                    child: Container(
-                      width: 25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: normalize ? Colors.white : Colors.white30.withOpacity(0.2),
-                      ),
-                      child: Transform.scale(
-                          scale: 2,
-                          child: IconButton(
-                            icon: ImageIcon(
-                              normalize
-                                  ? AssetImage('assets/custom_icons/normalize.png')
-                                  : AssetImage("assets/custom_icons/normalize_off.png")
-                              ),
-                            onPressed: () {
-                              setState(() {
-                                normalize = !normalize;
-                                player.normalizeVolume(normalize);
-                              });
-                            },
-                          )),
-                    )
-                ),
-                const SizedBox(width: 1,),
-              ],
-            ),
-          ],
+                  Center(
+                      child: Container(
+                        width: 25,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: normalize ? Colors.white : Colors.white30.withOpacity(0.2),
+                        ),
+                        child: Transform.scale(
+                            scale: 2,
+                            child: IconButton(
+                              icon: ImageIcon(
+                                normalize
+                                    ? const AssetImage('assets/custom_icons/normalize.png')
+                                    : const AssetImage("assets/custom_icons/normalize_off.png")
+                                ),
+                              onPressed: () {
+                                setState(() {
+                                  normalize = !normalize;
+                                  player.normalizeVolume(normalize);
+                                });
+                              },
+                            )),
+                      )
+                  ),
+                  const SizedBox(width: 1,),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
