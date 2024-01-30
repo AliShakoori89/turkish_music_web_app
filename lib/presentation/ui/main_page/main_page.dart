@@ -39,7 +39,7 @@ class _MainPageState extends State<MainPage> {
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: const MusicPage(),
+        child: MusicPage(),
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -59,7 +59,7 @@ class _MainPageState extends State<MainPage> {
                       selectedIndex: currentRoute,
                       height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width * 0.10,
-                      backgroundColor: Colors.black.withOpacity(0.0),
+                      backgroundColor: Colors.black.withOpacity(0.5),
                       borderRadius: 15,
                       onItemSelected: (value) {
                         setState(() {

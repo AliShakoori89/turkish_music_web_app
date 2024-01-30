@@ -16,11 +16,11 @@ class SingerNameTrackNameImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      // crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: align,
       children: [
         Container(
-          width: MediaQuery.of(context).size.width * 0.12,
+          width: MediaQuery.of(context).size.width * 0.14,
           height: MediaQuery.of(context).size.height * 0.065,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -31,7 +31,7 @@ class SingerNameTrackNameImage extends StatelessWidget {
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DefaultTextStyle(
