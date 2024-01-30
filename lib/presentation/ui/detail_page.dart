@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 
 import '../const/custom_divider.dart';
+import '../helpers/singer_name_trackName_image.dart';
 import '../helpers/song_detail_list.dart';
 
 class DetailPage extends StatelessWidget {
@@ -106,42 +107,11 @@ class BottomDialog {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.12,
-                        height: MediaQuery.of(context).size.height * 0.065,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: const DecorationImage(
-                                image: AssetImage("assets/images/tarkan.png"),
-                                fit: BoxFit.fill)
-                        ),
-                      ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DefaultTextStyle(
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.white
-                            ),
-                            child: Text(songName)
-                          ),
-                          DefaultTextStyle(
-                            style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white
-                                ),
-                            child: Text(singerName)
-                          )
-                        ],
-                      )
-                    ],
+                  SingerNameTrackNameImage(
+                    songName: songName,
+                    singerName: singerName,
+                    imagePath: "assets/images/tarkan.png",
+                    align: MainAxisAlignment.center,
                   ),
                   const SizedBox(height: 20,),
                   const SongDetailList(

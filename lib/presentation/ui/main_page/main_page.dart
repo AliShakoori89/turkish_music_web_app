@@ -54,12 +54,12 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   myRoutes[currentRoute],
                   Align(
-                    alignment: Alignment.center,
+                    alignment: Alignment.bottomLeft,
                     child: VerticalNavBar(
                       selectedIndex: currentRoute,
                       height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width * 0.10,
-                      backgroundColor: Colors.black.withOpacity(0.4),
+                      backgroundColor: Colors.black.withOpacity(0.0),
                       borderRadius: 15,
                       onItemSelected: (value) {
                         setState(() {

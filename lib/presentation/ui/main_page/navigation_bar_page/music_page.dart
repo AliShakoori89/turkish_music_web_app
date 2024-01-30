@@ -6,6 +6,8 @@ import 'package:simple_audio/simple_audio.dart';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:turkish_music_app/presentation/helpers/singer_name_trackName_image.dart';
+
 class MusicPage extends StatefulWidget {
   const MusicPage({super.key});
 
@@ -76,137 +78,142 @@ class _MusicPageState extends State<MusicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SizedBox(
-          height: 300,
-          width: 400,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // if (Platform.isAndroid || Platform.isIOS) ...{
+          //   Builder(
+          //     builder: (context) => ElevatedButton(
+          //       child: const Text("Get Storage Perms"),
+          //       onPressed: () async {
+          //         PermissionStatus status =
+          //         await Permission.storage.request();
+          //
+          //         if (!mounted) return;
+          //         ScaffoldMessenger.of(context).showSnackBar(
+          //           SnackBar(
+          //             content: Text("Storage Permissions: ${status.name}"),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // },
+          // const SizedBox(height: 5),
+          // ElevatedButton(
+          //   child: const Text("Open File"),
+          //   onPressed: () async {
+          //     String path = await pickFile();
+          //
+          //     await player.setMetadata(
+          //       const Metadata(
+          //         title: "Title",
+          //         artist: "Artist",
+          //         album: "Album",
+          //         artUri: "https://picsum.photos/200",
+          //       ),
+          //     );
+          //     await player.stop();
+          //     await player.open(path);
+          //   },
+          // ),
+          // const SizedBox(height: 10),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     ElevatedButton(
+          //       child: const Text("Preload File"),
+          //       onPressed: () async {
+          //         String path = await pickFile();
+          //         await player.preload(path);
+          //       },
+          //     ),
+          //     const SizedBox(width: 5),
+          //     ElevatedButton(
+          //       child: const Text("Play Preload"),
+          //       onPressed: () async {
+          //         if (!await player.hasPreloaded) {
+          //           debugPrint("No preloaded file to play!");
+          //           return;
+          //         }
+          //
+          //         debugPrint("Playing preloaded file.");
+          //         await player.stop();
+          //         await player.playPreload();
+          //       },
+          //     ),
+          //     const SizedBox(width: 5),
+          //     ElevatedButton(
+          //       child: const Text("Clear Preload"),
+          //       onPressed: () async {
+          //         if (!await player.hasPreloaded) {
+          //           debugPrint("No preloaded file to clear!");
+          //           return;
+          //         }
+          //
+          //         debugPrint("Cleared preloaded file.");
+          //         await player.clearPreload();
+          //       },
+          //     ),
+          //   ],
+          // ),
+          const SizedBox(height: 30),
+
+          // Toggle volume normalization
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Checkbox(
+          //       value: normalize,
+          //       onChanged: (value) {
+          //         setState(() => normalize = value!);
+          //         player.normalizeVolume(normalize);
+          //       },
+          //     ),
+          //     const Text("Normalize Volume"),
+          //   ],
+          // ),
+
+          // Progress bar with time.
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // if (Platform.isAndroid || Platform.isIOS) ...{
-              //   Builder(
-              //     builder: (context) => ElevatedButton(
-              //       child: const Text("Get Storage Perms"),
-              //       onPressed: () async {
-              //         PermissionStatus status =
-              //         await Permission.storage.request();
-              //
-              //         if (!mounted) return;
-              //         ScaffoldMessenger.of(context).showSnackBar(
-              //           SnackBar(
-              //             content: Text("Storage Permissions: ${status.name}"),
-              //           ),
-              //         );
-              //       },
-              //     ),
-              //   ),
-              // },
-              // const SizedBox(height: 5),
-              // ElevatedButton(
-              //   child: const Text("Open File"),
-              //   onPressed: () async {
-              //     String path = await pickFile();
-              //
-              //     await player.setMetadata(
-              //       const Metadata(
-              //         title: "Title",
-              //         artist: "Artist",
-              //         album: "Album",
-              //         artUri: "https://picsum.photos/200",
-              //       ),
-              //     );
-              //     await player.stop();
-              //     await player.open(path);
-              //   },
-              // ),
-              // const SizedBox(height: 10),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     ElevatedButton(
-              //       child: const Text("Preload File"),
-              //       onPressed: () async {
-              //         String path = await pickFile();
-              //         await player.preload(path);
-              //       },
-              //     ),
-              //     const SizedBox(width: 5),
-              //     ElevatedButton(
-              //       child: const Text("Play Preload"),
-              //       onPressed: () async {
-              //         if (!await player.hasPreloaded) {
-              //           debugPrint("No preloaded file to play!");
-              //           return;
-              //         }
-              //
-              //         debugPrint("Playing preloaded file.");
-              //         await player.stop();
-              //         await player.playPreload();
-              //       },
-              //     ),
-              //     const SizedBox(width: 5),
-              //     ElevatedButton(
-              //       child: const Text("Clear Preload"),
-              //       onPressed: () async {
-              //         if (!await player.hasPreloaded) {
-              //           debugPrint("No preloaded file to clear!");
-              //           return;
-              //         }
-              //
-              //         debugPrint("Cleared preloaded file.");
-              //         await player.clearPreload();
-              //       },
-              //     ),
-              //   ],
-              // ),
-              const SizedBox(height: 30),
-
-              // Toggle volume normalization
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Checkbox(
-              //       value: normalize,
-              //       onChanged: (value) {
-              //         setState(() => normalize = value!);
-              //         player.normalizeVolume(normalize);
-              //       },
-              //     ),
-              //     const Text("Normalize Volume"),
-              //   ],
-              // ),
-
-              // Progress bar with time.
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(convertSecondsToReadableString(position.floor())),
-                    Flexible(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 450),
-                        child: SliderTheme(
-                          data: SliderThemeData(
+                padding: EdgeInsets.only(
+                  left: MediaQuery.of(context).size.width * 0.10 + 15,
+                ),
+                child: SingerNameTrackNameImage(
+                    songName: "Tarkan",
+                    singerName: "MoOooooOoch",
+                    imagePath: "assets/images/tarkan.png",
+                    align: MainAxisAlignment.start),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(convertSecondsToReadableString(position.floor())),
+                  Flexible(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 450),
+                      child: SliderTheme(
+                        data: SliderThemeData(
                             activeTickMarkColor: Colors.red,
                             activeTrackColor: Colors.grey,
                             thumbColor: Colors.grey.withOpacity(0.8)
-                          ),
-                          child: Slider(
-                            value: min(position, duration),
-                            max: duration,
-                            onChanged: (value) {
-                              player.seek(value.floor());
-                            },
-                          ),
+                        ),
+                        child: Slider(
+                          value: min(position, duration),
+                          max: duration,
+                          onChanged: (value) {
+                            player.seek(value.floor());
+                          },
                         ),
                       ),
                     ),
-                    Text(convertSecondsToReadableString(duration.floor())),
-                  ],
-                ),
+                  ),
+                  Text(convertSecondsToReadableString(duration.floor())),
+                ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -304,10 +311,10 @@ class _MusicPageState extends State<MusicPage> {
                             scale: 2,
                             child: IconButton(
                               icon: ImageIcon(
-                                normalize
-                                    ? const AssetImage('assets/custom_icons/normalize.png')
-                                    : const AssetImage("assets/custom_icons/normalize_off.png")
-                                ),
+                                  normalize
+                                      ? const AssetImage('assets/custom_icons/normalize.png')
+                                      : const AssetImage("assets/custom_icons/normalize_off.png")
+                              ),
                               onPressed: () {
                                 setState(() {
                                   normalize = !normalize;
@@ -322,7 +329,7 @@ class _MusicPageState extends State<MusicPage> {
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

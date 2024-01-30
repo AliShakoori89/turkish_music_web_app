@@ -14,15 +14,16 @@ class NewSong extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.width * 0.055,
+            bottom: MediaQuery.of(context).size.width * 0.055,
           ),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.67,
+            height: MediaQuery.of(context).size.height * 0.42,
             child: AnimatedGridView(
                 duration: 100,
                 crossAxisCount: 2,
-                mainAxisExtent: 256,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
+                mainAxisExtent: 170,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
                 children: List.generate(
                     4,
                         (index) =>
@@ -36,7 +37,8 @@ class NewSong extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
-                              image: DecorationImage(image: AssetImage("assets/images/tarkan.png"),
+                              image: const DecorationImage(
+                                  image: AssetImage("assets/images/tarkan.png"),
                                   fit: BoxFit.fill)
                             ),
                             width: double.infinity,
