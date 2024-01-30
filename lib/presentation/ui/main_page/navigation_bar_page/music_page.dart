@@ -16,6 +16,7 @@ import 'dart:math';
 
 import 'package:turkish_music_app/presentation/helpers/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/helpers/top_arrow_icon.dart';
+import 'package:turkish_music_app/presentation/ui/detail_page.dart';
 
 class MusicPage extends StatelessWidget {
   MusicPage({super.key});
@@ -50,7 +51,7 @@ class MusicPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 7,
+                  flex: 9,
                   child: Padding(
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).size.height * 0.1
@@ -66,14 +67,42 @@ class MusicPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Expanded(
+                  flex: 5,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text("Recently Playlist",
+                            style: TextStyle(
+                              color: Colors.grey
+                            ),
+                          )
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Expanded(
+                        flex: 8,
+                        child: DetailPage(
+                          songName: 'Okadar',
+                          singerName: "Tarkan",
+                          singerImage: "assets/images/tarkan.png",
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
                     color: Colors.black,
                     height: MediaQuery.of(context).size.height * 0.14,
                     child: Column(
                       children: [
-
                         const TopArrow(),
                         Padding(
                           padding: EdgeInsets.only(

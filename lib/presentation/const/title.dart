@@ -22,7 +22,8 @@ class TitleText extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                 DetailPage(
                     songName: "Şımarık",
-                    singerName: "Tarkan")));
+                    singerName: "Tarkan",
+                    singerImage: "assets/images/tarkan.png",)));
           },
           child: const Text(
               "see all >>"),

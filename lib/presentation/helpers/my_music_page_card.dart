@@ -17,10 +17,10 @@ class MyMusicPageCard extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                top: 15,
+                top: 10,
                 left: 8,
                 right: 8,
-                bottom: 15
+                bottom: 10
               ),
               child: Row(
                 children: [
@@ -34,7 +34,7 @@ class MyMusicPageCard extends StatelessWidget {
             size: 20,)
           ],
         ),
-        CustomDivider()
+        const CustomDivider(),
       ],
     );
   }
