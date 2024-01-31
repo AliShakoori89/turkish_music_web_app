@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
+import 'package:turkish_music_app/presentation/helpers/under_image_singar_and_song_name.dart';
 
 class FeaturedContainer extends StatelessWidget {
   const FeaturedContainer({super.key});
@@ -27,6 +28,9 @@ class FeaturedContainer extends StatelessWidget {
             )
           ),
         ),
+        const UnderImageSingerAndSongName(
+            singerName: "Tarkan",
+            songName: "Araftaeim"),
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.055,
         ),
