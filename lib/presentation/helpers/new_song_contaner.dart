@@ -24,7 +24,7 @@ class NewSong extends StatelessWidget {
             child: AnimatedGridView(
                 crossAxisCount: 2,
                 mainAxisExtent: 170,
-                crossAxisSpacing: 20,
+                crossAxisSpacing: 50,
                 children: List.generate(
                     4,
                         (index) =>
@@ -46,9 +46,9 @@ class NewSong extends StatelessWidget {
                                 ),
                               ),
                                 ),
-                                Expanded(
+                                const Expanded(
                                   flex: 2,
-                                  child: const UnderImageSingerAndSongName(
+                                  child: UnderImageSingerAndSongName(
                                       singerName: "Tarkan",
                                       songName: "Araftaeim"),
                                 ),
