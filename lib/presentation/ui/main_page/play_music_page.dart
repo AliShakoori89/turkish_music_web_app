@@ -1,15 +1,14 @@
 import 'dart:ui';
-
 import 'package:circular_seek_bar/circular_seek_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/music_progress_bar.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/normalize_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_back_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/stop_button.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/volume_button.dart';
-
+import 'package:turkish_music_app/presentation/helpers/music_player_component/random_play_button.dart';
+import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_next_button.dart';
+import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_previous_button.dart';
 import '../../helpers/music_player_component/download_button.dart';
+import '../../helpers/music_player_component/loopIcon_button.dart';
 
 class PlayMusicPage extends StatefulWidget {
   
@@ -27,6 +26,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: ,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -75,18 +75,34 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     const PlayBackButton(),
                     Row(
                       children: [
-                        StopButton(),
+                        const SkipPrevious(),
                         const SizedBox(
-                          width: 5,
+                          width: 10,
                         ),
                         PlayButton(),
                         const SizedBox(
-                          width: 5,
+                          width: 10,
                         ),
-                        const VolumeButton()
+                        const SkipNext()
                       ],
                     ),
                     const DownloadButton()
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                    right: MediaQuery.of(context).size.width * 0.2,
+                    left: MediaQuery.of(context).size.width * 0.2
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RandomPlay(),
+                    LoopIconButton(),
                   ],
                 ),
               )
