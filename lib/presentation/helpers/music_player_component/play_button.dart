@@ -27,7 +27,7 @@ class PlayButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleButton(
       color: Colors.white30.withOpacity(0.2),
-      size: 40,
+      size: 50,
       onPressed: () {
         if (isPlaying) {
           player.pause();
@@ -40,6 +40,7 @@ class PlayButton extends StatelessWidget {
             ? Icons.pause_rounded
             : Icons.play_arrow_rounded,
         color: Colors.white,
+        size: 40,
       ),
     );
   }

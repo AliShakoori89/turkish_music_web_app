@@ -28,7 +28,10 @@ class PlaylistContainer extends StatelessWidget {
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PlayMusicPage(imagePath: "assets/images/tarkan.png",)),
+                      MaterialPageRoute(builder: (context) => PlayMusicPage(
+                        imagePath: "assets/images/tarkan.png",
+                      singerName: "Tarkan",
+                      trackName: "Araftaeim",)),
                     );
                   },
                   child: Padding(
