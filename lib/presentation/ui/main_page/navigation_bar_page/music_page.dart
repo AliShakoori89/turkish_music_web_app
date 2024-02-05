@@ -1,19 +1,6 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:simple_audio/simple_audio.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/music_progress_bar.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/normalize_button.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/play_back_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/stop_button.dart';
-import 'package:turkish_music_app/presentation/helpers/music_player_component/volume_button.dart';
 import 'package:turkish_music_app/presentation/helpers/my_music_page_card.dart';
-import 'dart:io';
-import 'dart:math';
-
 import 'package:turkish_music_app/presentation/helpers/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/helpers/top_arrow_icon.dart';
 import 'package:turkish_music_app/presentation/ui/detail_page.dart';
