@@ -47,6 +47,8 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   vertical_nav_bar: ^0.0.1
   circular_seek_bar: ^1.1.1
+  search_page: ^2.3.0
+  sqflite: ^2.3.2
 
 dev_dependencies:
   flutter_test:

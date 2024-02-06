@@ -12,6 +12,7 @@ class CustomAppBar extends StatelessWidget {
           icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
+            size: 20,
           ),
         ),
         const Expanded(
