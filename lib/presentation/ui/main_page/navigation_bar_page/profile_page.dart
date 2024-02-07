@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_card.dart';
 
@@ -8,6 +9,16 @@ import '../../../helpers/custom_page_with_cards.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
+
+  final Email email = Email(
+    body: 'Email body',
+    subject: 'Email subject',
+    recipients: ['example@example.com'],
+    cc: ['cc@example.com'],
+    bcc: ['bcc@example.com'],
+    attachmentPaths: ['/path/to/attachment.zip'],
+    isHTML: false,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +82,15 @@ class ProfilePage extends StatelessWidget {
                   customIcon: Icons.share,
                   customColor: Colors.grey),
             ),
-            const CustomCard(
-                title: "report",
-                customIcon: Icons.report,
-                customColor: Colors.grey),
+            InkWell(
+              onTap: () async{
+                await FlutterEmailSender.send(email);
+              },
+              child: const CustomCard(
+                  title: "report",
+                  customIcon: Icons.report,
+                  customColor: Colors.grey),
+            ),
             const CustomCard(
                 title: "help",
                 customIcon: Icons.help,

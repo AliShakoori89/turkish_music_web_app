@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_app_bar.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/like_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_back_button.dart';
@@ -159,7 +160,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.playlist_play_outlined,
                         color: Colors.grey,
                       ),
