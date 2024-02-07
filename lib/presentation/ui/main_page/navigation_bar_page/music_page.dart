@@ -4,6 +4,7 @@ import 'package:turkish_music_app/presentation/helpers/custom_page_with_cards.da
 import 'package:turkish_music_app/presentation/helpers/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/helpers/top_arrow_icon.dart';
 import 'package:turkish_music_app/presentation/ui/detail_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart';
 
 class MusicPage extends StatelessWidget {
   MusicPage({super.key});
@@ -83,9 +84,16 @@ class MusicPage extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: (){
-
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>
+                                  const PlayMusicPage(
+                                      imagePath: "assets/images/tarkan.png",
+                                      trackName: 'Okadar',
+                                      singerName: "Tarkan")),
+                            );
                           },
-                            child: TopArrow(),),
+                            child: const TopArrow(),),
                         Padding(
                           padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.10 + 15,

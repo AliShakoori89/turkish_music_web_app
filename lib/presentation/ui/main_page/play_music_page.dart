@@ -119,38 +119,53 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const RandomPlayButton(),
-                    Row(
-                      children: [
-                        const SkipPrevious(),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        PlayButton(),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const SkipNext()
-                      ],
-                    ),
-                    const LoopIconButton()
-                  ],
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.05
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const RandomPlayButton(),
+                      Row(
+                        children: [
+                          const SkipPrevious(),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          PlayButton(),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const SkipNext()
+                        ],
+                      ),
+                      const LoopIconButton()
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(
-                      Icons.playlist_play_outlined,
-                      color: Colors.grey,
-                    ),
-                    DownloadButton(),
-                  ],
+                Container(
+                  margin: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 0.08,
+                      left: MediaQuery.of(context).size.width * 0.08
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Icon(
+                        Icons.playlist_play_outlined,
+                        color: Colors.grey,
+                      ),
+                      DownloadButton(),
+                    ],
+                  ),
                 )
               ],
             ),

@@ -5,11 +5,6 @@ class TopArrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: (){
-
-        },
-        icon: const Icon(Icons.keyboard_arrow_up)
-    );
+    return const Icon(Icons.keyboard_arrow_up);
   }
 }
