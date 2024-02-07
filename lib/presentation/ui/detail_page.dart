@@ -121,17 +121,23 @@ class BottomDialog {
                     customIcon: Icon(Icons.playlist_add),
                     title: "Add to playlist",
                   ),
-                  const CustomDivider(),
+                  const CustomDivider(
+                    dividerColor: Colors.grey,
+                  ),
                   const SongDetailList(
                     customIcon: Icon(Icons.share),
                     title: "Share",
                   ),
-                  const CustomDivider(),
+                  const CustomDivider(
+                    dividerColor: Colors.grey,
+                  ),
                   const SongDetailList(
                     customIcon: Icon(Icons.mic),
                     title: "Go to Artist",
                   ),
-                  const CustomDivider(),
+                  const CustomDivider(
+                    dividerColor: Colors.grey,
+                  ),
                   const SongDetailList(
                     customIcon: Icon(Icons.download),
                     title: "Download",

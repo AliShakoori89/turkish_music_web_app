@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:vertical_nav_bar/vertical_nav_bar.dart';
 
@@ -33,6 +34,10 @@ class _MainPageState extends State<MainPage> {
         child: const HomePage()
       ),
       SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: ProfilePage()
+      ),
+      SizedBox(
         width: MediaQuery.of(context).size.width,
         child: MusicPage(),
       ),
@@ -52,7 +57,7 @@ class _MainPageState extends State<MainPage> {
                     alignment: Alignment.bottomLeft,
                     child: VerticalNavBar(
                       selectedIndex: currentRoute,
-                      height: MediaQuery.of(context).size.height * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       width: MediaQuery.of(context).size.width * 0.10,
                       backgroundColor: Colors.black.withOpacity(0.5),
                       borderRadius: 15,
@@ -65,6 +70,10 @@ class _MainPageState extends State<MainPage> {
                         VerticalNavBarItem(
                           customIcon: Icons.home,
                           iconSize: 25.0
+                        ),
+                        VerticalNavBarItem(
+                          customIcon: Icons.person,
+                          iconSize:25.0
                         ),
                         VerticalNavBarItem(
                           customIcon: MusicIcon.music,

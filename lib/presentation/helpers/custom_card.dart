@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/const/custom_divider.dart';
 
-class MyMusicPageCard extends StatelessWidget {
+import '../const/custom_divider.dart';
+
+class CustomCard extends StatelessWidget {
 
   final String title;
   final IconData customIcon;
+  final Color customColor;
 
-  const MyMusicPageCard({super.key, required this.title, required this.customIcon});
+  const CustomCard({super.key,
+    required this.title,
+    required this.customIcon,
+    required this.customColor});
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +22,26 @@ class MyMusicPageCard extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                top: 10,
-                left: 8,
-                right: 8,
-                bottom: 10
+                  top: 10,
+                  left: 8,
+                  right: 8,
+                  bottom: 10
               ),
               child: Row(
                 children: [
                   Icon(customIcon),
-                  const SizedBox(width: 10,),
+                  const SizedBox(width: 10),
                   Text(title),
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios,
-            size: 20,)
+            const Icon(Icons.arrow_forward_ios,
+              size: 20,)
           ],
         ),
-        const CustomDivider(),
+        CustomDivider(
+            dividerColor : customColor
+        ),
       ],
     );
   }

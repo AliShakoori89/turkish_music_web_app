@@ -49,6 +49,9 @@ dependencies:
   circular_seek_bar: ^1.1.1
   search_page: ^2.3.0
   sqflite: ^2.3.2
+  path_provider: ^2.1.2
+  path: ^1.8.0
+
 
 dev_dependencies:
   flutter_test:

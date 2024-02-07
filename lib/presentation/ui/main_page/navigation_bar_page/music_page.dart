@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
-import 'package:turkish_music_app/presentation/helpers/my_music_page_card.dart';
+import 'package:turkish_music_app/presentation/helpers/custom_page_with_cards.dart';
 import 'package:turkish_music_app/presentation/helpers/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/helpers/top_arrow_icon.dart';
 import 'package:turkish_music_app/presentation/ui/detail_page.dart';
@@ -39,20 +39,11 @@ class MusicPage extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 9,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.1
-                    ),
-                    child: ListView.builder(
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return MyMusicPageCard(
-                          customIcon: customIcon[index],
-                          title: title[index],
-                        );
-                      },
-                    ),
-                  ),
+                  child: CustomPageWithCards(
+                    title: title,
+                    customIcon: customIcon,
+                    rowNumber: 6,
+                    customColor: Colors.white,)
                 ),
                 const Expanded(
                   flex: 5,
@@ -90,7 +81,11 @@ class MusicPage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.14,
                     child: Column(
                       children: [
-                        const TopArrow(),
+                        InkWell(
+                          onTap: (){
+
+                          },
+                            child: TopArrow(),),
                         Padding(
                           padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.10 + 15,
@@ -104,7 +99,7 @@ class MusicPage extends StatelessWidget {
                               // Column(
                               //   mainAxisAlignment: MainAxisAlignment.start,
                               //   children: [
-                              const SingerNameTrackNameImage(
+                              SingerNameTrackNameImage(
                                   songName: "Tarkan",
                                   singerName: "MoOooooOoch",
                                   imagePath: "assets/images/tarkan.png",

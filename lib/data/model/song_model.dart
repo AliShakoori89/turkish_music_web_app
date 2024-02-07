@@ -1,35 +1,35 @@
 class SongModel {
   String? songId;
   String? songName;
-  String? userid;
+  String? singerId;
   String? duration;
-  String? coverImageUrl;
+  String? imagePath;
   String? singerName;
 
   SongModel({
     this.songId,
     this.songName,
-    this.userid,
+    this.singerId,
     this.duration,
-    this.coverImageUrl,
+    this.imagePath,
     this.singerName,
   });
 
   factory SongModel.fromJson(Map<String, dynamic> json) => SongModel(
     songId: json['songId'],
     songName: json['songName'],
-    userid: json['userid'],
+    singerId: json['singerId'],
     duration: json['duration'],
-    coverImageUrl: json['cover_image_url'],
+    imagePath: json['imagePath'],
     singerName: json['singerName'],
   );
 
   Map<String, dynamic> toJson() => {
     'songId': songId,
     'songName': songName,
-    'userid': userid,
+    'singerId': singerId,
     'duration': duration,
-    'cover_image_url': coverImageUrl,
+    'imagePath': imagePath,
     'singerName': singerName,
   };
 }
