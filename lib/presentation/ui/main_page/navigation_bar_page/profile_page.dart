@@ -1,24 +1,51 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:simple_email_sender/simple_email_sender.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_card.dart';
-
 import '../../../const/custom_divider.dart';
-import '../../../helpers/custom_page_with_cards.dart';
+import '../../../helpers/about_button.dart';
+import '../../../helpers/exit_button.dart';
+import '../../../helpers/help_button.dart';
+import '../../../helpers/report_button.dart';
+import '../../../helpers/share_button.dart';
 
-class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
-  final Email email = Email(
-    body: 'Email body',
-    subject: 'Email subject',
-    recipients: ['example@example.com'],
-    cc: ['cc@example.com'],
-    bcc: ['bcc@example.com'],
-    attachmentPaths: ['/path/to/attachment.zip'],
-    isHTML: false,
-  );
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+
+  Future<void> send() async {
+    final Email email = Email(
+      body: 'your app have error.',
+      subject:  'Turkish Music Error Report',
+      recipients: ['alishakoori89@gmail.com'],
+    );
+
+    String platformResponse;
+
+    try {
+      await SimpleEmailSender.send(email);
+      platformResponse = 'success';
+    } catch (error) {
+      if (kDebugMode) {
+        print(error);
+      }
+      platformResponse = error.toString();
+    }
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(platformResponse),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +56,10 @@ class ProfilePage extends StatelessWidget {
           left: MediaQuery.of(context).size.width * 0.033,
           top: MediaQuery.of(context).size.height * 0.08,
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Column(
+            Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,69 +96,17 @@ class ProfilePage extends StatelessWidget {
                 ),
               ],
             ),
-            InkWell(
-              onTap: () async {
-                final String appLink = 'https://play.google.com/store/apps/details?id=com.example.myapp';
-                final String message = 'Check out my new app: $appLink';
-
-                // Share the app link and message using the share dialog
-                await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
-              },
-              child: const CustomCard(
-                  title: "Share",
-                  customIcon: Icons.share,
-                  customColor: Colors.grey),
-            ),
-            InkWell(
-              onTap: () async{
-                await FlutterEmailSender.send(email);
-              },
-              child: const CustomCard(
-                  title: "report",
-                  customIcon: Icons.report,
-                  customColor: Colors.grey),
-            ),
-            const CustomCard(
-                title: "help",
-                customIcon: Icons.help,
-                customColor: Colors.grey),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10,
-                          left: 10,
-                          right: 8,
-                          bottom: 10
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset("assets/custom_icons/about.png",width: 20,
-                          color: Colors.white),
-                          const SizedBox(width: 10),
-                          const Text("About"),
-                        ],
-                      ),
-                    ),
-                    const Icon(Icons.arrow_forward_ios,
-                      size: 20,)
-                  ],
-                ),
-                CustomDivider(
-                    dividerColor : Colors.grey
-                ),
-              ],
-            ),
-            const CustomCard(
-                title: "Exit",
-                customIcon: Icons.exit_to_app,
-                customColor: Colors.grey)
+            ShareButton(),
+            ReportButton(),
+            HelpButton(),
+            AboutButton(),
+            ExitButton()
           ],
         ),
       ),
     );
   }
 }
+
+
+

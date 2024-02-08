@@ -4,6 +4,7 @@ import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 void main() async{
 
+  WidgetsFlutterBinding.ensureInitialized();
   await SimpleAudio.init(
     useMediaController: true,
     shouldNormalizeVolume: false,
