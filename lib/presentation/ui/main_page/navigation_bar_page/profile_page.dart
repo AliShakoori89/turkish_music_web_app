@@ -5,6 +5,7 @@ import 'package:simple_email_sender/simple_email_sender.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_card.dart';
 import '../../../const/custom_divider.dart';
 import '../../../helpers/about_button.dart';
+import '../../../helpers/exit_account-button.dart';
 import '../../../helpers/exit_button.dart';
 import '../../../helpers/help_button.dart';
 import '../../../helpers/report_button.dart';
@@ -100,6 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ReportButton(),
             HelpButton(),
             AboutButton(),
+            ExitAccountButton(),
             ExitButton()
           ],
         ),

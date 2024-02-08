@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_exit_app/flutter_exit_app.dart';
+
 import 'custom_card.dart';
 
-class ExitButton extends StatelessWidget {
-  const ExitButton({
-    super.key,
-  });
+class ExitAccountButton extends StatelessWidget {
+  const ExitAccountButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        FlutterExitApp.exitApp();
       },
       child: const CustomCard(
           title: "Exit",
-          customIcon: Icons.exit_to_app,
+          customIcon: Icons.person_off_outlined,
           customColor: Colors.grey),
     );
   }
