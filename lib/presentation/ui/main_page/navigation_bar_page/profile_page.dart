@@ -1,8 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
-import 'package:simple_email_sender/simple_email_sender.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_card.dart';
 import '../../../const/custom_divider.dart';
 import '../../../helpers/about_button.dart';
 import '../../../helpers/exit_account-button.dart';
@@ -19,34 +15,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-  Future<void> send() async {
-    final Email email = Email(
-      body: 'your app have error.',
-      subject:  'Turkish Music Error Report',
-      recipients: ['alishakoori89@gmail.com'],
-    );
-
-    String platformResponse;
-
-    try {
-      await SimpleEmailSender.send(email);
-      platformResponse = 'success';
-    } catch (error) {
-      if (kDebugMode) {
-        print(error);
-      }
-      platformResponse = error.toString();
-    }
-
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(platformResponse),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

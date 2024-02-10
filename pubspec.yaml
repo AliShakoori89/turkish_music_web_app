@@ -52,8 +52,8 @@ dependencies:
   path_provider: ^2.1.2
   path: ^1.8.0
   flutter_share: ^2.0.0
-  simple_email_sender: ^0.0.5
   flutter_exit_app: ^1.1.2
+  mailer: ^6.1.0
 
 
 dev_dependencies:
