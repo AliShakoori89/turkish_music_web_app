@@ -11,7 +11,7 @@ class ExitAccountButton extends StatelessWidget {
       onTap: (){
       },
       child: const CustomCard(
-          title: "Exit",
+          title: "Exit Account",
           customIcon: Icons.person_off_outlined,
           customColor: Colors.grey),
     );

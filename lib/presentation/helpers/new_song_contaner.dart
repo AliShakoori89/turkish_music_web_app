@@ -22,6 +22,7 @@ class NewSong extends StatelessWidget {
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.42,
             child: AnimatedGridView(
+                physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
                 mainAxisExtent: 170,
                 crossAxisSpacing: 50,

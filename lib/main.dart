@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
@@ -21,7 +23,10 @@ void main() async{
     applePreferSkipButtons: true,
   );
 
-  runApp( const MyApp());
+  runApp( DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(), // Wrap your app
+  ),);
 }
 
 class MyApp extends StatelessWidget {

@@ -35,7 +35,7 @@ class _MainPageState extends State<MainPage> {
       ),
       SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: ProfilePage()
+          child: const ProfilePage()
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,

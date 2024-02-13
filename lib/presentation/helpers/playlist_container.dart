@@ -34,37 +34,35 @@ class PlaylistContainer extends StatelessWidget {
                       trackName: "Araftaeim",)),
                     );
                   },
-                  child: Padding(
-                        padding: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 0.030,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.blue,
-                                  image: const DecorationImage(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.22,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.blue,
+                                image: DecorationImage(
                                     image: AssetImage("assets/images/tarkan.png"),
                                     fit: BoxFit.fill
-                                  )
-                                ),
-                                width: MediaQuery.of(context).size.width * 0.22,
-                              ),
+                                )
                             ),
-                            const SizedBox(height: 3,),
-                            const Expanded(
-                              flex: 1,
-                              child: UnderImageSingerAndSongName(
-                                  singerName: "Tarkan",
-                                  songName: "Araftaeim"),
-                            )
-                          ],
+                            width: MediaQuery.of(context).size.width * 0.2,
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 3,),
+                        const Expanded(
+                          flex: 2,
+                          child: UnderImageSingerAndSongName(
+                              singerName: "Tarkan",
+                              songName: "Araftaeim"),
+                        )
+                      ],
+                    ),
+                  ),
                 )),
           ),
         ),

@@ -32,15 +32,13 @@ class ItemSearchPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20),
-            Expanded(
+            const SizedBox(height: 20),
+            const Expanded(
               flex: 1,
-              child: Container(
-                child: const Text('Search Page',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),),
-              ),
+              child: Text('Search Page',
+                style: TextStyle(
+                  fontSize: 14,
+                ),),
             ),
             Expanded(
               flex: 10,
@@ -61,6 +59,7 @@ class ItemSearchPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Search people',
+        backgroundColor: Colors.grey.withOpacity(0.2),
         onPressed: () => showSearch(
           context: context,
           delegate: SearchPage(

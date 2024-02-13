@@ -54,6 +54,7 @@ dependencies:
   flutter_share: ^2.0.0
   flutter_exit_app: ^1.1.2
   mailer: ^6.1.0
+  device_preview: ^1.1.0
 
 
 dev_dependencies:

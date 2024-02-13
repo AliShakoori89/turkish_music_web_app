@@ -57,113 +57,128 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CustomAppBar(),
+                const Expanded(
+                    flex: 1,
+                    child: CustomAppBar()),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.1,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.trackName,
-                              style: const TextStyle(
-                                  fontSize: 25,
-                                  color: Colors.white
-                              )),
-                          Text(widget.singerName,
-                            style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.grey
-                            ),)
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: LikeButton(
-                          name: widget.singerName,
-                          track: widget.trackName,
-                          isIcon: true,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                CircularSeekBar(
-                  width: double.infinity,
-                  height: 350,
-                  progress: _progress,
-                  barWidth: 8,
-                  startAngle: 45,
-                  sweepAngle: 270,
-                  strokeCap: StrokeCap.butt,
-                  progressGradientColors: const [Colors.blue, Colors.indigo, Colors.purple],
-                  dashWidth: 1,
-                  dashGap: 2,
-                  animation: true,
-                  child: Container(
-                    margin: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(widget.imagePath)
-                      )
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.05,
-                      left: MediaQuery.of(context).size.width * 0.05
-                  ),
+                Expanded(
+                  flex: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const RandomPlayButton(),
-                      Row(
-                        children: [
-                          const SkipPrevious(),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          PlayButton(),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const SkipNext()
-                        ],
+                      Expanded(
+                        flex: 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.trackName,
+                                style: const TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white
+                                )),
+                            Text(widget.singerName,
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.grey
+                              ),)
+                          ],
+                        ),
                       ),
-                      const LoopIconButton()
+                      Expanded(
+                        flex: 1,
+                        child: LikeButton(
+                            name: widget.singerName,
+                            track: widget.trackName,
+                            isIcon: true,
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-                Container(
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.08,
-                      left: MediaQuery.of(context).size.width * 0.08
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.playlist_play_outlined,
-                        color: Colors.grey,
+                Expanded(
+                  flex: 6,
+                  child: CircularSeekBar(
+                    width: double.infinity,
+                    height: 350,
+                    progress: _progress,
+                    barWidth: 8,
+                    startAngle: 45,
+                    sweepAngle: 270,
+                    strokeCap: StrokeCap.butt,
+                    progressGradientColors: const [Colors.blue, Colors.indigo, Colors.purple],
+                    dashWidth: 1,
+                    dashGap: 2,
+                    animation: true,
+                    child: Container(
+                      margin: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(widget.imagePath),
+                          fit: BoxFit.contain
+                        )
                       ),
-                      DownloadButton(),
-                    ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.05,
+                        left: MediaQuery.of(context).size.width * 0.05
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const RandomPlayButton(),
+                        Row(
+                          children: [
+                            const SkipPrevious(),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            PlayButton(),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const SkipNext()
+                          ],
+                        ),
+                        const LoopIconButton()
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.08,
+                        left: MediaQuery.of(context).size.width * 0.08
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.playlist_play_outlined,
+                          color: Colors.grey,
+                        ),
+                        DownloadButton(),
+                      ],
+                    ),
                   ),
                 )
               ],
