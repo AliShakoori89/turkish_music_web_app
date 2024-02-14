@@ -10,9 +10,12 @@ class ReportButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController categoryController = TextEditingController();
+
     return InkWell(
       onTap: (){
-        sendEmail(context);
+        showAlertDialog(context, categoryController);
       },
       child: const CustomCard(
           title: "report",
@@ -21,41 +24,24 @@ class ReportButton extends StatelessWidget {
     );
   }
 
-  sendEmail(BuildContext context //For showing snackbar
-      ) async {
-
-    print('Message sent: dfsfsdfdsf');
+  sendEmail(BuildContext context, TextEditingController controller) async {
 
     String username = 'alishakoori89@gmail.com'; //Your Email
     String password = "sncj jkcf xovi gjmr"; // 16 Digits App Password Generated From Google Account
 
     final smtpServer = gmail(username, password);
-    // Use the SmtpServer class to configure an SMTP server:
-    // final smtpServer = SmtpServer('smtp.domain.com');
-    // See the named arguments of SmtpServer for further configuration
-    // options.
 
-    // Create our message.
     final message = Message()
       ..from = Address(username, 'Ahmed Usman')
-      ..recipients.add('recipient-email@gmail.com')
-    // ..ccRecipients.addAll(['abc@gmail.com', 'xyz@gmail.com']) // For Adding Multiple Recipients
-    // ..bccRecipients.add(Address('a@gmail.com')) For Binding Carbon Copy of Sent Email
-      ..subject = 'Mail from Mailer'
-      ..text = 'Hello dear, I am sending you email from Flutter application'
-    // ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>"; // For Adding Html in email
-    // ..attachments = [
-    //   FileAttachment(File('image.png'))  //For Adding Attachments
-    //     ..location = Location.inline
-    //     ..cid = '<myimg@3.141>'
-    // ]
-        ;
+      ..recipients.add('alishakoori@gmail.com')
+      ..subject = 'Turkish Music App'
+      ..text = controller.text;
 
     try {
       final sendReport = await send(message, smtpServer);
       print('Message sent: ' + sendReport.toString());
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Report Send Successfully",
+          .showSnackBar(SnackBar(content: const Text("Report Send Successfully",
       style: TextStyle(
         color: Colors.white
       )),
@@ -68,4 +54,49 @@ class ReportButton extends StatelessWidget {
       }
     }
   }
-}
+
+  void showAlertDialog(BuildContext context, TextEditingController controller) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: ListTile(
+            subtitle: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.all(1),
+              child: TextFormField(
+                  controller: controller,
+                  maxLines: 8,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
+                      hintText: 'type your report',
+                      hintStyle: TextStyle(
+                        fontSize: 12,
+                          color: Color.fromRGBO(215, 215, 215, 1)
+                      )
+                  )
+              ),
+            ),
+          ),
+          actionsOverflowAlignment: OverflowBarAlignment.start,
+          actions: <Widget>[
+            TextButton(
+              child: const Text('close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('send'),
+              onPressed: () {
+                sendEmail(context, controller);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+
+        );
+      },
+    );
+  }}
