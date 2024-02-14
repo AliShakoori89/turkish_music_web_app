@@ -51,7 +51,8 @@ class NewSong extends StatelessWidget {
                                   flex: 2,
                                   child: UnderImageSingerAndSongName(
                                       singerName: "Tarkan",
-                                      songName: "Araftaeim"),
+                                      songName: "Araftaeim",
+                                  isArtist: true),
                                 ),
                               ],
                             ))),

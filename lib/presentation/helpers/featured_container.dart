@@ -121,7 +121,8 @@ class _FeaturedContainerState extends State<FeaturedContainer> {
         // ),
         const UnderImageSingerAndSongName(
             singerName: "Tarkan",
-            songName: "Araftaeim"),
+            songName: "Araftaeim",
+            isArtist: true),
         SizedBox(
           height: MediaQuery.of(context).size.width * 0.055,
         ),

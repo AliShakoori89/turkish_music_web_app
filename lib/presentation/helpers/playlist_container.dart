@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/presentation/helpers/under_image_singar_and_song_name.dart';
-
 import '../const/title.dart';
 import '../ui/main_page/play_music_page.dart';
 
@@ -12,11 +11,12 @@ class PlaylistContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TitleText(title: "Playlists", haveSeeAll: true),
+        const TitleText(title: "Artist", haveSeeAll: true),
         Container(
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.0052,
-              vertical: MediaQuery.of(context).size.width * 0.055),
+              vertical: MediaQuery.of(context).size.width * 0.055
+          ),
           height: MediaQuery.of(context).size.height * 0.2,
           width: double.infinity,
           child: AnimatedListView(
@@ -37,7 +37,7 @@ class PlaylistContainer extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.22,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           flex: 3,
@@ -53,12 +53,13 @@ class PlaylistContainer extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.2,
                           ),
                         ),
-                        const SizedBox(height: 3,),
+                        const SizedBox(height: 5,),
                         const Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: UnderImageSingerAndSongName(
                               singerName: "Tarkan",
-                              songName: "Araftaeim"),
+                              songName: "Araftaeim",
+                              isArtist: false),
                         )
                       ],
                     ),
