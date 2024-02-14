@@ -55,6 +55,7 @@ dependencies:
   flutter_exit_app: ^1.1.2
   mailer: ^6.1.0
   device_preview: ^1.1.0
+  carousel_slider: ^4.2.1
 
 
 dev_dependencies:

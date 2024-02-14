@@ -23,10 +23,13 @@ void main() async{
     applePreferSkipButtons: true,
   );
 
-  runApp( DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ),);
+  runApp(
+    // DevicePreview(
+    // enabled: !kReleaseMode,
+    // builder: (context) =>
+        MyApp(), // Wrap your app
+  // ),
+  );
 }
 
 class MyApp extends StatelessWidget {

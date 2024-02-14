@@ -5,9 +5,9 @@
 
 class Album {
   Album({
-      List<Data> data, 
-      bool success, 
-      String message, 
+      List<Data> data,
+      bool success,
+      String message,
       num lastPage,}){
     _data = data;
     _success = success;
@@ -66,11 +66,11 @@ Album copyWith({  List<Data> data,
 
 class Data {
   Data({
-      num id, 
-      String name, 
-      String imageSource, 
-      num singerId, 
-      Singer singer, 
+      num id,
+      String name,
+      String imageSource,
+      num singerId,
+      Singer singer,
       List<Musics> musics,}){
     _id = id;
     _name = name;
@@ -145,11 +145,11 @@ Data copyWith({  num id,
 
 class Musics {
   Musics({
-      num id, 
-      String name, 
-      String imageSource, 
-      String fileSource, 
-      num albumId, 
+      num id,
+      String name,
+      String imageSource,
+      String fileSource,
+      num albumId,
       String album,}){
     _id = id;
     _name = name;
@@ -212,8 +212,8 @@ Musics copyWith({  num id,
 
 class Singer {
   Singer({
-      num id, 
-      String name, 
+      num id,
+      String name,
       String imageSource,}){
     _id = id;
     _name = name;

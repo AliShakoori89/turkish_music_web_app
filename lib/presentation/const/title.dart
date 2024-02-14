@@ -20,13 +20,17 @@ class TitleText extends StatelessWidget {
             ? InkWell(
           onTap: (){
             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                DetailPage(
+                const DetailPage(
                     songName: "Şımarık",
                     singerName: "Tarkan",
                     singerImage: "assets/images/tarkan.png",)));
           },
           child: const Text(
-              "see all >>"),
+              "see all >>",
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.grey
+          )),
             )
             : const Text("")
       ],
