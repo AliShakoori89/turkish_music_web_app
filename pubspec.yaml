@@ -56,6 +56,8 @@ dependencies:
   mailer: ^6.1.0
   device_preview: ^1.1.0
   carousel_slider: ^4.2.1
+  flutter_bloc: ^8.1.4
+  equatable: ^2.0.5
 
 
 dev_dependencies:
