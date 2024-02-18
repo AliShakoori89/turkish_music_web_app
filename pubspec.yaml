@@ -57,6 +57,7 @@ dependencies:
   device_preview: ^1.1.0
   carousel_slider: ^4.2.1
   flutter_bloc: ^8.1.4
+  get: ^4.6.6
   equatable: ^2.0.5
 
 
@@ -86,7 +87,6 @@ flutter:
   assets:
     - assets/images/
     - assets/logo/tMusic.png
-    - assets/gif/animation1.gif
     - assets/custom_icons/normalize.png
     - assets/custom_icons/normalize_off.png
     - assets/custom_icons/

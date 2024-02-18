@@ -8,7 +8,11 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: EdgeInsets.only(
+          right: MediaQuery.of(context).size.width * 0.05,
+          left: MediaQuery.of(context).size.width * 0.05
+      ),
       child: TextFormField(
         cursorColor: Colors.grey,
         controller: emailController,
@@ -29,11 +33,8 @@ class CustomTextField extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white)),
           hintText: "Please sign in your email...",
+          prefixIcon: Icon(Icons.email),
           hintStyle: (TextStyle(color: Colors.white30)),
-          icon: Icon(
-            Icons.email,
-            color: Colors.white,
-          ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),

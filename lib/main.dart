@@ -1,7 +1,12 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:simple_audio/simple_audio.dart';
+import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
+import 'package:turkish_music_app/presentation/bloc/register_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 void main() async{
@@ -38,12 +43,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(brightness: Brightness.dark),
-      themeMode: ThemeMode.dark,
-      home: const MainPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (BuildContext context) =>
+                RegisterBloc(SignUpUserRepository())),
+      ],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(brightness: Brightness.dark),
+        themeMode: ThemeMode.dark,
+        home: const LoginPage(),
+      ),
     );
   }
 }
