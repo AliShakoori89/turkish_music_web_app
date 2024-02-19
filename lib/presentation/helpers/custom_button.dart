@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -6,7 +8,7 @@ import '../bloc/register_user_bloc/event.dart';
 import '../bloc/register_user_bloc/state.dart';
 import '../ui/input_verification_code.dart';
 
-class CustomButton extends StatelessWidget {
+class CustomButton extends StatefulWidget {
    CustomButton({
      super.key,
      this.emailFormKey,
@@ -18,6 +20,14 @@ class CustomButton extends StatelessWidget {
     String? email;
 
   @override
+  State<CustomButton> createState() => _CustomButtonState();
+}
+
+class _CustomButtonState extends State<CustomButton> with TickerProviderStateMixin{
+
+  int _state = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -27,119 +37,85 @@ class CustomButton extends StatelessWidget {
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Colors.blue,
           textStyle: const TextStyle(
               color: Colors.white,
               fontSize: 15),
         ),
         onPressed: () {
-          final registerBloc = BlocProvider.of<RegisterBloc>(context);
 
-          if (emailFormKey!.currentState!.validate()) {
+          setState(() {
 
-            if(buttonName == "Sign Up"){
+            if (widget.emailFormKey!.currentState!.validate()){
+              if (_state == 0) {
+                animateButton();
+                final registerBloc = BlocProvider.of<RegisterBloc>(context);
 
-              registerBloc.add(RegisterUserEvent(email: email!));
+                if(widget.buttonName == "Sign Up"){
 
+                  registerBloc.add(RegisterUserEvent(email: widget.email!));
 
+                } else if(widget.buttonName == "Sign In"){
 
-              // BlocBuilder<RegisterBloc, RegisterState>(
-              //     builder: (context, state){
-              //
-              //       String otpCode = state.otpCode;
-              //
-              //        return Dialog(
-              //          child: Padding(
-              //            padding: const EdgeInsets.all(8.0),
-              //            child: Column(
-              //              mainAxisSize: MainAxisSize.min,
-              //              mainAxisAlignment: MainAxisAlignment.center,
-              //              children: <Widget>[
-              //                Padding(
-              //                  padding: const EdgeInsets.only(
-              //                      top: 10,
-              //                      bottom: 20
-              //                  ),
-              //                  child: Expanded(
-              //                    child: Row(
-              //                      children: [
-              //                        const Text("Enter code when sent to "),
-              //                        Text("${email?.substring(0,3)}...${email?.substring(email!.length - 5)} :",
-              //                            style: const TextStyle(
-              //                              fontWeight: FontWeight.bold,
-              //                            )),
-              //                      ],
-              //                    ),
-              //                  ),
-              //                ),
-              //                const SizedBox(height: 15),
-              //                OtpTextField(
-              //                  numberOfFields: 6,
-              //                  borderColor: Colors.white,
-              //                  //set to true to show as box or false to show as dash
-              //                  showFieldAsBox: true,
-              //                  //runs when a code is typed in
-              //                  onCodeChanged: (String code) {
-              //                    //handle validation or checks here
-              //                  },
-              //                  //runs when every textfield is filled
-              //                  onSubmit: (String verificationCode){
-              //                    showDialog(
-              //                        context: context,
-              //                        builder: (context){
-              //                          return AlertDialog(
-              //                            title: const Text("Verification Code",
-              //                              style: TextStyle(color: Colors.white),),
-              //                            content: Text('Code entered is $verificationCode'),
-              //                          );
-              //                        }
-              //                    );
-              //                  }, // end onSubmit
-              //                ),
-              //                const SizedBox(height: 20),
-              //                Row(
-              //                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //                  children: [
-              //                    TextButton(
-              //                      onPressed: () {
-              //                        registerBloc.add(
-              //                            RegisterUserViaOTPCodeEvent(email: email!, otpCode: otpCode));
-              //                        Navigator.pop(context);
-              //                      },
-              //                      child: const Text('Submit'),
-              //                    ),
-              //                    TextButton(
-              //                      onPressed: () {
-              //                        Navigator.pop(context);
-              //                      },
-              //                      child: const Text('Close'),
-              //                    ),
-              //                  ],
-              //                ),
-              //              ],
-              //            ),
-              //          ),
-              //        );
-              //     },
-              // );
-
-            } else if(buttonName == "Sign In"){
-
-              registerBloc.add(RegisterUserViaOTPCodeEvent(email: email!));
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => InputVerificationCode(email: email!),
-                ),
-              );
+                  registerBloc.add(RegisterUserViaOTPCodeEvent(email: widget.email!));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => InputVerificationCode(email: widget.email!),
+                    ),
+                  );
+                }
+              }
             }
 
-          }
+          });
+
         },
-        child: Text(buttonName,
-          style: const TextStyle(
-              color: Colors.white
-          ),),
+        child: setUpButtonChild(widget.buttonName),
       ),
     );
   }
+
+  Widget setUpButtonChild(String title) {
+    if (_state == 0) {
+      return Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+      );
+    }
+    else if (_state == 1) {
+      return const SizedBox(
+        width: 15,
+        height: 15,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      );
+    }
+    else {
+      return Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16.0,
+        ),
+      );
+    }
+  }
+
+  void animateButton() {
+    setState(() {
+      _state = 1;
+    });
+
+    Timer(const Duration(milliseconds: 3300), () {
+      setState(() {
+        _state = 0;
+      });
+    });
+  }
+
 }
