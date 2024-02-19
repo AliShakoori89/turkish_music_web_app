@@ -12,7 +12,7 @@ import 'package:turkish_music_app/presentation/bloc/register_user_bloc/bloc.dart
 import 'package:turkish_music_app/presentation/service/authentication_service.dart';
 import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
+
 
 void main() async{
 
@@ -34,23 +34,23 @@ void main() async{
   );
 
   runApp(
-    // DevicePreview(
-    // enabled: !kReleaseMode,
-    // builder: (context) => RepositoryProvider<AuthenticationService>(
-    //     create: (context) {
-    //       return FakeAuthenticationService();
-    //     },
-    //     child: BlocProvider<AuthenticationBloc>(
-    //       create: (context) {
-    //         final authService =
-    //         RepositoryProvider.of<AuthenticationService>(context);
-    //         return AuthenticationBloc(authService)..add(AppLoaded());
-    //       },
-    //       child:
+    DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => RepositoryProvider<AuthenticationService>(
+        create: (context) {
+          return FakeAuthenticationService();
+        },
+        child: BlocProvider<AuthenticationBloc>(
+          create: (context) {
+            final authService =
+            RepositoryProvider.of<AuthenticationService>(context);
+            return AuthenticationBloc(authService)..add(AppLoaded());
+          },
+          child:
           const MyApp(),
-  //       )
-  //   ) // Wrap your app
-  // ),
+        )
+    ) // Wrap your app
+  ),
   );
 }
 

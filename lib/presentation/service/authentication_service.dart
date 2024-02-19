@@ -17,16 +17,9 @@ class FakeAuthenticationService extends AuthenticationService {
   Future<UserModel> getCurrentUser() async {
     SignUserRepository signUserRepository =  SignUserRepository();
     UserModel user = await signUserRepository.getCurrentUser();
-    List users = user.data;
 
-    for(int i = 0; i < users.length; i++){
-      if(user.data[i].email == ){
-        await signUserRepository.saveUserInLocalStorage(user);
-        return user;
-      }
-    }
-
-    return null; // return null for now
+    await signUserRepository.saveUserInLocalStorage(user);
+    return user;// return null for now
   }
 
   @override
@@ -40,6 +33,6 @@ class FakeAuthenticationService extends AuthenticationService {
 
   @override
   Future<void> signOut() {
-    return null;
+    return null!;
   }
 }

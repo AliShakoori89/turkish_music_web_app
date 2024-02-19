@@ -16,8 +16,9 @@ class ApiBaseHelper {
       Map<String, String> headers;
 
       headers = {
-        'Content-type': 'application/json',
-        'Authorization': 'bearer $accessToken'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $accessToken',
       };
 
 

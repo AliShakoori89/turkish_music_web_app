@@ -86,8 +86,9 @@ class SignUserRepository {
 
   Future<UserModel> getCurrentUser() async {
     ApiBaseHelper api = ApiBaseHelper();
+    String accessToken = await getAccessTokenValue();
     final response =
-    await api.get('/api/current_user/', api: accessToken);
+    await api.get('/api/User/testAuthorize/', accessToken: accessToken);
     final productJson = json.decode(response.body);
     return UserModel.fromJson(productJson);
   }
