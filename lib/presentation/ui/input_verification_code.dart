@@ -19,12 +19,13 @@ class InputVerificationCode extends StatefulWidget {
 
 class _InputVerificationCodeState extends State<InputVerificationCode> {
 
-  late List<TextEditingController?> controls;
+  late List<TextEditingController?> verificationCodeController;
   bool clearText = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
@@ -43,7 +44,7 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
                         size: 20,
                       ),
                     ),
-                    Text("Verification Page",
+                    const Text("Verification Page",
                     style: TextStyle(
                       color: Colors.white
                     ),),
@@ -82,11 +83,12 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
                         showFieldAsBox: true,
                         handleControllers: (controllers) {
                           //get all textFields controller, if needed
-                          controls = controllers;
+                          verificationCodeController = controllers;
                         },
                         onSubmit: (String verificationCode) {
 
                           final registerBloc = BlocProvider.of<RegisterBloc>(context);
+                          registerBloc.signUpUserRepository.secondLogin(widget.email, verificationCode);
 
                           //set clear text to clear text from all fields
                           // setState(() {

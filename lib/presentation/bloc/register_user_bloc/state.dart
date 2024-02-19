@@ -13,24 +13,29 @@ class RegisterState extends Equatable{
 
   const RegisterState ({
     this.status = RegisterStatus.initial,
-    bool? registerStatus
-  }): registerStatus = registerStatus ?? false;
+    bool? firstRegisterStatus,
+    bool? secondRegisterStatus
+  }): firstRegisterStatus = firstRegisterStatus ?? false,
+        secondRegisterStatus = secondRegisterStatus ?? false;
 
   final RegisterStatus status;
-  final bool registerStatus;
+  final bool firstRegisterStatus;
+  final bool secondRegisterStatus;
 
   @override
   // TODO: implement props
-  List<Object> get props => [ status, registerStatus];
+  List<Object> get props => [ status, firstRegisterStatus, secondRegisterStatus];
 
   RegisterState copyWith({
     RegisterStatus? status,
-    bool? registerStatus
+    bool? firstRegisterStatus,
+    bool? secondRegisterStatus
 
   }){
     return RegisterState(
         status: status ?? this.status,
-        registerStatus: registerStatus ?? this.registerStatus
+        firstRegisterStatus: firstRegisterStatus ?? this.firstRegisterStatus,
+        secondRegisterStatus: secondRegisterStatus ?? this.secondRegisterStatus
     );
   }
 }

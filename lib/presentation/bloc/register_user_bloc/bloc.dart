@@ -7,20 +7,20 @@ import 'event.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
-  SignUpUserRepository signUpUserRepository = SignUpUserRepository();
+  SignUserRepository signUpUserRepository = SignUserRepository();
 
   RegisterBloc(this.signUpUserRepository) : super(
 
       const RegisterState()){
     on<RegisterUserEvent>(_mapRegisterUserEventToState);
-    on<RegisterUserViaOTPCodeEvent>(_mapRegisterUserViaOTPCodeEventToState);
+    on<FirstLoginEvent>(_mapFirstLoginEventToState);
+    on<SecondLoginEvent>(_mapSecondLoginEventToState);
   }
 
   void _mapRegisterUserEventToState(
       RegisterUserEvent event, Emitter<RegisterState> emit) async {
     try {
       emit(state.copyWith(status: RegisterStatus.loading));
-      print("111111");
 
       await signUpUserRepository.requestPublic(event.email);
 
@@ -34,17 +34,37 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
-  void _mapRegisterUserViaOTPCodeEventToState(
-      RegisterUserViaOTPCodeEvent event, Emitter<RegisterState> emit) async {
+  void _mapFirstLoginEventToState(
+      FirstLoginEvent event, Emitter<RegisterState> emit) async {
     try {
       emit(state.copyWith(status: RegisterStatus.loading));
 
-      final bool? registerStatus = await signUpUserRepository.registerUserViaOTPCode(event.email);
+      final bool? firstLoginStatus = await signUpUserRepository.firstLogin(event.email);
+
 
       emit(
         state.copyWith(
           status: RegisterStatus.success,
-          registerStatus: registerStatus
+          firstRegisterStatus: firstLoginStatus
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: RegisterStatus.error));
+    }
+  }
+
+  void _mapSecondLoginEventToState(
+      SecondLoginEvent event, Emitter<RegisterState> emit) async {
+    try {
+      emit(state.copyWith(status: RegisterStatus.loading));
+
+      final bool? secondLoginStatus = await signUpUserRepository.secondLogin(event.email, event.verficationToken);
+
+
+      emit(
+        state.copyWith(
+            status: RegisterStatus.success,
+            secondRegisterStatus: secondLoginStatus
         ),
       );
     } catch (error) {

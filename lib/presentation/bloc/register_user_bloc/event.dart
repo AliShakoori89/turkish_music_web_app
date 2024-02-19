@@ -12,13 +12,25 @@ class RegisterUserEvent extends RegisterEvent{
   List<Object> get props => [email];
 }
 
-class RegisterUserViaOTPCodeEvent extends RegisterEvent{
+class FirstLoginEvent extends RegisterEvent{
   final String email;
 
-  RegisterUserViaOTPCodeEvent({
+  FirstLoginEvent({
     required this.email,
   });
 
   @override
   List<Object> get props => [email];
+}
+
+class SecondLoginEvent extends RegisterEvent{
+  final String email;
+  final String verficationToken;
+
+  SecondLoginEvent({
+    required this.email, required this.verficationToken
+  });
+
+  @override
+  List<Object> get props => [email, verficationToken];
 }

@@ -59,7 +59,7 @@ dependencies:
   flutter_bloc: ^8.1.4
   get: ^4.6.6
   equatable: ^2.0.5
-  custom_progress_button: ^2.0.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

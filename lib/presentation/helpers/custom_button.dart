@@ -50,19 +50,13 @@ class _CustomButtonState extends State<CustomButton> with TickerProviderStateMix
               if (_state == 0) {
                 animateButton();
                 final registerBloc = BlocProvider.of<RegisterBloc>(context);
-
                 if(widget.buttonName == "Sign Up"){
 
                   registerBloc.add(RegisterUserEvent(email: widget.email!));
 
-                } else if(widget.buttonName == "Sign In"){
-
-                  registerBloc.add(RegisterUserViaOTPCodeEvent(email: widget.email!));
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => InputVerificationCode(email: widget.email!),
-                    ),
-                  );
+                }
+                else if(widget.buttonName == "Sign In"){
+                  registerBloc.add(FirstLoginEvent(email: widget.email!));
                 }
               }
             }

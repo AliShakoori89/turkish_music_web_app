@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/domain/repositories/get_artist_repository.dart';
 
-import '../../../data/model/album.dart';
+import '../../../data/model/album_model.dart';
 
 // class ArtistContainerBloc extends Bloc<ArtistContainerEvent, ArtistContainerState> {
 //

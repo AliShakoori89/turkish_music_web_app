@@ -5,9 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
+import 'package:turkish_music_app/presentation/bloc/authentication_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/authentication_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/authentication_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/register_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/service/authentication_service.dart';
 import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 
 void main() async{
 
@@ -31,8 +36,20 @@ void main() async{
   runApp(
     // DevicePreview(
     // enabled: !kReleaseMode,
-    // builder: (context) =>
-        MyApp(), // Wrap your app
+    // builder: (context) => RepositoryProvider<AuthenticationService>(
+    //     create: (context) {
+    //       return FakeAuthenticationService();
+    //     },
+    //     child: BlocProvider<AuthenticationBloc>(
+    //       create: (context) {
+    //         final authService =
+    //         RepositoryProvider.of<AuthenticationService>(context);
+    //         return AuthenticationBloc(authService)..add(AppLoaded());
+    //       },
+    //       child:
+          const MyApp(),
+  //       )
+  //   ) // Wrap your app
   // ),
   );
 }
@@ -47,14 +64,23 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
             create: (BuildContext context) =>
-                RegisterBloc(SignUpUserRepository())),
+                RegisterBloc(SignUserRepository())),
+        // BlocProvider(
+        //     create: (BuildContext context) =>
+        //         AuthenticationBloc()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        home: const LoginPage(),
+        home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state.status.isSuccess) {
+                return MainPage(user: state.user!);
+              }
+              return const LoginPage();
+            })
       ),
     );
   }
