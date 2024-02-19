@@ -63,11 +63,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Column(
                             children: [
-                              // BlocBuilder<RegisterBloc, RegisterState>(
-                              // builder: (context, state) {
-                              //   return
-                              //
-                              // }),
                               CustomButton(
                                   emailFormKey: emailFormKey,
                                   buttonName: "Sign Up",

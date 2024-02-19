@@ -4,8 +4,8 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_app_bar.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_button.dart';
 
-import '../../bloc/register_user_bloc/bloc.dart';
-import '../../bloc/register_user_bloc/event.dart';
+import '../bloc/register_user_bloc/bloc.dart';
+
 
 class InputVerificationCode extends StatefulWidget {
   const InputVerificationCode({super.key,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/input_verification_code.dart';
 import '../bloc/register_user_bloc/bloc.dart';
 import '../bloc/register_user_bloc/event.dart';
 import '../bloc/register_user_bloc/state.dart';
+import '../ui/input_verification_code.dart';
 
 class CustomButton extends StatelessWidget {
    CustomButton({
