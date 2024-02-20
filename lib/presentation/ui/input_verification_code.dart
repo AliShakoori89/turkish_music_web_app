@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_app_bar.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_button.dart';
-
-import '../bloc/register_user_bloc/bloc.dart';
-
+import '../bloc/user_bloc/bloc.dart';
 
 class InputVerificationCode extends StatefulWidget {
   const InputVerificationCode({super.key,
@@ -87,7 +83,7 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
                         },
                         onSubmit: (String verificationCode) {
 
-                          final registerBloc = BlocProvider.of<RegisterBloc>(context);
+                          final registerBloc = BlocProvider.of<UserBloc>(context);
                           registerBloc.signUpUserRepository.secondLogin(widget.email, verificationCode);
 
                           //set clear text to clear text from all fields

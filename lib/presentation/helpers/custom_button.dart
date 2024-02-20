@@ -1,12 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import '../bloc/register_user_bloc/bloc.dart';
-import '../bloc/register_user_bloc/event.dart';
-import '../bloc/register_user_bloc/state.dart';
-import '../ui/input_verification_code.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
+import '../bloc/user_bloc/event.dart';
 
 class CustomButton extends StatefulWidget {
    CustomButton({
@@ -49,7 +45,7 @@ class _CustomButtonState extends State<CustomButton> with TickerProviderStateMix
             if (widget.emailFormKey!.currentState!.validate()){
               if (_state == 0) {
                 animateButton();
-                final registerBloc = BlocProvider.of<RegisterBloc>(context);
+                final registerBloc = BlocProvider.of<UserBloc>(context);
                 if(widget.buttonName == "Sign Up"){
 
                   registerBloc.add(RegisterUserEvent(email: widget.email!));

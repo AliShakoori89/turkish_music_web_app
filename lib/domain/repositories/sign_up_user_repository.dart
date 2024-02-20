@@ -45,6 +45,8 @@ class SignUserRepository {
 
     final response = await api.post("/api/User/FirstStepLogin", body);
 
+    print("firstLogin");
+
     if (response.statusCode == 200) {
       Get.snackbar("Verification Code","Send verification code successfully .");
       Get.to(InputVerificationCode(email: email));

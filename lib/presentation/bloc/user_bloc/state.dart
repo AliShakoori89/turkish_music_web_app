@@ -1,24 +1,24 @@
 import 'package:equatable/equatable.dart';
 
-enum RegisterStatus { initial, success, error, loading }
+enum UserStatus { initial, success, error, loading }
 
-extension RegisterStatusX on RegisterStatus {
-  bool get isInitial => this == RegisterStatus.initial;
-  bool get isSuccess => this == RegisterStatus.success;
-  bool get isError => this == RegisterStatus.error;
-  bool get isLoading => this == RegisterStatus.loading;
+extension UserStatusX on UserStatus {
+  bool get isInitial => this == UserStatus.initial;
+  bool get isSuccess => this == UserStatus.success;
+  bool get isError => this == UserStatus.error;
+  bool get isLoading => this == UserStatus.loading;
 }
 
-class RegisterState extends Equatable{
+class UserState extends Equatable{
 
-  const RegisterState ({
-    this.status = RegisterStatus.initial,
+  const UserState ({
+    this.status = UserStatus.initial,
     bool? firstRegisterStatus,
     bool? secondRegisterStatus
   }): firstRegisterStatus = firstRegisterStatus ?? false,
         secondRegisterStatus = secondRegisterStatus ?? false;
 
-  final RegisterStatus status;
+  final UserStatus status;
   final bool firstRegisterStatus;
   final bool secondRegisterStatus;
 
@@ -26,13 +26,13 @@ class RegisterState extends Equatable{
   // TODO: implement props
   List<Object> get props => [ status, firstRegisterStatus, secondRegisterStatus];
 
-  RegisterState copyWith({
-    RegisterStatus? status,
+  UserState copyWith({
+    UserStatus? status,
     bool? firstRegisterStatus,
     bool? secondRegisterStatus
 
   }){
-    return RegisterState(
+    return UserState(
         status: status ?? this.status,
         firstRegisterStatus: firstRegisterStatus ?? this.firstRegisterStatus,
         secondRegisterStatus: secondRegisterStatus ?? this.secondRegisterStatus

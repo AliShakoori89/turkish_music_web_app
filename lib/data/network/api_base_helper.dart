@@ -11,14 +11,16 @@ class ApiBaseHelper {
 
   Future<dynamic> get(String url,
       {String accessToken = '', String query = ''}) async {
+
+    print("accessToken                 " + accessToken);
     try {
       final Uri address = Uri.parse(baseUrl+url);
       Map<String, String> headers;
 
       headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer $accessToken',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $accessToken',
       };
 
 
@@ -38,15 +40,19 @@ class ApiBaseHelper {
 
       Map<String, String> headers;
 
+      print(address);
+
       headers = {
         'Content-type': 'application/json',
         'Authorization': 'bearer $accessToken'
       };
 
       final response = await http.post(address, body: body, headers: headers);
+      print(".............................             "+response.body);
       var responseJson = _returnResponse(response);
-      var parsedJson = json.decode(response.body);
-      print(".............................             "+parsedJson);
+      print(".............................             "+responseJson.body.toString());
+      // var parsedJson = json.decode(response.body);
+      // print(".............................             "+parsedJson);
       return responseJson;
 
     } on SocketException {
