@@ -34,9 +34,10 @@ void main() async{
   );
 
   runApp(
-    DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => RepositoryProvider<AuthenticationService>(
+    // DevicePreview(
+    // enabled: !kReleaseMode,
+    // builder: (context) =>
+        RepositoryProvider<AuthenticationService>(
         create: (context) {
           return FakeAuthenticationService();
         },
@@ -44,13 +45,12 @@ void main() async{
           create: (context) {
             final authService =
             RepositoryProvider.of<AuthenticationService>(context);
-            return AuthenticationBloc(authService)..add(AppLoaded());
+            return AuthenticationBloc(authService)..add(AppLoadedEvent());
           },
-          child:
-          const MyApp(),
+          child: const MyApp(),
         )
     ) // Wrap your app
-  ),
+  // ),
   );
 }
 
@@ -77,8 +77,10 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
               if (state.status.isSuccess) {
+                print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@             state.status.isSuccess");
                 return MainPage(user: state.user!);
               }
+              print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                state.status.isSuccess");
               return const LoginPage();
             })
       ),

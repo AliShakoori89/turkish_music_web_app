@@ -46,6 +46,7 @@ class ApiBaseHelper {
       final response = await http.post(address, body: body, headers: headers);
       var responseJson = _returnResponse(response);
       var parsedJson = json.decode(response.body);
+      print(".............................             "+parsedJson);
       return responseJson;
 
     } on SocketException {

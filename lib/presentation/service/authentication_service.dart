@@ -6,7 +6,7 @@ import '../../domain/repositories/sign_up_user_repository.dart';
 abstract class AuthenticationService {
   Future<UserModel> getCurrentUser();
 
-  Future<LoginUserModel> signInWithPhoneNumberAndPassword(
+  Future<LoginUserModel> signInWithEmail(
       String email);
 
   Future<void> signOut();
@@ -19,11 +19,12 @@ class FakeAuthenticationService extends AuthenticationService {
     UserModel user = await signUserRepository.getCurrentUser();
 
     await signUserRepository.saveUserInLocalStorage(user);
+    print("user                        "+user.data.toString());
     return user;// return null for now
   }
 
   @override
-  Future<LoginUserModel> signInWithPhoneNumberAndPassword(
+  Future<LoginUserModel> signInWithEmail(
       String email) async {
     SignUserRepository signUserRepository = SignUserRepository();
 

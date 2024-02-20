@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:turkish_music_app/presentation/ui/login_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
@@ -57,7 +59,7 @@ class SignUserRepository {
     else if (response.statusCode == 404){
       var parsedJson = json.decode(response.body);
       var message = parsedJson['message'];
-      Get.snackbar("Verification Code","User not exist !!");
+      Get.snackbar("Verification Code","User Not Exist !!");
       return false;
     }
   }
@@ -73,13 +75,15 @@ class SignUserRepository {
     var accessToken = parsedJson['data'];
     if (response.statusCode == 200) {
       await savedAccessTokenValue(accessToken);
-      Get.snackbar("Verification Code","Send verification code successfully");
+      Get.snackbar("Check Authentication","Authentication Success...  WellCome");
+      // Get.to(MainPage(user: user));
       return true;
     }
     else {
       var parsedJson = json.decode(response.body);
       var message = parsedJson['message'];
-      Get.snackbar("Verification Code","verification code send failed !!");
+      Get.snackbar("Check Authentication","The Entered Verification Code Is Invalid !!");
+      Get.to(const LoginPage());
       return false;
     }
   }

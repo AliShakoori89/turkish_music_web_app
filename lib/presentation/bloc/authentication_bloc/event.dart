@@ -1,10 +1,12 @@
 import '../../../data/model/user_model.dart';
 
 abstract class AuthenticationEvent {
+  const AuthenticationEvent();
+
   List<Object> get props => [];
 }
 
-class AppLoaded extends AuthenticationEvent {}
+class AppLoadedEvent extends AuthenticationEvent {}
 
 class UserLoggedInEvent extends AuthenticationEvent {
   final UserModel user;
@@ -15,12 +17,5 @@ class UserLoggedInEvent extends AuthenticationEvent {
   List<Object> get props => [user];
 }
 
-class AuthenticationAuthenticatedEvent extends AuthenticationEvent {
-  final UserModel user;
-
-  AuthenticationAuthenticatedEvent({required this.user});
-
-  @override
-  List<Object> get props => [user];
-}
+class UserLoggedOutEvent extends AuthenticationEvent {}
 
