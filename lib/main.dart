@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@             state.status.isSuccess");
                 return MainPage(user: state.user!);
               }
-              print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                state.status.isSuccess");
+              print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                login");
               return const LoginPage();
             })
       ),

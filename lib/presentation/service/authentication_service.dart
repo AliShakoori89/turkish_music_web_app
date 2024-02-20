@@ -19,7 +19,7 @@ class FakeAuthenticationService extends AuthenticationService {
     UserModel user = await signUserRepository.getCurrentUser();
 
     await signUserRepository.saveUserInLocalStorage(user);
-    print("user                        "+user.data.toString());
+    print("userrrr                        "+user.data.toString());
     return user;// return null for now
   }
 
