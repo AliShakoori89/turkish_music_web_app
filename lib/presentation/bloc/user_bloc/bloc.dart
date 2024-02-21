@@ -42,10 +42,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      print(event.email);
-
       final bool? firstLoginStatus = await signUpUserRepository.firstLogin(event.email);
-
 
       emit(
         state.copyWith(
@@ -64,7 +61,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.copyWith(status: UserStatus.loading));
 
       final bool? secondLoginStatus = await signUpUserRepository.secondLogin(event.email, event.verficationToken);
-
 
       emit(
         state.copyWith(

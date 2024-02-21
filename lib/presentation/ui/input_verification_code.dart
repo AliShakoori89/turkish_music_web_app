@@ -84,7 +84,10 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
                         onSubmit: (String verificationCode) {
 
                           final registerBloc = BlocProvider.of<UserBloc>(context);
+
                           registerBloc.signUpUserRepository.secondLogin(widget.email, verificationCode);
+
+                          registerBloc.signUpUserRepository.getCurrentUser();
 
                           //set clear text to clear text from all fields
                           // setState(() {

@@ -7,12 +7,10 @@ import 'http_exception.dart';
 
 class ApiBaseHelper {
   final String baseUrl = 'http://194.5.195.145';
-  final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
+
 
   Future<dynamic> get(String url,
       {String accessToken = '', String query = ''}) async {
-
-    print("accessToken                 " + accessToken);
     try {
       final Uri address = Uri.parse(baseUrl+url);
       Map<String, String> headers;
@@ -20,10 +18,11 @@ class ApiBaseHelper {
       headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $accessToken',
+        'Authorization': 'bearer $accessToken',
       };
 
 
+      print("3333333333333333333333333333333333                 " + address.toString());
       final response = await http.get(address, headers: headers);
       var responseJson = _returnResponse(response);
       return responseJson;
@@ -35,12 +34,9 @@ class ApiBaseHelper {
   Future<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
 
     try {
-      final Uri address =
-      Uri.parse(baseUrl+url);
+      final Uri address = Uri.parse(baseUrl+url);
 
       Map<String, String> headers;
-
-      print(address);
 
       headers = {
         'Content-type': 'application/json',
@@ -48,11 +44,7 @@ class ApiBaseHelper {
       };
 
       final response = await http.post(address, body: body, headers: headers);
-      print(".............................             "+response.body);
       var responseJson = _returnResponse(response);
-      print(".............................             "+responseJson.body.toString());
-      // var parsedJson = json.decode(response.body);
-      // print(".............................             "+parsedJson);
       return responseJson;
 
     } on SocketException {

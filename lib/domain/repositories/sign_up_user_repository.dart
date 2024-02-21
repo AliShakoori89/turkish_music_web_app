@@ -75,9 +75,12 @@ class SignUserRepository {
     var parsedJson = json.decode(response.body);
 
     var accessToken = parsedJson['data'];
+
+    print("555555555555555555555555555555                     "+accessToken);
     if (response.statusCode == 200) {
       await savedAccessTokenValue(accessToken);
       Get.snackbar("Check Authentication","Authentication Success...  WellCome");
+
       // Get.to(MainPage(user: user));
       return true;
     }
@@ -92,10 +95,18 @@ class SignUserRepository {
 
   Future<UserModel> getCurrentUser() async {
     ApiBaseHelper api = ApiBaseHelper();
+    final queryParameters = {
+      'apiKey': apiKey
+    };
     String accessToken = await getAccessTokenValue();
+
+    print("#########################################           ");
     final response =
-    await api.get('/api/User/testAuthorize/', accessToken: accessToken);
+    await api.get('/api/User/testAuthorize/', accessToken: accessToken, query: apiKey);
     final productJson = json.decode(response.body);
+
+    print("666666666666666666666666666666                         "+response.body);
+    // print("get current user                         "+productJson);
     return UserModel.fromJson(productJson);
   }
 
