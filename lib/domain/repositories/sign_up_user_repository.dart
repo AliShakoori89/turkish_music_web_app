@@ -49,14 +49,10 @@ class SignUserRepository {
       return true;
     }
     else if (response.statusCode == 401){
-      var parsedJson = json.decode(response.body);
-      var message = parsedJson['message'];
       Get.snackbar("Verification Code","OnAuthorize !!");
       return false;
     }
     else if (response.statusCode == 404){
-      var parsedJson = json.decode(response.body);
-      var message = parsedJson['message'];
       Get.snackbar("Verification Code","User Not Exist !!");
       return false;
     }
@@ -81,7 +77,6 @@ class SignUserRepository {
     }
     else {
       var parsedJson = json.decode(response.body);
-      var message = parsedJson['message'];
       Get.snackbar("Check Authentication","The Entered Verification Code Is Invalid !!");
       Get.to(const LoginPage());
       return false;

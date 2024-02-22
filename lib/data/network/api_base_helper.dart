@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'http_exception.dart';
 
@@ -20,9 +17,6 @@ class ApiBaseHelper {
         'apiKey': apiKey
       };
 
-      // final Uri uri =
-      // Uri(host: "194.5.195.145", scheme: "http");
-
       Map<String, String> headers;
 
       headers = {
@@ -32,12 +26,8 @@ class ApiBaseHelper {
 
       // print("uri                                "+uri.toString());
 
-      var urll = Uri.http("194.5.195.145", url, queryParameters);
-      print(urll);
-      print("222222222222222222222222222222222222222222222222222222 ");
-      final response = await http.get(urll, headers: headers);
-      print("333333333333333333333333333333333333333333333333333333333 ");
-      print("response                                 eeeeeee             "+response.body);
+      var secondURL = Uri.http("194.5.195.145", url, queryParameters);
+      final response = await http.get(secondURL, headers: headers);
       return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');
