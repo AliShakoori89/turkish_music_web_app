@@ -71,12 +71,9 @@ class SignUserRepository {
     if (response.statusCode == 200) {
       await savedAccessTokenValue(accessToken);
       Get.snackbar("Check Authentication","Authentication Success...  WellCome");
-
-      // Get.to(MainPage(user: user));
       return true;
     }
     else {
-      var parsedJson = json.decode(response.body);
       Get.snackbar("Check Authentication","The Entered Verification Code Is Invalid !!");
       Get.to(const LoginPage());
       return false;
