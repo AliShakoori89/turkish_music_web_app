@@ -34,7 +34,7 @@ class SignUserRepository {
   }
 
 
-  FutureOr<bool?> firstLogin(String email) async {
+  firstLogin(String email) async {
 
     ApiBaseHelper api = ApiBaseHelper();
 
