@@ -2,17 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 
-void main() async{
+Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = (prefs.getString('userData') == null)
+      ? false
+      : true;
   await SimpleAudio.init(
     useMediaController: true,
     shouldNormalizeVolume: false,
@@ -29,31 +33,14 @@ void main() async{
     applePreferSkipButtons: true,
   );
 
-  runApp(
-    // DevicePreview(
-    // enabled: !kReleaseMode,
-    // builder: (context) =>
-    //     RepositoryProvider<AuthenticationService>(
-    //     create: (context) {
-    //       return FakeAuthenticationService();
-    //     },
-    //     child: BlocProvider<AuthenticationBloc>(
-    //       create: (context) {
-    //         final authService =
-    //         RepositoryProvider.of<AuthenticationService>(context);
-    //         return AuthenticationBloc(authService)..add(AppLoadedEvent());
-    //       },
-    //       child:
-          const MyApp(),
-        // )
-    // ) // Wrap your app
-  // ),
-  );
+  runApp(MyApp(isLoggedIn: isLoggedIn),);
 }
 
 class MyApp extends StatelessWidget {
 
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -62,27 +49,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(SignUserRepository())),
-        // BlocProvider(
-        //     create: (BuildContext context) =>
-        //         AuthenticationBloc(AuthenticationService())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        home:
-        // BlocBuilder<UserBloc, UserState>(
-        //     builder: (context, state) {
-        //       if (state.status.isSuccess) {
-        //         print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@             state.status.isSuccess");
-        //         return Container();
-        //           // MainPage(user: state.user!);
-        //       }
-        //       print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@                login");
-        //       return
-          const LoginPage()
-            // })
+        home: isLoggedIn ? const MainPage() : const LoginPage(),
       ),
     );
   }

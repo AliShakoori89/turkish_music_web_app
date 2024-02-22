@@ -28,7 +28,7 @@ class UserModel {
 class Data {
   int? id;
   String? email;
-  Null? isAdmin;
+  bool? isAdmin;
   String? creationDate;
 
   Data({this.id, this.email, this.isAdmin, this.creationDate});

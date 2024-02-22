@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/presentation/ui/login_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
-
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
 import '../../presentation/ui/input_verification_code.dart';
@@ -45,8 +43,6 @@ class SignUserRepository {
 
     final response = await api.post("/api/User/FirstStepLogin", body);
 
-    print("firstLogin");
-
     if (response.statusCode == 200) {
       Get.snackbar("Verification Code","Send verification code successfully .");
       Get.to(InputVerificationCode(email: email));
@@ -76,7 +72,6 @@ class SignUserRepository {
 
     var accessToken = parsedJson['data'];
 
-    print("555555555555555555555555555555                     "+accessToken);
     if (response.statusCode == 200) {
       await savedAccessTokenValue(accessToken);
       Get.snackbar("Check Authentication","Authentication Success...  WellCome");
@@ -95,25 +90,28 @@ class SignUserRepository {
 
   Future<UserModel> getCurrentUser() async {
     ApiBaseHelper api = ApiBaseHelper();
-    final queryParameters = {
-      'apiKey': apiKey
-    };
+
     String accessToken = await getAccessTokenValue();
 
-    print("#########################################           ");
     final response =
-    await api.get('/api/User/testAuthorize/', accessToken: accessToken, query: apiKey);
+    await api.get('/api/User/testAuthorize', accessToken: accessToken);
     final productJson = json.decode(response.body);
 
-    print("666666666666666666666666666666                         "+response.body);
-    // print("get current user                         "+productJson);
     return UserModel.fromJson(productJson);
   }
 
-  Future<bool> saveUserInLocalStorage(UserModel user) async {
+  saveUserInLocalStorage(UserModel user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userData', jsonEncode(user.toJson()));
     return true;
+  }
+
+  FutureOr<UserModel> getUserInLocalStorage() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userData = prefs.getString('userData');
+    UserModel user =
+    UserModel.fromJson(jsonDecode(userData!));
+    return user;
   }
 
   savedAccessTokenValue(String accessToken) async {

@@ -6,26 +6,39 @@ import 'package:http/http.dart' as http;
 import 'http_exception.dart';
 
 class ApiBaseHelper {
+
   final String baseUrl = 'http://194.5.195.145';
+  final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
+
 
 
   Future<dynamic> get(String url,
-      {String accessToken = '', String query = ''}) async {
+      {String accessToken = '', String query = ""}) async {
     try {
-      final Uri address = Uri.parse(baseUrl+url);
+
+      final queryParameters = {
+        'apiKey': apiKey
+      };
+
+      // final Uri uri =
+      // Uri(host: "194.5.195.145", scheme: "http");
+
       Map<String, String> headers;
 
       headers = {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
         'Authorization': 'bearer $accessToken',
       };
 
+      // print("uri                                "+uri.toString());
 
-      print("3333333333333333333333333333333333                 " + address.toString());
-      final response = await http.get(address, headers: headers);
-      var responseJson = _returnResponse(response);
-      return responseJson;
+      var urll = Uri.http("194.5.195.145", url, queryParameters);
+      print(urll);
+      print("222222222222222222222222222222222222222222222222222222 ");
+      final response = await http.get(urll, headers: headers);
+      print("333333333333333333333333333333333333333333333333333333333 ");
+      print("response                                 eeeeeee             "+response.body);
+      return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }

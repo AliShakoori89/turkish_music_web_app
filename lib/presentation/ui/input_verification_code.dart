@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import '../bloc/user_bloc/bloc.dart';
+import 'main_page/main_page.dart';
 
 class InputVerificationCode extends StatefulWidget {
   const InputVerificationCode({super.key,
@@ -87,22 +89,8 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
 
                           registerBloc.signUpUserRepository.secondLogin(widget.email, verificationCode);
 
-                          registerBloc.signUpUserRepository.getCurrentUser();
+                          Get.to(const MainPage());
 
-                          //set clear text to clear text from all fields
-                          // setState(() {
-                          //   clearText = true;
-                          // });
-                          // //navigate to different screen code goes here
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return AlertDialog(
-                          //       title: Text("Verification Code"),
-                          //       content: Text('Code entered is $verificationCode'),
-                          //     );
-                          //   },
-                          // );
                         },
                       ),
                     ],

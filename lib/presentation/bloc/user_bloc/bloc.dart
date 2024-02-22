@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/user_model.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import '../../../domain/repositories/sign_up_user_repository.dart';
 import 'event.dart';
@@ -11,7 +10,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this.signUpUserRepository) : super(
 
-      const UserState()){
+      UserState.initial()){
     on<RegisterUserEvent>(_mapRegisterUserEventToState);
     on<FirstLoginEvent>(_mapFirstLoginEventToState);
     on<SecondLoginEvent>(_mapSecondLoginEventToState);
@@ -80,11 +79,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      await signUpUserRepository.getCurrentUser();
+      UserModel user = await signUpUserRepository.getCurrentUser();
+      await signUpUserRepository.saveUserInLocalStorage(user);
+
+      await signUpUserRepository.saveUserInLocalStorage(user);
 
       emit(
         state.copyWith(
             status: UserStatus.success,
+            user: user
         ),
       );
     } catch (error) {
