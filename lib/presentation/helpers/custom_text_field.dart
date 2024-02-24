@@ -9,11 +9,16 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(20)
+      ),
       margin: EdgeInsets.only(
           right: MediaQuery.of(context).size.width * 0.05,
           left: MediaQuery.of(context).size.width * 0.05
       ),
       child: TextFormField(
+        style: TextStyle(color: Colors.grey.withOpacity(0.4)),
         cursorColor: Colors.grey,
         controller: emailController,
         validator: (value) {
@@ -26,30 +31,28 @@ class CustomTextField extends StatelessWidget {
           return "Please enter a valid email";
         },
         autocorrect: false,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           contentPadding:
-          EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-          border: InputBorder.none,
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white)),
+          const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
           hintText: "Please sign in your email...",
-          prefixIcon: Icon(Icons.email),
-          hintStyle: (TextStyle(color: Colors.white30)),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
-          ),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+          prefixIcon: const Icon(Icons.email),
+          hintStyle: (const TextStyle(color: Colors.white30,
+          fontWeight: FontWeight.w400)),
+          errorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
               borderSide: BorderSide(
                 width: 1,
                 color: Colors.red,
               )),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+          focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
               borderSide: BorderSide(
                 width: 1,
                 color: Colors.red,
               )),
+          border: UnderlineInputBorder(
+            borderRadius: BorderRadius.circular(20)
+          )
         ),
       ),
     );
