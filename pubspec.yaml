@@ -90,6 +90,7 @@ flutter:
     - assets/custom_icons/normalize.png
     - assets/custom_icons/normalize_off.png
     - assets/custom_icons/
+    - assets/auth_assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
