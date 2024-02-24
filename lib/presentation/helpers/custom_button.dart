@@ -5,15 +5,15 @@ import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import '../bloc/user_bloc/event.dart';
 
 class CustomButton extends StatefulWidget {
-   CustomButton({
-     super.key,
-     this.emailFormKey,
-     required this.buttonName,
-     this.email});
+  CustomButton({
+    super.key,
+    this.emailFormKey,
+    required this.buttonName,
+    this.email});
 
-    GlobalKey<FormState>? emailFormKey;
-    final String buttonName;
-    String? email;
+  GlobalKey<FormState>? emailFormKey;
+  final String buttonName;
+  String? email;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -28,8 +28,8 @@ class _CustomButtonState extends State<CustomButton> with TickerProviderStateMix
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(
-        right: MediaQuery.of(context).size.width * 0.05,
-        left: MediaQuery.of(context).size.width * 0.05
+          right: MediaQuery.of(context).size.width * 0.05,
+          left: MediaQuery.of(context).size.width * 0.05
       ),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

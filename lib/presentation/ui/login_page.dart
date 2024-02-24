@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_button.dart';
 import 'package:turkish_music_app/presentation/helpers/custom_text_field.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/app_logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,92 +19,61 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Colors.purple, Colors.black],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            image: DecorationImage(
-              image: AssetImage("assets/images/backgroundApp.jpg"),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2),
-                  BlendMode.dstATop),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              top: 50
-            ),
-            child: SizedBox(
-              height: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.4,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage("assets/logo/tMusic.png"),)
-                          ),
-                        ),
-                    ),
+      body: SizedBox(
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/backgroundApp.jpg"),
+                    fit: BoxFit.cover
+                  )
+              ),
+              child: Container(
+                  margin: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: MediaQuery.of(context).size.height * 0.55
                   ),
-                  Flexible(
-                    child: Container(
-                        margin: const EdgeInsets.only(
-                          left: 10,
-                          right: 10,
-                          top: 50
-                        ),
-                        child: Column(
-                          children: [
-                            Form(
-                            key: emailFormKey,
-                            child: CustomTextField(emailController: emailController,)
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.08,
-                            ),
-                            Column(
-                              children: [
-                                CustomButton(
-                                    emailFormKey: emailFormKey,
-                                    buttonName: "Sign Up",
-                                    email: emailController.text),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.008,
-                                ),
-                                CustomButton(
-                                    emailFormKey: emailFormKey,
-                                    buttonName: "Sign In",
-                                    email: emailController.text),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.008,
-                                ),
-                                CustomButton(
-                                    emailFormKey: emailFormKey,
-                                    buttonName: "Sign in with google"),
-                              ],
-                            )
-                          ],
-                        )
+                  child: Column(
+                    children: [
+                      Form(
+                          key: emailFormKey,
+                          child: CustomTextField(emailController: emailController,)
                       ),
-                  ),
-                ],
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.08,
+                      ),
+                      Column(
+                        children: [
+                          CustomButton(
+                              emailFormKey: emailFormKey,
+                              buttonName: "Sign Up",
+                              email: emailController.text),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.008,
+                          ),
+                          CustomButton(
+                              emailFormKey: emailFormKey,
+                              buttonName: "Sign In",
+                              email: emailController.text),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.008,
+                          ),
+                          CustomButton(
+                              emailFormKey: emailFormKey,
+                              buttonName: "Sign in with google"),
+                        ],
+                      )
+                    ],
+                  )
               ),
             ),
-          ),
+            AppLogo(),
+          ],
         ),
-      ),
+      )
     );
   }
 }
