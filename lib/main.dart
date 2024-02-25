@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/ui/auth_screen.dart';
 import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
@@ -56,7 +55,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        home: isLoggedIn ? const MainPage() : AuthScreen(),
+        home: isLoggedIn ? const MainPage() : LoginPage(),
       ),
     );
   }
