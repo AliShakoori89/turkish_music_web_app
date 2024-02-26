@@ -14,9 +14,11 @@ Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isLoggedIn = (prefs.getString('userData') == null)
+  bool isLoggedIn = (prefs.getString('accessToken') == null)
       ? false
       : true;
+
+  print("is loged in ::::::::::::::::::::::::::::::::::::::::::::::::::::::: "+ isLoggedIn.toString());
   await SimpleAudio.init(
     useMediaController: true,
     shouldNormalizeVolume: false,
@@ -55,7 +57,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        home: isLoggedIn ? const MainPage() : LoginPage(),
+        home: isLoggedIn ? MainPage() : LoginPage(),
       ),
     );
   }

@@ -80,7 +80,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(state.copyWith(status: UserStatus.loading));
 
       UserModel user = await signUpUserRepository.getCurrentUser();
-      await signUpUserRepository.saveUserInLocalStorage(user);
+
+      print("userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr   :           "+user.toString() );
 
       await signUpUserRepository.saveUserInLocalStorage(user);
 
