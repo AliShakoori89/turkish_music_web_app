@@ -11,6 +11,18 @@
       "css": "music",
       "code": 59392,
       "src": "elusive"
+    },
+    {
+      "uid": "498fb7be4dd0f37dde190eba35b0f12b",
+      "css": "music_note",
+      "code": 59392,
+      "src": "material"
+    },
+    {
+      "uid": "9ea0a737ccc45d6c510dcbae56058849",
+      "css": "music",
+      "code": 59393,
+      "src": "fontawesome"
     }
   ]
 }

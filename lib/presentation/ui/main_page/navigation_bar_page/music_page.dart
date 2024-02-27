@@ -107,7 +107,7 @@ class MusicPage extends StatelessWidget {
                               // Column(
                               //   mainAxisAlignment: MainAxisAlignment.start,
                               //   children: [
-                              SingerNameTrackNameImage(
+                              const SingerNameTrackNameImage(
                                   songName: "Tarkan",
                                   singerName: "MoOooooOoch",
                                   imagePath: "assets/images/tarkan.png",

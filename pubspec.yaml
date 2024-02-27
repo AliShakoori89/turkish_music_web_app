@@ -60,6 +60,7 @@ dependencies:
   get: ^4.6.6
   equatable: ^2.0.5
   shared_preferences: ^2.2.2
+  gradient_icon: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -108,6 +109,7 @@ flutter:
     - family: Salsa
       fonts:
         - asset: assets/fonts/Salsa-Regular.ttf
+
     - family: Dancing Script
       fonts:
         - asset: assets/fonts/DancingScript-VariableFont_wght.ttf
@@ -115,6 +117,11 @@ flutter:
     - family: musicIcon
       fonts:
         - asset: assets/custom_icons/musicIcon.ttf
+
+    - family: MyFlutterApp
+      fonts:
+        - asset: assets/fonts/MyFlutterApp.ttf
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
