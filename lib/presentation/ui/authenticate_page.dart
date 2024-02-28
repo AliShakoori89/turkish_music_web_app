@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:gradient_icon/gradient_icon.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
 import '../bloc/user_bloc/bloc.dart';
 import '../bloc/user_bloc/event.dart';
@@ -38,7 +37,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   late List<TextEditingController?> verificationCodeController;
 
   int _state = 0;
-  bool enterVerificationCode = false;
 
   @override
   void initState() {
@@ -191,33 +189,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             component1(
                                 Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
                             const SizedBox(height: 10,),
-                            Visibility(
-                              visible: enterVerificationCode,
-                              child: OtpTextField(
-                                numberOfFields: 6,
-                                borderColor: Colors.white,
-                                fillColor: Colors.white.withOpacity(.05),
-                                focusedBorderColor: Color(0xffb188ef),
-                                filled: true,
-                                showFieldAsBox: true,
-                                handleControllers: (controllers) {
-                                  //get all textFields controller, if needed
-                                  verificationCodeController = controllers;
-                                },
-                                onSubmit: (String verificationCode) {
-
-                                  final registerBloc = BlocProvider.of<UserBloc>(context);
-
-                                  registerBloc.signUpUserRepository.secondLogin(emailController.text, verificationCode);
-
-                                  Get.to(const MainPage());
-
-                                },
-                              ),
-                            ),
-                            enterVerificationCode
-                                ? const SizedBox(height: 10,)
-                                : const SizedBox(height: 0,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -329,17 +300,43 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 final registerBloc = BlocProvider.of<UserBloc>(context);
                 if(string == "SIGN UP"){
 
-                  setState(() {
-                    enterVerificationCode = true;
-                  });
                   registerBloc.add(RegisterUserEvent(email: emailController.text));
 
                 }
                 else if(string == "LOG IN"){
-                  setState(() {
-                    enterVerificationCode = true;
-                  });
+
                   registerBloc.add(FirstLoginEvent(email: emailController.text));
+
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: const Text('Enter Code : '),
+                        content:  OtpTextField(
+                          numberOfFields: 6,
+                          borderColor: Colors.white,
+                          fillColor: Colors.white.withOpacity(.05),
+                          focusedBorderColor: const Color(0xffb188ef),
+                          fieldWidth: 35,
+                          filled: true,
+                          showFieldAsBox: true,
+                          handleControllers: (controllers) {
+                            //get all textFields controller, if needed
+                            verificationCodeController = controllers;
+                          },
+                          onSubmit: (String verificationCode) {
+
+                            final registerBloc = BlocProvider.of<UserBloc>(context);
+
+                            registerBloc.signUpUserRepository.secondLogin(emailController.text, verificationCode);
+
+                            Get.to(const MainPage());
+
+                          },
+                        ),
+                      );
+                    },
+                  );
                 }
               }
             }
