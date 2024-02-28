@@ -29,7 +29,7 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.65,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +51,7 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               margin: EdgeInsets.only(
                 right: MediaQuery.of(context).size.width * 0.08,
@@ -105,83 +105,3 @@ class _InputVerificationCodeState extends State<InputVerificationCode> {
     );
   }
 }
-
-// BlocBuilder<RegisterBloc, RegisterState>(
-//     builder: (context, state){
-//
-//       String otpCode = state.otpCode;
-//
-//        return Dialog(
-//          child: Padding(
-//            padding: const EdgeInsets.all(8.0),
-//            child: Column(
-//              mainAxisSize: MainAxisSize.min,
-//              mainAxisAlignment: MainAxisAlignment.center,
-//              children: <Widget>[
-//                Padding(
-//                  padding: const EdgeInsets.only(
-//                      top: 10,
-//                      bottom: 20
-//                  ),
-//                  child: Expanded(
-//                    child: Row(
-//                      children: [
-//                        const Text("Enter code when sent to "),
-//                        Text("${email?.substring(0,3)}...${email?.substring(email!.length - 5)} :",
-//                            style: const TextStyle(
-//                              fontWeight: FontWeight.bold,
-//                            )),
-//                      ],
-//                    ),
-//                  ),
-//                ),
-//                const SizedBox(height: 15),
-//                OtpTextField(
-//                  numberOfFields: 6,
-//                  borderColor: Colors.white,
-//                  //set to true to show as box or false to show as dash
-//                  showFieldAsBox: true,
-//                  //runs when a code is typed in
-//                  onCodeChanged: (String code) {
-//                    //handle validation or checks here
-//                  },
-//                  //runs when every textfield is filled
-//                  onSubmit: (String verificationCode){
-//                    showDialog(
-//                        context: context,
-//                        builder: (context){
-//                          return AlertDialog(
-//                            title: const Text("Verification Code",
-//                              style: TextStyle(color: Colors.white),),
-//                            content: Text('Code entered is $verificationCode'),
-//                          );
-//                        }
-//                    );
-//                  }, // end onSubmit
-//                ),
-//                const SizedBox(height: 20),
-//                Row(
-//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                  children: [
-//                    TextButton(
-//                      onPressed: () {
-//                        registerBloc.add(
-//                            RegisterUserViaOTPCodeEvent(email: email!, otpCode: otpCode));
-//                        Navigator.pop(context);
-//                      },
-//                      child: const Text('Submit'),
-//                    ),
-//                    TextButton(
-//                      onPressed: () {
-//                        Navigator.pop(context);
-//                      },
-//                      child: const Text('Close'),
-//                    ),
-//                  ],
-//                ),
-//              ],
-//            ),
-//          ),
-//        );
-//     },
-// );

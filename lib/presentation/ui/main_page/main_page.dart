@@ -23,8 +23,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
 
-    // print("user                                                  "+widget.user.data!.email!);
-
     void navigateRoutes(int selectedIndex) {
       setState(() {
         currentRoute = selectedIndex;

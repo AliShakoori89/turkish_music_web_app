@@ -3,10 +3,15 @@ import 'dart:ui';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:gradient_icon/gradient_icon.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
 import '../bloc/user_bloc/bloc.dart';
 import '../bloc/user_bloc/event.dart';
 import '../const/custom_icon/music_icons.dart';
+import 'main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
   const AuthenticatePage({super.key});
@@ -30,7 +35,10 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   late Animation<double> _heartAnimation;
   late AnimationController _heartController;
 
+  late List<TextEditingController?> verificationCodeController;
+
   int _state = 0;
+  bool enterVerificationCode = false;
 
   @override
   void initState() {
@@ -133,250 +141,26 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             height: size.height,
             child: Stack(
               children: [
-                Positioned(
-                  top: size.height * (animation2.value + .15),
-                  left: size.width * .5,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 80.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .27),
-                  left: size.width * .05,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 110.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .2),
-                  left: size.width * .8,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 50.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .1),
-                  left: size.width * .8,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 50.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .8),
-                  left: size.width * .8,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 50.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .25),
-                  left: size.width * .4,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 90.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .2),
-                  left: size.width * .2,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .6),
-                  left: size.width * .6,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .58),
-                  left: size.width * .21,
-                  child: const GradientIcon(
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    icon: Icons.music_note_outlined,
-                    size: 100.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .25),
-                  left: size.width * .001,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .37),
-                  left: size.width * .1,
-                  child: const GradientIcon(
-                    icon: Icons.music_note_outlined,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 160.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .1),
-                  left: size.width * .9,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .5),
-                  left: size.width * .5,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .7),
-                  left: size.width * .5,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music_note,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .4),
-                  left: size.width * .5,
-                  child: const GradientIcon(
-                    icon: MyFlutterApp.music,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 70.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * .5,
-                  left: size.width * (animation2.value + .5),
-                  child: const GradientIcon(
-                      icon: Icons.music_note_outlined,
-                      gradient: LinearGradient(
-                        colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      size: 60.0),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .35),
-                  left: size.width * 0.01,
-                  child: const GradientIcon(
-                    icon: Icons.music_note_outlined,
-                    gradient: LinearGradient(
-                      colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    size: 120.0,
-                  ),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .2),
-                  left: size.width * .60,
-                  child: const GradientIcon(
-                      icon: Icons.music_note_outlined,
-                      gradient: LinearGradient(
-                        colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      size: 100.0),
-                ),
-                Positioned(
-                  top: size.height * (animation2.value + .7),
-                  left: size.width * .7,
-                  child: const GradientIcon(
-                      icon: Icons.music_note_outlined,
-                      gradient: LinearGradient(
-                        colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      size: 80.0),
-                ),
+                MusicIconAnimation(topValue: .15, leftValue: .5, iconSize: 80, animation: animation2, icon: MyFlutterApp.music,),
+                MusicIconAnimation(topValue: .2, leftValue: .05, iconSize: 110.0, animation: animation1, icon: MyFlutterApp.music,),
+                MusicIconAnimation(topValue: .3, leftValue: .05, iconSize: 110.0, animation: animation1, icon: MyFlutterApp.music_note),
+                MusicIconAnimation(topValue: .3, leftValue: .8, iconSize: 50.0, animation: animation3, icon: MyFlutterApp.music_note),
+                MusicIconAnimation(topValue: .1, leftValue: .8, iconSize: 50.0, animation: animation2, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: .8, leftValue: .9, iconSize: 50.0, animation: animation2, icon: MyFlutterApp.music_note),
+                MusicIconAnimation(topValue: -.1, leftValue: .4, iconSize: 90.0, animation: animation3, icon: MyFlutterApp.music),
+                MusicIconAnimation(topValue: .2, leftValue: .2, iconSize: 70.0, animation: animation2, icon: MyFlutterApp.music_note),
+                MusicIconAnimation(topValue: .5, leftValue: .6, iconSize: 70.0, animation: animation1, icon: MyFlutterApp.music_note),
+                MusicIconAnimation(topValue: .2, leftValue: .25, iconSize: 100.0, animation: animation3, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: -.1, leftValue: .001, iconSize: 70.0, animation: animation3, icon: MyFlutterApp.music),
+                MusicIconAnimation(topValue: .3, leftValue: .1, iconSize: 160.0, animation: animation1, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: -.25, leftValue: .9, iconSize: 70.0, animation: animation3, icon: MyFlutterApp.music_note),
+                MusicIconAnimation(topValue: .2, leftValue: .5, iconSize: 70.0, animation: animation3, icon: MyFlutterApp.music),
+                MusicIconAnimation(topValue: .7, leftValue: .5, iconSize: 70.0, animation: animation2, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: .4, leftValue: .6, iconSize: 70.0, animation: animation1, icon: MyFlutterApp.music),
+                MusicIconAnimation(topValue: .5, leftValue: .5, iconSize: 60.0, animation: animation2, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: .2, leftValue: .6, iconSize: 100.0, animation: animation3, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: .2, leftValue: .6, iconSize: 80.0, animation: animation2, icon: Icons.music_note_outlined),
+                MusicIconAnimation(topValue: .7, leftValue: .7, iconSize: 80.0, animation: animation2, icon: Icons.music_note_outlined),
                 Container(
                   margin: const EdgeInsets.only(
                       right: 35,
@@ -403,10 +187,37 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                       Expanded(
                         flex: 4,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             component1(
                                 Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
+                            const SizedBox(height: 10,),
+                            Visibility(
+                              visible: enterVerificationCode,
+                              child: OtpTextField(
+                                numberOfFields: 6,
+                                borderColor: Colors.white,
+                                fillColor: Colors.white.withOpacity(.05),
+                                focusedBorderColor: Color(0xffb188ef),
+                                filled: true,
+                                showFieldAsBox: true,
+                                handleControllers: (controllers) {
+                                  //get all textFields controller, if needed
+                                  verificationCodeController = controllers;
+                                },
+                                onSubmit: (String verificationCode) {
+
+                                  final registerBloc = BlocProvider.of<UserBloc>(context);
+
+                                  registerBloc.signUpUserRepository.secondLogin(emailController.text, verificationCode);
+
+                                  Get.to(const MainPage());
+
+                                },
+                              ),
+                            ),
+                            enterVerificationCode
+                                ? const SizedBox(height: 10,)
+                                : const SizedBox(height: 0,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -518,10 +329,16 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 final registerBloc = BlocProvider.of<UserBloc>(context);
                 if(string == "SIGN UP"){
 
+                  setState(() {
+                    enterVerificationCode = true;
+                  });
                   registerBloc.add(RegisterUserEvent(email: emailController.text));
 
                 }
                 else if(string == "LOG IN"){
+                  setState(() {
+                    enterVerificationCode = true;
+                  });
                   registerBloc.add(FirstLoginEvent(email: emailController.text));
                 }
               }

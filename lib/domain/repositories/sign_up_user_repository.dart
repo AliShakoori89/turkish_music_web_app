@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
-import '../../presentation/ui/input_verification_code.dart';
 
 class SignUserRepository {
 
@@ -15,17 +14,20 @@ class SignUserRepository {
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       'email': email,
-      // "verificationToken": "",
       "apiKey": apiKey});
 
     final response = await api.post("/api/User/registerPublic",body);
     if (response.statusCode == 200) {
 
-      Get.snackbar("Registration", "Registration was successful");
+      Get.snackbar("Registration", "Registration was successful",
+          backgroundColor: const Color(
+              0xFF00B01E).withOpacity(0.2));
       return 'sent';
     }
     else {
-      Get.snackbar("Registration", "The desired user exists .");
+      Get.snackbar("Registration", "The desired user exists .",
+          backgroundColor: const Color(
+              0xFFC20808).withOpacity(0.2));
 
       var parsedJson = json.decode(response.body);
       var message = parsedJson['message'];
@@ -44,16 +46,21 @@ class SignUserRepository {
     final response = await api.post("/api/User/FirstStepLogin", body);
 
     if (response.statusCode == 200) {
-      Get.snackbar("Verification Code","Send verification code successfully .");
-      Get.to(InputVerificationCode(email: email));
+      Get.snackbar("Verification Code","Send verification code successfully .",
+          backgroundColor: const Color(
+              0xFF00B01E).withOpacity(0.2));
       return true;
     }
     else if (response.statusCode == 401){
-      Get.snackbar("Verification Code","OnAuthorize !!");
+      Get.snackbar("Verification Code","OnAuthorize !!",
+          backgroundColor: const Color(
+              0xFFC20808).withOpacity(0.2));
       return false;
     }
     else if (response.statusCode == 404){
-      Get.snackbar("Verification Code","User Not Exist !!");
+      Get.snackbar("Verification Code","User Not Exist !!",
+          backgroundColor: const Color(
+              0xFFC20808).withOpacity(0.2));
       return false;
     }
   }
@@ -70,12 +77,16 @@ class SignUserRepository {
 
     if (response.statusCode == 200) {
       await savedAccessTokenValue(accessToken);
-      Get.snackbar("Check Authentication","Authentication Success...  WellCome");
+      Get.snackbar("Check Authentication","Authentication Success...  WellCome",
+          backgroundColor: const Color(
+              0xFF00B01E).withOpacity(0.2)
+      );
       return true;
     }
     else {
-      Get.snackbar("Check Authentication","The Entered Verification Code Is Invalid !!");
-      Get.to(const LoginPage());
+      Get.snackbar("Check Authentication","The Entered Verification Code Is Invalid !!",
+          backgroundColor: const Color(
+              0xFFC20808).withOpacity(0.2));
       return false;
     }
   }

@@ -7,7 +7,6 @@ import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
-import 'package:turkish_music_app/presentation/ui/login_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 
@@ -19,7 +18,6 @@ Future<void> main() async{
       ? false
       : true;
 
-  print("is loged in ::::::::::::::::::::::::::::::::::::::::::::::::::::::: "+ isLoggedIn.toString());
   await SimpleAudio.init(
     useMediaController: true,
     shouldNormalizeVolume: false,
@@ -58,7 +56,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        home: isLoggedIn ? MainPage() : AuthenticatePage(),
+        home: isLoggedIn ? const MainPage() : const AuthenticatePage(),
       ),
     );
   }
