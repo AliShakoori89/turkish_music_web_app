@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_button.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_text_field.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/custom_text_field.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/app_logo.dart';
+
+import '../helpers/widgets/custom_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

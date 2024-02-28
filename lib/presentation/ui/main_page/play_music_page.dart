@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_app_bar.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/custom_app_bar.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/like_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/random_play_button.dart';

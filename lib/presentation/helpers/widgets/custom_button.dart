@@ -2,7 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
-import '../bloc/user_bloc/event.dart';
+
+import '../../bloc/user_bloc/event.dart';
 
 class CustomButton extends StatefulWidget {
   CustomButton({

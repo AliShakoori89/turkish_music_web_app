@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../const/custom_divider.dart';
+import '../../const/custom_divider.dart';
 
 class AboutButton extends StatelessWidget {
   const AboutButton({

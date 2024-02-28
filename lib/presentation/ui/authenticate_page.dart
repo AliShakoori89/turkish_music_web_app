@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_icon/gradient_icon.dart';
@@ -376,65 +377,71 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                       ),
                       size: 80.0),
                 ),
-                Column(
-                  children: [
-                    Expanded(
-                      flex: 9,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: size.height * .1),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(.7),
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                            wordSpacing: 4,
+                Container(
+                  margin: const EdgeInsets.only(
+                      right: 35,
+                      left: 35
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 9,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: size.height * .1),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(.7),
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              wordSpacing: 4,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          component1(
-                              Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              component2(
-                                'LOG IN',
+                      Expanded(
+                        flex: 4,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            component1(
+                                Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                component2(
+                                  'LOG IN',
+                                    2.58,
+                                  emailFormKey
+                                ),
+                                SizedBox(width: size.width / 20),
+                                component2(
+                                  'SIGN UP',
                                   2.58,
-                                emailFormKey
-                              ),
-                              SizedBox(width: size.width / 20),
-                              component2(
-                                'SIGN UP',
-                                2.58,
-                                emailFormKey,
-                              ),
-                            ],
-                          ),
-                        ],
+                                  emailFormKey,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 6,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          component2(
-                            'Login with google Account',
-                            2,
-                            emailFormKey,
-                          ),
-                          SizedBox(height: size.height * .05),
-                        ],
+                      Expanded(
+                        flex: 6,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            component2(
+                              'Login with google Account',
+                              2,
+                              emailFormKey,
+                            ),
+                            SizedBox(height: size.height * .05),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -455,24 +462,28 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
           sigmaX: 15,
         ),
         child: Container(
-          height: size.width / 8,
-          width: size.width / 1.2,
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(right: size.width / 30),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(.05),
-            borderRadius: BorderRadius.circular(15),
-          ),
+
           child: Form(
             key: emailFormKey,
-            child: TextField(
+            child: TextFormField(
               controller: controller,
               style: TextStyle(color: Colors.white.withOpacity(.8)),
               cursorColor: Colors.white,
               obscureText: isPassword,
               keyboardType:
               isEmail ? TextInputType.emailAddress : TextInputType.text,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Enter email';
+                }
+                else if (EmailValidator.validate(value)){
+                  return null ;
+                }
+                return "Enter a valid email";
+              },
               decoration: InputDecoration(
+                fillColor: Colors.white.withOpacity(.05),
+                filled: true,
                 prefixIcon: Icon(
                   icon,
                   color: Colors.white.withOpacity(.7),

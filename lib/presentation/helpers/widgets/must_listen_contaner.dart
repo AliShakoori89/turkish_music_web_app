@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 
-import '../const/title.dart';
+import '../../const/title.dart';
 
 class MustListenContainer extends StatelessWidget {
   const MustListenContainer({super.key});

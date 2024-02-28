@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../../const/custom_divider.dart';
-import '../../../helpers/about_button.dart';
-import '../../../helpers/exit_account-button.dart';
-import '../../../helpers/exit_button.dart';
-import '../../../helpers/help_button.dart';
-import '../../../helpers/report_button.dart';
-import '../../../helpers/share_button.dart';
+import '../../../helpers/widgets/about_button.dart';
+import '../../../helpers/widgets/exit_account-button.dart';
+import '../../../helpers/widgets/exit_button.dart';
+import '../../../helpers/widgets/help_button.dart';
+import '../../../helpers/widgets/report_button.dart';
+import '../../../helpers/widgets/share_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

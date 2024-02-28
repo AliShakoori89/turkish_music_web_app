@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/const/custom_divider.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_card.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/custom_card.dart';
 
 class CustomPageWithCards extends StatelessWidget {
 

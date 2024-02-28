@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
-import 'package:turkish_music_app/presentation/helpers/custom_page_with_cards.dart';
-import 'package:turkish_music_app/presentation/helpers/singer_name_trackName_image.dart';
-import 'package:turkish_music_app/presentation/helpers/top_arrow_icon.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/ui/detail_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart';
+
+import '../../../helpers/widgets/top_arrow_icon.dart';
 
 class MusicPage extends StatelessWidget {
   MusicPage({super.key});

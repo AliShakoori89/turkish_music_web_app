@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
-import 'package:turkish_music_app/presentation/helpers/under_image_singar_and_song_name.dart';
-import '../const/title.dart';
-import '../ui/main_page/play_music_page.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
+
+import '../../const/title.dart';
+import '../../ui/main_page/play_music_page.dart';
 
 class PlaylistContainer extends StatelessWidget {
   const PlaylistContainer({super.key});

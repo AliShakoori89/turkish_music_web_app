@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import '../const/custom_divider.dart';
-import '../helpers/singer_name_trackName_image.dart';
-import '../helpers/song_detail_list.dart';
+import '../helpers/widgets/singer_name_trackName_image.dart';
+import '../helpers/widgets/song_detail_list.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key,

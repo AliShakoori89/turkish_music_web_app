@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
-import 'package:turkish_music_app/presentation/helpers/under_image_singar_and_song_name.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 
 class NewSong extends StatelessWidget {
   const NewSong({super.key});

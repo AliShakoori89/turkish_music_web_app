@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../helpers/featured_container.dart';
-import '../../../helpers/header.dart';
-import '../../../helpers/must_listen_contaner.dart';
-import '../../../helpers/new_song_contaner.dart';
-import '../../../helpers/playlist_container.dart';
+import '../../../helpers/widgets/featured_container.dart';
+import '../../../helpers/widgets/header.dart';
+import '../../../helpers/widgets/must_listen_contaner.dart';
+import '../../../helpers/widgets/new_song_contaner.dart';
+import '../../../helpers/widgets/playlist_container.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

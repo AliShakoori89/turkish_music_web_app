@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:search_page/search_page.dart';
 
-import '../../../helpers/custom_app_bar.dart';
+import '../../../helpers/widgets/custom_app_bar.dart';
 
 class MusicItem implements Comparable<MusicItem> {
 
