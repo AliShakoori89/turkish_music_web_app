@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/state.dart';
+import '../../../data/model/music_model.dart';
 import '../../../domain/repositories/music_repository.dart';
 
 class MusicBloc extends Bloc<MusicEvent, MusicState> {
@@ -10,6 +11,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
   MusicBloc(this.musicRepository) : super(
       MusicState.initial()){
     on<GetNewMusicEvent>(_mapGetNewMusicEventToState);
+    on<GetFamousArtistEvent>(_mapGetFamousArtistEventToState);
   }
 
   void _mapGetNewMusicEventToState(
@@ -22,6 +24,26 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       emit(
         state.copyWith(
           status: MusicStatus.success,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: MusicStatus.error));
+    }
+  }
+
+  void _mapGetFamousArtistEventToState(
+      GetFamousArtistEvent event, Emitter<MusicState> emit) async {
+    try {
+      emit(state.copyWith(status: MusicStatus.loading));
+
+      print("11111111111111111111111111111111");
+
+      List<Singer> famousArtist = await musicRepository.getFamousArtist();
+
+      emit(
+        state.copyWith(
+          status: MusicStatus.success,
+          famousArtist: famousArtist
         ),
       );
     } catch (error) {

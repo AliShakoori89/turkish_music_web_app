@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 
-class FeaturedContainer extends StatefulWidget {
-  const FeaturedContainer({super.key});
+class NewSongContainer extends StatefulWidget {
+  const NewSongContainer({super.key});
 
   @override
-  State<FeaturedContainer> createState() => _FeaturedContainerState();
+  State<NewSongContainer> createState() => _NewSongContainerState();
 }
 
-class _FeaturedContainerState extends State<FeaturedContainer> {
+class _NewSongContainerState extends State<NewSongContainer> {
 
   int _currentIndex = 0;
 

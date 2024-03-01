@@ -19,9 +19,9 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppHeader(),
-              FeaturedContainer(),
-              PlaylistContainer(),
-              NewSong(),
+              NewSongContainer(),
+              FamousArtistContainer(),
+              NewAlbumContainer(),
               MustListenContainer()
             ],
           ),

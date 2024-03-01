@@ -3,15 +3,15 @@ import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 
-class NewSong extends StatelessWidget {
-  const NewSong({super.key});
+class NewAlbumContainer extends StatelessWidget {
+  const NewAlbumContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleText(title: "New Song", haveSeeAll: false),
+        const TitleText(title: "New Album", haveSeeAll: false),
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.02,

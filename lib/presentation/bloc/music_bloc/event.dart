@@ -4,3 +4,6 @@ abstract class MusicEvent {
 
 class GetNewMusicEvent extends MusicEvent{}
 
+class GetFamousArtistEvent extends MusicEvent{}
+
+

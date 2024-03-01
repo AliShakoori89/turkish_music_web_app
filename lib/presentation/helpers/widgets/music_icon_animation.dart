@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_icon/gradient_icon.dart';
 
-import '../../const/custom_icon/music_icons.dart';
-
 class MusicIconAnimation extends StatelessWidget {
   const MusicIconAnimation({super.key, required this.topValue, required this.leftValue,
   required this.iconSize, required this.animation, required this.icon});

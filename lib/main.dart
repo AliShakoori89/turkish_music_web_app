@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_audio/simple_audio.dart';
+import 'package:turkish_music_app/domain/repositories/music_repository.dart';
 import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
+import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
@@ -50,6 +52,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(SignUserRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                MusicBloc(MusicRepository())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
