@@ -26,13 +26,9 @@ class MusicRepository {
     ApiBaseHelper api = ApiBaseHelper();
     List<SingerDataModel> isBestArtist = [];
 
-    final response =
-    await api.get('/api/Singer/GetAll');
-
+    final response = await api.get('/api/Singer/GetAll');
     final productJson = json.decode(response.body);
-
     var artist = SingerModel.fromJson(productJson);
-
 
     for(int i = 0 ; i < artist.data.length - 1 ; i++){
       if(artist.data[i].isBest == true){
@@ -40,9 +36,6 @@ class MusicRepository {
       }else{
       }
     }
-
-    print("isBestArtist                            "+isBestArtist[0].imageSource);
-
     return isBestArtist;
   }
 }

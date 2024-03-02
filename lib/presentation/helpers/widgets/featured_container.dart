@@ -82,43 +82,31 @@ class _NewSongContainerState extends State<NewSongContainer> {
                 ),
               ),
               Positioned(
-                  top: MediaQuery.of(context).size.height / 4,
-                  child: Opacity(
-                    opacity: 0.8,
-                    child: Row(
-                      children: map<Widget>(cardList, (index, url) {
-                        return Container(
-                          width: 5.0,
-                          height: 5.0,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 2.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _currentIndex == index
-                                ? Colors.blueAccent
-                                : Colors.grey,
-                          ),
-                        );
-                      }),
-                    ),
-                  ))
+                top: MediaQuery.of(context).size.height / 5,
+                height: 100,
+                child: Opacity(
+                  opacity: 0.1,
+                  child: Row(
+                    children: map<Widget>(cardList, (index, url) {
+                      return Container(
+                        width: 10.0,
+                        height: 10.0,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == index
+                              ? Colors.red
+                              : Colors.red,
+                        ),
+                      );
+                    }),
+                  ),
+                )
+              )
             ],
           ),
         ),
-        // Container(
-        //   padding: EdgeInsets.symmetric(
-        //       horizontal: MediaQuery.of(context).size.width * 0.0052,
-        //       vertical: MediaQuery.of(context).size.width * 0.055),
-        //   height: MediaQuery.of(context).size.height * 0.2,
-        //   decoration: BoxDecoration(
-        //     color: Colors.blueAccent,
-        //     borderRadius: BorderRadius.circular(15),
-        //     image: const DecorationImage(
-        //       image: AssetImage("assets/images/tarkan1.png"),
-        //         fit: BoxFit.fill
-        //     )
-        //   ),
-        // ),
         UnderImageSingerAndSongName(
             singerName: "Tarkan",
             songName: "Araftaeim",
