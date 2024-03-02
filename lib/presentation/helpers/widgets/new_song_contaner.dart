@@ -47,12 +47,12 @@ class NewAlbumContainer extends StatelessWidget {
                                 ),
                               ),
                                 ),
-                                const Expanded(
+                                Expanded(
                                   flex: 2,
                                   child: UnderImageSingerAndSongName(
                                       singerName: "Tarkan",
                                       songName: "Araftaeim",
-                                  isArtist: true),
+                                      isArtist: true),
                                 ),
                               ],
                             ))),

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/singer_model.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/state.dart';
-import '../../../data/model/music_model.dart';
 import '../../../domain/repositories/music_repository.dart';
 
 class MusicBloc extends Bloc<MusicEvent, MusicState> {
@@ -36,9 +36,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
     try {
       emit(state.copyWith(status: MusicStatus.loading));
 
-      print("11111111111111111111111111111111");
-
-      List<Singer> famousArtist = await musicRepository.getFamousArtist();
+      List<SingerDataModel> famousArtist = await musicRepository.getFamousArtist();
 
       emit(
         state.copyWith(

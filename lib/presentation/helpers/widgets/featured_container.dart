@@ -119,7 +119,7 @@ class _NewSongContainerState extends State<NewSongContainer> {
         //     )
         //   ),
         // ),
-        const UnderImageSingerAndSongName(
+        UnderImageSingerAndSongName(
             singerName: "Tarkan",
             songName: "Araftaeim",
             isArtist: true),

@@ -3,7 +3,7 @@ import '../../../helpers/widgets/featured_container.dart';
 import '../../../helpers/widgets/header.dart';
 import '../../../helpers/widgets/must_listen_contaner.dart';
 import '../../../helpers/widgets/new_song_contaner.dart';
-import '../../../helpers/widgets/playlist_container.dart';
+import '../../../helpers/widgets/home_page/famous_artist_container.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

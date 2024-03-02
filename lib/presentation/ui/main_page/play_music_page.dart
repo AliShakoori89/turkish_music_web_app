@@ -14,12 +14,10 @@ import '../../helpers/music_player_component/loopIcon_button.dart';
 class PlayMusicPage extends StatefulWidget {
   
   final String imagePath;
-  final String trackName;
   final String singerName;
 
   const PlayMusicPage({super.key,
     required this.imagePath,
-    required this.trackName,
     required this.singerName});
 
   @override
@@ -70,27 +68,17 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     children: [
                       Expanded(
                         flex: 10,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.trackName,
-                                style: const TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.white
-                                )),
-                            Text(widget.singerName,
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.grey
-                              ),)
-                          ],
-                        ),
+                        child: Text(widget.singerName,
+                          style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey
+                          ),)
+                        ,
                       ),
                       Expanded(
                         flex: 1,
                         child: LikeButton(
                             name: widget.singerName,
-                            track: widget.trackName,
                             isIcon: true,
                         ),
                       ),
