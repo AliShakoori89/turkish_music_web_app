@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
+import 'package:turkish_music_app/data/model/new_album_model.dart';
 import '../../data/model/singer_model.dart';
 import '../../data/network/api_base_helper.dart';
 
@@ -34,5 +35,14 @@ class MusicRepository {
       }
     }
     return isBestArtist;
+  }
+
+  @override
+  Future<dynamic> getNewAlbum() async {
+    ApiBaseHelper api = ApiBaseHelper();
+    final response = await api.get('/api/Album/GetNewAlbums');
+    final productJson = json.decode(response.body);
+    var newDongData = NewAlbumModel.fromJson(productJson);
+    return newDongData;
   }
 }

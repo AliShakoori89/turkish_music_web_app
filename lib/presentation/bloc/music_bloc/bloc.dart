@@ -13,6 +13,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       MusicState.initial()){
     on<GetNewMusicEvent>(_mapGetNewMusicEventToState);
     on<GetFamousArtistEvent>(_mapGetFamousArtistEventToState);
+    on<GetNewAlbumEvent>(_mapGetNewAlbumEventToState);
   }
 
   void _mapGetNewMusicEventToState(
@@ -24,7 +25,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       emit(
         state.copyWith(
           status: MusicStatus.success,
-          newSong: newSong
+          newMusic: newSong
         ),
       );
     } catch (error) {
@@ -43,6 +44,23 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
         state.copyWith(
           status: MusicStatus.success,
           famousArtist: famousArtist
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: MusicStatus.error));
+    }
+  }
+
+  void _mapGetNewAlbumEventToState(
+      GetNewAlbumEvent event, Emitter<MusicState> emit) async {
+    try {
+      emit(state.copyWith(status: MusicStatus.loading));
+      List<GetNewAlbumEvent> newSong = await musicRepository.getNewMusic();
+
+      emit(
+        state.copyWith(
+            status: MusicStatus.success,
+            newMusic: newSong
         ),
       );
     } catch (error) {

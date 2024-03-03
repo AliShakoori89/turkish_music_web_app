@@ -26,7 +26,7 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
 
     return BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
 
-      List<NewMusicDataModel> newSong = state.newSong;
+      List<NewMusicDataModel> newSong = state.newMusic;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
