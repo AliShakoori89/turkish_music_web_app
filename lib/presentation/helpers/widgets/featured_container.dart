@@ -1,7 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
+
+import '../../bloc/music_bloc/bloc.dart';
+import '../../bloc/music_bloc/event.dart';
+import '../../bloc/music_bloc/state.dart';
 
 class NewSongContainer extends StatefulWidget {
   const NewSongContainer({super.key});
@@ -36,85 +43,71 @@ class _NewSongContainerState extends State<NewSongContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const TitleText(title: "New Song", haveSeeAll: true),
-        SizedBox(
-          height: MediaQuery.of(context).size.width * 0.055,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                // height: MediaQuery.of(context).size.height / 5,
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height / 5,
-                    autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 5),
-                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    pauseAutoPlayOnTouch: true,
-                    aspectRatio: 2.0,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                  ),
-                  items: cardList.map((card) {
-                    return Builder(builder: (BuildContext context) {
-                      return SizedBox(
-                        // height: MediaQuery.of(context).size.height * 0.09,
-                        width: MediaQuery.of(context).size.width / 0.5,
-                        child: Card(
-                          elevation: 0,
-                          child: card,
-                          // shadowColor: Colors.white,
-                        ),
-                      );
+
+    BlocProvider.of<MusicBloc>(context).add(GetNewMusicEvent());
+
+    return BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
+
+      List<NewSongDataModel> newSong = state.newSong;
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const TitleText(title: "New Song", haveSeeAll: true),
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.011,
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height / 5,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 10),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 2000),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  pauseAutoPlayOnTouch: true,
+                  aspectRatio: 2.0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
                     });
-                  }).toList(),
+                  },
                 ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).size.height / 5,
-                height: 100,
-                child: Opacity(
-                  opacity: 0.1,
-                  child: Row(
-                    children: map<Widget>(cardList, (index, url) {
-                      return Container(
-                        width: 10.0,
-                        height: 10.0,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 2.0),
+                items: List.generate(newSong.length, (index) {
+
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0),
+                        image: DecorationImage(
+                          image: NetworkImage(newSong[index].imageSource),
+                            opacity: 0.3,
+                            fit: BoxFit.fitWidth
+                        )
+                      ),
+                      child: Container(
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentIndex == index
-                              ? Colors.red
-                              : Colors.red,
+                            borderRadius: BorderRadius.circular(25.0),
+                            image: DecorationImage(
+                                image: NetworkImage(newSong[index].imageSource),
+                                fit: BoxFit.contain
+                            )
                         ),
-                      );
-                    }),
-                  ),
+                      ),
+                    ),
+                  );
+                }
                 )
               )
-            ],
           ),
-        ),
-        UnderImageSingerAndSongName(
-            singerName: "Tarkan",
-            songName: "Araftaeim",
-            isArtist: true),
-        SizedBox(
-          height: MediaQuery.of(context).size.width * 0.055,
-        ),
-      ],
-    );
+
+          SizedBox(
+            height: MediaQuery.of(context).size.width * 0.055,
+          ),
+        ],
+      );
+    });
   }
 }

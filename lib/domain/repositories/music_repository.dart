@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:turkish_music_app/data/model/new-song_model.dart';
 import '../../data/model/singer_model.dart';
-import '../../data/model/music_model.dart';
 import '../../data/network/api_base_helper.dart';
 
 class MusicRepository {
@@ -10,14 +10,11 @@ class MusicRepository {
 
   @override
   Future<dynamic> getNewMusic() async {
-
     ApiBaseHelper api = ApiBaseHelper();
-
-    final response =
-    await api.get('/api/NewMusic/GetAll');
+    final response = await api.get('/api/NewMusic/GetAll');
     final productJson = json.decode(response.body);
-
-    return MusicModel.fromJson(productJson);
+    var newDongData = NewSongModel.fromJson(productJson);
+    return newDongData.data;
   }
 
   @override

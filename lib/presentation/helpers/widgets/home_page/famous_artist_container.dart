@@ -19,10 +19,10 @@ class FamousArtistContainer extends StatelessWidget {
     BlocProvider.of<MusicBloc>(context).add(GetFamousArtistEvent());
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const TitleText(title: "Artist", haveSeeAll: true),
-        BlocBuilder<MusicBloc, MusicState>(
-        builder: (context, state) {
+        BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
 
           List<SingerDataModel> artistList = state.famousArtist;
 
@@ -42,8 +42,7 @@ class FamousArtistContainer extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlayMusicPage(
-                                imagePath:
-                                    artistList[index].imageSource,
+                                imagePath: artistList[index].imageSource,
                                 singerName: artistList[index].name,
                               )),
                     );
@@ -60,8 +59,8 @@ class FamousArtistContainer extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 color: Colors.blue,
                                 image: DecorationImage(
-                                    image:
-                                        NetworkImage(artistList[index].imageSource),
+                                    image: NetworkImage(
+                                        artistList[index].imageSource),
                                     fit: BoxFit.fill)),
                             width: MediaQuery.of(context).size.width * 0.2,
                           ),
