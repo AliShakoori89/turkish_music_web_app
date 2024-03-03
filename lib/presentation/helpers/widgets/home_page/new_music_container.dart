@@ -4,42 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
-import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
+import '../../../bloc/music_bloc/bloc.dart';
+import '../../../bloc/music_bloc/event.dart';
+import '../../../bloc/music_bloc/state.dart';
 
-import '../../bloc/music_bloc/bloc.dart';
-import '../../bloc/music_bloc/event.dart';
-import '../../bloc/music_bloc/state.dart';
-
-class NewSongContainer extends StatefulWidget {
-  const NewSongContainer({super.key});
+class NewMusicContainer extends StatefulWidget {
+  const NewMusicContainer({super.key});
 
   @override
-  State<NewSongContainer> createState() => _NewSongContainerState();
+  State<NewMusicContainer> createState() => _NewMusicContainerState();
 }
 
-class _NewSongContainerState extends State<NewSongContainer> {
+class _NewMusicContainerState extends State<NewMusicContainer> {
 
   int _currentIndex = 0;
-
-  List cardList=[
-    Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          image: const DecorationImage(
-              image: ExactAssetImage('assets/images/tarkan1.png'),
-              fit: BoxFit.fill
-          )
-      ),
-    )
-  ];
-
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
-    for (var i = 0; i < list.length; i++) {
-      result.add(handler(i, list[i]));
-    }
-    return result;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +26,7 @@ class _NewSongContainerState extends State<NewSongContainer> {
 
     return BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
 
-      List<NewSongDataModel> newSong = state.newSong;
+      List<NewMusicDataModel> newSong = state.newSong;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,

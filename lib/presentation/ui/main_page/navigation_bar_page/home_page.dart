@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../helpers/widgets/featured_container.dart';
+import '../../../helpers/widgets/home_page/new_music_container.dart';
 import '../../../helpers/widgets/header.dart';
 import '../../../helpers/widgets/must_listen_contaner.dart';
-import '../../../helpers/widgets/new_song_contaner.dart';
+import '../../../helpers/widgets/home_page/new_album_contaner.dart';
 import '../../../helpers/widgets/home_page/famous_artist_container.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppHeader(),
-              NewSongContainer(),
+              NewMusicContainer(),
               FamousArtistContainer(),
               NewAlbumContainer(),
               MustListenContainer()

@@ -4,25 +4,25 @@
 
 import 'dart:convert';
 
-NewSongModel newSongModelFromJson(String str) => NewSongModel.fromJson(json.decode(str));
+NewMusicModel newSongModelFromJson(String str) => NewMusicModel.fromJson(json.decode(str));
 
-String newSongModelToJson(NewSongModel data) => json.encode(data.toJson());
+String newSongModelToJson(NewMusicModel data) => json.encode(data.toJson());
 
-class NewSongModel {
-  List<NewSongDataModel> data;
+class NewMusicModel {
+  List<NewMusicDataModel> data;
   bool success;
   String message;
   int lastPage;
 
-  NewSongModel({
+  NewMusicModel({
     required this.data,
     required this.success,
     required this.message,
     required this.lastPage,
   });
 
-  factory NewSongModel.fromJson(Map<String, dynamic> json) => NewSongModel(
-    data: List<NewSongDataModel>.from(json["data"].map((x) => NewSongDataModel.fromJson(x))),
+  factory NewMusicModel.fromJson(Map<String, dynamic> json) => NewMusicModel(
+    data: List<NewMusicDataModel>.from(json["data"].map((x) => NewMusicDataModel.fromJson(x))),
     success: json["success"],
     message: json["message"],
     lastPage: json["lastPage"],
@@ -36,15 +36,15 @@ class NewSongModel {
   };
 }
 
-class NewSongDataModel {
+class NewMusicDataModel {
   int id;
   String name;
   String imageSource;
   String fileSource;
   int singerId;
-  Singer singer;
+  NewMusicSingerModel singer;
 
-  NewSongDataModel({
+  NewMusicDataModel({
     required this.id,
     required this.name,
     required this.imageSource,
@@ -53,13 +53,13 @@ class NewSongDataModel {
     required this.singer,
   });
 
-  factory NewSongDataModel.fromJson(Map<String, dynamic> json) => NewSongDataModel(
+  factory NewMusicDataModel.fromJson(Map<String, dynamic> json) => NewMusicDataModel(
     id: json["id"],
     name: json["name"],
     imageSource: json["imageSource"],
     fileSource: json["fileSource"],
     singerId: json["singerId"],
-    singer: Singer.fromJson(json["singer"]),
+    singer: NewMusicSingerModel.fromJson(json["singer"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -72,20 +72,20 @@ class NewSongDataModel {
   };
 }
 
-class Singer {
+class NewMusicSingerModel {
   int id;
   String name;
   String imageSource;
   bool isBest;
 
-  Singer({
+  NewMusicSingerModel({
     required this.id,
     required this.name,
     required this.imageSource,
     required this.isBest,
   });
 
-  factory Singer.fromJson(Map<String, dynamic> json) => Singer(
+  factory NewMusicSingerModel.fromJson(Map<String, dynamic> json) => NewMusicSingerModel(
     id: json["id"],
     name: json["name"],
     imageSource: json["imageSource"],

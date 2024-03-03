@@ -13,7 +13,7 @@ class MusicRepository {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/NewMusic/GetAll');
     final productJson = json.decode(response.body);
-    var newDongData = NewSongModel.fromJson(productJson);
+    var newDongData = NewMusicModel.fromJson(productJson);
     return newDongData.data;
   }
 

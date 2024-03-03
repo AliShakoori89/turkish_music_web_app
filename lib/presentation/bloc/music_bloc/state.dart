@@ -22,12 +22,12 @@ class MusicState extends Equatable{
   static MusicState initial() => const MusicState(
       status: MusicStatus.initial,
       famousArtist: <SingerDataModel>[],
-      newSong: <NewSongDataModel>[]
+      newSong: <NewMusicDataModel>[]
   );
 
   final MusicStatus status;
   final List<SingerDataModel> famousArtist;
-  final List<NewSongDataModel> newSong;
+  final List<NewMusicDataModel> newSong;
 
   @override
   // TODO: implement props
@@ -36,7 +36,7 @@ class MusicState extends Equatable{
   MusicState copyWith({
     MusicStatus? status,
     List<SingerDataModel>? famousArtist,
-    List<NewSongDataModel>? newSong
+    List<NewMusicDataModel>? newSong
   }) {
     return MusicState(
         status: status ?? this.status,

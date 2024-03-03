@@ -29,7 +29,7 @@ class FamousArtistContainer extends StatelessWidget {
           return Container(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.0052,
-                vertical: MediaQuery.of(context).size.width * 0.055),
+                vertical: MediaQuery.of(context).size.width * 0.0055),
             height: MediaQuery.of(context).size.height * 0.2,
             width: double.infinity,
             child: AnimatedListView(

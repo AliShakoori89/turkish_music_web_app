@@ -19,7 +19,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       GetNewMusicEvent event, Emitter<MusicState> emit) async {
     try {
       emit(state.copyWith(status: MusicStatus.loading));
-      List<NewSongDataModel> newSong = await musicRepository.getNewMusic();
+      List<NewMusicDataModel> newSong = await musicRepository.getNewMusic();
 
       emit(
         state.copyWith(
