@@ -24,8 +24,6 @@ class ApiBaseHelper {
         'Authorization': 'bearer $accessToken',
       };
 
-      // print("uri                                "+uri.toString());
-
       var secondURL = Uri.http("194.5.195.145", url, queryParameters);
       final response = await http.get(secondURL, headers: headers);
       return response;

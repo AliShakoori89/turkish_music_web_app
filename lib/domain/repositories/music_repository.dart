@@ -28,7 +28,7 @@ class MusicRepository {
     final productJson = json.decode(response.body);
     var artist = SingerModel.fromJson(productJson);
 
-    for(int i = 0 ; i < artist.data.length - 1 ; i++){
+    for(int i = 0 ; i < artist.data.length ; i++){
       if(artist.data[i].isBest == true){
         isBestArtist.add(artist.data[i]);
       }else{

@@ -61,6 +61,7 @@ dependencies:
   equatable: ^2.0.5
   shared_preferences: ^2.2.2
   gradient_icon: ^2.0.9
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
