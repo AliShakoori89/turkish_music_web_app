@@ -21,7 +21,7 @@ class NewMusicShimmerContainer extends StatelessWidget {
             ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                  color: Colors.black45),
+                color: Colors.black12,),
               width: MediaQuery.of(context).size.width * 0.99,
               height: MediaQuery.of(context).size.height * 0.09
           )

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:shimmer/shimmer.dart';
 
 class NewAlbumShimmerContainer extends StatelessWidget {
@@ -10,29 +11,27 @@ class NewAlbumShimmerContainer extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.15,
-      child: ListView.builder(
-          shrinkWrap: true,
+      height: MediaQuery.of(context).size.height * 0.42,
+      child: AnimatedGridView(
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 4,
-
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, int index){
-            return Shimmer.fromColors(
-                baseColor: Colors.black12,
-                highlightColor: Colors.grey[400]!,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.black45,
-                          shape: BoxShape.circle),
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      height: MediaQuery.of(context).size.width * 0.2
-                  ),
-                )
-            );
-          }),
+          crossAxisCount: 2,
+          mainAxisExtent: 170,
+          crossAxisSpacing: 50,
+          children: List.generate(
+              4,
+                  (index) =>
+                      Shimmer.fromColors(
+                        baseColor: Colors.black12,
+                        highlightColor: Colors.grey[400]!,
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                              borderRadius: BorderRadius.circular(5.0)),
+                          width: 50,
+                        )
+                      )))
     );
   }
 }

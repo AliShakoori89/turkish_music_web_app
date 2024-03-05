@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:turkish_music_app/data/model/singer_model.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
-
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../const/title.dart';
 import '../../../ui/main_page/play_music_page.dart';
 
-class FamousArtistContainer extends StatelessWidget {
+class FamousArtistContainer extends StatefulWidget {
   const FamousArtistContainer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<FamousArtistContainer> createState() => _FamousArtistContainerState();
+}
 
+class _FamousArtistContainerState extends State<FamousArtistContainer> {
+
+  @override
+  void initState() {
     BlocProvider.of<MusicBloc>(context).add(GetFamousArtistEvent());
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +65,7 @@ class FamousArtistContainer extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.22,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Expanded(
                             flex: 3,
@@ -69,9 +78,6 @@ class FamousArtistContainer extends StatelessWidget {
                                       fit: BoxFit.fill)),
                               width: MediaQuery.of(context).size.width * 0.2,
                             ),
-                          ),
-                          const SizedBox(
-                            height: 5,
                           ),
                           Expanded(
                             flex: 1,
@@ -90,8 +96,8 @@ class FamousArtistContainer extends StatelessWidget {
           else if(state.status.isError){
             return Container();
           }
-          return Center(
-            child: Text('No Enter'),
+          return const Center(
+            child: Text('No Internet'),
           );
         }),
       ],

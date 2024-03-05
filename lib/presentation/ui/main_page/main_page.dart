@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/data/model/user_model.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:vertical_nav_bar/vertical_nav_bar.dart';
-
 import '../../const/custom_icon/music_icons.dart';
 
 class MainPage extends StatefulWidget {
@@ -70,20 +68,20 @@ class _MainPageState extends State<MainPage> {
                       },
                       items: const [
                         VerticalNavBarItem(
-                          customIcon: Icons.home,
-                          iconSize: 25.0
+                            customIcon: Icons.home,
+                            iconSize: 25.0
                         ),
                         VerticalNavBarItem(
-                          customIcon: Icons.person,
-                          iconSize:25.0
+                            customIcon: Icons.person,
+                            iconSize:25.0
                         ),
                         VerticalNavBarItem(
-                          customIcon: MusicIcon.music,
-                          iconSize:18.0
+                            customIcon: MusicIcon.music,
+                            iconSize:18.0
                         ),
                         VerticalNavBarItem(
-                          customIcon: Icons.search,
-                          iconSize:25.0
+                            customIcon: Icons.search,
+                            iconSize:25.0
                         ),
                       ],
                     ),
@@ -92,7 +90,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ],
           ),
-        ),
+        )
     );
   }
 }

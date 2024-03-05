@@ -26,7 +26,7 @@ class ArtistShimmerContainer extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10),
                   child: Container(
                       decoration: const BoxDecoration(
-                          color: Colors.black45,
+                          color: Colors.black12,
                           shape: BoxShape.circle),
                       width: MediaQuery.of(context).size.width * 0.2,
                       height: MediaQuery.of(context).size.width * 0.2

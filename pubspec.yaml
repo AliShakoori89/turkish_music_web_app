@@ -62,6 +62,7 @@ dependencies:
   shared_preferences: ^2.2.2
   gradient_icon: ^2.0.9
   shimmer: ^3.0.0
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -93,6 +94,7 @@ flutter:
     - assets/custom_icons/normalize_off.png
     - assets/custom_icons/
     - assets/auth_assets/
+    - assets/gif/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

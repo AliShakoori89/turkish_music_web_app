@@ -40,9 +40,13 @@ class MusicRepository {
   @override
   Future<dynamic> getNewAlbum() async {
     ApiBaseHelper api = ApiBaseHelper();
+    print("1111111111111111            ");
     final response = await api.get('/api/Album/GetNewAlbums');
+    print("222222222222222222222");
     final productJson = json.decode(response.body);
     var newDongData = NewAlbumModel.fromJson(productJson);
+
+    print("@@@@@@@@@@@      "+newDongData.data.length.toString());
     return newDongData;
   }
 }
