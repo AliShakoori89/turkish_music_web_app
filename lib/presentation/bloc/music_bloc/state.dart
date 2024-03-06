@@ -25,13 +25,13 @@ class MusicState extends Equatable{
       status: MusicStatus.initial,
       famousArtist: <SingerDataModel>[],
       newMusic: <NewMusicDataModel>[],
-      newAlbum: <NewAlbumModel>[],
+      newAlbum: <NewAlbumDataModel>[],
   );
 
   final MusicStatus status;
   final List<SingerDataModel> famousArtist;
   final List<NewMusicDataModel> newMusic;
-  final List<NewAlbumModel> newAlbum;
+  final List<NewAlbumDataModel> newAlbum;
 
   @override
   // TODO: implement props
@@ -41,7 +41,7 @@ class MusicState extends Equatable{
     MusicStatus? status,
     List<SingerDataModel>? famousArtist,
     List<NewMusicDataModel>? newMusic,
-    List<NewAlbumModel>? newAlbum
+    List<NewAlbumDataModel>? newAlbum
   }) {
     return MusicState(
         status: status ?? this.status,

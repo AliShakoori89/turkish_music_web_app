@@ -31,6 +31,9 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(
+          height: 20,
+        ),
         const TitleText(title: "Artist", haveSeeAll: true),
         BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
 
@@ -84,7 +87,8 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                             child: UnderImageSingerAndSongName(
                                 singerName: artistList[index].name,
                                 isArtist: false),
-                          )
+                          ),
+                          Spacer()
                         ],
                       ),
                     ),

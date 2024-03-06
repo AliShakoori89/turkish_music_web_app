@@ -1,30 +1,41 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UnderImageSingerAndSongName extends StatelessWidget {
 
   final String singerName;
-  String? songName;
+  String? albumName;
   final bool isArtist;
 
   UnderImageSingerAndSongName({
     super.key, required this.singerName,
-    this.songName, required this.isArtist});
+    this.albumName, required this.isArtist});
 
   @override
   Widget build(BuildContext context) {
     return isArtist
         ? Padding(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 2
           ),
           child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-          Text(songName!, style: const TextStyle(fontSize: 12)),
-          Text(singerName,
-              style: const TextStyle(fontSize: 10, color: Colors.grey)),
-                ],
-              ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: Text(
+                      albumName!,
+                      style: const TextStyle(fontSize: 12),
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                Expanded(
+                  flex: 1,
+                  child: Text(singerName,
+                      style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                ),
+                Spacer()
+              ],
+            ),
         )
         : Text(
       singerName,

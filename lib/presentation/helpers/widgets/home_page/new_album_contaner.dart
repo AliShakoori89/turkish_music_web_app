@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
@@ -40,12 +41,13 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
           ),
           child: BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
 
-            List<NewAlbumModel> newAlbum = state.newAlbum;
+            List<NewAlbumDataModel> newAlbum = state.newAlbum;
 
             if(state.status.isLoading){
               return const NewAlbumShimmerContainer();
             }
             else if(state.status.isSuccess){
+
               return SizedBox(
                   height: MediaQuery.of(context).size.height * 0.42,
                   child: AnimatedGridView(
@@ -61,24 +63,22 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                   Expanded(
                                     flex: 5,
                                     child: Container(
-                                      color: Colors.grey[700],
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/tarkan.png"),
-                                                fit: BoxFit.fill)),
-                                        width: double.infinity,
-                                      ),
-                                    ),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(15),
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  newAlbum[index].imageSource
+                                              ),
+                                              fit: BoxFit.fill)),
+                                      width: double.infinity,
+                                    )
                                   ),
                                   Expanded(
                                     flex: 2,
                                     child: UnderImageSingerAndSongName(
-                                        singerName: "Tarkan",
-                                        songName: "Araftaeim",
+                                        singerName: newAlbum[index].singer.name,
+                                        albumName: newAlbum[index].name,
                                         isArtist: true),
                                   ),
                                 ],
@@ -92,8 +92,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
             }
             return Container();
           })
-
-        )
+        ),
       ],
     );
   }
