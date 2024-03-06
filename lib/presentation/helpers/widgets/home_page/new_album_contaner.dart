@@ -42,8 +42,6 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
 
             List<NewAlbumModel> newAlbum = state.newAlbum;
 
-            print(newAlbum);
-
             if(state.status.isLoading){
               return const NewAlbumShimmerContainer();
             }

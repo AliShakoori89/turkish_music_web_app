@@ -1,7 +1,7 @@
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import '../helpers/widgets/header.dart';
 
@@ -22,11 +22,7 @@ class _ErrorInternetConnectionPageState extends State<ErrorInternetConnectionPag
     refreshKey.currentState?.show(atTop: false);
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) =>
-      //   const MainPage()),
-      // );
+      Restart.restartApp(webOrigin: '/');
     });
   }
   
@@ -41,8 +37,12 @@ class _ErrorInternetConnectionPageState extends State<ErrorInternetConnectionPag
           key: refreshKey,
           onRefresh: refreshList,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Flexible(
+                child: ListView(
+                )
+              ),
               Flexible(
                 flex: 1,
                 child: Container(

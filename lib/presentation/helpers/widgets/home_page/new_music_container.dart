@@ -91,12 +91,10 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
             );
           }
           else if(state.status.isError){
-            return Container();
+            return const NewMusicShimmerContainer();
           }
-          return Container();
+          return const NewMusicShimmerContainer();
           }),
-
-
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.055,
           ),

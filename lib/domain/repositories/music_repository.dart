@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/data/model/new_album_model.dart';
 import '../../data/model/singer_model.dart';
@@ -47,6 +48,6 @@ class MusicRepository {
     var newDongData = NewAlbumModel.fromJson(productJson);
 
     print("@@@@@@@@@@@      "+newDongData.data.length.toString());
-    return newDongData;
+    return newDongData.data;
   }
 }

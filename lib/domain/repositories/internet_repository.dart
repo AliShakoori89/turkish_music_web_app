@@ -6,12 +6,14 @@ class InternetConnectionRepository {
   Future<dynamic> checkInternetConnection() async {
     bool result = await InternetConnectionChecker().hasConnection;
     if(result == true) {
-      return true;
       print('YAY! Free cute dog pics!');
+      return true;
+
     } else {
       print('No internet :( Reason:');
-      return false;
       print(InternetConnectionChecker().checkTimeout);
+      return false;
+
     }
   }
 }

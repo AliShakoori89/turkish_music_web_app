@@ -94,11 +94,9 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
             );
           }
           else if(state.status.isError){
-            return Container();
+            return ArtistShimmerContainer(shimmerLength: artistList.length);
           }
-          return const Center(
-            child: Text('No Internet'),
-          );
+          return ArtistShimmerContainer(shimmerLength: artistList.length);
         }),
       ],
     );

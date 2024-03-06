@@ -39,6 +39,7 @@ Future<void> main() async{
     androidNotificationIconPath: "mipmap/ic_launcher",
     androidCompactActions: [1, 2, 3],
     applePreferSkipButtons: true,
+
   );
 
   runApp(MyApp(isLoggedIn: isLoggedIn),);
@@ -47,11 +48,15 @@ Future<void> main() async{
 class MyApp extends StatelessWidget {
 
   final bool isLoggedIn;
+  // final List result;
 
   const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
+
+    // print("AAAAAAAaaaaaaaaaaaaaaaaa             "+result.toString());
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -69,13 +74,13 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        home: BlocBuilder<InternetConnectionBloc, InternetConnectionState>(builder: (context, state) {
-          if(state.internetConnectionStatus) {
-            return isLoggedIn ? const MainPage() : const AuthenticatePage();
-          }else{
-            return const ErrorInternetConnectionPage();
-          }
-        })
+        initialRoute: '/',
+        home:
+        // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
+        isLoggedIn
+            ? const MainPage()
+            : const AuthenticatePage()
+            // : const ErrorInternetConnectionPage()
       ),
     );
   }
