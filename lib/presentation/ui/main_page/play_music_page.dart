@@ -35,7 +35,6 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
   @override
   Widget build(BuildContext context) {
 
-    print("imagePath                              "+imagePath);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(
@@ -61,9 +60,13 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Expanded(
+                Expanded(
                     flex: 1,
-                    child: CustomAppBar()),
+                    child: CustomAppBar(
+                      title: "Now Playing",
+                      singerName: singerName,
+                      haveMenuButton: true,
+                    )),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
@@ -74,7 +77,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     children: [
                       Expanded(
                         flex: 10,
-                        child: Text(widget.singerName,
+                        child: Text(singerName,
                           style: const TextStyle(
                               fontSize: 15,
                               color: Colors.grey
@@ -84,7 +87,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                       Expanded(
                         flex: 1,
                         child: LikeButton(
-                            name: widget.singerName,
+                            name: singerName,
                             isIcon: true,
                         ),
                       ),

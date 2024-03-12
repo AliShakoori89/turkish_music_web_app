@@ -46,4 +46,13 @@ class MusicRepository {
     var newDongData = NewAlbumModel.fromJson(productJson);
     return newDongData.data;
   }
+
+  @override
+  Future<dynamic> getArtist() async {
+    ApiBaseHelper api = ApiBaseHelper();
+    final response = await api.get('/api/Album/GetNewAlbums');
+    final productJson = json.decode(response.body);
+    var newDongData = NewAlbumModel.fromJson(productJson);
+    return newDongData.data;
+  }
 }

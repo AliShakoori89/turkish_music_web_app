@@ -6,6 +6,7 @@ import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/artist_page.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../const/title.dart';
 import '../../../ui/main_page/play_music_page.dart';
@@ -55,7 +56,13 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                 children: List.generate(artistList.length, (index) {
                   return InkWell(
                     onTap: () {
-
+                      Navigator.push(
+                        context,
+                          MaterialPageRoute(
+                              builder: (context) => ArtistPage(
+                                  artistDetail: artistList[index]
+                              ))
+                      );
                     },
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.22,
