@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/music_repository.dart';
-import 'package:turkish_music_app/domain/repositories/sign_up_user_repository.dart';
+import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/state.dart';

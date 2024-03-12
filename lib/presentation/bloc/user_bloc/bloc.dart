@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/user_model.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
-import '../../../domain/repositories/sign_up_user_repository.dart';
+import '../../../domain/repositories/user_repository.dart';
 import 'event.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
