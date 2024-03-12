@@ -4,13 +4,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_audio/simple_audio.dart';
+import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/music_repository.dart';
+import 'package:turkish_music_app/domain/repositories/new_music_repository.dart';
+import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
@@ -64,7 +70,13 @@ class MyApp extends StatelessWidget {
                 UserBloc(SignUserRepository())),
         BlocProvider(
             create: (BuildContext context) =>
-                MusicBloc(MusicRepository())),
+                NewMusicBloc(NewMusicRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                AlbumBloc(AlbumRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                SingerBloc(SingerRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 InternetConnectionBloc(InternetConnectionRepository())),

@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:turkish_music_app/data/model/new-song_model.dart';
-import 'package:turkish_music_app/data/model/new_album_model.dart';
 import '../../../data/model/singer_model.dart';
 
 enum SingerStatus { initial, success, error, loading }

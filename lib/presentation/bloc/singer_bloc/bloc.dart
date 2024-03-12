@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/singer_model.dart';
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
-import 'package:turkish_music_app/presentation/bloc/artist_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/singer_bloc/state.dart';
 import 'event.dart';
 
 class SingerBloc extends Bloc<SingerEvent, SingerState> {

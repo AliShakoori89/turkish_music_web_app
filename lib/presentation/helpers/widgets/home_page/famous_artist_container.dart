@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/data/model/singer_model.dart';
-import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/music_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/music_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/artist_page.dart';
+import '../../../bloc/singer_bloc/bloc.dart';
+import '../../../bloc/singer_bloc/event.dart';
+import '../../../bloc/singer_bloc/state.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../const/title.dart';
-import '../../../ui/main_page/play_music_page.dart';
 
 class FamousArtistContainer extends StatefulWidget {
   const FamousArtistContainer({super.key});
@@ -22,7 +21,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
 
   @override
   void initState() {
-    BlocProvider.of<MusicBloc>(context).add(GetFamousArtistEvent());
+    BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
     super.initState();
   }
 
@@ -36,9 +35,9 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
           height: 20,
         ),
         const TitleText(title: "Artist", haveSeeAll: true),
-        BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
+        BlocBuilder<SingerBloc, SingerState>(builder: (context, state) {
 
-          List<SingerDataModel> artistList = state.famousArtist;
+          List<SingerDataModel> artistList = state.famousSinger;
 
           if(state.status.isLoading){
             return ArtistShimmerContainer(shimmerLength: artistList.length);

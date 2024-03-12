@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:turkish_music_app/data/model/new_album_model.dart';
-import 'package:turkish_music_app/presentation/bloc/music_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
-
-import '../../../bloc/music_bloc/bloc.dart';
-import '../../../bloc/music_bloc/state.dart';
+import '../../../bloc/album_bloc/event.dart';
 import '../../../const/shimmer_container/new_album_shimmer_container.dart';
 
 class NewAlbumContainer extends StatefulWidget {
@@ -22,7 +21,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
 
   @override
   void initState() {
-    BlocProvider.of<MusicBloc>(context).add(GetNewAlbumEvent());
+    BlocProvider.of<AlbumBloc>(context).add(GetNewAlbumEvent());
     super.initState();
   }
 
@@ -39,7 +38,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
             left: MediaQuery.of(context).size.width * 0.09,
             right: MediaQuery.of(context).size.width * 0.09,
           ),
-          child: BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
+          child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
 
             List<NewAlbumDataModel> newAlbum = state.newAlbum;
 

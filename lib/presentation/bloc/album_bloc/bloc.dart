@@ -1,33 +1,31 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/data/model/singer_model.dart';
-import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
-import 'package:turkish_music_app/presentation/bloc/artist_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import '../../../data/model/new_album_model.dart';
+import '../../../domain/repositories/album_repository.dart';
 import 'event.dart';
 
-class SingerBloc extends Bloc<SingerEvent, SingerState> {
+class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
 
-  SingerRepository singerRepository = SingerRepository();
+  AlbumRepository albumRepository = AlbumRepository();
 
-  SingerBloc(this.singerRepository) : super(
-      SingerState.initial()){
-    on<GetFamousSingerEvent>(_mapGetFamousSingerEventToState);
+  AlbumBloc(this.albumRepository) : super(
+      AlbumState.initial()){
+    on<GetNewAlbumEvent>(_mapGetNewAlbumEventToState);
   }
 
-  void _mapGetFamousSingerEventToState(
-      GetFamousSingerEvent event, Emitter<SingerState> emit) async {
+  void _mapGetNewAlbumEventToState(
+      GetNewAlbumEvent event, Emitter<AlbumState> emit) async {
     try {
-      emit(state.copyWith(status: SingerStatus.loading));
-
-      List<SingerDataModel> famousSinger = await singerRepository.getFamousSinger();
-
+      emit(state.copyWith(status: AlbumStatus.loading));
+      List<NewAlbumDataModel> newAlbum = await albumRepository.getNewAlbum();
       emit(
         state.copyWith(
-          status: SingerStatus.success,
-          famousSinger: famousSinger
+            status: AlbumStatus.success,
+            newAlbum: newAlbum
         ),
       );
     } catch (error) {
-      emit(state.copyWith(status: SingerStatus.error));
+      emit(state.copyWith(status: AlbumStatus.error));
     }
   }
 }

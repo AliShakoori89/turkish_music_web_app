@@ -3,41 +3,41 @@ import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/data/model/new_album_model.dart';
 import '../../../data/model/singer_model.dart';
 
-enum SingerStatus { initial, success, error, loading }
+enum AlbumStatus { initial, success, error, loading }
 
-extension SingerStatusX on SingerStatus {
-  bool get isInitial => this == SingerStatus.initial;
-  bool get isSuccess => this == SingerStatus.success;
-  bool get isError => this == SingerStatus.error;
-  bool get isLoading => this == SingerStatus.loading;
+extension MusicStatusX on AlbumStatus {
+  bool get isInitial => this == AlbumStatus.initial;
+  bool get isSuccess => this == AlbumStatus.success;
+  bool get isError => this == AlbumStatus.error;
+  bool get isLoading => this == AlbumStatus.loading;
 }
 
-class SingerState extends Equatable{
+class AlbumState extends Equatable{
 
-  const SingerState({
+  const AlbumState({
     required this.status,
-    required this.famousSinger,
+    required this.newAlbum
   });
 
-  static SingerState initial() => const SingerState(
-      status: SingerStatus.initial,
-      famousSinger: <SingerDataModel>[]
+  static AlbumState initial() => const AlbumState(
+    status: AlbumStatus.initial,
+    newAlbum: <NewAlbumDataModel>[],
   );
 
-  final SingerStatus status;
-  final List<SingerDataModel> famousSinger;
+  final AlbumStatus status;
+  final List<NewAlbumDataModel> newAlbum;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, famousSinger];
+  List<Object?> get props => [status, newAlbum];
 
-  SingerState copyWith({
-    SingerStatus? status,
-    List<SingerDataModel>? famousSinger,
+  AlbumState copyWith({
+    AlbumStatus? status,
+    List<NewAlbumDataModel>? newAlbum
   }) {
-    return SingerState(
+    return AlbumState(
         status: status ?? this.status,
-        famousSinger: famousSinger ?? this.famousSinger
+        newAlbum: newAlbum ?? this.newAlbum
     );
   }
 }

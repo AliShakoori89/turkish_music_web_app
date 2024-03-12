@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
+import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/new_music_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
-import '../../../bloc/music_bloc/bloc.dart';
-import '../../../bloc/music_bloc/event.dart';
-import '../../../bloc/music_bloc/state.dart';
+import '../../../bloc/new_music_bloc/event.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../ui/main_page/play_music_page.dart';
 
@@ -23,7 +23,7 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
 
   @override
   void initState() {
-    BlocProvider.of<MusicBloc>(context).add(GetNewMusicEvent());
+    BlocProvider.of<NewMusicBloc>(context).add(GetNewMusicEvent());
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
           ),
-          BlocBuilder<MusicBloc, MusicState>(builder: (context, state) {
+          BlocBuilder<NewMusicBloc, NewMusicState>(builder: (context, state) {
 
           List<NewMusicDataModel> newSong = state.newMusic;
 

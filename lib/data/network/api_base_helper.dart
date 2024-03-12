@@ -10,11 +10,13 @@ class ApiBaseHelper {
 
 
   Future<dynamic> get(String url,
-      {String accessToken = '', String query = ""}) async {
+      {String accessToken = '', int page = 0, int count = 0}) async {
     try {
 
       final queryParameters = {
-        'apiKey': apiKey
+        'apiKey': apiKey,
+        "page": page ,
+        "count": count
       };
 
       Map<String, String> headers;
