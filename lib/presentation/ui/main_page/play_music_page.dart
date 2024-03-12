@@ -21,15 +21,21 @@ class PlayMusicPage extends StatefulWidget {
     required this.singerName});
 
   @override
-  State<PlayMusicPage> createState() => _PlayMusicPageState();
+  State<PlayMusicPage> createState() => _PlayMusicPageState(imagePath, singerName);
 }
 
 class _PlayMusicPageState extends State<PlayMusicPage> {
 
+  String imagePath;
+  String singerName;
   final double _progress = 90;
+
+  _PlayMusicPageState(this.imagePath, this.singerName);
 
   @override
   Widget build(BuildContext context) {
+
+    print("imagePath                              "+imagePath);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(
@@ -43,7 +49,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
             end: Alignment.bottomCenter,
           ),
           image: DecorationImage(
-              image: AssetImage(widget.imagePath),
+              image: NetworkImage(imagePath),
           fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2),
                 BlendMode.dstATop),
@@ -108,8 +114,8 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                         color: Colors.amber,
                         shape: BoxShape.circle,
                         image: DecorationImage(
-                          image: AssetImage(widget.imagePath),
-                          fit: BoxFit.contain
+                          image: NetworkImage(widget.imagePath),
+                          fit: BoxFit.cover
                         )
                       ),
                     ),

@@ -55,14 +55,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                 children: List.generate(artistList.length, (index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PlayMusicPage(
-                              imagePath: artistList[index].imageSource,
-                              singerName: artistList[index].name,
-                            )),
-                      );
+
                     },
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.22,
@@ -74,6 +67,12 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                             flex: 3,
                             child: Container(
                               decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.purple.withOpacity(0.5),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                       image: NetworkImage(

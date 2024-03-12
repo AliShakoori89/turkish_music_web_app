@@ -28,6 +28,12 @@ class MustListenContainer extends StatelessWidget {
                   ),
                   child: Container(
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.purple.withOpacity(0.5),
+                            blurRadius: 10,
+                          ),
+                        ],
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blue,
                         image: const DecorationImage(

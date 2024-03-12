@@ -8,6 +8,7 @@ import '../../../bloc/music_bloc/bloc.dart';
 import '../../../bloc/music_bloc/event.dart';
 import '../../../bloc/music_bloc/state.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
+import '../../../ui/main_page/play_music_page.dart';
 
 class NewMusicContainer extends StatefulWidget {
   const NewMusicContainer({super.key});
@@ -62,25 +63,40 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
                       },
                     ),
                     items: List.generate(newSong.length, (index) {
-
                       return Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25.0),
-                              image: DecorationImage(
-                                  image: NetworkImage(newSong[index].imageSource),
-                                  opacity: 0.3,
-                                  fit: BoxFit.fitWidth
-                              )
-                          ),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlayMusicPage(
+                                    imagePath: newSong[index].imageSource,
+                                    singerName: newSong[index].name,
+                                  )),
+                            );
+                          },
                           child: Container(
                             decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color: Colors.purple.withOpacity(0.5),
+                                  strokeAlign: BorderSide.strokeAlignOutside),
                                 borderRadius: BorderRadius.circular(25.0),
                                 image: DecorationImage(
                                     image: NetworkImage(newSong[index].imageSource),
-                                    fit: BoxFit.contain
+                                    opacity: 0.3,
+                                    fit: BoxFit.fitWidth
                                 )
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  image: DecorationImage(
+                                      image: NetworkImage(newSong[index].imageSource),
+                                      fit: BoxFit.contain
+                                  )
+                              ),
                             ),
                           ),
                         ),

@@ -16,6 +16,13 @@ class AppHeader extends StatelessWidget {
           const SizedBox(width: 15,),
           const Text("Turkish Music",
           style: TextStyle(
+              shadows: <Shadow>[
+                Shadow(
+                  offset: Offset(2.0, 2.0),
+                  blurRadius: 3.0,
+                  color: Colors.purple,
+                ),
+              ],
             fontFamily: "Dancing Script",
             fontSize: 35
           )),

@@ -62,16 +62,27 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                 children: [
                                   Expanded(
                                     flex: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  newAlbum[index].imageSource
+                                    child: InkWell(
+                                      onTap: (){
+
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.purple.withOpacity(0.5),
+                                                blurRadius: 10.0,
                                               ),
-                                              fit: BoxFit.fill)),
-                                      width: double.infinity,
+                                            ],
+                                            borderRadius:
+                                            BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    newAlbum[index].imageSource
+                                                ),
+                                                fit: BoxFit.fill)),
+                                        width: double.infinity,
+                                      ),
                                     )
                                   ),
                                   Expanded(
