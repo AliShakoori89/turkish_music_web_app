@@ -17,12 +17,12 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       GetMusicEvent event, Emitter<MusicState> emit) async {
     try {
       emit(state.copyWith(status: MusicStatus.loading));
-      AlbumModel onlineMode = await musicRepository.getMusic(event.musicId);
+      MusicModel musicDetail = await musicRepository.getMusic(event.musicId);
 
       emit(
         state.copyWith(
           status: MusicStatus.success,
-          musicDetail: onlineMode
+          musicDetail: musicDetail
         ),
       );
     } catch (error) {

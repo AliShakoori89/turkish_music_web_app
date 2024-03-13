@@ -10,16 +10,11 @@ class ApiBaseHelper {
 
 
   Future<dynamic> get(String url,
-      {String accessToken = '',
-        String query = "",
-        // int page = 0, int count = 0
-      }) async {
+      {String accessToken = '', String query = ""}) async {
     try {
 
       final queryParameters = {
-        'apiKey': apiKey,
-        // "page": page ,
-        // "count": count
+        'apiKey': apiKey
       };
 
       Map<String, String> headers;
@@ -29,8 +24,11 @@ class ApiBaseHelper {
         'Authorization': 'bearer $accessToken',
       };
 
+      print(accessToken);
       var secondURL = Uri.http("194.5.195.145", url, queryParameters);
       final response = await http.get(secondURL, headers: headers);
+
+      print(response.body);
       return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');

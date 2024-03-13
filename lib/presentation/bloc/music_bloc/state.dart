@@ -37,7 +37,7 @@ class MusicState extends Equatable{
     MusicModel? musicDetail
   }) {
     return MusicState(
-        status: status ?? this.status,
+      status: status ?? this.status,
       musicDetail: musicDetail ?? this.musicDetail
     );
   }

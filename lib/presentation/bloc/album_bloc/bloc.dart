@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import '../../../data/model/new_album_model.dart';
 import '../../../domain/repositories/album_repository.dart';
@@ -11,6 +12,7 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
   AlbumBloc(this.albumRepository) : super(
       AlbumState.initial()){
     on<GetNewAlbumEvent>(_mapGetNewAlbumEventToState);
+    on<GetSingerAllAlbumEvent>(_mapGetSingerAllAlbumEventToState);
   }
 
   void _mapGetNewAlbumEventToState(
@@ -22,6 +24,23 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
         state.copyWith(
             status: AlbumStatus.success,
             newAlbum: newAlbum
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: AlbumStatus.error));
+    }
+  }
+
+  void _mapGetSingerAllAlbumEventToState(
+      GetSingerAllAlbumEvent event, Emitter<AlbumState> emit) async {
+    try {
+      emit(state.copyWith(status: AlbumStatus.loading));
+      List singerAllAlbum = await albumRepository.getSingerAllAlbum(event.id);
+      print("singerAllAlbum            "+singerAllAlbum.length.toString());
+      emit(
+        state.copyWith(
+            status: AlbumStatus.success,
+            singerAllAlbum: singerAllAlbum
         ),
       );
     } catch (error) {
