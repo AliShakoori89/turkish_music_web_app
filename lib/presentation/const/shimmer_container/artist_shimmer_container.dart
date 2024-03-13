@@ -15,7 +15,7 @@ class ArtistShimmerContainer extends StatelessWidget {
       child: ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: shimmerLength,
+          itemCount: 7,
 
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, int index){

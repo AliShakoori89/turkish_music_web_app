@@ -8,7 +8,7 @@ class MusicRepository {
   @override
   Future<dynamic> getMusic(int id) async {
     ApiBaseHelper api = ApiBaseHelper();
-    final MusicModel response = await api.get('/api/Music/GetOneMusic/$id');
+    final MusicModel response = await api.get('/api/Album/GetAlbumsBySingerId/$id');
     return response.data;
   }
 }

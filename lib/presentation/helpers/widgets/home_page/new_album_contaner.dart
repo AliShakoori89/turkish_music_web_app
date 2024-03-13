@@ -98,9 +98,9 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                 );
               }
             else if(state.status.isError){
-
+              return const NewAlbumShimmerContainer();
             }
-            return Container();
+            return const NewAlbumShimmerContainer();
           })
         ),
       ],

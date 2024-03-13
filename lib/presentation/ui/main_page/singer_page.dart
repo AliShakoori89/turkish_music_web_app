@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 
+import '../../../data/model/music_model.dart';
 import '../../../data/model/singer_model.dart';
 import '../../helpers/widgets/custom_app_bar.dart';
 
@@ -31,7 +35,16 @@ class ArtistPage extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
+
+              MusicModel albumDetail = state.;
+              return ListView.builder(
+                itemCount: ,
+                itemBuilder: ,
+              );
+            }),
+
           ],
         ),
       ),

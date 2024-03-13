@@ -12,6 +12,7 @@ class AlbumRepository {
     final response = await api.get('/api/Album/GetNewAlbums');
     final productJson = json.decode(response.body);
     var newDongData = NewAlbumModel.fromJson(productJson);
+
     return newDongData.data;
   }
 }
