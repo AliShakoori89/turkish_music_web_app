@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_app_bar.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/like_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
@@ -59,19 +60,16 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
           child: SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    flex: 1,
-                    child: CustomAppBar(
-                      title: "Now Playing",
-                      singerName: singerName,
-                      haveMenuButton: true,
-                    )),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
+                Flexible(
+                  child: CustomAppBar(
+                    title: "Now Playing",
+                    singerName: singerName,
+                    haveMenuButton: true,
+                  ),
                 ),
-                Expanded(
-                  flex: 2,
+                Flexible(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -81,24 +79,21 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                           style: const TextStyle(
                               fontSize: 15,
                               color: Colors.grey
-                          ),)
-                        ,
+                          ),
+                        ),
                       ),
                       Expanded(
                         flex: 1,
                         child: LikeButton(
-                            name: singerName,
-                            isIcon: true,
+                          name: singerName,
+                          isIcon: true,
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                Expanded(
-                  flex: 6,
+                Flexible(
+                  flex: 4,
                   child: CircularSeekBar(
                     width: double.infinity,
                     height: 350,
@@ -114,53 +109,47 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     child: Container(
                       margin: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.amber,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(widget.imagePath),
-                          fit: BoxFit.cover
-                        )
+                          color: Colors.amber,
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: NetworkImage(widget.imagePath),
+                              fit: BoxFit.cover
+                          )
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                Expanded(
-                  flex: 1,
+                Flexible(
                   child: Container(
                     margin: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.05,
                         left: MediaQuery.of(context).size.width * 0.05
                     ),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const RandomPlayButton(),
-                        Row(
-                          children: [
-                            const SkipPrevious(),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            PlayButton(),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const SkipNext()
-                          ],
-                        ),
-                        const LoopIconButton()
+                        RandomPlayButton(),
+                        LoopIconButton()
                       ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                Expanded(
-                  flex: 1,
+                Flexible(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    const SkipPrevious(),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    PlayButton(),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const SkipNext()
+                  ],
+                ),),
+                Flexible(
                   child: Container(
                     margin: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.08,
@@ -176,6 +165,16 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                         DownloadButton(),
                       ],
                     ),
+                  ),
+                ),
+                Flexible(
+                  child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index){
+                      return Container(
+                        child: Text("1231231231231"),
+                      );
+                    },
                   ),
                 )
               ],

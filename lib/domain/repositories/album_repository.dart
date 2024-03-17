@@ -28,8 +28,8 @@ class AlbumRepository {
     print("1111111111 "+ response.toString());
     final productJson = json.decode(response.body);
     print("22222222222222       "+productJson.toString());
-    AlbumModel singerAllAlbum = AlbumModel.fromJson(productJson);
-    print("3333333333333333       "+singerAllAlbum.data!.length.toString());
+    var singerAllAlbum = AlbumModel.fromJson(productJson);
+    print("3333333333333333       "+singerAllAlbum.toString());
     return singerAllAlbum.data;
   }
 }

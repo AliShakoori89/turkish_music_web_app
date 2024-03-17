@@ -32,55 +32,98 @@ class _ArtistPageState extends State<ArtistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: CustomAppBar(
-                title: "Singer Page",
-                singerName: widget.artistDetail.name,
-                haveMenuButton: false,
-              ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.black, Colors.purple.withOpacity(0.7)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-            Expanded(
-              flex: 3,
-              child: Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: MediaQuery.of(context).size.width * 0.5,
-                  child: CircleAvatar(
-                    foregroundImage: NetworkImage(
-                      widget.artistDetail.imageSource
-                    ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.009),
+              Expanded(
+                flex: 2,
+                child: CustomAppBar(
+                  title: "Singer Page",
+                  singerName: widget.artistDetail.name,
+                  haveMenuButton: false,
+                ),
+              ),
+              // SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+              Expanded(
+                flex: 8,
+                child: Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Colors.purple, Colors.black],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                            widget.artistDetail.imageSource
+                        ),
+                        fit: BoxFit.fill
+                      )
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-            Expanded(
-              flex: 8,
-              child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Expanded(
+                flex: 12,
+                child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
 
-                List singerAllAlbum = state.singerAllAlbum;
+                  var singerAllAlbum = state.singerAllAlbum;
 
-                return ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: singerAllAlbum.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        leading: const Icon(Icons.list),
-                        trailing: const Text(
-                          "GFG",
-                          style: TextStyle(color: Colors.green, fontSize: 15),
-                        ),
-                        title: Text("List item $index"));
-                  });
-              }),
-            ),
-          ],
+                  return Container(
+                    margin: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.01,
+                      right: MediaQuery.of(context).size.width * 0.01
+                    ),
+                    child: ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: singerAllAlbum.length,
+                        itemExtent: 120.0,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: (){
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).size.height * 0.02
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.2,
+                                  height: MediaQuery.of(context).size.width * 0.5,
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                      image: DecorationImage(
+                                        image: NetworkImage(singerAllAlbum[index].imageSource.toString()),
+                                        fit: BoxFit.cover,
+                                      )
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.02,
+                                ),
+                                Text(singerAllAlbum[index].name!)
+                              ],
+                            )),
+                        );
+                      }),
+                  );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

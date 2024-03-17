@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import '../../../data/model/new_album_model.dart';
+import '../../../data/model/singer_model.dart';
 import '../../../domain/repositories/album_repository.dart';
 import 'event.dart';
 
@@ -35,8 +36,7 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
       GetSingerAllAlbumEvent event, Emitter<AlbumState> emit) async {
     try {
       emit(state.copyWith(status: AlbumStatus.loading));
-      List singerAllAlbum = await albumRepository.getSingerAllAlbum(event.id);
-      print("singerAllAlbum            "+singerAllAlbum.length.toString());
+      List<AlbumDataModel> singerAllAlbum = await albumRepository.getSingerAllAlbum(event.id);
       emit(
         state.copyWith(
             status: AlbumStatus.success,

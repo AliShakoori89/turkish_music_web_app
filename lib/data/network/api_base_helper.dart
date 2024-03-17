@@ -24,11 +24,9 @@ class ApiBaseHelper {
         'Authorization': 'bearer $accessToken',
       };
 
-      print(accessToken);
       var secondURL = Uri.http("194.5.195.145", url, queryParameters);
       final response = await http.get(secondURL, headers: headers);
 
-      print(response.body);
       return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');
