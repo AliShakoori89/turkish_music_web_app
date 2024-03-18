@@ -58,7 +58,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                       Navigator.push(
                         context,
                           MaterialPageRoute(
-                              builder: (context) => ArtistPage(
+                              builder: (context) => SingerPage(
                                   artistDetail: artistList[index]
                               ))
                       );

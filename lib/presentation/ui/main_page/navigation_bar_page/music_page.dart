@@ -90,7 +90,8 @@ class MusicPage extends StatelessWidget {
                               MaterialPageRoute(builder: (context) =>
                                   const PlayMusicPage(
                                       imagePath: "assets/images/tarkan.png",
-                                      singerName: "Tarkan")),
+                                      singerName: "Tarkan",
+                                      musicFile: "SADADASDASDASDASDSAD",)),
                             );
                           },
                             child: const TopArrow(),),

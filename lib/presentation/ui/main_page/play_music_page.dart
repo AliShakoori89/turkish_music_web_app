@@ -16,28 +16,33 @@ class PlayMusicPage extends StatefulWidget {
   
   final String imagePath;
   final String singerName;
+  final String musicFile;
 
   const PlayMusicPage({super.key,
     required this.imagePath,
-    required this.singerName});
+    required this.singerName,
+    required this.musicFile});
 
   @override
-  State<PlayMusicPage> createState() => _PlayMusicPageState(imagePath, singerName);
+  State<PlayMusicPage> createState() => _PlayMusicPageState(imagePath, singerName, musicFile);
 }
 
 class _PlayMusicPageState extends State<PlayMusicPage> {
 
   String imagePath;
   String singerName;
+  String musicFile;
+
   final double _progress = 90;
 
-  _PlayMusicPageState(this.imagePath, this.singerName);
+  _PlayMusicPageState(this.imagePath, this.singerName, this.musicFile);
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       body: Container(
+        height: double.infinity,
         margin: EdgeInsets.only(
             right: MediaQuery.of(context).size.width * 0.05,
             left: MediaQuery.of(context).size.width * 0.05
@@ -50,7 +55,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
           ),
           image: DecorationImage(
               image: NetworkImage(imagePath),
-          fit: BoxFit.cover,
+          fit: BoxFit.fitHeight,
             colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2),
                 BlendMode.dstATop),
           ),
@@ -63,6 +68,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Flexible(
+                  flex: 2,
                   child: CustomAppBar(
                     title: "Now Playing",
                     singerName: singerName,
@@ -70,6 +76,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   ),
                 ),
                 Flexible(
+                  flex: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -93,7 +100,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   ),
                 ),
                 Flexible(
-                  flex: 4,
+                  flex: 6,
                   child: CircularSeekBar(
                     width: double.infinity,
                     height: 350,
@@ -120,6 +127,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   ),
                 ),
                 Flexible(
+                  flex: 1,
                   child: Container(
                     margin: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.05,
@@ -135,6 +143,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   ),
                 ),
                 Flexible(
+                  flex: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -150,6 +159,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   ],
                 ),),
                 Flexible(
+                  flex: 1,
                   child: Container(
                     margin: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.08,
@@ -168,6 +178,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   ),
                 ),
                 Flexible(
+                  flex: 4,
                   child: ListView.builder(
                     itemCount: 10,
                     itemBuilder: (BuildContext context, int index){
@@ -175,7 +186,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                         child: Text("1231231231231"),
                       );
                     },
-                  ),
+                  )
                 )
               ],
             ),

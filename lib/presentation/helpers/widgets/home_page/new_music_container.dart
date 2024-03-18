@@ -73,6 +73,7 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
                                   builder: (context) => PlayMusicPage(
                                     imagePath: newSong[index].imageSource,
                                     singerName: newSong[index].name,
+                                    musicFile: newSong[index].fileSource,
                                   )),
                             );
                           },

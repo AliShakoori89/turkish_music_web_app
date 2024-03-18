@@ -6,21 +6,22 @@ import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart';
 
 import '../../../data/model/music_model.dart';
 import '../../../data/model/singer_model.dart';
 import '../../helpers/widgets/custom_app_bar.dart';
 
-class ArtistPage extends StatefulWidget {
-  const ArtistPage({super.key, required this.artistDetail});
+class SingerPage extends StatefulWidget {
+  const SingerPage({super.key, required this.artistDetail});
 
   final SingerDataModel artistDetail;
 
   @override
-  State<ArtistPage> createState() => _ArtistPageState();
+  State<SingerPage> createState() => _SingerPageState();
 }
 
-class _ArtistPageState extends State<ArtistPage> {
+class _SingerPageState extends State<SingerPage> {
 
   @override
   void initState() {
@@ -93,6 +94,15 @@ class _ArtistPageState extends State<ArtistPage> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PlayMusicPage(
+                                      imagePath: singerAllAlbum[index].imageSource.toString(),
+                                      musicFile: singerAllAlbum[index].musics![0].fileSource.toString(),
+                                      singerName: ,
+                                    ))
+                            );
                           },
                           child: Padding(
                             padding: EdgeInsets.only(
