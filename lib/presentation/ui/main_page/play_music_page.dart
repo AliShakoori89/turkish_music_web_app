@@ -1,14 +1,17 @@
 import 'dart:ui';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_app_bar.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/like_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/random_play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_next_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_previous_button.dart';
+import '../../../data/model/album_model.dart';
 import '../../helpers/music_player_component/download_button.dart';
 import '../../helpers/music_player_component/loopIcon_button.dart';
 
@@ -16,26 +19,83 @@ class PlayMusicPage extends StatefulWidget {
   
   final String imagePath;
   final String singerName;
-  final String musicFile;
+  List<AlbumDataMusicModel>? musicFiles;
+  String? musicFile;
 
-  const PlayMusicPage({super.key,
+  PlayMusicPage({super.key,
     required this.imagePath,
     required this.singerName,
-    required this.musicFile});
+    this.musicFiles,
+    this.musicFile});
 
   @override
-  State<PlayMusicPage> createState() => _PlayMusicPageState(imagePath, singerName, musicFile);
+  State<PlayMusicPage> createState() => _PlayMusicPageState(imagePath, singerName, musicFiles,
+      musicFile);
 }
 
 class _PlayMusicPageState extends State<PlayMusicPage> {
 
   String imagePath;
   String singerName;
-  String musicFile;
+  List<AlbumDataMusicModel>? musicFiles;
+  String? musicFile;
 
   final double _progress = 90;
 
-  _PlayMusicPageState(this.imagePath, this.singerName, this.musicFile);
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  PlaybackState playbackState = PlaybackState.stop;
+  bool get isPlaying =>
+      playbackState == PlaybackState.play ||
+          playbackState == PlaybackState.preloadPlayed;
+
+  _PlayMusicPageState(this.imagePath, this.singerName, this.musicFiles,
+      this.musicFile);
+
+  final SimpleAudio player = SimpleAudio(
+    onSkipNext: (_) => debugPrint("Next"),
+    onSkipPrevious: (_) => debugPrint("Prev"),
+    onNetworkStreamError: (player, error) {
+      debugPrint("Network Stream Error: $error");
+      player.stop();
+    },
+    onDecodeError: (player, error) {
+      debugPrint("Decode Error: $error");
+      player.stop();
+    },
+  );
+
+  String convertSecondsToReadableString(int seconds) {
+    int m = seconds ~/ 60;
+    int s = seconds % 60;
+
+    return "$m:${s > 9 ? s : "0$s"}";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    player.playbackStateStream.listen((event) async {
+      setState(() => playbackState = event);
+    });
+
+    player.progressStateStream.listen((event) {
+      setState(() {
+        position = event.position.toDouble();
+        duration = event.duration.toDouble();
+      });
+    });
+  }
+
+  bool get isMuted => volume == 0;
+  double trueVolume = 1;
+  double volume = 1;
+  bool normalize = false;
+  bool loop = false;
+
+  double position = 0;
+  double duration = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +180,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: NetworkImage(widget.imagePath),
-                              fit: BoxFit.cover
+                              fit: BoxFit.fitHeight
                           )
                       ),
                     ),
@@ -151,7 +211,27 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     const SizedBox(
                       width: 10,
                     ),
-                    PlayButton(),
+                    CircleButton(
+                        size: 40,
+                        onPressed: () async{
+
+                          if (isPlaying) {
+                            player.pause();
+                            await audioPlayer.pause();
+                          } else {
+                            player.play();
+                            print("@@@@@@@@@@@@@@@               "+musicFile.toString());
+
+                            await audioPlayer.play(UrlSource(musicFile!));
+                          }
+                        },
+                        child: Icon(
+                          isPlaying
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
                     const SizedBox(
                       width: 10,
                     ),
@@ -177,19 +257,57 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     ),
                   ),
                 ),
-                Flexible(
+                musicFiles != null ? Flexible(
                   flex: 4,
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: musicFiles?.length,
                     itemBuilder: (BuildContext context, int index){
                       return Container(
-                        child: Text("1231231231231"),
+                        margin: const EdgeInsets.only(
+                          top: 10,
+                          bottom: 10
+                        ),
+                        child: Text(musicFiles![index].name!),
                       );
                     },
                   )
                 )
+                    : Container()
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CircleButton extends StatelessWidget {
+  const CircleButton({
+    required this.onPressed,
+    required this.child,
+    this.size = 35,
+    this.color = Colors.blue,
+    super.key,
+  });
+
+  final void Function()? onPressed;
+  final Widget child;
+  final double size;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: size,
+      width: size,
+      child: ClipOval(
+        child: Material(
+          color: color,
+          child: InkWell(
+            canRequestFocus: false,
+            onTap: onPressed,
+            child: child,
           ),
         ),
       ),

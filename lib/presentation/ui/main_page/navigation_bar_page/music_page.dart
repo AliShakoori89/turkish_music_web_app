@@ -88,10 +88,9 @@ class MusicPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) =>
-                                  const PlayMusicPage(
+                                  PlayMusicPage(
                                       imagePath: "assets/images/tarkan.png",
-                                      singerName: "Tarkan",
-                                      musicFile: "SADADASDASDASDASDSAD",)),
+                                      singerName: "Tarkan",)),
                             );
                           },
                             child: const TopArrow(),),
@@ -113,7 +112,7 @@ class MusicPage extends StatelessWidget {
                                   singerName: "MoOooooOoch",
                                   imagePath: "assets/images/tarkan.png",
                                   align: MainAxisAlignment.start),
-                              PlayButton()
+                              // PlayButton(isPlaying: isPlaying, player: player,)
                             ],
                           ),
                         ),

@@ -12,13 +12,10 @@ import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
@@ -60,8 +57,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // print("AAAAAAAaaaaaaaaaaaaaaaaa             "+result.toString());
 
     return MultiBlocProvider(
       providers: [
