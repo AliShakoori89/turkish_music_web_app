@@ -212,7 +212,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                       width: 10,
                     ),
                     CircleButton(
-                        size: 40,
+                        size: 60,
                         onPressed: () async{
 
                           if (isPlaying) {
@@ -230,6 +230,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                               ? Icons.pause_rounded
                               : Icons.play_arrow_rounded,
                           color: Colors.white,
+                          size: 50,
                         ),
                       ),
                     const SizedBox(

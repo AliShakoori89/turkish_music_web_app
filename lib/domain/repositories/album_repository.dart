@@ -13,10 +13,12 @@ class AlbumRepository {
   Future<dynamic> getNewAlbum() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Album/GetNewAlbums');
+    print("22222222222          "+response.body.toString());
     final productJson = json.decode(response.body);
+    print("33333333333             "+productJson.toString());
     var newDongData = NewAlbumModel.fromJson(productJson);
-
-    return newDongData.data;
+    print("44444444444444444             ");
+    return newDongData;
   }
 
   @override
@@ -25,11 +27,8 @@ class AlbumRepository {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('accessToken');
     final response = await api.get('/api/Album/GetAlbumsBySingerId/$id', accessToken: accessToken!);
-    print("1111111111 "+ response.toString());
     final productJson = json.decode(response.body);
-    print("22222222222222       "+productJson.toString());
     var singerAllAlbum = AlbumModel.fromJson(productJson);
-    print("3333333333333333       "+singerAllAlbum.toString());
     return singerAllAlbum.data;
   }
 }

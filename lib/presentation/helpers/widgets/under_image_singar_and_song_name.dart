@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class UnderImageSingerAndSongName extends StatelessWidget {
 
-  final String singerName;
+  final String? singerName;
   String? albumName;
   final bool isArtist;
 
@@ -30,15 +30,15 @@ class UnderImageSingerAndSongName extends StatelessWidget {
                     )),
                 Expanded(
                   flex: 1,
-                  child: Text(singerName,
-                      style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                  child: singerName != null ? Text(singerName!,
+                      style: const TextStyle(fontSize: 10, color: Colors.grey)):Container(),
                 ),
                 Spacer()
               ],
             ),
         )
         : Text(
-      singerName,
+      singerName != null ? singerName! : "",
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(fontSize: 12),
       maxLines: 1,

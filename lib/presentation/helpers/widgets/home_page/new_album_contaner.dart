@@ -40,7 +40,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
           ),
           child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
 
-            List<NewAlbumDataModel> newAlbum = state.newAlbum;
+            var newAlbum = state.newAlbum;
 
             if(state.status.isLoading){
               return const NewAlbumShimmerContainer();
@@ -55,51 +55,53 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                       mainAxisExtent: 170,
                       crossAxisSpacing: 50,
                       children: List.generate(
-                          newAlbum.length,
-                          (index) => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 5,
-                                    child: InkWell(
-                                      onTap: (){
-
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.purple.withOpacity(0.5),
-                                                blurRadius: 10.0,
-                                              ),
-                                            ],
-                                            borderRadius:
-                                            BorderRadius.circular(15),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    newAlbum[index].imageSource
-                                                ),
-                                                fit: BoxFit.fill)),
-                                        width: double.infinity,
-                                      ),
-                                    )
+                          newAlbum!.data!.length,
+                          (index) {
+                            print(newAlbum.data![index].imageSource!);
+                            return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                flex: 5,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.purple.withOpacity(0.5),
+                                            blurRadius: 10.0,
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                            image: NetworkImage(newAlbum
+                                                .data![index].imageSource!),
+                                            fit: BoxFit.fill)),
+                                    width: double.infinity,
                                   ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: UnderImageSingerAndSongName(
-                                        singerName: newAlbum[index].singer.name,
-                                        albumName: newAlbum[index].name,
-                                        isArtist: true),
-                                  ),
-                                ],
-                              )
+                                )),
+                            Expanded(
+                              flex: 2,
+                              child: UnderImageSingerAndSongName(
+                                  singerName:
+                                      newAlbum.data![index].singer?.name,
+                                  albumName: newAlbum.data![index].name,
+                                  isArtist: true),
+                            ),
+                          ],
+                        );
+                      }
                       )
                   ),
                 );
               }
             else if(state.status.isError){
+              print("errorrrrrrrrrrrrrrrrrrrrrrrr");
               return const NewAlbumShimmerContainer();
             }
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             return const NewAlbumShimmerContainer();
           })
         ),

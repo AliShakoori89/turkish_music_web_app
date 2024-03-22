@@ -11,8 +11,8 @@ class NewMusicRepository {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/NewMusic/GetAll');
     final productJson = json.decode(response.body);
-    var newDongData = NewMusicModel.fromJson(productJson);
-    return newDongData.data;
+    var newSongData = NewMusicModel.fromJson(productJson);
+    return newSongData.data;
   }
 
 }

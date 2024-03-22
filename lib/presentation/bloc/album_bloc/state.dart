@@ -23,12 +23,12 @@ class AlbumState extends Equatable{
 
   static AlbumState initial() => const AlbumState(
     status: AlbumStatus.initial,
-    newAlbum: <NewAlbumDataModel>[],
+    newAlbum: null,
     singerAllAlbum: <AlbumDataModel>[]
   );
 
   final AlbumStatus status;
-  final List<NewAlbumDataModel> newAlbum;
+  final NewAlbumModel? newAlbum;
   final List<AlbumDataModel> singerAllAlbum;
 
   @override
@@ -37,7 +37,7 @@ class AlbumState extends Equatable{
 
   AlbumState copyWith({
     AlbumStatus? status,
-    List<NewAlbumDataModel>? newAlbum,
+    NewAlbumModel? newAlbum,
     List<AlbumDataModel>? singerAllAlbum
   }) {
     return AlbumState(
