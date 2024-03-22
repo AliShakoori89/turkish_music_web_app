@@ -76,6 +76,9 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
   void initState() {
     super.initState();
 
+    player.play();
+    audioPlayer.play(UrlSource(musicFile!));
+
     player.playbackStateStream.listen((event) async {
       setState(() => playbackState = event);
     });
