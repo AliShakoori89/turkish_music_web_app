@@ -14,6 +14,7 @@ import 'package:turkish_music_app/presentation/helpers/music_player_component/sk
 import '../../../data/model/album_model.dart';
 import '../../helpers/music_player_component/download_button.dart';
 import '../../helpers/music_player_component/loopIcon_button.dart';
+import '../../helpers/widgets/circle_button.dart';
 
 class PlayMusicPage extends StatefulWidget {
   
@@ -39,8 +40,6 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
   String singerName;
   List<AlbumDataMusicModel>? musicFiles;
   String? musicFile;
-
-  final double _progress = 90;
 
   AudioPlayer audioPlayer = AudioPlayer();
 
@@ -78,6 +77,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
 
     player.play();
     audioPlayer.play(UrlSource(musicFile!));
+    player.open(musicFile!);
 
     player.playbackStateStream.listen((event) async {
       setState(() => playbackState = event);
@@ -89,6 +89,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
         duration = event.duration.toDouble();
       });
     });
+
   }
 
   bool get isMuted => volume == 0;
@@ -167,7 +168,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                   child: CircularSeekBar(
                     width: double.infinity,
                     height: 350,
-                    progress: _progress,
+                    progress: 100,
                     barWidth: 8,
                     startAngle: 45,
                     sweepAngle: 270,
@@ -176,6 +177,8 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     dashWidth: 1,
                     dashGap: 2,
                     animation: true,
+                    animDurationMillis: 10000,
+
                     child: Container(
                       margin: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -187,7 +190,16 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                           )
                       ),
                     ),
+                    // maxProgress: 120,
+                    // minProgress: 0,
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(convertSecondsToReadableString(position.floor())),
+                    Text(convertSecondsToReadableString(duration.floor())),
+                  ],
                 ),
                 Flexible(
                   flex: 1,
@@ -196,11 +208,27 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                         right: MediaQuery.of(context).size.width * 0.05,
                         left: MediaQuery.of(context).size.width * 0.05
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         RandomPlayButton(),
-                        LoopIconButton()
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          splashRadius: 24,
+                          onPressed: () {
+                            setState(() => loop = !loop);
+                            player.loopPlayback(loop);
+                          },
+                          icon: loop
+                              ? const Icon(
+                            CupertinoIcons.arrow_2_circlepath,
+                            color: Colors.white,
+                            size: 20,)
+                              : const Icon(
+                              CupertinoIcons.arrow_2_circlepath,
+                              color: Colors.grey,
+                              size: 20),
+                        )
                       ],
                     ),
                   ),
@@ -214,28 +242,7 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     const SizedBox(
                       width: 10,
                     ),
-                    CircleButton(
-                        size: 60,
-                        onPressed: () async{
-
-                          if (isPlaying) {
-                            player.pause();
-                            await audioPlayer.pause();
-                          } else {
-                            player.play();
-                            print("@@@@@@@@@@@@@@@               "+musicFile.toString());
-
-                            await audioPlayer.play(UrlSource(musicFile!));
-                          }
-                        },
-                        child: Icon(
-                          isPlaying
-                              ? Icons.pause_rounded
-                              : Icons.play_arrow_rounded,
-                          color: Colors.white,
-                          size: 50,
-                        ),
-                      ),
+                    playButton(),
                     const SizedBox(
                       width: 10,
                     ),
@@ -284,37 +291,28 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
       ),
     );
   }
-}
 
-class CircleButton extends StatelessWidget {
-  const CircleButton({
-    required this.onPressed,
-    required this.child,
-    this.size = 35,
-    this.color = Colors.blue,
-    super.key,
-  });
+  CircleButton playButton() {
+    return CircleButton(
+                      size: 60,
+                      onPressed: () async{
 
-  final void Function()? onPressed;
-  final Widget child;
-  final double size;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: ClipOval(
-        child: Material(
-          color: color,
-          child: InkWell(
-            canRequestFocus: false,
-            onTap: onPressed,
-            child: child,
-          ),
-        ),
-      ),
-    );
+                        if (isPlaying) {
+                          player.pause();
+                          await audioPlayer.pause();
+                        } else {
+                          player.play();
+                          await audioPlayer.play(UrlSource(musicFile!));
+                        }
+                      },
+                      child: Icon(
+                        isPlaying
+                            ? Icons.pause_rounded
+                            : Icons.play_arrow_rounded,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    );
   }
 }
+
