@@ -66,6 +66,12 @@ class _SingerPageState extends State<SingerPage> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.3,
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.purple.withOpacity(0.5),
+                          blurRadius: 10,
+                        ),
+                      ],
                     borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
                         image: NetworkImage(

@@ -34,7 +34,6 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
         const SizedBox(
           height: 20,
         ),
-        const TitleText(title: "Artist", haveSeeAll: true),
         BlocBuilder<SingerBloc, SingerState>(builder: (context, state) {
 
           List<SingerDataModel> artistList = state.famousSinger;
