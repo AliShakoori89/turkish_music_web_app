@@ -75,9 +75,9 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
   void initState() {
     super.initState();
 
-    player.play();
-    audioPlayer.play(UrlSource(musicFile!));
-    player.open(musicFile!);
+    // player.play();
+    // audioPlayer.play(UrlSource(musicFile!));
+    // player.open(musicFile!);
 
     player.playbackStateStream.listen((event) async {
       setState(() => playbackState = event);
@@ -297,13 +297,19 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                       size: 60,
                       onPressed: () async{
 
-                        if (isPlaying) {
-                          player.pause();
-                          await audioPlayer.pause();
-                        } else {
-                          player.play();
-                          await audioPlayer.play(UrlSource(musicFile!));
+                        print("*******             "+isPlaying.toString());
+                        print("*******             "+player.toString());
+                        print("*******             "+audioPlayer.playerId);
+                        if(musicFile == musicFile){
+                          if (isPlaying) {
+                            player.pause();
+                            await audioPlayer.pause();
+                          } else {
+                            player.play();
+                            await audioPlayer.play(UrlSource(musicFile!));
+                          }
                         }
+
                       },
                       child: Icon(
                         isPlaying

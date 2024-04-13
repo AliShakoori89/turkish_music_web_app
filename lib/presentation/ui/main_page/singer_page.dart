@@ -59,7 +59,7 @@ class _SingerPageState extends State<SingerPage> {
               Expanded(
                 flex: 8,
                 child: Container(
-                  margin: EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                     left: 30,
                     right: 30
                   ),
@@ -85,13 +85,13 @@ class _SingerPageState extends State<SingerPage> {
 
                   return Container(
                     margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.01,
-                      right: MediaQuery.of(context).size.width * 0.01
+                      left: MediaQuery.of(context).size.width * 0.09,
+                      right: MediaQuery.of(context).size.width * 0.09
                     ),
                     child: AnimatedGridView(
                         crossAxisCount: 2,
                         mainAxisExtent: 250,
-                        crossAxisSpacing: 5,
+                        crossAxisSpacing: 1,
                       primary: false,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
@@ -124,10 +124,16 @@ class _SingerPageState extends State<SingerPage> {
                                     width: MediaQuery.of(context).size.width * 0.3,
                                     height: MediaQuery.of(context).size.width * 0.7,
                                     decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.purple.withOpacity(0.5),
+                                            blurRadius: 10,
+                                          ),
+                                        ],
                                         borderRadius: const BorderRadius.all(Radius.circular(8)),
                                         image: DecorationImage(
                                           image: NetworkImage(singerAllAlbum[index].imageSource.toString()),
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.fill,
                                         )
                                     ),
                                   ),
