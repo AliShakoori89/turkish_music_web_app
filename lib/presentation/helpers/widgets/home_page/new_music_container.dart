@@ -33,7 +33,6 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TitleText(title: "New Song", haveSeeAll: true),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
           ),
@@ -92,7 +91,6 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25.0),
                                   image: DecorationImage(
                                       image: NetworkImage(newSong[index].imageSource),
                                       fit: BoxFit.contain
