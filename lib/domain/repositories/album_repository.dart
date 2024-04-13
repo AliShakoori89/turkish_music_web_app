@@ -13,11 +13,8 @@ class AlbumRepository {
   Future<dynamic> getNewAlbum() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Album/GetNewAlbums');
-    print("22222222222          "+response.body.toString());
     final productJson = json.decode(response.body);
-    print("33333333333             "+productJson.toString());
     var newDongData = NewAlbumModel.fromJson(productJson);
-    print("44444444444444444             ");
     return newDongData;
   }
 

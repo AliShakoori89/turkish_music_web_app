@@ -65,7 +65,7 @@ class SignUserRepository {
     }
   }
 
-  FutureOr<bool?> secondLogin(String email, String verificationToken) async {
+  Future<bool> secondLogin(String email, String verificationToken) async {
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({'email': email, "verificationToken": verificationToken,
       "apiKey": apiKey});
@@ -77,16 +77,9 @@ class SignUserRepository {
 
     if (response.statusCode == 200) {
       await savedAccessTokenValue(accessToken);
-      Get.snackbar("Check Authentication","Authentication Success...  WellCome",
-          backgroundColor: const Color(
-              0xFF00B01E).withOpacity(0.2)
-      );
       return true;
     }
     else {
-      Get.snackbar("Check Authentication","The Entered Verification Code Is Invalid !!",
-          backgroundColor: const Color(
-              0xFFC20808).withOpacity(0.2));
       return false;
     }
   }

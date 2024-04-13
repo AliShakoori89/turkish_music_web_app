@@ -42,7 +42,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
           if(state.status.isLoading){
             return ArtistShimmerContainer(shimmerLength: artistList.length);
           }
-          else if(state.status.isSuccess){
+          if(state.status.isSuccess){
             return Container(
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.0052,
@@ -102,7 +102,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
               ),
             );
           }
-          else if(state.status.isError){
+          if(state.status.isError){
             return ArtistShimmerContainer(shimmerLength: artistList.length);
           }
           return ArtistShimmerContainer(shimmerLength: artistList.length);

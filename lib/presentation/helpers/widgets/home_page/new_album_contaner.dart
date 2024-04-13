@@ -48,11 +48,11 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
             else if(state.status.isSuccess){
 
               return SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.42,
+                  height: MediaQuery.of(context).size.height * 0.45,
                   child: AnimatedGridView(
                       physics: const NeverScrollableScrollPhysics(),
                       crossAxisCount: 2,
-                      mainAxisExtent: 170,
+                      mainAxisExtent: 220,
                       crossAxisSpacing: 50,
                       children: List.generate(
                           newAlbum!.data!.length,

@@ -396,14 +396,24 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             //get all textFields controller, if needed
                             verificationCodeController = controllers;
                           },
-                          onSubmit: (String verificationCode) {
+                          onSubmit: (String verificationCode) async{
 
                             final registerBloc = BlocProvider.of<UserBloc>(context);
 
-                            registerBloc.signUpUserRepository.secondLogin(emailController.text, verificationCode);
+                            bool isTrue = await registerBloc.signUpUserRepository.secondLogin(emailController.text, verificationCode);
 
-                            Get.to(const MainPage());
-
+                            if(isTrue){
+                              Get.snackbar("Check Authentication","Authentication Success...  WellCome",
+                                  backgroundColor: const Color(
+                                      0xFF00B01E).withOpacity(0.2)
+                              );
+                              Get.to(const MainPage());
+                            } else {
+                              Get.snackbar("Check Verification Code","Verification code is not true",
+                                  backgroundColor: const Color(
+                                      0xFFC20808).withOpacity(0.2)
+                              );
+                            }
                           },
                         ),
                       );
