@@ -66,6 +66,8 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
                         padding: const EdgeInsets.only(right: 10),
                         child: InkWell(
                           onTap: (){
+
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
