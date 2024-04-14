@@ -1,4 +1,9 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_audio/simple_audio.dart';
+import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
@@ -8,7 +13,14 @@ import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart
 import '../../../helpers/widgets/top_arrow_icon.dart';
 
 class MusicPage extends StatelessWidget {
-  MusicPage({super.key});
+
+  final bool isPlaying;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+  late PlaybackState playbackState;
+
+  MusicPage({super.key, required this.isPlaying, required this.player,
+    required this.audioPlayer, required this.playbackState});
 
   List customIcon = [
     Icons.playlist_play_outlined,
@@ -78,85 +90,101 @@ class MusicPage extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    color: Colors.black,
-                    height: MediaQuery.of(context).size.height * 0.14,
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>
-                                  PlayMusicPage(
+                  child: BlocBuilder<IsPlayingMusicBloc, IsPlayingMusicState>(
+                    builder: (context, state) {
+
+                      return Container(
+                        color: Colors.black,
+                        height: MediaQuery.of(context).size.height * 0.14,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      PlayMusicPage(
+                                        imagePath: state.singerImage,
+                                        singerName: state.singerName,
+                                        musicFile: state.musicFile,
+                                        isPlaying: isPlaying,
+                                        playbackState: playbackState,
+                                        player: player,
+                                        audioPlayer: audioPlayer,)),
+                                );
+                              },
+                              child: const TopArrow(),),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.10 + 15,
+                                right: MediaQuery.of(context).size.width * 0.10 + 15,
+                                // top: MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                  const SingerNameTrackNameImage(
+                                      songName: "Tarkan",
+                                      singerName: "MoOooooOoch",
                                       imagePath: "assets/images/tarkan.png",
-                                      singerName: "Tarkan",)),
-                            );
-                          },
-                            child: const TopArrow(),),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.10 + 15,
-                            right: MediaQuery.of(context).size.width * 0.10 + 15,
-                            // top: MediaQuery.of(context).size.height * 0.03,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Column(
-                              //   mainAxisAlignment: MainAxisAlignment.start,
-                              //   children: [
-                              const SingerNameTrackNameImage(
-                                  songName: "Tarkan",
-                                  singerName: "MoOooooOoch",
-                                  imagePath: "assets/images/tarkan.png",
-                                  align: MainAxisAlignment.start),
-                              // PlayButton(isPlaying: isPlaying, player: player,)
-                            ],
-                          ),
+                                      align: MainAxisAlignment.start),
+                                      PlayButton(
+                                        isPlaying: isPlaying,
+                                        player: player,
+                                        audioPlayer: audioPlayer,
+                                        musicFile:
+                                      )
+                                    ])
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      );
+                    }
+                  )
                 ),
               ],
             ),
           ),
         )
-        );
+      );
   }
 }
 
-class CircleButton extends StatelessWidget {
-  const CircleButton({
-    required this.onPressed,
-    required this.child,
-    this.size = 35,
-    this.color = Colors.blue,
-    super.key,
-  });
-
-  final void Function()? onPressed;
-  final Widget child;
-  final double size;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: size,
-      width: size,
-      child: ClipOval(
-        child: Material(
-          color: color,
-          child: InkWell(
-            canRequestFocus: false,
-            onTap: onPressed,
-            child: child,
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class CircleButton extends StatelessWidget {
+//   const CircleButton({
+//     required this.onPressed,
+//     required this.child,
+//     this.size = 35,
+//     this.color = Colors.blue,
+//     super.key,
+//   });
+//
+//   final void Function()? onPressed;
+//   final Widget child;
+//   final double size;
+//   final Color color;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       height: size,
+//       width: size,
+//       child: ClipOval(
+//         child: Material(
+//           color: color,
+//           child: InkWell(
+//             canRequestFocus: false,
+//             onTap: onPressed,
+//             child: child,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

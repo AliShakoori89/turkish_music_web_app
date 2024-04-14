@@ -12,24 +12,39 @@ extension MIsPlayingMusicStatusX on IsPlayingMusicStatus {
 class IsPlayingMusicState extends Equatable{
 
   const IsPlayingMusicState({
-    required this.status
+    required this.status,
+    required this.musicFile,
+    required this.singerName,
+    required this.singerImage
   });
 
   static IsPlayingMusicState initial() => const IsPlayingMusicState(
-      status: IsPlayingMusicStatus.initial,
+    status: IsPlayingMusicStatus.initial,
+    musicFile: '',
+    singerName: '',
+    singerImage: ''
   );
 
   final IsPlayingMusicStatus status;
+  final String musicFile;
+  final String singerName;
+  final String singerImage;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status];
+  List<Object?> get props => [status, musicFile, singerName, singerImage];
 
   IsPlayingMusicState copyWith({
     IsPlayingMusicStatus? status,
+    String? musicFile,
+    String? singerName,
+    String? singerImage
   }) {
     return IsPlayingMusicState(
-        status: status ?? this.status,
+      status: status ?? this.status,
+      musicFile: musicFile ?? this.musicFile,
+      singerName: singerName ?? this.singerName,
+      singerImage: singerImage ?? this.singerImage
     );
   }
 }

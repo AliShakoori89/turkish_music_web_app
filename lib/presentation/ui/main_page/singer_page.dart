@@ -1,8 +1,10 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
+import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
@@ -14,15 +16,28 @@ import '../../../data/model/singer_model.dart';
 import '../../helpers/widgets/custom_app_bar.dart';
 
 class SingerPage extends StatefulWidget {
-  const SingerPage({super.key, required this.artistDetail});
+  SingerPage({super.key, required this.artistDetail, required this.audioPlayer,
+    required this.isPlaying, required this.playbackState, required this.player});
 
   final SingerDataModel artistDetail;
+  final AudioPlayer audioPlayer;
+  final bool isPlaying;
+  late PlaybackState playbackState;
+  final SimpleAudio player;
 
   @override
-  State<SingerPage> createState() => _SingerPageState();
+  State<SingerPage> createState() => _SingerPageState(artistDetail, audioPlayer, isPlaying, playbackState, player);
 }
 
 class _SingerPageState extends State<SingerPage> {
+
+  final SingerDataModel artistDetail;
+  final AudioPlayer audioPlayer;
+  final bool isPlaying;
+  late PlaybackState playbackState;
+  final SimpleAudio player;
+
+  _SingerPageState(this.artistDetail, this.audioPlayer, this.isPlaying, this.playbackState, this.player);
 
   @override
   void initState() {
@@ -114,6 +129,10 @@ class _SingerPageState extends State<SingerPage> {
                                       imagePath: singerAllAlbum[index].imageSource!,
                                       musicFiles: singerAllAlbum[index].musics,
                                       singerName: singerAllAlbum[index].name!,
+                                      isPlaying: isPlaying,
+                                      playbackState: playbackState,
+                                      player: player,
+                                      audioPlayer: audioPlayer,
                                     ))
                             );
                           },

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer' as developer;
+import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page.dart';
@@ -28,6 +30,27 @@ class _MainPageState extends State<MainPage> {
   String connectionType = "No internet connection";
   bool isOffline = true;
   late StreamSubscription<ConnectivityResult> connectionSubscription;
+
+  PlaybackState playbackState = PlaybackState.stop;
+  bool get isPlaying =>
+      playbackState == PlaybackState.play ||
+          playbackState == PlaybackState.preloadPlayed;
+
+  final SimpleAudio player = SimpleAudio(
+    onSkipNext: (_) => debugPrint("Next"),
+    onSkipPrevious: (_) => debugPrint("Prev"),
+    onNetworkStreamError: (player, error) {
+      debugPrint("Network Stream Error: $error");
+      player.stop();
+    },
+    onDecodeError: (player, error) {
+      debugPrint("Decode Error: $error");
+      player.stop();
+    },
+  );
+
+  AudioPlayer audioPlayer = AudioPlayer();
+
 
   @override
   void initState() {
@@ -109,7 +132,7 @@ class _MainPageState extends State<MainPage> {
     List myRoutes = [
       SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: const HomePage()
+        child: HomePage(isPlaying: isPlaying, playbackState: playbackState, player: player, audioPlayer: audioPlayer )
       ),
       SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -117,7 +140,7 @@ class _MainPageState extends State<MainPage> {
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: MusicPage(),
+        child: MusicPage(isPlaying: isPlaying, playbackState: playbackState, player: player, audioPlayer: audioPlayer),
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,

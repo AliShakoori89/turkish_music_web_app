@@ -98,10 +98,8 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                 );
               }
             else if(state.status.isError){
-              print("errorrrrrrrrrrrrrrrrrrrrrrrr");
               return const NewAlbumShimmerContainer();
             }
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
             return const NewAlbumShimmerContainer();
           })
         ),

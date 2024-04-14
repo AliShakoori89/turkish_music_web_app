@@ -1,6 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
+import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/data/model/singer_model.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/singer_page.dart';
@@ -8,16 +10,29 @@ import '../../../bloc/singer_bloc/bloc.dart';
 import '../../../bloc/singer_bloc/event.dart';
 import '../../../bloc/singer_bloc/state.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
-import '../../../const/title.dart';
 
 class FamousArtistContainer extends StatefulWidget {
-  const FamousArtistContainer({super.key});
+
+  final bool isPlaying;
+  late PlaybackState playbackState;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+
+  FamousArtistContainer({super.key, required this.isPlaying, required this.playbackState,
+    required this.player, required this.audioPlayer});
 
   @override
-  State<FamousArtistContainer> createState() => _FamousArtistContainerState();
+  State<FamousArtistContainer> createState() => _FamousArtistContainerState(isPlaying, playbackState, player, audioPlayer);
 }
 
 class _FamousArtistContainerState extends State<FamousArtistContainer> {
+
+  final bool isPlaying;
+  late PlaybackState playbackState;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+
+  _FamousArtistContainerState(this.isPlaying, this.playbackState, this.player, this.audioPlayer);
 
   @override
   void initState() {
@@ -58,7 +73,11 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                         context,
                           MaterialPageRoute(
                               builder: (context) => SingerPage(
-                                  artistDetail: artistList[index]
+                                artistDetail: artistList[index],
+                                isPlaying: isPlaying,
+                                playbackState: playbackState,
+                                player: player,
+                                audioPlayer: audioPlayer,
                               ))
                       );
                     },

@@ -20,49 +20,63 @@ class PlayMusicPage extends StatefulWidget {
   
   final String imagePath;
   final String singerName;
+  final bool isPlaying;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+  late PlaybackState playbackState;
   List<AlbumDataMusicModel>? musicFiles;
   String? musicFile;
 
   PlayMusicPage({super.key,
     required this.imagePath,
     required this.singerName,
+    required this.isPlaying,
+    required this.player,
+    required this.audioPlayer,
+    required this.playbackState,
     this.musicFiles,
     this.musicFile});
 
   @override
-  State<PlayMusicPage> createState() => _PlayMusicPageState(imagePath, singerName, musicFiles,
+  State<PlayMusicPage> createState() => PlayMusicPageState(imagePath, singerName, isPlaying,
+      player, audioPlayer, playbackState, musicFiles,
       musicFile);
 }
 
-class _PlayMusicPageState extends State<PlayMusicPage> {
+class PlayMusicPageState extends State<PlayMusicPage> {
 
-  String imagePath;
-  String singerName;
+  final String imagePath;
+  final String singerName;
+  final bool isPlaying;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+  late PlaybackState playbackState;
   List<AlbumDataMusicModel>? musicFiles;
   String? musicFile;
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  PlayMusicPageState(this.imagePath, this.singerName, this.isPlaying,
+      this.player, this.audioPlayer, this.playbackState, this.musicFiles, this.musicFile);
 
-  PlaybackState playbackState = PlaybackState.stop;
-  bool get isPlaying =>
-      playbackState == PlaybackState.play ||
-          playbackState == PlaybackState.preloadPlayed;
 
-  _PlayMusicPageState(this.imagePath, this.singerName, this.musicFiles,
-      this.musicFile);
+  // AudioPlayer audioPlayer = AudioPlayer();
 
-  final SimpleAudio player = SimpleAudio(
-    onSkipNext: (_) => debugPrint("Next"),
-    onSkipPrevious: (_) => debugPrint("Prev"),
-    onNetworkStreamError: (player, error) {
-      debugPrint("Network Stream Error: $error");
-      player.stop();
-    },
-    onDecodeError: (player, error) {
-      debugPrint("Decode Error: $error");
-      player.stop();
-    },
-  );
+  // PlaybackState playbackState = PlaybackState.stop;
+  // bool get isPlaying =>
+  //     playbackState == PlaybackState.play ||
+  //         playbackState == PlaybackState.preloadPlayed;
+
+  // final SimpleAudio player = SimpleAudio(
+  //   onSkipNext: (_) => debugPrint("Next"),
+  //   onSkipPrevious: (_) => debugPrint("Prev"),
+  //   onNetworkStreamError: (player, error) {
+  //     debugPrint("Network Stream Error: $error");
+  //     player.stop();
+  //   },
+  //   onDecodeError: (player, error) {
+  //     debugPrint("Decode Error: $error");
+  //     player.stop();
+  //   },
+  // );
 
   String convertSecondsToReadableString(int seconds) {
     int m = seconds ~/ 60;
@@ -74,12 +88,6 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
   @override
   void initState() {
     super.initState();
-
-    // player.play();
-    // audioPlayer.play(UrlSource(musicFile!));
-    // player.open(musicFile!);
-
-
 
     player.playbackStateStream.listen((event) async {
       setState(() => playbackState = event);
@@ -244,7 +252,12 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
                     const SizedBox(
                       width: 10,
                     ),
-                    playButton(),
+                    PlayButton(
+                      isPlaying: isPlaying,
+                      player: player,
+                      audioPlayer: audioPlayer,
+                      musicFile: musicFile,
+                    ),
                     const SizedBox(
                       width: 10,
                     ),
@@ -294,33 +307,29 @@ class _PlayMusicPageState extends State<PlayMusicPage> {
     );
   }
 
-  CircleButton playButton() {
-    return CircleButton(
-                      size: 60,
-                      onPressed: () async{
-
-                        print("*******             "+isPlaying.toString());
-                        print("*******             "+player.toString());
-                        print("*******             "+audioPlayer.playerId);
-                        if(musicFile == musicFile){
-                          if (isPlaying) {
-                            player.pause();
-                            await audioPlayer.pause();
-                          } else {
-                            player.play();
-                            await audioPlayer.play(UrlSource(musicFile!));
-                          }
-                        }
-
-                      },
-                      child: Icon(
-                        isPlaying
-                            ? Icons.pause_rounded
-                            : Icons.play_arrow_rounded,
-                        color: Colors.white,
-                        size: 50,
-                      ),
-                    );
-  }
+  // CircleButton playButton() {
+  //   return CircleButton(
+  //     size: 60,
+  //     onPressed: () async {
+  //       print("*******             " + isPlaying.toString());
+  //       print("*******             " + player.toString());
+  //       print("*******             " + audioPlayer.playerId);
+  //       if (musicFile == musicFile) {
+  //         if (isPlaying) {
+  //           player.pause();
+  //           await audioPlayer.pause();
+  //         } else {
+  //           player.play();
+  //           await audioPlayer.play(UrlSource(musicFile!));
+  //         }
+  //       }
+  //     },
+  //     child: Icon(
+  //       isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+  //       color: Colors.white,
+  //       size: 50,
+  //     ),
+  //   );
+  // }
 }
 

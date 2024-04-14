@@ -10,17 +10,38 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
   IsPlayingMusicBloc(this.isPlayingMusicRepository) : super(
       IsPlayingMusicState.initial()){
     on<SetIsPlayingMusicEvent>(_mapSetIsPlayingMusicEventToState);
+    on<GetIsPlayingMusicEvent>(_mapGetIsPlayingMusicEventToState);
   }
 
   void _mapSetIsPlayingMusicEventToState(
       SetIsPlayingMusicEvent event, Emitter<IsPlayingMusicState> emit) async {
     try {
       emit(state.copyWith(status: IsPlayingMusicStatus.loading));
-      isPlayingMusicRepository.setMusicIsPlaying(event.musicFilePath);
+      isPlayingMusicRepository.setMusicIsPlaying(
+          event.musicFilePath,
+          event.singerName,
+          event.imagePath,
+          );
 
       emit(
         state.copyWith(
             status: IsPlayingMusicStatus.success,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: IsPlayingMusicStatus.error));
+    }
+  }
+
+  void _mapGetIsPlayingMusicEventToState(
+      GetIsPlayingMusicEvent event, Emitter<IsPlayingMusicState> emit) async {
+    try {
+      emit(state.copyWith(status: IsPlayingMusicStatus.loading));
+
+
+      emit(
+        state.copyWith(
+          status: IsPlayingMusicStatus.success,
         ),
       );
     } catch (error) {

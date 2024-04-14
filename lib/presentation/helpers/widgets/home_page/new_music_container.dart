@@ -1,8 +1,12 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
+import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
@@ -11,15 +15,29 @@ import '../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../ui/main_page/play_music_page.dart';
 
 class NewMusicContainer extends StatefulWidget {
-  const NewMusicContainer({super.key});
+
+  final bool isPlaying;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+  late PlaybackState playbackState;
+
+  NewMusicContainer({super.key, required this.isPlaying, required this.player,
+    required this.audioPlayer, required this.playbackState});
 
   @override
-  State<NewMusicContainer> createState() => _NewMusicContainerState();
+  State<NewMusicContainer> createState() => NewMusicContainerState(isPlaying, player, audioPlayer, playbackState);
 }
 
-class _NewMusicContainerState extends State<NewMusicContainer> {
+class NewMusicContainerState extends State<NewMusicContainer> {
 
   int _currentIndex = 0;
+  final bool isPlaying;
+  final SimpleAudio player;
+  final AudioPlayer audioPlayer;
+  late PlaybackState playbackState;
+
+
+  NewMusicContainerState(this.isPlaying, this.player, this.audioPlayer, this.playbackState);
 
   @override
   void initState() {
@@ -67,6 +85,11 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
                         child: InkWell(
                           onTap: (){
 
+                            BlocProvider.of<IsPlayingMusicBloc>(context).add(
+                                SetIsPlayingMusicEvent(
+                                    musicFilePath: newSong[index].fileSource,
+                                    singerName: newSong[index].name,
+                                    imagePath: newSong[index].imageSource));
 
                             Navigator.push(
                               context,
@@ -75,6 +98,10 @@ class _NewMusicContainerState extends State<NewMusicContainer> {
                                     imagePath: newSong[index].imageSource,
                                     singerName: newSong[index].name,
                                     musicFile: newSong[index].fileSource,
+                                    player: player,
+                                    audioPlayer: audioPlayer,
+                                    isPlaying: isPlaying,
+                                    playbackState: playbackState
                                   )),
                             );
                           },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_audio/simple_audio.dart';
-
-import '../../ui/main_page/navigation_bar_page/music_page.dart';
+import '../widgets/circle_button.dart';
 
 class StopButton extends StatelessWidget {
   StopButton({super.key});
