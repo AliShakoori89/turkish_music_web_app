@@ -72,12 +72,6 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                         child: InkWell(
                           onTap: (){
 
-                            BlocProvider.of<IsPlayingMusicBloc>(context).add(
-                                SetIsPlayingMusicEvent(
-                                    musicFilePath: newSong[index].fileSource,
-                                    singerName: newSong[index].name,
-                                    imagePath: newSong[index].imageSource));
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(

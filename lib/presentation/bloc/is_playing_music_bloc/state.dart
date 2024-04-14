@@ -1,4 +1,6 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:equatable/equatable.dart';
+import 'package:simple_audio/simple_audio.dart';
 
 enum IsPlayingMusicStatus { initial, success, error, loading }
 
@@ -15,14 +17,14 @@ class IsPlayingMusicState extends Equatable{
     required this.status,
     required this.musicFile,
     required this.singerName,
-    required this.singerImage
+    required this.singerImage,
   });
 
   static IsPlayingMusicState initial() => const IsPlayingMusicState(
     status: IsPlayingMusicStatus.initial,
     musicFile: '',
     singerName: '',
-    singerImage: ''
+    singerImage: '',
   );
 
   final IsPlayingMusicStatus status;
