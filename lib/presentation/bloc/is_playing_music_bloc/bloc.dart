@@ -38,10 +38,16 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
     try {
       emit(state.copyWith(status: IsPlayingMusicStatus.loading));
 
+      var musicFile = await isPlayingMusicRepository.getMusicFileIsPlaying();
+      var musicSingerImage = await isPlayingMusicRepository.getMusicSingerImageIsPlaying();
+      var musicSingerName = await isPlayingMusicRepository.getMusicSingerNameIsPlaying();
 
       emit(
         state.copyWith(
           status: IsPlayingMusicStatus.success,
+          musicFile: musicFile,
+          singerImage: musicSingerImage,
+          singerName: musicSingerName
         ),
       );
     } catch (error) {

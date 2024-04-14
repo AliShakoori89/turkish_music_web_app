@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IsPlayingMusicRepository {
@@ -9,13 +11,22 @@ class IsPlayingMusicRepository {
     await prefs.setString('singerImage', singerImage);
   }
 
-  Future<> getMusicIsPlaying() async{
+  FutureOr<String?> getMusicFileIsPlaying() async{
     final prefs = await SharedPreferences.getInstance();
     final String? filePath = prefs.getString('filePath');
-    final String? singerName = prefs.getString('singerName');
-    final String? singerImage = prefs.getString('singerImage');
+    return filePath;
+  }
 
-    return ;
+  FutureOr<String?> getMusicSingerNameIsPlaying() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String? singerName = prefs.getString('singerName');
+    return singerName;
+  }
+
+  FutureOr<String?> getMusicSingerImageIsPlaying() async{
+    final prefs = await SharedPreferences.getInstance();
+    final String? singerImage = prefs.getString('singerImage');
+    return singerImage;
   }
 
 }
