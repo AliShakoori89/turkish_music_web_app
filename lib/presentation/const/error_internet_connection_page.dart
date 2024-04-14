@@ -54,7 +54,7 @@ class _ErrorInternetConnectionPageState extends State<ErrorInternetConnectionPag
               ),
               const Flexible(
                   flex: 1,
-                  child: Text("No Internet Connect")),
+                  child: Text("No Internet Connection")),
               const Flexible(
                   flex: 1,
                   child: Text("please Check Your Connection !!!"))
