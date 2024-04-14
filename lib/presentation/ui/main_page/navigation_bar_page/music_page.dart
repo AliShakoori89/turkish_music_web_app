@@ -93,6 +93,10 @@ class MusicPage extends StatelessWidget {
                   child: BlocBuilder<IsPlayingMusicBloc, IsPlayingMusicState>(
                     builder: (context, state) {
 
+                      var musicFile = state.musicFile;
+                      var musicSingerName = state.singerName;
+                      var musicSingerImage = state.singerImage;
+
                       return Container(
                         color: Colors.black,
                         height: MediaQuery.of(context).size.height * 0.14,
@@ -128,15 +132,15 @@ class MusicPage extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                   const SingerNameTrackNameImage(
-                                      songName: "Tarkan",
-                                      singerName: "MoOooooOoch",
+                                      singerName: "Tarkan",
+                                      songName: "MoOooooOoch",
                                       imagePath: "assets/images/tarkan.png",
                                       align: MainAxisAlignment.start),
                                       PlayButton(
                                         isPlaying: isPlaying,
                                         player: player,
                                         audioPlayer: audioPlayer,
-                                        musicFile:
+                                        musicFile: musicFile
                                       )
                                     ])
                                 ],
