@@ -8,10 +8,12 @@ import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/music_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_music_repository.dart';
+import 'package:turkish_music_app/domain/repositories/play_music_repository.dart';
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
@@ -78,6 +80,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 InternetConnectionBloc(InternetConnectionRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                IsPlayingMusicBloc(IsPlayingMusicRepository())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

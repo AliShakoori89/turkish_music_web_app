@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SingerRepository {
+class IsPlayingMusicRepository {
 
-  saveMusicIsPlaying(String filePath) async{
+  setMusicIsPlaying(String filePath) async{
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('filePath', filePath);
   }
