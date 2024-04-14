@@ -16,28 +16,19 @@ import '../../../data/model/singer_model.dart';
 import '../../helpers/widgets/custom_app_bar.dart';
 
 class SingerPage extends StatefulWidget {
-  SingerPage({super.key, required this.artistDetail, required this.audioPlayer,
-    required this.isPlaying, required this.playbackState, required this.player});
+  SingerPage({super.key, required this.artistDetail});
 
   final SingerDataModel artistDetail;
-  final AudioPlayer audioPlayer;
-  final bool isPlaying;
-  late PlaybackState playbackState;
-  final SimpleAudio player;
 
   @override
-  State<SingerPage> createState() => _SingerPageState(artistDetail, audioPlayer, isPlaying, playbackState, player);
+  State<SingerPage> createState() => _SingerPageState(artistDetail);
 }
 
 class _SingerPageState extends State<SingerPage> {
 
   final SingerDataModel artistDetail;
-  final AudioPlayer audioPlayer;
-  final bool isPlaying;
-  late PlaybackState playbackState;
-  final SimpleAudio player;
 
-  _SingerPageState(this.artistDetail, this.audioPlayer, this.isPlaying, this.playbackState, this.player);
+  _SingerPageState(this.artistDetail);
 
   @override
   void initState() {
@@ -128,11 +119,7 @@ class _SingerPageState extends State<SingerPage> {
                                     builder: (context) => PlayMusicPage(
                                       imagePath: singerAllAlbum[index].imageSource!,
                                       musicFiles: singerAllAlbum[index].musics,
-                                      singerName: singerAllAlbum[index].name!,
-                                      isPlaying: isPlaying,
-                                      playbackState: playbackState,
-                                      player: player,
-                                      audioPlayer: audioPlayer,
+                                      singerName: singerAllAlbum[index].name!
                                     ))
                             );
                           },

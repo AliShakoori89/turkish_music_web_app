@@ -20,26 +20,17 @@ class PlayMusicPage extends StatefulWidget {
   
   final String imagePath;
   final String singerName;
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
   List<AlbumDataMusicModel>? musicFiles;
   String? musicFile;
 
   PlayMusicPage({super.key,
     required this.imagePath,
     required this.singerName,
-    required this.isPlaying,
-    required this.player,
-    required this.audioPlayer,
-    required this.playbackState,
     this.musicFiles,
     this.musicFile});
 
   @override
-  State<PlayMusicPage> createState() => PlayMusicPageState(imagePath, singerName, isPlaying,
-      player, audioPlayer, playbackState, musicFiles,
+  State<PlayMusicPage> createState() => PlayMusicPageState(imagePath, singerName, musicFiles,
       musicFile);
 }
 
@@ -47,36 +38,31 @@ class PlayMusicPageState extends State<PlayMusicPage> {
 
   final String imagePath;
   final String singerName;
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
   List<AlbumDataMusicModel>? musicFiles;
   String? musicFile;
 
-  PlayMusicPageState(this.imagePath, this.singerName, this.isPlaying,
-      this.player, this.audioPlayer, this.playbackState, this.musicFiles, this.musicFile);
+  PlayMusicPageState(this.imagePath, this.singerName, this.musicFiles, this.musicFile);
 
 
-  // AudioPlayer audioPlayer = AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
 
-  // PlaybackState playbackState = PlaybackState.stop;
-  // bool get isPlaying =>
-  //     playbackState == PlaybackState.play ||
-  //         playbackState == PlaybackState.preloadPlayed;
+  PlaybackState playbackState = PlaybackState.stop;
+  bool get isPlaying =>
+      playbackState == PlaybackState.play ||
+          playbackState == PlaybackState.preloadPlayed;
 
-  // final SimpleAudio player = SimpleAudio(
-  //   onSkipNext: (_) => debugPrint("Next"),
-  //   onSkipPrevious: (_) => debugPrint("Prev"),
-  //   onNetworkStreamError: (player, error) {
-  //     debugPrint("Network Stream Error: $error");
-  //     player.stop();
-  //   },
-  //   onDecodeError: (player, error) {
-  //     debugPrint("Decode Error: $error");
-  //     player.stop();
-  //   },
-  // );
+  final SimpleAudio player = SimpleAudio(
+    onSkipNext: (_) => debugPrint("Next"),
+    onSkipPrevious: (_) => debugPrint("Prev"),
+    onNetworkStreamError: (player, error) {
+      debugPrint("Network Stream Error: $error");
+      player.stop();
+    },
+    onDecodeError: (player, error) {
+      debugPrint("Decode Error: $error");
+      player.stop();
+    },
+  );
 
   String convertSecondsToReadableString(int seconds) {
     int m = seconds ~/ 60;

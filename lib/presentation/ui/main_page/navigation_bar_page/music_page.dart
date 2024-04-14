@@ -14,13 +14,7 @@ import '../../../helpers/widgets/top_arrow_icon.dart';
 
 class MusicPage extends StatelessWidget {
 
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
-
-  MusicPage({super.key, required this.isPlaying, required this.player,
-    required this.audioPlayer, required this.playbackState});
+  MusicPage({super.key});
 
   List customIcon = [
     Icons.playlist_play_outlined,
@@ -110,11 +104,7 @@ class MusicPage extends StatelessWidget {
                                       PlayMusicPage(
                                         imagePath: state.singerImage,
                                         singerName: state.singerName,
-                                        musicFile: state.musicFile,
-                                        isPlaying: isPlaying,
-                                        playbackState: playbackState,
-                                        player: player,
-                                        audioPlayer: audioPlayer,)),
+                                        musicFile: state.musicFile)),
                                 );
                               },
                               child: const TopArrow(),),
@@ -136,12 +126,12 @@ class MusicPage extends StatelessWidget {
                                       songName: "MoOooooOoch",
                                       imagePath: "assets/images/tarkan.png",
                                       align: MainAxisAlignment.start),
-                                      PlayButton(
-                                        isPlaying: isPlaying,
-                                        player: player,
-                                        audioPlayer: audioPlayer,
-                                        musicFile: musicFile
-                                      )
+                                      // PlayButton(
+                                      //   isPlaying: isPlaying,
+                                      //   player: player,
+                                      //   audioPlayer: audioPlayer,
+                                      //   musicFile: musicFile
+                                      // )
                                     ])
                                 ],
                               ),

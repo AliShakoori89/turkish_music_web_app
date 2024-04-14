@@ -13,25 +13,14 @@ import '../../../helpers/widgets/home_page/new_album_contaner.dart';
 import '../../../helpers/widgets/home_page/famous_artist_container.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key, required this.isPlaying, required this.player,
-    required this.audioPlayer, required this.playbackState});
+  const HomePage({super.key});
 
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
 
   @override
-  State<HomePage> createState() => HomePageState(isPlaying, player, audioPlayer, playbackState);
+  State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-
-  HomePageState(this.isPlaying, this.player, this.audioPlayer, this.playbackState);
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +34,8 @@ class HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppHeader(),
-                NewMusicContainer(isPlaying: isPlaying, player: player,
-                    audioPlayer: audioPlayer, playbackState: playbackState),
-                FamousArtistContainer(isPlaying: isPlaying, player: player,
-                    audioPlayer: audioPlayer, playbackState: playbackState),
+                NewMusicContainer(),
+                FamousArtistContainer(),
                 NewAlbumContainer(),
                 MustListenContainer()
               ],

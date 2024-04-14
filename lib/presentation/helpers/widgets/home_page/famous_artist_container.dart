@@ -13,26 +13,13 @@ import '../../../const/shimmer_container/artist_shimmer_container.dart';
 
 class FamousArtistContainer extends StatefulWidget {
 
-  final bool isPlaying;
-  late PlaybackState playbackState;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-
-  FamousArtistContainer({super.key, required this.isPlaying, required this.playbackState,
-    required this.player, required this.audioPlayer});
+  const FamousArtistContainer({super.key});
 
   @override
-  State<FamousArtistContainer> createState() => _FamousArtistContainerState(isPlaying, playbackState, player, audioPlayer);
+  State<FamousArtistContainer> createState() => _FamousArtistContainerState();
 }
 
 class _FamousArtistContainerState extends State<FamousArtistContainer> {
-
-  final bool isPlaying;
-  late PlaybackState playbackState;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-
-  _FamousArtistContainerState(this.isPlaying, this.playbackState, this.player, this.audioPlayer);
 
   @override
   void initState() {
@@ -74,10 +61,6 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                           MaterialPageRoute(
                               builder: (context) => SingerPage(
                                 artistDetail: artistList[index],
-                                isPlaying: isPlaying,
-                                playbackState: playbackState,
-                                player: player,
-                                audioPlayer: audioPlayer,
                               ))
                       );
                     },

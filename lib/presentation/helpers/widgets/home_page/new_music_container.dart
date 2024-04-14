@@ -16,28 +16,15 @@ import '../../../ui/main_page/play_music_page.dart';
 
 class NewMusicContainer extends StatefulWidget {
 
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
-
-  NewMusicContainer({super.key, required this.isPlaying, required this.player,
-    required this.audioPlayer, required this.playbackState});
+  const NewMusicContainer({super.key});
 
   @override
-  State<NewMusicContainer> createState() => NewMusicContainerState(isPlaying, player, audioPlayer, playbackState);
+  State<NewMusicContainer> createState() => NewMusicContainerState();
 }
 
 class NewMusicContainerState extends State<NewMusicContainer> {
 
   int _currentIndex = 0;
-  final bool isPlaying;
-  final SimpleAudio player;
-  final AudioPlayer audioPlayer;
-  late PlaybackState playbackState;
-
-
-  NewMusicContainerState(this.isPlaying, this.player, this.audioPlayer, this.playbackState);
 
   @override
   void initState() {
@@ -98,10 +85,6 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                     imagePath: newSong[index].imageSource,
                                     singerName: newSong[index].name,
                                     musicFile: newSong[index].fileSource,
-                                    player: player,
-                                    audioPlayer: audioPlayer,
-                                    isPlaying: isPlaying,
-                                    playbackState: playbackState
                                   )),
                             );
                           },

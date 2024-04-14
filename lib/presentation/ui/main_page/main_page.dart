@@ -31,27 +31,6 @@ class _MainPageState extends State<MainPage> {
   bool isOffline = true;
   late StreamSubscription<ConnectivityResult> connectionSubscription;
 
-  PlaybackState playbackState = PlaybackState.stop;
-  bool get isPlaying =>
-      playbackState == PlaybackState.play ||
-          playbackState == PlaybackState.preloadPlayed;
-
-  final SimpleAudio player = SimpleAudio(
-    onSkipNext: (_) => debugPrint("Next"),
-    onSkipPrevious: (_) => debugPrint("Prev"),
-    onNetworkStreamError: (player, error) {
-      debugPrint("Network Stream Error: $error");
-      player.stop();
-    },
-    onDecodeError: (player, error) {
-      debugPrint("Decode Error: $error");
-      player.stop();
-    },
-  );
-
-  AudioPlayer audioPlayer = AudioPlayer();
-
-
   @override
   void initState() {
     super.initState();
@@ -132,7 +111,7 @@ class _MainPageState extends State<MainPage> {
     List myRoutes = [
       SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: HomePage(isPlaying: isPlaying, playbackState: playbackState, player: player, audioPlayer: audioPlayer )
+        child: const HomePage()
       ),
       SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -140,7 +119,7 @@ class _MainPageState extends State<MainPage> {
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: MusicPage(isPlaying: isPlaying, playbackState: playbackState, player: player, audioPlayer: audioPlayer),
+        child: MusicPage(),
       ),
       SizedBox(
         width: MediaQuery.of(context).size.width,
