@@ -104,7 +104,9 @@ class MusicPage extends StatelessWidget {
                                       PlayMusicPage(
                                         imagePath: state.singerImage,
                                         singerName: state.singerName,
-                                        musicFile: state.musicFile)),
+                                        musicFile: state.musicFile,
+                                        musicFiles: [],
+                                      )),
                                 );
                               },
                               child: const TopArrow(),),

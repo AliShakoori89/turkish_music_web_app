@@ -79,6 +79,7 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                     imagePath: newSong[index].imageSource,
                                     singerName: newSong[index].name,
                                     musicFile: newSong[index].fileSource,
+                                    musicFiles: [],
                                   )),
                             );
                           },

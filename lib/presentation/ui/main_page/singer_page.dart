@@ -112,17 +112,18 @@ class _SingerPageState extends State<SingerPage> {
                         children: List.generate(
                             singerAllAlbum.length,
                                 (index) => GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PlayMusicPage(
-                                      imagePath: singerAllAlbum[index].imageSource!,
-                                      musicFiles: singerAllAlbum[index].musics,
-                                      singerName: singerAllAlbum[index].name!
-                                    ))
-                            );
-                          },
+                          // onTap: (){
+                          //   Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => PlayMusicPage(
+                          //             imagePath: singerAllAlbum[index].imageSource!,
+                          //             musicFiles: singerAllAlbum[index].musics!,
+                          //             singerName: singerAllAlbum[index].name!,
+                          //             musicFile: singerAllAlbum[index].,
+                          //           ))
+                          //   );
+                          // },
                           child: Padding(
                             padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).size.height * 0.02,

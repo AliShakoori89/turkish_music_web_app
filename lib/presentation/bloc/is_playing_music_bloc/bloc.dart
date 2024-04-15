@@ -17,10 +17,13 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
       SetIsPlayingMusicEvent event, Emitter<IsPlayingMusicState> emit) async {
     try {
       emit(state.copyWith(status: IsPlayingMusicStatus.loading));
+
+      print("################################################################            "+event.isPlaying.toString() );
       isPlayingMusicRepository.setMusicIsPlaying(
           event.musicFilePath,
           event.singerName,
           event.imagePath,
+          event.isPlaying,
           );
 
       emit(
@@ -41,13 +44,15 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
       var musicFile = await isPlayingMusicRepository.getMusicFileIsPlaying();
       var musicSingerImage = await isPlayingMusicRepository.getMusicSingerImageIsPlaying();
       var musicSingerName = await isPlayingMusicRepository.getMusicSingerNameIsPlaying();
+      var isPlaying = await isPlayingMusicRepository.getIsPlaying();
 
       emit(
         state.copyWith(
           status: IsPlayingMusicStatus.success,
           musicFile: musicFile,
           singerImage: musicSingerImage,
-          singerName: musicSingerName
+          singerName: musicSingerName,
+          isPlaying: isPlaying
         ),
       );
     } catch (error) {
