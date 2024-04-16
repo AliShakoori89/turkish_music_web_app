@@ -48,6 +48,8 @@ class PlayButtonState extends State<PlayButton> {
       print("11111         " + musicFile);
       print("22222         " + widget.musicFile);
 
+      print("333333333                     "+widget.isPlaying.toString());
+
       return musicFile == widget.musicFile
           ?  CircleButton(
               size: 60,
@@ -102,9 +104,11 @@ class PlayButtonState extends State<PlayButton> {
                 ));
 
                 if (widget.isPlaying) {
+                  print("                                         pause");
                   widget.player.pause();
                   await widget.audioPlayer.pause();
                 } else {
+                  print("                                          play");
                   widget.player.play();
                   await widget.audioPlayer.play(UrlSource(widget.musicFile));
                 }

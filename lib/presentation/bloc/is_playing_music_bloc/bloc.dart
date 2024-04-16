@@ -10,7 +10,9 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
   IsPlayingMusicBloc(this.isPlayingMusicRepository) : super(
       IsPlayingMusicState.initial()){
     on<SetIsPlayingMusicEvent>(_mapSetIsPlayingMusicEventToState);
+    on<SetPreviousSongFileEvent>(_mapSetPreviousSongFileEventToState);
     on<GetIsPlayingMusicEvent>(_mapGetIsPlayingMusicEventToState);
+    on<GetPreviousSongFileEvent>(_mapGetPreviousSongFileEventToState);
   }
 
   void _mapSetIsPlayingMusicEventToState(
@@ -35,6 +37,25 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
     }
   }
 
+  void _mapSetPreviousSongFileEventToState(
+      SetPreviousSongFileEvent event, Emitter<IsPlayingMusicState> emit) async {
+    try {
+      emit(state.copyWith(status: IsPlayingMusicStatus.loading));
+
+      isPlayingMusicRepository.setPreviousSong(
+        event.previousSongFilePath
+      );
+
+      emit(
+        state.copyWith(
+          status: IsPlayingMusicStatus.success,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: IsPlayingMusicStatus.error));
+    }
+  }
+
   void _mapGetIsPlayingMusicEventToState(
       GetIsPlayingMusicEvent event, Emitter<IsPlayingMusicState> emit) async {
     try {
@@ -52,6 +73,24 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
           singerImage: musicSingerImage,
           singerName: musicSingerName,
           isPlaying: isPlaying
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: IsPlayingMusicStatus.error));
+    }
+  }
+
+  void _mapGetPreviousSongFileEventToState(
+      GetPreviousSongFileEvent event, Emitter<IsPlayingMusicState> emit) async {
+    try {
+      emit(state.copyWith(status: IsPlayingMusicStatus.loading));
+
+      var previousSongFile = await isPlayingMusicRepository.getPreviousSong();
+
+      emit(
+        state.copyWith(
+            status: IsPlayingMusicStatus.success,
+            previousSongFile: previousSongFile,
         ),
       );
     } catch (error) {

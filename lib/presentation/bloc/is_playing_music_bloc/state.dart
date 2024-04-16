@@ -18,6 +18,7 @@ class IsPlayingMusicState extends Equatable{
     required this.musicFile,
     required this.singerName,
     required this.singerImage,
+    required this.previousSongFile,
     required this.isPlaying
   });
 
@@ -26,6 +27,7 @@ class IsPlayingMusicState extends Equatable{
     musicFile: '',
     singerName: '',
     singerImage: '',
+    previousSongFile: '',
     isPlaying: false
   );
 
@@ -33,17 +35,19 @@ class IsPlayingMusicState extends Equatable{
   final String musicFile;
   final String singerName;
   final String singerImage;
+  final String previousSongFile;
   final bool isPlaying;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, musicFile, singerName, singerImage, isPlaying];
+  List<Object?> get props => [status, musicFile, singerName, singerImage, previousSongFile, isPlaying];
 
   IsPlayingMusicState copyWith({
     IsPlayingMusicStatus? status,
     String? musicFile,
     String? singerName,
     String? singerImage,
+    String? previousSongFile,
     bool? isPlaying
   }) {
     return IsPlayingMusicState(
@@ -51,6 +55,7 @@ class IsPlayingMusicState extends Equatable{
       musicFile: musicFile ?? this.musicFile,
       singerName: singerName ?? this.singerName,
       singerImage: singerImage ?? this.singerImage,
+      previousSongFile: previousSongFile ?? this.previousSongFile,
       isPlaying: isPlaying ?? this.isPlaying
     );
   }

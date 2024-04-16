@@ -15,13 +15,8 @@ import 'package:turkish_music_app/presentation/helpers/music_player_component/sk
 import '../../../data/model/album_model.dart';
 import '../../bloc/is_playing_music_bloc/bloc.dart';
 import '../../bloc/is_playing_music_bloc/event.dart';
-import '../../bloc/is_playing_music_bloc/state.dart';
 import '../../helpers/music_player_component/download_button.dart';
-import '../../helpers/music_player_component/loopIcon_button.dart';
 import '../../helpers/widgets/circle_button.dart';
-import 'package:turkish_music_app/presentation/helpers/global.dart' as global;
-
-
 
 class PlayMusicPage extends StatefulWidget {
   
@@ -58,6 +53,19 @@ class PlayMusicPageState extends State<PlayMusicPage> {
       playbackState == PlaybackState.play ||
           playbackState == PlaybackState.preloadPlayed;
 
+  final SimpleAudio player = SimpleAudio(
+    onSkipNext: (_) => debugPrint("Next"),
+    onSkipPrevious: (_) => debugPrint("Prev"),
+    onNetworkStreamError: (player, error) {
+      debugPrint("Network Stream Error: $error");
+      player.stop();
+    },
+    onDecodeError: (player, error) {
+      debugPrint("Decode Error: $error");
+      player.stop();
+    },
+  );
+
   String convertSecondsToReadableString(int seconds) {
     int m = seconds ~/ 60;
     int s = seconds % 60;
@@ -68,17 +76,29 @@ class PlayMusicPageState extends State<PlayMusicPage> {
   @override
   void initState() {
     super.initState();
-
-    global.player.playbackStateStream.listen((event) async {
+    player.stop();
+    player.playbackStateStream.listen((event) async {
       setState(() => playbackState = event);
     });
 
-    global.player.progressStateStream.listen((event) {
+    player.progressStateStream.listen((event) {
       setState(() {
         position = event.position.toDouble();
         duration = event.duration.toDouble();
       });
     });
+
+
+    audioPlayer.play(UrlSource(musicFile));
+
+    // BlocProvider.of<IsPlayingMusicBloc>(context)
+    //     .add(SetPreviousSongFileEvent(
+    //   previousSongFilePath: musicFile
+    // ));
+    //
+    // var previousSongFile = BlocProvider.of<IsPlayingMusicBloc>(context)
+    //     .add(GetPreviousSongFileEvent());
+
   }
 
   bool get isMuted => volume == 0;
@@ -208,7 +228,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                             splashRadius: 24,
                             onPressed: () {
                               setState(() => loop = !loop);
-                              global.player.loopPlayback(loop);
+                              player.loopPlayback(loop);
                             },
                             icon: loop
                                 ? const Icon(
@@ -235,7 +255,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                         ),
                         PlayButton(
                           isPlaying: isPlaying,
-                          player: global.player,
+                          player: player,
                           audioPlayer: audioPlayer,
                           musicFile: musicFile,
                           musicSingerName: singerName,
