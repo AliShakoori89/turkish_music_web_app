@@ -94,7 +94,8 @@ class MyApp extends StatelessWidget {
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
         isLoggedIn
             ? const MainPage()
-            : const AuthenticatePage()
+            : const MainPage()
+        // AuthenticatePage()
             // : const ErrorInternetConnectionPage()
       ),
     );

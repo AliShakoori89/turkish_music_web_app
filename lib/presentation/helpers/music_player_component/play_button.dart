@@ -7,6 +7,7 @@ import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/state.
 import '../../bloc/is_playing_music_bloc/bloc.dart';
 import '../../bloc/is_playing_music_bloc/event.dart';
 import '../widgets/circle_button.dart';
+import 'package:turkish_music_app/presentation/helpers/global.dart' as global;
 
 class PlayButton extends StatefulWidget {
   PlayButton({super.key,
@@ -41,15 +42,55 @@ class PlayButtonState extends State<PlayButton> {
   Widget build(BuildContext context) {
 
     return BlocBuilder<IsPlayingMusicBloc, IsPlayingMusicState>(
-        builder: (context, state){
+        builder: (context, state) {
+      var musicFile = state.musicFile;
 
-          var musicFile = state.musicFile;
+      print("11111         " + musicFile);
+      print("22222         " + widget.musicFile);
 
-          print("11111         "+musicFile);
-          print("22222         "+widget.musicFile);
+      return musicFile == widget.musicFile
+          ?  CircleButton(
+              size: 60,
+              onPressed: () async {
 
-          return musicFile == widget.musicFile
-              ? CircleButton(
+                BlocProvider.of<IsPlayingMusicBloc>(context)
+                    .add(SetIsPlayingMusicEvent(
+                  musicFilePath: widget.musicFile,
+                  singerName: widget.musicSingerName,
+                  imagePath: widget.imagePath,
+                  isPlaying: widget.isPlaying,
+                ));
+
+                if (widget.isPlaying) {
+
+                  BlocProvider.of<IsPlayingMusicBloc>(context)
+                      .add(GetIsPlayingMusicEvent());
+
+                  print("pause");
+                  widget.player.pause();
+                  await widget.audioPlayer.pause();
+                } else {
+
+                  BlocProvider.of<IsPlayingMusicBloc>(context)
+                      .add(GetIsPlayingMusicEvent());
+
+                  print("play");
+                  widget.player.play();
+                  await widget.audioPlayer.play(UrlSource(widget.musicFile));
+                }
+
+              },
+              child:  BlocBuilder<IsPlayingMusicBloc, IsPlayingMusicState>(
+                  builder: (context, state) {
+                    var isPlaying = state.isPlaying;
+
+                    return Icon(
+                isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                  color: Colors.white,
+                  size: 50,
+                );
+             }))
+          : CircleButton(
               size: 60,
               onPressed: () async {
                 BlocProvider.of<IsPlayingMusicBloc>(context)
@@ -63,45 +104,19 @@ class PlayButtonState extends State<PlayButton> {
                 if (widget.isPlaying) {
                   widget.player.pause();
                   await widget.audioPlayer.pause();
-                  BlocProvider.of<IsPlayingMusicBloc>(context)
-                      .add(GetIsPlayingMusicEvent());
-                } else {
-                  widget.player.play();
-                  await widget.audioPlayer.play(UrlSource(widget.musicFile));
-                  BlocProvider.of<IsPlayingMusicBloc>(context)
-                      .add(GetIsPlayingMusicEvent());
-                }
-              },
-              child: BlocBuilder<IsPlayingMusicBloc, IsPlayingMusicState>(
-                  builder: (context, state) {
-                    var isPlaying = state.isPlaying;
-
-                    return Icon(
-                      isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                      color: Colors.white,
-                      size: 50,
-                    );
-                  }))
-          : CircleButton(
-              size: 60,
-              onPressed: () async {
-
-                if (widget.isPlaying) {
-                  widget.player.pause();
-                  await widget.audioPlayer.pause();
                 } else {
                   widget.player.play();
                   await widget.audioPlayer.play(UrlSource(widget.musicFile));
                 }
               },
               child: Icon(
-                widget.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+                widget.isPlaying
+                    ? Icons.pause_rounded
+                    : Icons.play_arrow_rounded,
                 color: Colors.white,
                 size: 50,
               ));
-
-        });
-
+    });
   }
 }
 

@@ -18,7 +18,6 @@ class IsPlayingMusicBloc extends Bloc<IsPlayingMusicEvent, IsPlayingMusicState> 
     try {
       emit(state.copyWith(status: IsPlayingMusicStatus.loading));
 
-      print("################################################################            "+event.isPlaying.toString() );
       isPlayingMusicRepository.setMusicIsPlaying(
           event.musicFilePath,
           event.singerName,

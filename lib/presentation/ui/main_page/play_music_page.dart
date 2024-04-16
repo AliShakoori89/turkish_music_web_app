@@ -19,6 +19,7 @@ import '../../bloc/is_playing_music_bloc/state.dart';
 import '../../helpers/music_player_component/download_button.dart';
 import '../../helpers/music_player_component/loopIcon_button.dart';
 import '../../helpers/widgets/circle_button.dart';
+import 'package:turkish_music_app/presentation/helpers/global.dart' as global;
 
 
 
@@ -57,19 +58,6 @@ class PlayMusicPageState extends State<PlayMusicPage> {
       playbackState == PlaybackState.play ||
           playbackState == PlaybackState.preloadPlayed;
 
-  final SimpleAudio player = SimpleAudio(
-    onSkipNext: (_) => debugPrint("Next"),
-    onSkipPrevious: (_) => debugPrint("Prev"),
-    onNetworkStreamError: (player, error) {
-      debugPrint("Network Stream Error: $error");
-      player.stop();
-    },
-    onDecodeError: (player, error) {
-      debugPrint("Decode Error: $error");
-      player.stop();
-    },
-  );
-
   String convertSecondsToReadableString(int seconds) {
     int m = seconds ~/ 60;
     int s = seconds % 60;
@@ -81,26 +69,16 @@ class PlayMusicPageState extends State<PlayMusicPage> {
   void initState() {
     super.initState();
 
-    player.playbackStateStream.listen((event) async {
+    global.player.playbackStateStream.listen((event) async {
       setState(() => playbackState = event);
     });
 
-    player.progressStateStream.listen((event) {
+    global.player.progressStateStream.listen((event) {
       setState(() {
         position = event.position.toDouble();
         duration = event.duration.toDouble();
       });
     });
-
-    print("33333333333     "+musicFile);
-
-    BlocProvider.of<IsPlayingMusicBloc>(context)
-        .add(SetIsPlayingMusicEvent(
-      musicFilePath: musicFile,
-      singerName: singerName,
-      imagePath: imagePath,
-      isPlaying: isPlaying,
-    ));
   }
 
   bool get isMuted => volume == 0;
@@ -230,7 +208,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                             splashRadius: 24,
                             onPressed: () {
                               setState(() => loop = !loop);
-                              player.loopPlayback(loop);
+                              global.player.loopPlayback(loop);
                             },
                             icon: loop
                                 ? const Icon(
@@ -257,7 +235,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                         ),
                         PlayButton(
                           isPlaying: isPlaying,
-                          player: player,
+                          player: global.player,
                           audioPlayer: audioPlayer,
                           musicFile: musicFile,
                           musicSingerName: singerName,
