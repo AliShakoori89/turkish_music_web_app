@@ -20,10 +20,8 @@ final class SelectSong extends CurrentSelectedSongEvent {
   final String songName;
   final String songFile;
   final String songImage;
-  final List newSongs;
   final String songSingerName;
 
   SelectSong({required this.id, required this.songName,
-    required this.songFile, required this.songImage,
-    required this.newSongs, required this.songSingerName});
+    required this.songFile, required this.songImage, required this.songSingerName});
 }

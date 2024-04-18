@@ -79,12 +79,13 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                               songFile: newSong[index].fileSource,
                                               songImage: newSong[index].imageSource,
                                               id: newSong[index].id,
-                                              songSingerName: newSong[index].singer.name,
-                                              newSongs: newSong
+                                              songSingerName: newSong[index].singer.name
                                               )),
-                                      child: PlayMusicPage(newSongs: newSong),
+                                      child: const PlayMusicPage(),
                                     )));
+                                    setState(() {
 
+                                    });
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(

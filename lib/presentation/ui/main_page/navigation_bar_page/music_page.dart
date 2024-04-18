@@ -84,64 +84,55 @@ class MusicPage extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: BlocBuilder<IsPlayingMusicBloc, IsPlayingMusicState>(
-                    builder: (context, state) {
-
-                      var musicFile = state.musicFile;
-                      var musicSingerName = state.singerName;
-                      var musicSingerImage = state.singerImage;
-
-                      return Container(
-                        color: Colors.black,
-                        height: MediaQuery.of(context).size.height * 0.14,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: (){
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) =>
-                                //       PlayMusicPage(
-                                //         imagePath: state.singerImage,
-                                //         singerName: state.singerName,
-                                //         musicFile: state.musicFile,
-                                //         musicFiles: [],
-                                //       )),
-                                // );
-                              },
-                              child: const TopArrow(),),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: MediaQuery.of(context).size.width * 0.10 + 15,
-                                right: MediaQuery.of(context).size.width * 0.10 + 15,
-                                // top: MediaQuery.of(context).size.height * 0.03,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                  const SingerNameTrackNameImage(
-                                      singerName: "Tarkan",
-                                      songName: "MoOooooOoch",
-                                      imagePath: "assets/images/tarkan.png",
-                                      align: MainAxisAlignment.start),
-                                      // PlayButton(
-                                      //   isPlaying: isPlaying,
-                                      //   player: player,
-                                      //   audioPlayer: audioPlayer,
-                                      //   musicFile: musicFile
-                                      // )
-                                    ])
-                                ],
-                              ),
-                            ),
-                          ],
+                  child: Container(
+                    color: Colors.black,
+                    height: MediaQuery.of(context).size.height * 0.14,
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) =>
+                            //       PlayMusicPage(
+                            //         imagePath: state.singerImage,
+                            //         singerName: state.singerName,
+                            //         musicFile: state.musicFile,
+                            //         musicFiles: [],
+                            //       )),
+                            // );
+                          },
+                          child: const TopArrow(),),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.10 + 15,
+                            right: MediaQuery.of(context).size.width * 0.10 + 15,
+                            // top: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          child: const Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SingerNameTrackNameImage(
+                                        singerName: "Tarkan",
+                                        songName: "MoOooooOoch",
+                                        imagePath: "assets/images/tarkan.png",
+                                        align: MainAxisAlignment.start),
+                                    // PlayButton(
+                                    //   isPlaying: isPlaying,
+                                    //   player: player,
+                                    //   audioPlayer: audioPlayer,
+                                    //   musicFile: musicFile
+                                    // )
+                                  ])
+                            ],
+                          ),
                         ),
-                      );
-                    }
+                      ],
+                    ),
                   )
                 ),
               ],

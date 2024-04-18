@@ -8,6 +8,7 @@ import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/music_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_music_repository.dart';
+import 'package:turkish_music_app/domain/repositories/play_box_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_music_repository.dart';
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
@@ -18,6 +19,7 @@ import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc
 import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
@@ -91,6 +93,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 AudioControlBloc()),
+        BlocProvider(
+            create: (BuildContext context) =>
+                PlayBoxBloc(PlayBoxRepository())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
