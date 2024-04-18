@@ -12,6 +12,8 @@ import 'package:turkish_music_app/domain/repositories/play_music_repository.dart
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/audio_control/bloc/audio_control_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/music_bloc/bloc.dart';
@@ -83,6 +85,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 IsPlayingMusicBloc(IsPlayingMusicRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                CurrentSelectedSongBloc()),
+        BlocProvider(
+            create: (BuildContext context) =>
+                AudioControlBloc()),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,

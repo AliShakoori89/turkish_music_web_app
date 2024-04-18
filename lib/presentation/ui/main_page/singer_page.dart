@@ -11,7 +11,7 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart';
 
-import '../../../data/model/music_model.dart';
+import '../../../data/model/song_model.dart';
 import '../../../data/model/singer_model.dart';
 import '../../helpers/widgets/custom_app_bar.dart';
 

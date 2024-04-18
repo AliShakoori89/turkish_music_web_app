@@ -98,16 +98,16 @@ class MusicPage extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) =>
-                                      PlayMusicPage(
-                                        imagePath: state.singerImage,
-                                        singerName: state.singerName,
-                                        musicFile: state.musicFile,
-                                        musicFiles: [],
-                                      )),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) =>
+                                //       PlayMusicPage(
+                                //         imagePath: state.singerImage,
+                                //         singerName: state.singerName,
+                                //         musicFile: state.musicFile,
+                                //         musicFiles: [],
+                                //       )),
+                                // );
                               },
                               child: const TopArrow(),),
                             Padding(

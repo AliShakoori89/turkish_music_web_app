@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simple_audio/simple_audio.dart';
+import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_app_bar.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/like_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/play_button.dart';
@@ -13,45 +14,25 @@ import 'package:turkish_music_app/presentation/helpers/music_player_component/ra
 import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_next_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_previous_button.dart';
 import '../../../data/model/album_model.dart';
+import '../../../data/model/new-song_model.dart';
+import '../../bloc/audio_control/bloc/audio_control_bloc.dart';
+import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../bloc/is_playing_music_bloc/bloc.dart';
 import '../../bloc/is_playing_music_bloc/event.dart';
 import '../../helpers/music_player_component/download_button.dart';
 import '../../helpers/widgets/circle_button.dart';
 
 class PlayMusicPage extends StatefulWidget {
-  
-  final String imagePath;
-  final String singerName;
-  final List<AlbumDataMusicModel> musicFiles;
-  final String musicFile;
 
-  const PlayMusicPage({super.key,
-    required this.imagePath,
-    required this.singerName,
-    required this.musicFiles,
-    required this.musicFile});
+  final List<NewSongDataModel> newSongs;
+
+  const PlayMusicPage({super.key, required this.newSongs});
 
   @override
-  State<PlayMusicPage> createState() => PlayMusicPageState(imagePath, singerName, musicFiles,
-      musicFile);
+  State<PlayMusicPage> createState() => PlayMusicPageState();
 }
 
 class PlayMusicPageState extends State<PlayMusicPage> {
-
-  final String imagePath;
-  final String singerName;
-  final List<AlbumDataMusicModel>? musicFiles;
-  final String musicFile;
-
-  PlayMusicPageState(this.imagePath, this.singerName, this.musicFiles, this.musicFile);
-
-
-  AudioPlayer audioPlayer = AudioPlayer();
-
-  PlaybackState playbackState = PlaybackState.stop;
-  bool get isPlaying =>
-      playbackState == PlaybackState.play ||
-          playbackState == PlaybackState.preloadPlayed;
 
   final SimpleAudio player = SimpleAudio(
     onSkipNext: (_) => debugPrint("Next"),
@@ -73,37 +54,6 @@ class PlayMusicPageState extends State<PlayMusicPage> {
     return "$m:${s > 9 ? s : "0$s"}";
   }
 
-  @override
-  void initState() {
-    super.initState();
-    player.stop();
-    player.playbackStateStream.listen((event) async {
-      setState(() => playbackState = event);
-    });
-
-    player.progressStateStream.listen((event) {
-      setState(() {
-        position = event.position.toDouble();
-        duration = event.duration.toDouble();
-      });
-    });
-
-
-    audioPlayer.play(UrlSource(musicFile));
-
-    // BlocProvider.of<IsPlayingMusicBloc>(context)
-    //     .add(SetPreviousSongFileEvent(
-    //   previousSongFilePath: musicFile
-    // ));
-    //
-    // var previousSongFile = BlocProvider.of<IsPlayingMusicBloc>(context)
-    //     .add(GetPreviousSongFileEvent());
-
-  }
-
-  bool get isMuted => volume == 0;
-  double trueVolume = 1;
-  double volume = 1;
   bool normalize = false;
   bool loop = false;
 
@@ -113,15 +63,28 @@ class PlayMusicPageState extends State<PlayMusicPage> {
   @override
   Widget build(BuildContext context) {
 
-    // print("isPlayinggggggggggggggggggg              "+isPlaying.toString());
-
     return Scaffold(
-      body: Container(
+        body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
+            listener: (context, state) {
+      context.read<AudioControlBloc>().add(PlaySong(
+          songId:
+              context.read<CurrentSelectedSongBloc>().currentSelectedSongId!,
+          songFile:
+              context.read<CurrentSelectedSongBloc>().currentSelectedSongFile!,
+          songImage:
+              context.read<CurrentSelectedSongBloc>().currentSelectedSongImage!,
+          songName: context
+              .read<CurrentSelectedSongBloc>()
+              .currentSelectedSongName!));
+    }, builder: (context, state) {
+      if (state is LoadingNewSong) {
+        return const Center(child: CircularProgressIndicator());
+      } else if (state is SelectedSongFetched) {
+        return Container(
           height: double.infinity,
           margin: EdgeInsets.only(
               right: MediaQuery.of(context).size.width * 0.05,
-              left: MediaQuery.of(context).size.width * 0.05
-          ),
+              left: MediaQuery.of(context).size.width * 0.05),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [Colors.purple, Colors.black],
@@ -129,10 +92,10 @@ class PlayMusicPageState extends State<PlayMusicPage> {
               end: Alignment.bottomCenter,
             ),
             image: DecorationImage(
-              image: NetworkImage(imagePath),
+              image: NetworkImage(state.songImage),
               fit: BoxFit.fitHeight,
-              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2),
-                  BlendMode.dstATop),
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.2), BlendMode.dstATop),
             ),
           ),
           child: BackdropFilter(
@@ -146,7 +109,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                     flex: 2,
                     child: CustomAppBar(
                       title: "Now Playing",
-                      singerName: singerName,
+                      singerName: state.songName,
                       haveMenuButton: true,
                     ),
                   ),
@@ -157,17 +120,16 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                       children: [
                         Expanded(
                           flex: 10,
-                          child: Text(singerName,
+                          child: Text(
+                            state.singerName,
                             style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.grey
-                            ),
+                                fontSize: 15, color: Colors.grey),
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: LikeButton(
-                            name: singerName,
+                            name: state.songName,
                             isIcon: true,
                           ),
                         ),
@@ -184,7 +146,11 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                       startAngle: 45,
                       sweepAngle: 270,
                       strokeCap: StrokeCap.butt,
-                      progressGradientColors: const [Colors.blue, Colors.indigo, Colors.purple],
+                      progressGradientColors: const [
+                        Colors.blue,
+                        Colors.indigo,
+                        Colors.purple
+                      ],
                       dashWidth: 1,
                       dashGap: 2,
                       animation: true,
@@ -196,10 +162,8 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                             color: Colors.amber,
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                                image: NetworkImage(widget.imagePath),
-                                fit: BoxFit.fitHeight
-                            )
-                        ),
+                                image: NetworkImage(state.songImage),
+                                fit: BoxFit.fitHeight)),
                       ),
                       // maxProgress: 120,
                       // minProgress: 0,
@@ -217,12 +181,11 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                     child: Container(
                       margin: EdgeInsets.only(
                           right: MediaQuery.of(context).size.width * 0.05,
-                          left: MediaQuery.of(context).size.width * 0.05
-                      ),
+                          left: MediaQuery.of(context).size.width * 0.05),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          RandomPlayButton(),
+                          const RandomPlayButton(),
                           IconButton(
                             padding: const EdgeInsets.all(0),
                             splashRadius: 24,
@@ -232,49 +195,75 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                             },
                             icon: loop
                                 ? const Icon(
-                              CupertinoIcons.arrow_2_circlepath,
-                              color: Colors.white,
-                              size: 20,)
-                                : const Icon(
-                                CupertinoIcons.arrow_2_circlepath,
-                                color: Colors.grey,
-                                size: 20),
+                                    CupertinoIcons.arrow_2_circlepath,
+                                    color: Colors.white,
+                                    size: 20,
+                                  )
+                                : const Icon(CupertinoIcons.arrow_2_circlepath,
+                                    color: Colors.grey, size: 20),
                           )
                         ],
                       ),
                     ),
                   ),
                   Flexible(
-                    flex: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SkipPrevious(),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        PlayButton(
-                          isPlaying: isPlaying,
-                          player: player,
-                          audioPlayer: audioPlayer,
-                          musicFile: musicFile,
-                          musicSingerName: singerName,
-                          imagePath: imagePath,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const SkipNext()
-                      ],
-                    )
-                  ),
+                      flex: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SkipPrevious(),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          BlocBuilder<AudioControlBloc, AudioControlState>(
+                            buildWhen: (previous, current) {
+                              if (previous is AudioPlayedState && current is AudioPlayedState) {
+                                return false;
+                              } else {
+                                return true;
+                              }
+                            },
+                            builder: (context, state) {
+                              return IconButton(
+                                  padding: const EdgeInsets.all(1),
+                                  onPressed: () async {
+                                    if (state is AudioPausedState) {
+                                      BlocProvider.of<AudioControlBloc>(context).add(ResumeSong());
+                                    } else {
+                                      BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
+                                    }
+                                  },
+                                  icon: Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          offset: const Offset(
+                                            1.0,
+                                            1.0,
+                                          ),
+                                          blurRadius: 10.0,
+                                          spreadRadius: 7.0,
+                                        ),
+                                        BoxShadow(color: Colors.white30.withOpacity(0.3), spreadRadius: 0),
+                                      ]),
+                                      child: state is AudioPlayedState
+                                          ? const Icon(Icons.pause)
+                                          : const Icon(Icons.play_arrow_rounded)));
+                            },
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const SkipNext()
+                        ],
+                      )),
                   Flexible(
                     flex: 1,
                     child: Container(
                       margin: EdgeInsets.only(
                           right: MediaQuery.of(context).size.width * 0.08,
-                          left: MediaQuery.of(context).size.width * 0.08
-                      ),
+                          left: MediaQuery.of(context).size.width * 0.08),
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -287,28 +276,81 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                       ),
                     ),
                   ),
-                  musicFiles != null ? Flexible(
+                  const Spacer(),
+                  Flexible(
                       flex: 4,
                       child: ListView.builder(
-                        itemCount: musicFiles?.length,
+                        itemCount: widget.newSongs.length,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index){
                           return Container(
-                            margin: const EdgeInsets.only(
-                                top: 10,
-                                bottom: 10
+                            decoration: BoxDecoration(
+                              color: Colors.white30.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(15)
                             ),
-                            child: Text(musicFiles![index].name!),
+                            margin: const EdgeInsets.only(
+                                top: 15,
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  margin: const EdgeInsets.only(
+                                    right: 5
+                                  ),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      image: DecorationImage(
+                                      image: NetworkImage(widget.newSongs[index].imageSource),
+                                      fit: BoxFit.cover
+                                    )
+                                  ),
+                                ),
+                                const SizedBox(width: 5,),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(widget.newSongs[index].name,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold
+                                    ),),
+                                    Text(widget.newSongs[index].singer.name,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                        color: Colors.white54
+                                      ),),
+                                  ],
+                                ),
+                                const Spacer(),
+                                widget.newSongs[index].singer.name == state.singerName
+                                    ? Container(
+                                  width: 150,
+                                  height: 30,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/gif/playing music animation.gif"),
+                                    )
+                                  ),
+                                )
+                                    : Container()
+                              ],
+                            ),
                           );
                         },
                       )
                   )
-                      : Container()
                 ],
               ),
             ),
           ),
-      )
-    );
+        );
+      } else {
+        return const Center(child: Text('Something went wrong'));
+      }
+    }));
   }
 
   // CircleButton playButton() {

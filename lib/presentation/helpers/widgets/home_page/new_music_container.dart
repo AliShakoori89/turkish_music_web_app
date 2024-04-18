@@ -3,13 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
-import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/is_playing_music_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_music_bloc/state.dart';
-import 'package:turkish_music_app/presentation/const/title.dart';
+import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/new_music_bloc/event.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../ui/main_page/play_music_page.dart';
@@ -43,7 +40,7 @@ class NewMusicContainerState extends State<NewMusicContainer> {
           ),
           BlocBuilder<NewMusicBloc, NewMusicState>(builder: (context, state) {
 
-          List<NewMusicDataModel> newSong = state.newMusic;
+          List<NewSongDataModel> newSong = state.newMusic;
 
           if(state.status.isLoading){
             return const NewMusicShimmerContainer();
@@ -73,15 +70,31 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                           onTap: (){
 
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlayMusicPage(
-                                    imagePath: newSong[index].imageSource,
-                                    singerName: newSong[index].name,
-                                    musicFile: newSong[index].fileSource,
-                                    musicFiles: [],
-                                  )),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BlocProvider(
+                                      create: (context) => CurrentSelectedSongBloc()..add(
+                                          SelectSong(
+                                              songName: newSong[index].name,
+                                              songFile: newSong[index].fileSource,
+                                              songImage: newSong[index].imageSource,
+                                              id: newSong[index].id,
+                                              songSingerName: newSong[index].singer.name,
+                                              newSongs: newSong
+                                              )),
+                                      child: PlayMusicPage(newSongs: newSong),
+                                    )));
+
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => PlayMusicPage(
+                            //         imagePath: newSong[index].imageSource,
+                            //         singerName: newSong[index].name,
+                            //         musicFile: newSong[index].fileSource,
+                            //         musicFiles: [],
+                            //       )),
+                            // );
                           },
                           child: Container(
                             decoration: BoxDecoration(

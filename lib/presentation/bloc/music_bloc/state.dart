@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:turkish_music_app/data/model/music_model.dart';
+import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/data/model/new_album_model.dart';
 import '../../../data/model/singer_model.dart';
@@ -26,7 +26,7 @@ class MusicState extends Equatable{
   );
 
   final MusicStatus status;
-  final MusicModel? musicDetail;
+  final SongModel? musicDetail;
 
   @override
   // TODO: implement props
@@ -34,7 +34,7 @@ class MusicState extends Equatable{
 
   MusicState copyWith({
     MusicStatus? status,
-    MusicModel? musicDetail
+    SongModel? musicDetail
   }) {
     return MusicState(
       status: status ?? this.status,

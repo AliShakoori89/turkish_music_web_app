@@ -9,7 +9,7 @@ NewMusicModel newSongModelFromJson(String str) => NewMusicModel.fromJson(json.de
 String newSongModelToJson(NewMusicModel data) => json.encode(data.toJson());
 
 class NewMusicModel {
-  List<NewMusicDataModel> data;
+  List<NewSongDataModel> data;
   bool success;
   String message;
   int lastPage;
@@ -22,7 +22,7 @@ class NewMusicModel {
   });
 
   factory NewMusicModel.fromJson(Map<String, dynamic> json) => NewMusicModel(
-    data: List<NewMusicDataModel>.from(json["data"].map((x) => NewMusicDataModel.fromJson(x))),
+    data: List<NewSongDataModel>.from(json["data"].map((x) => NewSongDataModel.fromJson(x))),
     success: json["success"],
     message: json["message"],
     lastPage: json["lastPage"],
@@ -36,7 +36,7 @@ class NewMusicModel {
   };
 }
 
-class NewMusicDataModel {
+class NewSongDataModel {
   int id;
   String name;
   String imageSource;
@@ -44,7 +44,7 @@ class NewMusicDataModel {
   int singerId;
   NewMusicSingerModel singer;
 
-  NewMusicDataModel({
+  NewSongDataModel({
     required this.id,
     required this.name,
     required this.imageSource,
@@ -53,7 +53,7 @@ class NewMusicDataModel {
     required this.singer,
   });
 
-  factory NewMusicDataModel.fromJson(Map<String, dynamic> json) => NewMusicDataModel(
+  factory NewSongDataModel.fromJson(Map<String, dynamic> json) => NewSongDataModel(
     id: json["id"],
     name: json["name"],
     imageSource: json["imageSource"],
