@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:audio_duration/audio_duration.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,34 +36,13 @@ class PlayMusicPage extends StatefulWidget {
 
 class PlayMusicPageState extends State<PlayMusicPage> {
 
-  final SimpleAudio player = SimpleAudio(
-    onSkipNext: (_) => debugPrint("Next"),
-    onSkipPrevious: (_) => debugPrint("Prev"),
-    onNetworkStreamError: (player, error) {
-      debugPrint("Network Stream Error: $error");
-      player.stop();
-    },
-    onDecodeError: (player, error) {
-      debugPrint("Decode Error: $error");
-      player.stop();
-    },
-  );
-
-  String convertSecondsToReadableString(int seconds) {
-    int m = seconds ~/ 60;
-    int s = seconds % 60;
-
-    return "$m:${s > 9 ? s : "0$s"}";
-  }
-
   bool normalize = false;
   bool loop = false;
 
-  double position = 0;
-  double duration = 0;
-
   @override
   Widget build(BuildContext context) {
+
+    AudioPlayer audioPlayer = AudioPlayer();
 
     return Scaffold(
         body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
@@ -187,15 +167,37 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                           // minProgress: 0,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                              convertSecondsToReadableString(position.floor())),
-                          Text(
-                              convertSecondsToReadableString(duration.floor())),
-                        ],
-                      ),
+                      StreamBuilder(
+                          stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
+                          builder: ((context, snapshot) {
+
+                            AudioPlayer audioPlayer = AudioPlayer();
+
+                            if (snapshot.hasData) {
+                              // final currrentDuration = ((state.songFile. ?? 0)).toStringAsPrecision(1);
+                              return Column(
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [Text(AudioDuration.getAudioDuration(state.songFile).toString()), const Text("0.30")],
+                                      )),
+                                ],
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          })),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //   children: [
+                      //     Text(
+                      //         convertSecondsToReadableString(position.floor())),
+                      //     Text(
+                      //         convertSecondsToReadableString(duration.floor())),
+                      //   ],
+                      // ),
                       Flexible(
                         flex: 1,
                         child: Container(
@@ -216,8 +218,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                                 padding: const EdgeInsets.all(0),
                                 splashRadius: 24,
                                 onPressed: () {
-                                  setState(() => loop = !loop);
-                                  player.loopPlayback(loop);
+
                                 },
                                 icon: loop
                                     ? const Icon(

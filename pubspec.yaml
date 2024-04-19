@@ -66,6 +66,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   restart_app: ^1.2.1
   audioplayers: ^6.0.0
+  audio_duration: ^0.0.3
 
 dev_dependencies:
   flutter_test:
