@@ -1,6 +1,4 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
@@ -81,11 +79,8 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                               id: newSong[index].id,
                                               songSingerName: newSong[index].singer.name
                                               )),
-                                      child: const PlayMusicPage(),
+                                      child: PlayMusicPage(),
                                     )));
-                                    setState(() {
-
-                                    });
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(

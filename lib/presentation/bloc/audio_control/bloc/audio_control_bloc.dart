@@ -26,7 +26,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
     on<PlaySong>((event, emit) async {
       final Source source = UrlSource(event.songFile ?? "");
-      print("source                    "+source.toString());
       await _audioPlayer.play(source);
       emit(AudioPlayedState());
     });

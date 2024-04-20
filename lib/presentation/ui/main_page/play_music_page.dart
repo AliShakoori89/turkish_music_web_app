@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:audio_duration/audio_duration.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,8 +26,8 @@ import '../../helpers/music_player_component/download_button.dart';
 import '../../helpers/widgets/circle_button.dart';
 
 class PlayMusicPage extends StatefulWidget {
-
   const PlayMusicPage({super.key});
+
 
   @override
   State<PlayMusicPage> createState() => PlayMusicPageState();
@@ -38,6 +37,9 @@ class PlayMusicPageState extends State<PlayMusicPage> {
 
   bool normalize = false;
   bool loop = false;
+  Duration _duration = Duration();
+  Duration _position = Duration();
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +50,12 @@ class PlayMusicPageState extends State<PlayMusicPage> {
         body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
             listener: (context, state) {
               context.read<AudioControlBloc>().add(PlaySong(
-                  songId:
-                  context
-                      .read<CurrentSelectedSongBloc>()
-                      .currentSelectedSongId!,
-                  songFile:
-                  context
-                      .read<CurrentSelectedSongBloc>()
-                      .currentSelectedSongFile!,
-                  songImage:
-                  context
-                      .read<CurrentSelectedSongBloc>()
-                      .currentSelectedSongImage!,
-                  songName: context
-                      .read<CurrentSelectedSongBloc>()
-                      .currentSelectedSongName!));
+                  songId: context.read<CurrentSelectedSongBloc>().currentSelectedSongId!,
+                  songFile: context.read<CurrentSelectedSongBloc>().currentSelectedSongFile!,
+                  songImage: context.read<CurrentSelectedSongBloc>().currentSelectedSongImage!,
+                  songName: context.read<CurrentSelectedSongBloc>().currentSelectedSongName!));
+              // context.read<AudioControlBloc>().add(UpdateSeekPositionDuration());
+              // context.read<AudioControlBloc>().add(UpdateTimeDuration());
             }, builder: (context, state) {
           if (state is LoadingNewSong) {
             return const Center(child: CircularProgressIndicator());
@@ -172,32 +165,53 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                           builder: ((context, snapshot) {
 
                             AudioPlayer audioPlayer = AudioPlayer();
+                            audioPlayer.setSourceUrl(state.songFile);
+
+                            audioPlayer.onDurationChanged.listen((Duration d) {
+                              print('                             ${d.inSeconds~/ 60}:${((d.inSeconds) % 60).toString().padLeft(2, '0')}');
+
+                            });
 
                             if (snapshot.hasData) {
-                              // final currrentDuration = ((state.songFile. ?? 0)).toStringAsPrecision(1);
+                              final Duration? duration = snapshot.data;
+
                               return Column(
                                 children: [
                                   Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [Text(AudioDuration.getAudioDuration(state.songFile).toString()), const Text("0.30")],
+                                        children: [Row(
+                                          children: [
+                                            Text((duration?.inMinutes ?? 0).toString().padLeft(2, '0')),
+                                            const Text(":"),
+                                            Text((duration?.inSeconds ?? 0).toString().padLeft(2, '0'))
+                                          ],
+                                        ),
+                                          // Text(duration.)
+                                        ],
                                       )),
+                                  SliderTheme(
+                                    data: SliderTheme.of(context)
+                                        .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
+                                    child: Slider(
+                                        activeColor: Colors.green,
+                                        inactiveColor: Colors.black,
+                                        value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
+                                        max: 100,
+                                        min: 0,
+                                        // activeColor: Theme.of(context).colorScheme.background,
+                                        onChangeEnd: (value) {},
+                                        onChanged: (val) {
+                                          BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
+                                        }),
+                                  )
                                 ],
                               );
                             } else {
                               return const SizedBox();
                             }
                           })),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //   children: [
-                      //     Text(
-                      //         convertSecondsToReadableString(position.floor())),
-                      //     Text(
-                      //         convertSecondsToReadableString(duration.floor())),
-                      //   ],
-                      // ),
                       Flexible(
                         flex: 1,
                         child: Container(
@@ -399,30 +413,5 @@ class PlayMusicPageState extends State<PlayMusicPage> {
           }
         }));
   }
-
-  // CircleButton playButton() {
-  //   return CircleButton(
-  //     size: 60,
-  //     onPressed: () async {
-  //       print("*******             " + isPlaying.toString());
-  //       print("*******             " + player.toString());
-  //       print("*******             " + audioPlayer.playerId);
-  //       if (musicFile == musicFile) {
-  //         if (isPlaying) {
-  //           player.pause();
-  //           await audioPlayer.pause();
-  //         } else {
-  //           player.play();
-  //           await audioPlayer.play(UrlSource(musicFile!));
-  //         }
-  //       }
-  //     },
-  //     child: Icon(
-  //       isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-  //       color: Colors.white,
-  //       size: 50,
-  //     ),
-  //   );
-  // }
 }
 
