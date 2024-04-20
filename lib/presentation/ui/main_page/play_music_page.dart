@@ -37,8 +37,10 @@ class PlayMusicPageState extends State<PlayMusicPage> {
 
   bool normalize = false;
   bool loop = false;
-  Duration _duration = Duration();
-  Duration _position = Duration();
+  double songSecond = 0;
+  int songEndMinute = 0 ;
+  String songEndSecond = '0';
+  int i = 0;
 
 
   @override
@@ -164,12 +166,12 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                           stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
                           builder: ((context, snapshot) {
 
-                            AudioPlayer audioPlayer = AudioPlayer();
                             audioPlayer.setSourceUrl(state.songFile);
 
                             audioPlayer.onDurationChanged.listen((Duration d) {
-                              print('                             ${d.inSeconds~/ 60}:${((d.inSeconds) % 60).toString().padLeft(2, '0')}');
-
+                              songSecond = double.parse(d.inSeconds.toString());
+                              songEndMinute = d.inSeconds~/ 60;
+                              songEndSecond = ((d.inSeconds) % 60).toString().padLeft(2, '0');
                             });
 
                             if (snapshot.hasData) {
@@ -181,14 +183,21 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [Row(
+                                        children: [
+                                          Row(
                                           children: [
-                                            Text((duration?.inMinutes ?? 0).toString().padLeft(2, '0')),
+                                            Text((duration!.inMinutes ).toString().padLeft(2, '0')),
                                             const Text(":"),
-                                            Text((duration?.inSeconds ?? 0).toString().padLeft(2, '0'))
+                                            Text((duration.inSeconds >= 60 ? 00 : i++).toString().padLeft(2, '0'))
                                           ],
                                         ),
-                                          // Text(duration.)
+                                          Row(
+                                            children: [
+                                              Text(songEndMinute.toString()),
+                                              const Text(":"),
+                                              Text(songEndSecond)
+                                            ],
+                                          )
                                         ],
                                       )),
                                   SliderTheme(
@@ -198,7 +207,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                                         activeColor: Colors.green,
                                         inactiveColor: Colors.black,
                                         value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
-                                        max: 100,
+                                        max: songSecond,
                                         min: 0,
                                         // activeColor: Theme.of(context).colorScheme.background,
                                         onChangeEnd: (value) {},
