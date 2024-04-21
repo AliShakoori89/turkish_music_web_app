@@ -9,7 +9,7 @@ import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page.dart';
 
 import '../../../data/model/song_model.dart';
 import '../../../data/model/singer_model.dart';

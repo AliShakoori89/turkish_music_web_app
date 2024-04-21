@@ -8,7 +8,7 @@ import 'package:turkish_music_app/presentation/helpers/music_player_component/pl
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/ui/detail_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_music_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page.dart';
 
 import '../../../helpers/widgets/top_arrow_icon.dart';
 

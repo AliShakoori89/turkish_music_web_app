@@ -7,7 +7,7 @@ import 'package:turkish_music_app/presentation/bloc/new_music_bloc/state.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/new_music_bloc/event.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
-import '../../../ui/main_page/play_music_page.dart';
+import '../../../ui/main_page/play_song_page/play_song_page.dart';
 
 class NewMusicContainer extends StatefulWidget {
 

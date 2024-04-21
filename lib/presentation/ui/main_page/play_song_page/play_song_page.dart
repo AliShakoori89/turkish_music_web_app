@@ -15,15 +15,16 @@ import 'package:turkish_music_app/presentation/helpers/music_player_component/pl
 import 'package:turkish_music_app/presentation/helpers/music_player_component/random_play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_next_button.dart';
 import 'package:turkish_music_app/presentation/helpers/music_player_component/skip_previous_button.dart';
-import '../../../data/model/album_model.dart';
-import '../../../data/model/new-song_model.dart';
-import '../../bloc/audio_control/bloc/audio_control_bloc.dart';
-import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../../bloc/is_playing_music_bloc/bloc.dart';
-import '../../bloc/is_playing_music_bloc/event.dart';
-import '../../bloc/play_box_bloc/event.dart';
-import '../../helpers/music_player_component/download_button.dart';
-import '../../helpers/widgets/circle_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/song_slider.dart';
+import '../../../../data/model/album_model.dart';
+import '../../../../data/model/new-song_model.dart';
+import '../../../bloc/audio_control/bloc/audio_control_bloc.dart';
+import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
+import '../../../bloc/is_playing_music_bloc/bloc.dart';
+import '../../../bloc/is_playing_music_bloc/event.dart';
+import '../../../bloc/play_box_bloc/event.dart';
+import '../../../helpers/music_player_component/download_button.dart';
+import '../../../helpers/widgets/circle_button.dart';
 
 class PlayMusicPage extends StatefulWidget {
   const PlayMusicPage({super.key});
@@ -40,7 +41,8 @@ class PlayMusicPageState extends State<PlayMusicPage> {
   double songSecond = 0;
   int songEndMinute = 0 ;
   String songEndSecond = '0';
-  int i = 0;
+
+  int i = 00;
 
 
   @override
@@ -64,6 +66,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
           } else if (state is SelectedSongFetched) {
 
             var songName = state.songName;
+            var songFile = state.songFile;
 
             BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: songName));
 
@@ -162,6 +165,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                           // minProgress: 0,
                         ),
                       ),
+                      // SongSlider(audioPlayer: audioPlayer, songFile: state.songFile,),
                       StreamBuilder(
                           stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
                           builder: ((context, snapshot) {
@@ -175,7 +179,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                             });
 
                             if (snapshot.hasData) {
-                              final Duration? duration = snapshot.data;
+                              Duration? duration = snapshot.data;
 
                               return Column(
                                 children: [
@@ -188,7 +192,7 @@ class PlayMusicPageState extends State<PlayMusicPage> {
                                           children: [
                                             Text((duration!.inMinutes ).toString().padLeft(2, '0')),
                                             const Text(":"),
-                                            Text((duration.inSeconds >= 60 ? 00 : i++).toString().padLeft(2, '0'))
+                                            Text((calculateSecondTimer(duration)).toString().padLeft(2, '0'))
                                           ],
                                         ),
                                           Row(
@@ -421,6 +425,32 @@ class PlayMusicPageState extends State<PlayMusicPage> {
             return const Center(child: Text('Something went wrong'));
           }
         }));
+  }
+
+  int calculateSecondTimer(Duration duration){
+    int secondTime = 0;
+    if(duration.inSeconds < 60){
+      secondTime = duration.inSeconds;
+    }else if(duration.inSeconds < 120){
+      secondTime = duration.inSeconds-60;
+    }else if(duration.inSeconds < 180){
+      secondTime = duration.inSeconds-120;
+    }else if(duration.inSeconds < 240){
+      secondTime = duration.inSeconds-180;
+    }else if(duration.inSeconds < 300){
+      secondTime = duration.inSeconds-240;
+    }else if(duration.inSeconds < 360){
+      secondTime = duration.inSeconds-300;
+    }else if(duration.inSeconds < 420){
+      secondTime = duration.inSeconds-360;
+    }else if(duration.inSeconds < 480){
+      secondTime = duration.inSeconds-420;
+    }else if(duration.inSeconds < 540){
+      secondTime = duration.inSeconds-480;
+    }else if(duration.inSeconds < 600){
+      secondTime = duration.inSeconds-540;
+    }
+    return secondTime;
   }
 }
 
