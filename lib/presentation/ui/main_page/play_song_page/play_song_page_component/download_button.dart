@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DownloadButton extends StatefulWidget {
-
+class DownloadButton extends StatelessWidget {
   const DownloadButton({super.key});
 
-  @override
-  State<DownloadButton> createState() => _DownloadButtonState();
-}
-
-class _DownloadButtonState extends State<DownloadButton> {
-
-  bool download = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +11,7 @@ class _DownloadButtonState extends State<DownloadButton> {
           onTap: () {
 
           },
-          child: Icon(
+          child: const Icon(
             Icons.download,
             size: 15.0, color:
           Colors.grey,)

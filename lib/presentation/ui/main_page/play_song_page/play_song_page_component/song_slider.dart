@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../bloc/audio_control/bloc/audio_control_bloc.dart';
+import '../../../../bloc/audio_control/bloc/audio_control_bloc.dart';
 
 class SongSlider extends StatefulWidget {
 
@@ -19,6 +19,12 @@ class _SongSliderState extends State<SongSlider> {
   double songSecond = 0;
   int songEndMinute = 0 ;
   String songEndSecond = '0';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,8 @@ class _SongSliderState extends State<SongSlider> {
             return Column(
               children: [
                 Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 70.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -63,17 +70,20 @@ class _SongSliderState extends State<SongSlider> {
                 SliderTheme(
                   data: SliderTheme.of(context)
                       .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
-                  child: Slider(
-                      activeColor: Colors.green,
-                      inactiveColor: Colors.black,
-                      value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
-                      max: songSecond,
-                      min: 0,
-                      // activeColor: Theme.of(context).colorScheme.background,
-                      onChangeEnd: (value) {},
-                      onChanged: (val) {
-                        BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
-                      }),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                    child: Slider(
+                        activeColor: Colors.purple,
+                        inactiveColor: Colors.black,
+                        value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
+                        max: songSecond,
+                        min: 0,
+                        // activeColor: Theme.of(context).colorScheme.background,
+                        onChangeEnd: (value) {},
+                        onChanged: (val) {
+                          BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
+                        }),
+                  ),
                 )
               ],
             );
