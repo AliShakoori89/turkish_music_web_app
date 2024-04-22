@@ -1,7 +1,7 @@
 import 'package:turkish_music_app/data/model/song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
-class MusicRepository {
+class SongRepository {
 
   final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
 

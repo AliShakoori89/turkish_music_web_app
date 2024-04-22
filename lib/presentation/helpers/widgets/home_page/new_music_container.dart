@@ -2,10 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
-import 'package:turkish_music_app/presentation/bloc/new_music_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/new_music_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/new_song_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../../../bloc/new_music_bloc/event.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../ui/main_page/play_song_page/play_song_page.dart';
 
@@ -23,7 +23,7 @@ class NewMusicContainerState extends State<NewMusicContainer> {
 
   @override
   void initState() {
-    BlocProvider.of<NewMusicBloc>(context).add(GetNewMusicEvent());
+    BlocProvider.of<NewSongBloc>(context).add(GetNewSongEvent());
     super.initState();
   }
 
@@ -36,12 +36,12 @@ class NewMusicContainerState extends State<NewMusicContainer> {
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
           ),
-          BlocBuilder<NewMusicBloc, NewMusicState>(builder: (context, state) {
+          BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
-          List<NewSongDataModel> newSong = state.newMusic;
+          List<NewSongDataModel> newSong = state.newSong;
 
           if(state.status.isLoading){
-            return const NewMusicShimmerContainer();
+            return const NewSongShimmerContainer();
           }
           else if(state.status.isSuccess){
             return Padding(
@@ -122,9 +122,9 @@ class NewMusicContainerState extends State<NewMusicContainer> {
             );
           }
           else if(state.status.isError){
-            return const NewMusicShimmerContainer();
+            return const NewSongShimmerContainer();
           }
-          return const NewMusicShimmerContainer();
+          return const NewSongShimmerContainer();
           }),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.055,

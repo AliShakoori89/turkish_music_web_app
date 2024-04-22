@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:shimmer/shimmer.dart';
 
-class NewMusicShimmerContainer extends StatelessWidget {
-  const NewMusicShimmerContainer({super.key});
+class NewSongShimmerContainer extends StatelessWidget {
+  const NewSongShimmerContainer({super.key});
 
   @override
   Widget build(BuildContext context) {

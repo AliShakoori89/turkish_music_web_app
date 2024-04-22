@@ -1,24 +1,24 @@
-abstract class IsPlayingMusicEvent {
+abstract class PlayingSongEvent {
   List<Object> get props => [];
 }
 
-class SetIsPlayingMusicEvent extends IsPlayingMusicEvent{
-  final String musicFilePath;
+class SetPlayingSongEvent extends PlayingSongEvent{
+  final String songFilePath;
   final String singerName;
   final String imagePath;
   final bool isPlaying;
 
-  SetIsPlayingMusicEvent({
-    required this.musicFilePath,
+  SetPlayingSongEvent({
+    required this.songFilePath,
     required this.singerName,
     required this.imagePath,
     required this.isPlaying});
 
   @override
-  List<Object> get props => [musicFilePath, singerName, imagePath, isPlaying];
+  List<Object> get props => [songFilePath, singerName, imagePath, isPlaying];
 }
 
-class SetPreviousSongFileEvent extends IsPlayingMusicEvent{
+class SetPreviousSongFileEvent extends PlayingSongEvent{
   final String previousSongFilePath;
 
   SetPreviousSongFileEvent({
@@ -28,15 +28,15 @@ class SetPreviousSongFileEvent extends IsPlayingMusicEvent{
   List<Object> get props => [previousSongFilePath];
 }
 
-class GetIsPlayingMusicEvent extends IsPlayingMusicEvent{
+class GetPlayingSongEvent extends PlayingSongEvent{
 
-  GetIsPlayingMusicEvent();
+  GetPlayingSongEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class GetPreviousSongFileEvent extends IsPlayingMusicEvent{
+class GetPreviousSongFileEvent extends PlayingSongEvent{
 
   GetPreviousSongFileEvent();
 

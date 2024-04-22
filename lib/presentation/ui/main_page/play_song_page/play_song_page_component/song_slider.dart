@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../bloc/audio_control/bloc/audio_control_bloc.dart';
+import '../../../../bloc/song_control_bloc/bloc/song_control_bloc.dart';
 
 class SongSlider extends StatefulWidget {
 
@@ -29,7 +29,7 @@ class _SongSliderState extends State<SongSlider> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
+        stream: BlocProvider.of<SongControlBloc>(context).positionStream,
         builder: ((context, snapshot) {
 
           widget.audioPlayer.setSourceUrl(widget.songFile);
@@ -81,7 +81,7 @@ class _SongSliderState extends State<SongSlider> {
                         // activeColor: Theme.of(context).colorScheme.background,
                         onChangeEnd: (value) {},
                         onChanged: (val) {
-                          BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
+                          BlocProvider.of<SongControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
                         }),
                   ),
                 )

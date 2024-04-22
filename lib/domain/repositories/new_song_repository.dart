@@ -2,7 +2,7 @@ import 'dart:convert';
 import '../../data/model/new-song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
-class NewMusicRepository {
+class NewSongRepository {
 
   final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
 

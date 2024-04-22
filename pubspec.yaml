@@ -67,6 +67,8 @@ dependencies:
   restart_app: ^1.2.1
   audioplayers: ^6.0.0
   sleek_circular_slider: ^2.0.1
+  youtube_explode_dart: ^2.2.0
+  audio_service: ^0.18.13
 
 
 dev_dependencies:
