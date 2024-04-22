@@ -68,19 +68,34 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                           onTap: (){
 
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(
-                                          SelectSong(
-                                              songName: newSong[index].name,
-                                              songFile: newSong[index].fileSource,
-                                              songImage: newSong[index].imageSource,
-                                              id: newSong[index].id,
-                                              songSingerName: newSong[index].singer.name
-                                              )),
-                                      child: PlayMusicPage(),
-                                    )));
+                              context,
+                              MaterialPageRoute(builder: (context) => PlayMusicPage(
+                                  songName: newSong[index].name,
+                                  songFile: newSong[index].fileSource,
+                                  songImage: newSong[index].imageSource,
+                                  songSingerName: newSong[index].singer.name
+                              ),),
+                            );
+
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => BlocProvider(
+                            //           create: (context) => CurrentSelectedSongBloc()..add(
+                            //               SelectSong(
+                            //                   songName: newSong[index].name,
+                            //                   songFile: newSong[index].fileSource,
+                            //                   songImage: newSong[index].imageSource,
+                            //                   id: newSong[index].id,
+                            //                   songSingerName: newSong[index].singer.name
+                            //                   )),
+                            //           child: PlayMusicPage(
+                            //               songName: newSong[index].name,
+                            //               songFile: newSong[index].fileSource,
+                            //               songImage: newSong[index].imageSource,
+                            //               songSingerName: newSong[index].singer.name
+                            //           ),
+                            //         )));
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(

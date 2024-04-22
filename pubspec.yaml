@@ -69,6 +69,9 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   youtube_explode_dart: ^2.2.0
   audio_service: ^0.18.13
+  audio_session: ^0.1.19
+  just_audio_platform_interface: ^4.2.2
+
 
 
 dev_dependencies:
