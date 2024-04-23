@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page.dart';

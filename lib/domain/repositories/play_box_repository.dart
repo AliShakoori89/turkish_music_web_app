@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:audioplayers/audioplayers.dart';
-
 import '../../data/model/new-song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
@@ -29,13 +26,6 @@ class PlayBoxRepository {
   Future<dynamic> getSongTime(String songFile) async {
 
     double songTime = 0;
-
-    AudioPlayer audioPlayer = AudioPlayer();
-    audioPlayer.setSourceUrl(songFile);
-
-    audioPlayer.onDurationChanged.listen((Duration d) {
-      songTime = double.parse(d.inSeconds.toString());
-    });
     return songTime;
   }
 
@@ -44,12 +34,9 @@ class PlayBoxRepository {
 
     int songEndMinute = 0 ;
 
-    AudioPlayer audioPlayer = AudioPlayer();
-    audioPlayer.setSourceUrl(songFile);
 
-    audioPlayer.onDurationChanged.listen((Duration d) {
-      songEndMinute = d.inSeconds~/ 60;
-    });
+
+
     return songEndMinute;
   }
 
@@ -58,12 +45,6 @@ class PlayBoxRepository {
 
     String songEndSecond = '0';
 
-    AudioPlayer audioPlayer = AudioPlayer();
-    audioPlayer.setSourceUrl(songFile);
-
-    audioPlayer.onDurationChanged.listen((Duration d) {
-      songEndSecond = ((d.inSeconds) % 60).toString().padLeft(2, '0');
-    });
     return songEndSecond;
   }
 }

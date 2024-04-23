@@ -25,6 +25,7 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/bloc/song_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_duration_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 
@@ -36,22 +37,22 @@ Future<void> main() async{
       ? false
       : true;
 
-  await SimpleAudio.init(
-    useMediaController: true,
-    shouldNormalizeVolume: false,
-    dbusName: "com.erikas.SimpleAudio",
-    actions: [
-      MediaControlAction.rewind,
-      MediaControlAction.skipPrev,
-      MediaControlAction.playPause,
-      MediaControlAction.skipNext,
-      MediaControlAction.fastForward,
-    ],
-    androidNotificationIconPath: "mipmap/ic_launcher",
-    androidCompactActions: [1, 2, 3],
-    applePreferSkipButtons: true,
-
-  );
+  // await SimpleAudio.init(
+  //   useMediaController: true,
+  //   shouldNormalizeVolume: false,
+  //   dbusName: "com.erikas.SimpleAudio",
+  //   actions: [
+  //     MediaControlAction.rewind,
+  //     MediaControlAction.skipPrev,
+  //     MediaControlAction.playPause,
+  //     MediaControlAction.skipNext,
+  //     MediaControlAction.fastForward,
+  //   ],
+  //   androidNotificationIconPath: "mipmap/ic_launcher",
+  //   androidCompactActions: [1, 2, 3],
+  //   applePreferSkipButtons: true,
+  //
+  // );
 
   runApp(MyApp(isLoggedIn: isLoggedIn),);
 }
@@ -89,18 +90,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 PlayingSongBloc(IsPlayingMusicRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
-                CurrentSelectedSongBloc()),
-        BlocProvider(
-            create: (BuildContext context) =>
-                SongControlBloc()),
+        // BlocProvider(
+        //     create: (BuildContext context) =>
+        //         CurrentSelectedSongBloc()),
         BlocProvider(
             create: (BuildContext context) =>
                 PlayBoxBloc(PlayBoxRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
-                SongDurationBloc(SongDurationRepository())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -112,8 +107,9 @@ class MyApp extends StatelessWidget {
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
         isLoggedIn
             ? const MainPage()
-            : const MainPage()
-        // AuthenticatePage()
+            :
+        // const MainPage()
+        AuthenticatePage()
             // : const ErrorInternetConnectionPage()
       ),
     );

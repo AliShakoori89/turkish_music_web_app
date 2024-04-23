@@ -67,6 +67,8 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                         child: InkWell(
                           onTap: (){
 
+                            print("1111111111111111111111111111111");
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => PlayMusicPage(
