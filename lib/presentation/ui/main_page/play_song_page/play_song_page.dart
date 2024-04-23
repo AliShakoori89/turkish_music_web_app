@@ -69,8 +69,8 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
       print("33333333333333333333333                  "+widget.songFile);
       // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
       await player.setAudioSource(AudioSource.uri(Uri.parse(
-          "http://194.5.195.145/TurkishMusicFiles/NewMusicFiles/2024-04-13-10-20-30-Sana Na.mp3"
-          // "http://194.5.195.145/TurkishMusicFiles/NewMusicFiles/2024-04-13-10-09-25-Canim_Azaldi.mp3"
+          // "http://194.5.195.145/TurkishMusicFiles/NewMusicFiles/2024-04-13-10-20-30-Sana Na.mp3"
+          "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3"
       )));
     } on PlayerException catch (e) {
       print("Error loading audio source: $e");
