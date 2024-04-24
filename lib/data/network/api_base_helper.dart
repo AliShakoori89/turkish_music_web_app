@@ -4,7 +4,7 @@ import 'http_exception.dart';
 
 class ApiBaseHelper {
 
-  final String baseUrl = 'http://194.5.195.145';
+  final String baseUrl = 'api.turkishmusicapi.ir';
   final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
 
 
@@ -24,8 +24,14 @@ class ApiBaseHelper {
         'Authorization': 'bearer $accessToken',
       };
 
-      var secondURL = Uri.http("194.5.195.145", url, queryParameters);
-      final response = await http.get(secondURL, headers: headers);
+      final Uri address = Uri(
+          host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
+
+      print("address                           "+address.toString());
+
+      // var secondURL = Uri.http(baseUrl, url, queryParameters);
+      // print("secondURL                        "+secondURL.toString());
+      final response = await http.get(address, headers: headers);
 
       return response;
     } on SocketException {
@@ -36,7 +42,10 @@ class ApiBaseHelper {
   Future<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
 
     try {
-      final Uri address = Uri.parse(baseUrl+url);
+      // final Uri address = Uri.parse(baseUrl+url);
+
+      final Uri address =
+      Uri(host: baseUrl+url, scheme: "https", path: url);
 
       Map<String, String> headers;
 
