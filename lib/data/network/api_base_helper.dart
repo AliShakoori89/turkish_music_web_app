@@ -25,7 +25,7 @@ class ApiBaseHelper {
       };
 
       final Uri address = Uri(
-          host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
+          host: baseUrl, scheme: "http", query: query, path: url, queryParameters: queryParameters);
 
       print("address                           "+address.toString());
 
@@ -45,7 +45,7 @@ class ApiBaseHelper {
       // final Uri address = Uri.parse(baseUrl+url);
 
       final Uri address =
-      Uri(host: baseUrl+url, scheme: "https", path: url);
+      Uri(host: baseUrl+url, scheme: "http", path: url);
 
       Map<String, String> headers;
 

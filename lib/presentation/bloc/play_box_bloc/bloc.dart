@@ -11,7 +11,6 @@ class PlayBoxBloc extends Bloc<PlayBoxEvent, PlayBoxState> {
   PlayBoxBloc(this.playBoxRepository) : super(
       PlayBoxState.initial()){
     on<PlayBoxListEvent>(_mapPlayBoxListEventToState);
-    on<CalculateSongTimeEvent>(_mapCalculateSongTimeEventToState);
   }
 
   void _mapPlayBoxListEventToState(
@@ -31,27 +30,4 @@ class PlayBoxBloc extends Bloc<PlayBoxEvent, PlayBoxState> {
       emit(state.copyWith(status: PlayBoxStatus.error));
     }
   }
-
-  void _mapCalculateSongTimeEventToState(
-      CalculateSongTimeEvent event, Emitter<PlayBoxState> emit) async {
-    try {
-      emit(state.copyWith(status: PlayBoxStatus.loading));
-
-      double songTime = await playBoxRepository.getSongTime(event.songFile);
-      int songMinute = await playBoxRepository.getSongMinute(event.songFile);
-      String songSecond = await playBoxRepository.getSongSecond(event.songFile);
-
-      emit(
-        state.copyWith(
-            status: PlayBoxStatus.success,
-            songTime: songTime,
-            minute: songMinute,
-            second: songSecond
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: PlayBoxStatus.error));
-    }
-  }
-
 }

@@ -307,7 +307,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   Widget component1(
       IconData icon, String hintText, bool isPassword, bool isEmail,
       TextEditingController controller, GlobalKey<FormState> emailFormKey) {
-    Size size = MediaQuery.of(context).size;
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: BackdropFilter(
