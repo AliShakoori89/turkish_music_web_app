@@ -69,7 +69,6 @@ class SignUserRepository {
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({'email': email, "verificationToken": verificationToken,
       "apiKey": apiKey});
-
     final response = await api.post("/api/User/SecondStepLogin", body);
     var parsedJson = json.decode(response.body);
 

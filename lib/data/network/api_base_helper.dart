@@ -25,12 +25,8 @@ class ApiBaseHelper {
       };
 
       final Uri address = Uri(
-          host: baseUrl, scheme: "http", query: query, path: url, queryParameters: queryParameters);
+          host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
 
-      print("address                           "+address.toString());
-
-      // var secondURL = Uri.http(baseUrl, url, queryParameters);
-      // print("secondURL                        "+secondURL.toString());
       final response = await http.get(address, headers: headers);
 
       return response;
@@ -42,10 +38,13 @@ class ApiBaseHelper {
   Future<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
 
     try {
-      // final Uri address = Uri.parse(baseUrl+url);
+
+      final queryParameters = {
+        'apiKey': apiKey
+      };
 
       final Uri address =
-      Uri(host: baseUrl+url, scheme: "http", path: url);
+      Uri(host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
 
       Map<String, String> headers;
 

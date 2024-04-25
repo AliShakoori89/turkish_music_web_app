@@ -5,7 +5,6 @@ import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
-import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../ui/main_page/play_song_page/play_song_page.dart';
 
@@ -67,8 +66,6 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                         child: InkWell(
                           onTap: (){
 
-                            print("1111111111111111111111111111111");
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => PlayMusicPage(
@@ -78,36 +75,6 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                   songSingerName: newSong[index].singer.name
                               ),),
                             );
-
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => BlocProvider(
-                            //           create: (context) => CurrentSelectedSongBloc()..add(
-                            //               SelectSong(
-                            //                   songName: newSong[index].name,
-                            //                   songFile: newSong[index].fileSource,
-                            //                   songImage: newSong[index].imageSource,
-                            //                   id: newSong[index].id,
-                            //                   songSingerName: newSong[index].singer.name
-                            //                   )),
-                            //           child: PlayMusicPage(
-                            //               songName: newSong[index].name,
-                            //               songFile: newSong[index].fileSource,
-                            //               songImage: newSong[index].imageSource,
-                            //               songSingerName: newSong[index].singer.name
-                            //           ),
-                            //         )));
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => PlayMusicPage(
-                            //         imagePath: newSong[index].imageSource,
-                            //         singerName: newSong[index].name,
-                            //         musicFile: newSong[index].fileSource,
-                            //         musicFiles: [],
-                            //       )),
-                            // );
                           },
                           child: Container(
                             decoration: BoxDecoration(

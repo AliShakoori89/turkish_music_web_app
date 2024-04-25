@@ -30,7 +30,7 @@ class PlayMusicPage extends StatefulWidget {
   final String songImage;
   final String songSingerName;
   const PlayMusicPage({super.key, required this.songFile, required this.songName,
-  required this.songImage, required this.songSingerName});
+    required this.songImage, required this.songSingerName});
 
 
   @override
@@ -53,6 +53,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));
+    player.stop();
     _init();
   }
 
@@ -72,11 +73,12 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     } on PlayerException catch (e) {
       print("Error loading audio source: $e");
     }
+      player.play();
   }
 
   @override
   void dispose() {
-    player.dispose();
+    // player.dispose();
     super.dispose();
   }
 
