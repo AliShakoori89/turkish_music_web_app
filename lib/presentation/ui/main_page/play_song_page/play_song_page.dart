@@ -53,7 +53,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
     ));
-    player.stop();
     _init();
   }
 
@@ -73,7 +72,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     } on PlayerException catch (e) {
       print("Error loading audio source: $e");
     }
-      player.play();
+      // player.play();
   }
 
   @override
@@ -85,7 +84,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      player.stop();
+      // player.stop();
     }
   }
 

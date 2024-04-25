@@ -29,8 +29,10 @@ class ControlButtons extends StatelessWidget {
               return Container(
                 margin: const EdgeInsets.all(8.0),
                 width: 50.0,
-                height: 50.0,
-                child: const CircularProgressIndicator(),
+                height: 200.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage("assets/gif/playing music animation.gif"))
+                  ),
               );
             } else if (playing != true) {
               return IconButton(
