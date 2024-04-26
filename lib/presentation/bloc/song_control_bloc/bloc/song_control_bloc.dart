@@ -1,14 +1,14 @@
 // import 'dart:async';
-// import 'package:audioplayers/audioplayers.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:just_audio/just_audio.dart';
 // part 'song_control_event.dart';
 // part 'song_control_state.dart';
 //
 // enum SongControlStatus { play, pause }
 //
 // class SongControlBloc extends Bloc<SongControlEvent, SongControlState> {
-//   Stream<Duration> get positionStream => _audioPlayer.onPositionChanged;
+//   Stream<Duration> get positionStream => _audioPlayer.positionStream;
 //
 //   StreamSubscription? _audioStream;
 //   final _audioPlayer = AudioPlayer();
@@ -22,8 +22,7 @@
 //     });
 //
 //     on<PlaySong>((event, emit) async {
-//       final Source source = UrlSource(event.songFile ?? "");
-//       await _audioPlayer.play(source);
+//       await _audioPlayer.play();
 //       emit(SongPlayedState());
 //     });
 //
@@ -32,10 +31,10 @@
 //       emit(SongPausedState());
 //     });
 //
-//     on<ResumeSong>((event, emit) async {
-//       await _audioPlayer.resume();
-//       emit(SongPlayedState());
-//     });
+//     // on<ResumeSong>((event, emit) async {
+//     //   await _audioPlayer.resume();
+//     //   emit(SongPlayedState());
+//     // });
 //   }
 //
 //   stopAudio() async {

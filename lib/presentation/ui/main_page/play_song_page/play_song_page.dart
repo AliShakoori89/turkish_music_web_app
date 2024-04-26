@@ -17,8 +17,10 @@ import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/repeat_button.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/song_slider.dart';
+import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
+import '../../../bloc/song_control_bloc/bloc/song_control_bloc.dart';
 import '../../../helpers/widgets/custom_app_bar.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -29,8 +31,10 @@ class PlayMusicPage extends StatefulWidget {
   final String songFile;
   final String songImage;
   final String songSingerName;
-  const PlayMusicPage({super.key, required this.songFile, required this.songName,
-    required this.songImage, required this.songSingerName});
+  final int songID;
+  const PlayMusicPage({super.key, required this.songFile,
+    required this.songName, required this.songImage,
+    required this.songSingerName, required this.songID});
 
 
   @override
@@ -104,8 +108,14 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
         body: Container(
           height: double.infinity,
           margin: EdgeInsets.only(
-              right: MediaQuery.of(context).size.width * 0.05,
-              left: MediaQuery.of(context).size.width * 0.05),
+              right: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.05,
+              left: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.05),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [Colors.purple, Colors.black],
@@ -159,9 +169,11 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                   ),
                   Flexible(
                     flex: 8,
-                    child: CustomCircularSeekBar(songImage: widget.songImage),
+                    child: CustomCircularSeekBar(songImage: widget
+                        .songImage),
                   ),
-                  SongSlider(positionDataStream: _positionDataStream, player: player),
+                  SongSlider(positionDataStream: _positionDataStream,
+                      player: player),
                   SizedBox(height: 15,),
                   Flexible(
                       flex: 2,
@@ -174,6 +186,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
             ),
           ),
         )
+
     );
   }
 }

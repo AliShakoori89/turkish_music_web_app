@@ -93,6 +93,9 @@ class MyApp extends StatelessWidget {
         // BlocProvider(
         //     create: (BuildContext context) =>
         //         CurrentSelectedSongBloc()),
+        // BlocProvider(
+        //     create: (BuildContext context) =>
+        //         CurrentSelectedSongBloc()),
         BlocProvider(
             create: (BuildContext context) =>
                 PlayBoxBloc(PlayBoxRepository())),
