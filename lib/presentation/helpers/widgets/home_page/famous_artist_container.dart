@@ -8,6 +8,7 @@ import '../../../bloc/singer_bloc/bloc.dart';
 import '../../../bloc/singer_bloc/event.dart';
 import '../../../bloc/singer_bloc/state.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
+import '../../../const/title.dart';
 
 class FamousArtistContainer extends StatefulWidget {
 
@@ -34,6 +35,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
         const SizedBox(
           height: 20,
         ),
+        const TitleText(title: "Singer", haveSeeAll: true),
         BlocBuilder<SingerBloc, SingerState>(builder: (context, state) {
 
           List<SingerDataModel> artistList = state.famousSinger;

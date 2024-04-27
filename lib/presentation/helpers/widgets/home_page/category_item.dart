@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 
-import '../../const/title.dart';
+import '../../../const/title.dart';
 
-class MustListenContainer extends StatelessWidget {
-  const MustListenContainer({super.key});
+class CategoryItemContainer extends StatelessWidget {
+  CategoryItemContainer({super.key});
+
+  var categories_item = [
+    'assets/category_images/top song.png',
+    'assets/category_images/happy song.png',
+    'assets/category_images/nostalgia.png',
+    'assets/category_images/sad song.png',
+    'assets/category_images/songs on the road.png',
+    'assets/category_images/turkce rap.png',
+    'assets/category_images/remix.png'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TitleText(title: "Must Listen", haveSeeAll: true),
+        const TitleText(title: "Category", haveSeeAll: false),
         Container(
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.0052,
@@ -21,7 +31,7 @@ class MustListenContainer extends StatelessWidget {
             duration: 100,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-                10,
+                categories_item.length,
                     (index) => Padding(
                   padding: EdgeInsets.only(
                     right: MediaQuery.of(context).size.width * 0.030,
@@ -36,8 +46,8 @@ class MustListenContainer extends StatelessWidget {
                         ],
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blue,
-                        image: const DecorationImage(
-                            image: AssetImage("assets/images/tarkan.png"),
+                        image: DecorationImage(
+                            image: AssetImage(categories_item[index]),
                             fit: BoxFit.fill
                         )
                     ),
