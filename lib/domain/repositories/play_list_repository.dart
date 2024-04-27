@@ -7,11 +7,11 @@ class PlayListRepository {
   final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
 
   @override
-  addToPlayList(String songName, int musicID) async {
+  addToPlayList(int userID, int musicID) async {
     ApiBaseHelper api = ApiBaseHelper();
 
     var body = jsonEncode({
-      "userId": 0,
+      "userId": userID,
       "musicId": musicID,
       "apiKey": apiKey
     });
@@ -20,8 +20,15 @@ class PlayListRepository {
   }
 
   @override
-  removeFromPlayList(){
+  removeFromPlayList(int userID, int musicID) async{
 
+    ApiBaseHelper api = ApiBaseHelper();
+
+    var body = jsonEncode({
+      "userId": userID,
+      "musicId": musicID,
+      "apiKey": apiKey
+    });
+  await api.post('/api/PlayList/AddToPlayList', body);
   }
-
 }
