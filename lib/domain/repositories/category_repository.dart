@@ -10,8 +10,9 @@ class CategoryRepository {
   Future<dynamic> getAllCategory() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Category/GetAll');
+
     final productJson = json.decode(response.body);
-    var allCategory = CategoryDataModel.fromJson(productJson);
-    return allCategory;
+    var allCategory = CategoryModel.fromJson(productJson);
+    return allCategory.data;
   }
 }

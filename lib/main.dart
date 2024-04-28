@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
+import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/song_duration_repository.dart';
 import 'package:turkish_music_app/domain/repositories/song_repository.dart';
@@ -14,6 +15,7 @@ import 'package:turkish_music_app/domain/repositories/play_song_repository.dart'
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
@@ -99,6 +101,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 PlayBoxBloc(PlayBoxRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                CategoryBloc(CategoryRepository())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
