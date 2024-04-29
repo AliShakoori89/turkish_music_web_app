@@ -6,8 +6,8 @@ import '../../../helpers/widgets/home_page/new_album_contaner.dart';
 import '../../../helpers/widgets/home_page/famous_artist_container.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
 
+  HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();

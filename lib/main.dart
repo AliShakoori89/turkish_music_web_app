@@ -30,7 +30,6 @@ import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
-
 Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -92,12 +91,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 PlayingSongBloc(IsPlayingMusicRepository())),
-        // BlocProvider(
-        //     create: (BuildContext context) =>
-        //         CurrentSelectedSongBloc()),
-        // BlocProvider(
-        //     create: (BuildContext context) =>
-        //         CurrentSelectedSongBloc()),
+        BlocProvider(
+            create: (BuildContext context) =>
+                CurrentSelectedSongBloc()),
+        BlocProvider(
+            create: (BuildContext context) =>
+                SongControlBloc()),
         BlocProvider(
             create: (BuildContext context) =>
                 PlayBoxBloc(PlayBoxRepository())),
@@ -114,7 +113,8 @@ class MyApp extends StatelessWidget {
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
         isLoggedIn
-            ? const MainPage()
+            ? MainPage(
+        )
             :
         // const MainPage()
         AuthenticatePage()

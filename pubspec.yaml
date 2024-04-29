@@ -65,6 +65,9 @@ dependencies:
   connectivity_plus: ^5.0.2
   restart_app: ^1.2.1
   just_audio: ^0.9.37
+  audioplayers: ^4.1.0
+  audio_video_progress_bar: ^2.0.2
+  cache_audio_player_plus: ^1.1.0
 
 
 

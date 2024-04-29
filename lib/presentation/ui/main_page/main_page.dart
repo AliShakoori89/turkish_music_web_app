@@ -12,6 +12,7 @@ import '../../const/custom_icon/music_icons.dart';
 import '../../const/error_internet_connection_page.dart';
 
 class MainPage extends StatefulWidget {
+
   const MainPage({super.key});
 
 
@@ -109,7 +110,7 @@ class _MainPageState extends State<MainPage> {
     List myRoutes = [
       SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: const HomePage()
+        child: HomePage()
       ),
       SizedBox(
           width: MediaQuery.of(context).size.width,
