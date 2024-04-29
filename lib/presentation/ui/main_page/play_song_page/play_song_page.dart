@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart' as justAudio;
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/all_songs_list.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/like_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/media_buttons.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
@@ -28,83 +29,11 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
 //
   bool loop = false;
 
-  bool loaded = false;
-  Duration _duration = new Duration();
-  Duration _position = new Duration();
-  late AudioPlayer advancedPlayer;
-
   @override
   void initState() {
     super.initState();
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
-    // initPlayer();
-    // ambiguate(WidgetsBinding.instance)!.addObserver(this);
-    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    //   statusBarColor: Colors.black,
-    // ));
-    // _init();
   }
-
-  void initPlayer(){
-    advancedPlayer = AudioPlayer();
-
-    advancedPlayer.onDurationChanged.listen((Duration d) {
-      _duration = d;
-      print('Max duration: $d');
-    });
-
-    advancedPlayer.onPositionChanged.listen((Duration p) {
-      _position = p;
-      print('Max duration: $p');
-    });
-  }
-
-  void seekToSecond(int second){
-    Duration newDuration = Duration(seconds: second);
-
-    advancedPlayer.seek(newDuration);
-  }
-
-  // Future<void> _init() async {
-  //
-  //   final session = await AudioSession.instance;
-  //   await session.configure(const AudioSessionConfiguration.speech());
-  //   // Listen to errors during playback.
-  //   audioPlayer.playbackEventStream.listen((event) {},
-  //       onError: (Object e, StackTrace stackTrace) {
-  //       });
-  //   // try {
-  //   //   String songFile = widget.songFile.substring(0, 4) + "s" + widget.songFile.substring(4, widget.songFile.length);
-  //   //   await player.setAudioSource(AudioSource.uri(Uri.parse(
-  //   //       songFile
-  //   //   )));
-  //   // } on PlayerException catch (e) {
-  //   //   print("Error loading audio source: $e");
-  //   // }
-  //     // player.play();
-  // }
-
-  // @override
-  // void dispose() {
-  //   // player.dispose();
-  //   super.dispose();
-  // }
-  //
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if (state == AppLifecycleState.paused) {
-  //     // player.stop();
-  //   }
-  // }
-
-  // Stream<PositionData> get _positionDataStream =>
-  //     Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
-  //         audioPlayer.positionStream,
-  //         audioPlayer.bufferedPositionStream,
-  //         audioPlayer.durationStream,
-  //             (position, bufferedPosition, duration) => PositionData(
-  //             position, bufferedPosition, duration ?? Duration.zero));
-
 
   @override
   Widget build(BuildContext context) {
@@ -196,56 +125,155 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                               ],
                             ),
                           ),
+                          CustomCircularSeekBar(
+                            songImage: state.songImage,
+                          ),
                           // SongSlider(positionDataStream: _positionDataStream,
                           //     player: audioPlayer),
-                          StreamBuilder(
-                              stream: BlocProvider.of<SongControlBloc>(context).positionStream,
-                              builder: ((context, snapshot) {
-                                if (snapshot.hasData) {
-                                  final secondCurrentDuration = (snapshot.data?.inSeconds ?? 0).toStringAsPrecision(2);
-                                  final minuteCurrentDuration = (snapshot.data?.inMinutes ?? 0).toStringAsPrecision(2);
-                                  return Column(
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(minuteCurrentDuration),
-                                                  Text(":"),
-                                                  Text(secondCurrentDuration),
-                                                ],
-                                              ),
-                                              Text("${snapshot.data?.inSeconds}")],
-                                          )),
-                                      SliderTheme(
-                                        data: SliderTheme.of(context)
-                                            .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
-                                        child: Slider(
-                                            value: _position.inSeconds.toDouble(),
-                                            min: 0.0,
-                                            max: _duration.inSeconds.toDouble(),
-                                            onChanged: (double value) {
-                                              setState(() {
-                                                seekToSecond(value.toInt());
-                                                value = value;
-                                              });}),
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  return const SizedBox();
-                                }
-                              })),
+                          // StreamBuilder(
+                          //     stream: BlocProvider.of<SongControlBloc>(context).positionStream,
+                          //     builder: ((context, snapshot) {
+                          //       if (snapshot.hasData) {
+                          //         final secondCurrentDuration = (snapshot.data?.inSeconds ?? 0).toStringAsPrecision(2);
+                          //         final minuteCurrentDuration = (snapshot.data?.inMinutes ?? 0).toStringAsPrecision(2);
+                          //         return Column(
+                          //           children: [
+                          //             Padding(
+                          //                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          //                 child: Row(
+                          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //                   children: [
+                          //                     Row(
+                          //                       children: [
+                          //                         Text(minuteCurrentDuration),
+                          //                         Text(":"),
+                          //                         Text(secondCurrentDuration),
+                          //                       ],
+                          //                     ),
+                          //                     Text("${snapshot.data?.inSeconds}")],
+                          //                 )),
+                          //             // SliderTheme(
+                          //             //   data: SliderTheme.of(context)
+                          //             //       .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
+                          //             //   child: Slider(
+                          //             //       value: _position.inSeconds.toDouble(),
+                          //             //       min: 0.0,
+                          //             //       max: _duration.inSeconds.toDouble(),
+                          //             //       onChanged: (double value) {
+                          //             //         setState(() {
+                          //             //           seekToSecond(value.toInt());
+                          //             //           value = value;
+                          //             //         });}),
+                          //             // )
+                          //           ],
+                          //         );
+                          //       } else {
+                          //         return const SizedBox();
+                          //       }
+                          //     })),
                           SizedBox(height: 15,),
                           Flexible(
                               flex: 2,
-                              child:
-                              MediaButtons(
-                                  // player: player,
-                                  loop: loop)
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // Opens volume slider dialog
+                                  // IconButton(
+                                  //     padding: const EdgeInsets.all(1),
+                                  //     // style: AppTheme.lightTheme.iconButtonTheme.style,
+                                  //     onPressed: () {
+                                  //       //pass song list here
+                                  //       // context
+                                  //       //     .read<CurrentSelectedSongBloc>()
+                                  //       //     .add(PlayPreviousSong(songs: BlocProvider.of<SongBloc>(context).songs));
+                                  //     },
+                                  //     icon: Container(
+                                  //         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                                  //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                  //           BoxShadow(
+                                  //             color: Colors.black.withOpacity(0.1),
+                                  //             offset: const Offset(
+                                  //               1.0,
+                                  //               1.0,
+                                  //             ),
+                                  //             blurRadius: 10.0,
+                                  //             spreadRadius: 7.0,
+                                  //           ),
+                                  //           const BoxShadow(color: Colors.white, spreadRadius: 0),
+                                  //         ]),
+                                  //         child: const Icon(Icons.skip_previous_rounded))),
+
+                                  BlocBuilder<SongControlBloc, SongControlState>(
+                                    buildWhen: (previous, current) {
+
+                                      print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+
+                                      if (previous is SongPlayedState && current is SongPlayedState) {
+                                        print("bbbbbbbbbbbbbbbbbbbbb             "+previous.toString());
+                                        print("bbbbbbbbbbbbbbbbbbbbb             "+current.toString());
+                                        return false;
+                                      } else {
+                                        return true;
+                                      }
+                                    },
+                                    builder: (context, state) {
+                                      return IconButton(
+                                          padding: const EdgeInsets.all(1),
+                                          onPressed: () async {
+
+                                            if (state is SongPausedState) {
+                                              BlocProvider.of<SongControlBloc>(context).add(ResumeSong());
+                                            } else {
+                                              BlocProvider.of<SongControlBloc>(context).add(PauseSong());
+                                            }
+                                          },
+                                          icon: Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black.withOpacity(0.1),
+                                                  offset: const Offset(
+                                                    1.0,
+                                                    1.0,
+                                                  ),
+                                                  blurRadius: 10.0,
+                                                  spreadRadius: 7.0,
+                                                ),
+                                                const BoxShadow(color: Colors.white, spreadRadius: 0),
+                                              ]),
+                                              child: state is SongPlayedState
+                                                  ? const Icon(Icons.pause)
+                                                  : const Icon(Icons.play_arrow_rounded)));
+                                    },
+                                  ),
+                                  // Opens speed slider dialog
+                                  // IconButton(
+                                  //     padding: const EdgeInsets.all(1),
+                                  //     onPressed: () {
+                                  //       // context
+                                  //       //     .read<CurrentSelectedSongBloc>()
+                                  //       //     .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).songs));
+                                  //     },
+                                  //     icon: Container(
+                                  //         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                                  //         decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                  //           BoxShadow(
+                                  //             color: Colors.black.withOpacity(0.1),
+                                  //             offset: const Offset(
+                                  //               1.0,
+                                  //               1.0,
+                                  //             ),
+                                  //             blurRadius: 10.0,
+                                  //             spreadRadius: 7.0,
+                                  //           ),
+                                  //           const BoxShadow(color: Colors.white, spreadRadius: 0),
+                                  //         ]),
+                                  //         child: const Icon(Icons.skip_next_rounded)))
+                                ],
+                              )
+                              // MediaButtons(
+                              //     // player: player,
+                              //     loop: loop)
                           ),
                           const Spacer(),
                           const Flexible(

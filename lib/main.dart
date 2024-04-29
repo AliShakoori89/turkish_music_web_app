@@ -32,7 +32,9 @@ import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 Future<void> main() async{
 
+
   WidgetsFlutterBinding.ensureInitialized();
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = (prefs.getString('accessToken') == null)
       ? false
@@ -55,7 +57,7 @@ Future<void> main() async{
   //
   // );
 
-  runApp(MyApp(isLoggedIn: isLoggedIn),);
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {

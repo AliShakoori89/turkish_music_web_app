@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:just_audio/just_audio.dart' as justAudioPlayer;
 import 'package:audioplayers/audioplayers.dart';
 
 part 'song_control_event.dart';
@@ -29,9 +28,7 @@ class SongControlBloc extends Bloc<SongControlEvent, SongControlState> {
     });
 
     on<PlaySong>((event, emit) async {
-      print("sourceeeeeeeeeeeeeeeee                   ");
       final Source source = UrlSource(event.songFile ?? "");
-      print("source                   "+source.toString());
       await _audioPlayer.play(source);
       emit(SongPlayedState());
     });

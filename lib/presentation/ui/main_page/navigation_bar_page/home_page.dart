@@ -5,15 +5,7 @@ import '../../../helpers/widgets/home_page/category_item.dart';
 import '../../../helpers/widgets/home_page/new_album_contaner.dart';
 import '../../../helpers/widgets/home_page/famous_artist_container.dart';
 
-class HomePage extends StatefulWidget {
-
-  HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
