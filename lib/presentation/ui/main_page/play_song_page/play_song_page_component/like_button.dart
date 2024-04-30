@@ -12,9 +12,10 @@ class LikeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-      return const Icon(
-        CupertinoIcons.heart,
+      return IconButton(
+        icon: Icon(CupertinoIcons.heart),
         color: Colors.grey,
+        onPressed: () {  },
       );
 
   }

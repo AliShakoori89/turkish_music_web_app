@@ -4,6 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/download_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/like_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/normalize_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/play_list_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/repeat_button.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
@@ -79,11 +84,11 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Flexible(
-                            flex: 2,
+                            flex: 1,
                             child: CustomAppBar(
                               title: "Now Playing",
                               singerName: state.songModel.album == null ? "" : state.songModel.album!.singer!.name!,
-                              haveMenuButton: true,
+                              haveMenuButton: false,
                             ),
                           ),
                           Flexible(
@@ -99,116 +104,145 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         fontSize: 15, color: Colors.grey),
                                   ),
                                 ),
-                                // Expanded(
-                                //   flex: 1,
-                                //   child: LikeButton(
-                                //     name: state.songModel.songName!,
-                                //     isIcon: true,
-                                //   ),
-                                // ),
+                                Expanded(
+                                  flex: 1,
+                                  child: LikeButton(
+                                    name: state.songModel.name!,
+                                    isIcon: true,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           CustomCircularSeekBar(
                             songImage: state.songModel.imageSource!,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-
-                              BlocBuilder<SongBloc, SongState>(
-                              builder: (context, state) {
-                                return                               IconButton(
-                                    padding: const EdgeInsets.all(1),
-                                    // style: AppTheme.lightTheme.iconButtonTheme.style,
-                                    onPressed: () {
-                                      context
-                                          .read<CurrentSelectedSongBloc>()
-                                          .add(PlayPreviousSong(songs: state.songDetail!));
-                                    },
-                                    icon: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.1),
-                                            offset: const Offset(
-                                              1.0,
-                                              1.0,
-                                            ),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 7.0,
-                                          ),
-                                          const BoxShadow(color: Colors.white, spreadRadius: 0),
-                                        ]),
-                                        child: const Icon(Icons.skip_previous_rounded)));
-                              }),
-                              BlocBuilder<AudioControlBloc, AudioControlState>(
-                                buildWhen: (previous, current) {
-                                  print("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-
-                                  if (previous is AudioPlayedState && current is AudioPlayedState) {
-                                    return false;
-                                  } else {
-                                    return true;
-                                  }
-                                },
-                                builder: (context, state) {
-                                  return IconButton(
-                                      padding: const EdgeInsets.all(1),
-                                      onPressed: () async {
-                                        if (state is AudioPausedState) {
-                                          BlocProvider.of<AudioControlBloc>(context).add(ResumeSong());
+                          Container(
+                            margin: EdgeInsets.only(
+                              right: 20,
+                              left: 20
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    DownloadButton(),
+                                    NormalizeButton()
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    BlocBuilder<SongBloc, SongState>(
+                                        builder: (context, state) {
+                                          return IconButton(
+                                              padding: const EdgeInsets.all(1),
+                                              // style: AppTheme.lightTheme.iconButtonTheme.style,
+                                              onPressed: () {
+                                                context
+                                                    .read<CurrentSelectedSongBloc>()
+                                                    .add(PlayPreviousSong(songs: state.songDetail!));
+                                              },
+                                              icon: Container(
+                                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black.withOpacity(0.1),
+                                                      offset: const Offset(
+                                                        1.0,
+                                                        1.0,
+                                                      ),
+                                                      blurRadius: 10.0,
+                                                      spreadRadius: 7.0,
+                                                    ),
+                                                    BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
+                                                  ]),
+                                                  child: const Icon(Icons.skip_previous_rounded,
+                                                    color: Colors.white,)));
+                                        }),
+                                    BlocBuilder<AudioControlBloc, AudioControlState>(
+                                      buildWhen: (previous, current) {
+                                        if (previous is AudioPlayedState && current is AudioPlayedState) {
+                                          return false;
                                         } else {
-                                          BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
+                                          return true;
                                         }
                                       },
-                                      icon: Container(
-                                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withOpacity(0.1),
-                                              offset: const Offset(
-                                                1.0,
-                                                1.0,
-                                              ),
-                                              blurRadius: 10.0,
-                                              spreadRadius: 7.0,
-                                            ),
-                                            const BoxShadow(color: Colors.white, spreadRadius: 0),
-                                          ]),
-                                          child: state is AudioPlayedState
-                                              ? const Icon(Icons.pause)
-                                              : const Icon(Icons.play_arrow_rounded)));
-                                },
-                              ),
+                                      builder: (context, state) {
+                                        return IconButton(
+                                            padding: const EdgeInsets.all(1),
+                                            onPressed: () async {
+                                              if (state is AudioPausedState) {
+                                                BlocProvider.of<AudioControlBloc>(context).add(ResumeSong());
+                                              } else {
+                                                BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
+                                              }
+                                            },
+                                            icon: Container(
+                                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black.withOpacity(0.1),
+                                                    offset: const Offset(
+                                                      1.0,
+                                                      1.0,
+                                                    ),
+                                                    blurRadius: 10.0,
+                                                    spreadRadius: 7.0,
+                                                  ),
+                                                  BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
+                                                ]),
+                                                child: state is AudioPlayedState
+                                                    ? const Icon(
+                                                  Icons.pause,
+                                                  color: Colors.white,
+                                                  size: 40,)
+                                                    : const Icon(
+                                                  Icons.play_arrow_rounded,
+                                                  color: Colors.white,
+                                                  size: 40,)));
+                                      },
+                                    ),
 
-                              BlocBuilder<SongBloc, SongState>(
-                              builder: (context, state) {
-                                return IconButton(
-                                    padding: const EdgeInsets.all(1),
-                                    onPressed: () {
-                                      context
-                                          .read<CurrentSelectedSongBloc>()
-                                          .add(PlayNextSong(songs: state.songDetail ?? []));
-                                    },
-                                    icon: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(0.1),
-                                            offset: const Offset(
-                                              1.0,
-                                              1.0,
-                                            ),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 7.0,
-                                          ),
-                                          const BoxShadow(color: Colors.white, spreadRadius: 0),
-                                        ]),
-                                        child: const Icon(Icons.skip_next_rounded)));
+                                    BlocBuilder<SongBloc, SongState>(
+                                        builder: (context, state) {
+                                          return IconButton(
+                                              padding: const EdgeInsets.all(1),
+                                              onPressed: () {
+                                                context
+                                                    .read<CurrentSelectedSongBloc>()
+                                                    .add(PlayNextSong(songs: state.songDetail ?? []));
+                                              },
+                                              icon: Container(
+                                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black.withOpacity(0.1),
+                                                      offset: const Offset(
+                                                        1.0,
+                                                        1.0,
+                                                      ),
+                                                      blurRadius: 10.0,
+                                                      spreadRadius: 7.0,
+                                                    ),
+                                                    BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
+                                                  ]),
+                                                  child: const Icon(Icons.skip_next_rounded,
+                                                    color: Colors.white,)));
 
-                              })
-                            ],
+                                        })
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    PlayListButton(),
+                                    RepeatButton(loop: loop)
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: 15,),
                           const Spacer(),
