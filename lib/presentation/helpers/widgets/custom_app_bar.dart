@@ -13,14 +13,14 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-            size: 20,
-          ),
-        ),
+        // IconButton(
+        //   onPressed: () => Navigator.pop(context),
+        //   icon: const Icon(
+        //     Icons.arrow_back_ios,
+        //     color: Colors.white,
+        //     size: 20,
+        //   ),
+        // ),
         Expanded(
           child: Center(
             child: Column(

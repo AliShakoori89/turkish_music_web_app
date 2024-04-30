@@ -9,6 +9,7 @@ import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
+import '../../../helpers/widgets/custom_app_bar.dart';
 
 class PlayMusicPage extends StatefulWidget {
 
@@ -77,14 +78,14 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Flexible(
-                          //   flex: 2,
-                          //   child: CustomAppBar(
-                          //     title: "Now Playing",
-                          //     singerName: state.songModel.album!.singer!.name!,
-                          //     haveMenuButton: true,
-                          //   ),
-                          // ),
+                          Flexible(
+                            flex: 2,
+                            child: CustomAppBar(
+                              title: "Now Playing",
+                              singerName: state.songModel.album == null ? "" : state.songModel.album!.singer!.name!,
+                              haveMenuButton: true,
+                            ),
+                          ),
                           Flexible(
                             flex: 1,
                             child: Row(
