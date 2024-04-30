@@ -1,14 +1,16 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-part 'song_control_event.dart';
-part 'song_control_state.dart';
+import '../../../../data/model/song_model.dart';
+
+part 'audio_control_event.dart';
+part 'audio_control_state.dart';
 
 enum SongControlStatus { play, pause }
 
-class SongControlBloc extends Bloc<SongControlEvent, SongControlState> {
+class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   Stream<Duration> get positionStream => _audioPlayer.onPositionChanged;
 
   StreamSubscription? _audioStream;
@@ -16,31 +18,31 @@ class SongControlBloc extends Bloc<SongControlEvent, SongControlState> {
 
   AudioPlayer get audioPlayer => _audioPlayer;
 
-  SongControlBloc() : super(SongControlInitial()) {
+  AudioControlBloc() : super(AudioControlInitial()) {
     _audioStream = _audioPlayer.eventStream.listen((event) {
-      if (event.duration == event.duration) {
+      if (event.position == event.duration) {
         add(SongCompleted());
       }
     });
 
     on<SongCompleted>((event, emit) async {
-      emit(SongPausedState());
+      emit(AudioPausedState());
     });
 
     on<PlaySong>((event, emit) async {
-      final Source source = UrlSource(event.songFile ?? "");
+      final Source source = UrlSource(event.currentSong.fileSource ?? "");
       await _audioPlayer.play(source);
-      emit(SongPlayedState());
+      emit(AudioPlayedState());
     });
 
     on<PauseSong>((event, emit) async {
       await _audioPlayer.pause();
-      emit(SongPausedState());
+      emit(AudioPausedState());
     });
 
     on<ResumeSong>((event, emit) async {
       await _audioPlayer.resume();
-      emit(SongPlayedState());
+      emit(AudioPlayedState());
     });
   }
 

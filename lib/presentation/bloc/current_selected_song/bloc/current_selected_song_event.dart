@@ -16,12 +16,7 @@ final class PlayPreviousSong extends CurrentSelectedSongEvent {
 }
 
 final class SelectSong extends CurrentSelectedSongEvent {
-  final int id;
-  final String songName;
-  final String songFile;
-  final String songImage;
-  final String songSingerName;
+  final SongDataModel songModel;
 
-  SelectSong({required this.id, required this.songName,
-    required this.songFile, required this.songImage, required this.songSingerName});
+  SelectSong({required this.songModel});
 }

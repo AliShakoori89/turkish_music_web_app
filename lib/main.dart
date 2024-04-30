@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_audio/simple_audio.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
-import 'package:turkish_music_app/domain/repositories/song_duration_repository.dart';
 import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_box_repository.dart';
@@ -16,16 +14,13 @@ import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/song_control_bloc/bloc/song_control_bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/song_duration_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
@@ -95,10 +90,7 @@ class MyApp extends StatelessWidget {
                 PlayingSongBloc(IsPlayingMusicRepository())),
         BlocProvider(
             create: (BuildContext context) =>
-                CurrentSelectedSongBloc()),
-        BlocProvider(
-            create: (BuildContext context) =>
-                SongControlBloc()),
+                AudioControlBloc()),
         BlocProvider(
             create: (BuildContext context) =>
                 PlayBoxBloc(PlayBoxRepository())),

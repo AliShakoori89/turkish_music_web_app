@@ -26,7 +26,7 @@ class SongState extends Equatable{
   );
 
   final SongStatus status;
-  final SongModel? songDetail;
+  final List<SongDataModel>? songDetail;
 
   @override
   // TODO: implement props
@@ -34,7 +34,7 @@ class SongState extends Equatable{
 
   SongState copyWith({
     SongStatus? status,
-    SongModel? songDetail
+    List<SongDataModel>? songDetail
   }) {
     return SongState(
       status: status ?? this.status,

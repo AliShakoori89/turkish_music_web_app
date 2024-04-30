@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
+import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
@@ -17,7 +18,6 @@ class NewMusicContainer extends StatefulWidget {
 
 class NewMusicContainerState extends State<NewMusicContainer> {
 
-  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -56,7 +56,6 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                       aspectRatio: 2.0,
                       onPageChanged: (index, reason) {
                         setState(() {
-                          _currentIndex = index;
                         });
                       },
                     ),
@@ -66,34 +65,27 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                         child: InkWell(
                           onTap: (){
 
+                            SongDataModel songDataModel = SongDataModel();
+                            songDataModel.id = newSong[index].id;
+                            songDataModel.name = newSong[index].name;
+                            songDataModel.imageSource = newSong[index].imageSource;
+                            songDataModel.fileSource = newSong[index].fileSource.substring(0, 4)
+                                + "s"
+                                + newSong[index].fileSource.substring(4, newSong[index].fileSource.length);
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => BlocProvider(
                                       create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
-                                        id: state.newSong[index].id,
-                                        songFile: state.newSong[index].fileSource,
-                                        songImage: state.newSong[index].imageSource,
-                                        songName: state.newSong[index].name,
-                                        songSingerName: state.newSong[index].singer.name
+                                        songModel: songDataModel
                                       )),
                                       child: PlayMusicPage(
-                                          // songName: state.newSong[index].name,
-                                          // songFile: state.newSong[index].fileSource
+                                          songName: state.newSong[index].name,
+                                          songFile: state.newSong[index].fileSource
                                       ),
 
                                     )));
-
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => PlayMusicPage(
-                            //       songName: newSong[index].name,
-                            //       songFile: newSong[index].fileSource,
-                            //       songImage: newSong[index].imageSource,
-                            //       songSingerName: newSong[index].singer.name,
-                            //       songID: newSong[index].id
-                            //   ),),
-                            // );
                           },
                           child: Container(
                             decoration: BoxDecoration(
