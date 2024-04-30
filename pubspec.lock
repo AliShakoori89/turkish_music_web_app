@@ -25,22 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  audio_session:
-    dependency: transitive
-    description:
-      name: audio_session
-      sha256: a49af9981eec5d7cd73b37bacb6ee73f8143a6a9f9bd5b6021e6c346b9b6cf4e
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.19"
-  audio_video_progress_bar:
-    dependency: "direct main"
-    description:
-      name: audio_video_progress_bar
-      sha256: ccc7d7b83d2a16c52d4a7fb332faabd1baa053fb0e4c16815aefd3945ab33b81
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   audioplayers:
     dependency: "direct main"
     description:
@@ -121,14 +105,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  cache_audio_player_plus:
-    dependency: "direct main"
-    description:
-      name: cache_audio_player_plus
-      sha256: "5fe112512cc02b8e8112fb70271b75a58a50cc820362811b73bb73a6136083bc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -233,14 +209,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  dio:
-    dependency: transitive
-    description:
-      name: dio
-      sha256: "11e40df547d418cc0c4900a9318b26304e665da6fa4755399a9ff9efd09034b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.4.3+1"
   email_validator:
     dependency: "direct main"
     description:
@@ -397,22 +365,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
-  hive:
-    dependency: transitive
-    description:
-      name: hive
-      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.3"
-  hive_flutter:
-    dependency: transitive
-    description:
-      name: hive_flutter
-      sha256: dca1da446b1d808a51689fb5d0c6c9510c0a2ba01e22805d492c73b68e33eecc
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   http:
     dependency: transitive
     description:
@@ -461,30 +413,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
-  just_audio:
-    dependency: "direct main"
-    description:
-      name: just_audio
-      sha256: b7cb6bbf3750caa924d03f432ba401ec300fd90936b3f73a9b33d58b1e96286b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.37"
-  just_audio_platform_interface:
-    dependency: transitive
-    description:
-      name: just_audio_platform_interface
-      sha256: c3dee0014248c97c91fe6299edb73dc4d6c6930a2f4f713579cd692d9e47f4a1
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.2"
-  just_audio_web:
-    dependency: transitive
-    description:
-      name: just_audio_web
-      sha256: "134356b0fe3d898293102b33b5fd618831ffdc72bb7a1b726140abdf22772b70"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.9"
   leak_tracker:
     dependency: transitive
     description:
@@ -749,14 +677,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.27.7"
   search_page:
     dependency: "direct main"
     description:

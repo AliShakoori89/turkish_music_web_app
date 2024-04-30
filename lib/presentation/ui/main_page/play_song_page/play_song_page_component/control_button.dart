@@ -8,11 +8,6 @@ import '../../../../bloc/current_selected_song/bloc/current_selected_song_bloc.d
 import '../../../../bloc/song_bloc/bloc.dart';
 
 class ControlButtons extends StatelessWidget {
-  // final AudioPlayer player;
-
-  const ControlButtons({super.key,
-    // required this.player
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +58,7 @@ class ControlButtons extends StatelessWidget {
                   } else {
                     BlocProvider.of<SongControlBloc>(context).add(PauseSong());
                   }
-                },
+                  },
                 icon: Container(
                     padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [

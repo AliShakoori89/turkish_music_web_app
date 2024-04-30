@@ -11,10 +11,6 @@ import '../../../ui/main_page/play_song_page/play_song_page.dart';
 
 class NewMusicContainer extends StatefulWidget {
 
-
-
-  const NewMusicContainer({super.key});
-
   @override
   State<NewMusicContainer> createState() => NewMusicContainerState();
 }
@@ -82,8 +78,9 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                         songSingerName: state.newSong[index].singer.name
                                       )),
                                       child: PlayMusicPage(
-                                          songName: state.newSong[index].name,
-                                          songFile: state.newSong[index].name),
+                                          // songName: state.newSong[index].name,
+                                          // songFile: state.newSong[index].fileSource
+                                      ),
 
                                     )));
 
