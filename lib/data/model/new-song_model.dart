@@ -41,6 +41,8 @@ class NewSongDataModel {
   String name;
   String imageSource;
   String fileSource;
+  String minute;
+  String second;
   int singerId;
   NewMusicSingerModel singer;
 
@@ -49,6 +51,8 @@ class NewSongDataModel {
     required this.name,
     required this.imageSource,
     required this.fileSource,
+    required this.minute,
+    required this.second,
     required this.singerId,
     required this.singer,
   });
@@ -58,6 +62,8 @@ class NewSongDataModel {
     name: json["name"],
     imageSource: json["imageSource"],
     fileSource: json["fileSource"],
+    minute: json["minute"],
+    second: json["second"],
     singerId: json["singerId"],
     singer: NewMusicSingerModel.fromJson(json["singer"]),
   );
@@ -67,6 +73,8 @@ class NewSongDataModel {
     "name": name,
     "imageSource": imageSource,
     "fileSource": fileSource,
+    "minute": minute,
+    "second": second,
     "singerId": singerId,
     "singer": singer.toJson(),
   };

@@ -65,13 +65,19 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                         child: InkWell(
                           onTap: (){
 
-                            SongDataModel songDataModel = SongDataModel();
-                            songDataModel.id = newSong[index].id;
-                            songDataModel.name = newSong[index].name;
-                            songDataModel.imageSource = newSong[index].imageSource;
-                            songDataModel.fileSource = newSong[index].fileSource.substring(0, 4)
+                            SongDataModel songDataModel = SongDataModel(
+                            id : newSong[index].id,
+                            name: newSong[index].name,
+                            imageSource: newSong[index].imageSource,
+                            fileSource: newSong[index].fileSource.substring(0, 4)
                                 + "s"
-                                + newSong[index].fileSource.substring(4, newSong[index].fileSource.length);
+                                + newSong[index].fileSource.substring(4, newSong[index].fileSource.length),
+                            minute: newSong[index].minute,
+                           second: newSong[index].second,
+                              album: null,
+                              albumId: null,
+                              categories: null
+                            );
 
                             Navigator.push(
                                 context,

@@ -234,6 +234,42 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         })
                                   ],
                                 ),
+                                StreamBuilder(
+                                    stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
+                                    builder: ((context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        final currentDuration = ((snapshot.data?.inSeconds ?? 0) / 100).toStringAsPrecision(2);
+                                        return Column(
+                                          children: [
+                                            Padding(
+                                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Text(currentDuration),
+                                                    Text("${double.parse(state.songModel.minute!) * 60 + double.parse(state.songModel.second!)}")],
+                                                )),
+                                            SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
+                                              child: Slider(
+                                                  activeColor: Colors.green,
+                                                  inactiveColor: Colors.black,
+                                                  value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
+                                                  max: double.parse(state.songModel.minute!) * 60 + double.parse(state.songModel.second!),
+                                                  min: 0,
+                                                  // activeColor: Theme.of(context).colorScheme.background,
+                                                  onChangeEnd: (value) {},
+                                                  onChanged: (val) {
+                                                    BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
+                                                  }),
+                                            )
+                                          ],
+                                        );
+                                      } else {
+                                        return const SizedBox();
+                                      }
+                                    })),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [

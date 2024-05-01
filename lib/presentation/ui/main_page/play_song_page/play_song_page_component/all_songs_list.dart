@@ -26,16 +26,21 @@ class AllSongsList extends StatelessWidget {
 
                 onTap: (){
 
-                  SongDataModel songDataModel = SongDataModel();
-                  songDataModel.id = state.playBoxSong![index].id;
-                  songDataModel.name = state.playBoxSong![index].name;
-                  songDataModel.imageSource = state.playBoxSong![index].imageSource;
-                  songDataModel.fileSource = state.playBoxSong![index]
+                  SongDataModel songDataModel = SongDataModel(
+                  id: state.playBoxSong![index].id,
+                  name: state.playBoxSong![index].name,
+                  imageSource: state.playBoxSong![index].imageSource,
+                  fileSource: state.playBoxSong![index]
                       .fileSource.substring(0, 4)
                       + "s"
                       + state.playBoxSong![index]
                           .fileSource.substring(4, state.playBoxSong![index]
-                          .fileSource.length);
+                          .fileSource.length),
+                  second: state.playBoxSong![index].second,
+                  minute: state.playBoxSong![index].minute,
+                  categories: null,
+                  albumId: null,
+                  album: null);
 
                   Navigator.pushAndRemoveUntil(
                       context,

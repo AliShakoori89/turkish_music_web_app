@@ -1,123 +1,168 @@
 class SongModel {
-  List<SongDataModel>? data;
-  bool? success;
-  String? message;
-  int? lastPage;
+  SongModel({
+    required this.data,
+    required this.success,
+    required this.message,
+    required this.lastPage,
+  });
+  late final List<SongDataModel> data;
+  late final bool success;
+  late final String message;
+  late final int lastPage;
 
-  SongModel({this.data, this.success, this.message, this.lastPage});
-
-  SongModel.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
-      data = <SongDataModel>[];
-      json['data'].forEach((v) {
-        data!.add(SongDataModel.fromJson(v));
-      });
-    }
+  SongModel.fromJson(Map<String, dynamic> json){
+    data = List.from(json['data']).map((e)=>SongDataModel.fromJson(e)).toList();
     success = json['success'];
     message = json['message'];
     lastPage = json['lastPage'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    data['success'] = success;
-    data['message'] = message;
-    data['lastPage'] = lastPage;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['data'] = data.map((e)=>e.toJson()).toList();
+    _data['success'] = success;
+    _data['message'] = message;
+    _data['lastPage'] = lastPage;
+    return _data;
   }
 }
 
 class SongDataModel {
-  int? id;
-  String? name;
-  String? imageSource;
-  String? fileSource;
-  int? albumId;
-  SongAlbumModel? album;
+  SongDataModel({
+    required this.id,
+    required this.name,
+    required this.imageSource,
+    required this.fileSource,
+    required this.minute,
+    required this.second,
+    this.categories,
+    this.albumId,
+    this.album,
+  });
+  late final int id;
+  late final String name;
+  late final String imageSource;
+  late final String fileSource;
+  late final String minute;
+  late final String second;
+  late List<SongCategoriesModel>? categories;
+  late int? albumId;
+  late SongAlbumModel? album;
 
-  SongDataModel(
-      {this.id,
-        this.name,
-        this.imageSource,
-        this.fileSource,
-        this.albumId,
-        this.album});
-
-  SongDataModel.fromJson(Map<String, dynamic> json) {
+  SongDataModel.fromJson(Map<String, dynamic> json){
     id = json['id'];
     name = json['name'];
     imageSource = json['imageSource'];
     fileSource = json['fileSource'];
+    minute = json['minute'];
+    second = json['second'];
+    categories = List.from(json['categories']).map((e)=>SongCategoriesModel.fromJson(e)).toList();
     albumId = json['albumId'];
-    album = json['album'] != null ? SongAlbumModel.fromJson(json['album']) : null;
+    album = SongAlbumModel.fromJson(json['album']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['imageSource'] = imageSource;
-    data['fileSource'] = fileSource;
-    data['albumId'] = albumId;
-    if (album != null) {
-      data['album'] = album!.toJson();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['imageSource'] = imageSource;
+    _data['fileSource'] = fileSource;
+    _data['minute'] = minute;
+    _data['second'] = second;
+    _data['categories'] = categories?.map((e)=>e.toJson()).toList();
+    _data['albumId'] = albumId;
+    _data['album'] = album?.toJson();
+    return _data;
+  }
+}
+
+class SongCategoriesModel {
+  SongCategoriesModel({
+    required this.id,
+    required this.imageSource,
+    required this.title,
+    required this.musics,
+    required this.creationDate,
+  });
+  late final int id;
+  late final String imageSource;
+  late final String title;
+  late final List<String> musics;
+  late final String creationDate;
+
+  SongCategoriesModel.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    imageSource = json['imageSource'];
+    title = json['title'];
+    musics = List.castFrom<dynamic, String>(json['musics']);
+    creationDate = json['creationDate'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['imageSource'] = imageSource;
+    _data['title'] = title;
+    _data['musics'] = musics;
+    _data['creationDate'] = creationDate;
+    return _data;
   }
 }
 
 class SongAlbumModel {
-  int? id;
-  String? name;
-  String? imageSource;
-  int? singerId;
-  SongSingerModel? singer;
-  List<String>? musics;
+  SongAlbumModel({
+    required this.id,
+    required this.name,
+    required this.imageSource,
+    required this.singerId,
+    required this.isNew,
+    required this.singer,
+    required this.musics,
+  });
+  late final int id;
+  late final String name;
+  late final String imageSource;
+  late final int singerId;
+  late final bool isNew;
+  late final SongSingerModel singer;
+  late final List<String> musics;
 
-  SongAlbumModel(
-      {this.id,
-        this.name,
-        this.imageSource,
-        this.singerId,
-        this.singer,
-        this.musics});
-
-  SongAlbumModel.fromJson(Map<String, dynamic> json) {
+  SongAlbumModel.fromJson(Map<String, dynamic> json){
     id = json['id'];
     name = json['name'];
     imageSource = json['imageSource'];
     singerId = json['singerId'];
-    singer =
-    json['singer'] != null ? SongSingerModel.fromJson(json['singer']) : null;
-    musics = json['musics'].cast<String>();
+    isNew = json['isNew'];
+    singer = SongSingerModel.fromJson(json['singer']);
+    musics = List.castFrom<dynamic, String>(json['musics']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['imageSource'] = imageSource;
-    data['singerId'] = singerId;
-    if (singer != null) {
-      data['singer'] = singer!.toJson();
-    }
-    data['musics'] = musics;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['imageSource'] = imageSource;
+    _data['singerId'] = singerId;
+    _data['isNew'] = isNew;
+    _data['singer'] = singer.toJson();
+    _data['musics'] = musics;
+    return _data;
   }
 }
 
 class SongSingerModel {
-  int? id;
-  String? name;
-  String? imageSource;
-  bool? isBest;
+  SongSingerModel({
+    required this.id,
+    required this.name,
+    required this.imageSource,
+    required this.isBest,
+  });
+  late final int id;
+  late final String name;
+  late final String imageSource;
+  late final bool isBest;
 
-  SongSingerModel({this.id, this.name, this.imageSource, this.isBest});
-
-  SongSingerModel.fromJson(Map<String, dynamic> json) {
+  SongSingerModel.fromJson(Map<String, dynamic> json){
     id = json['id'];
     name = json['name'];
     imageSource = json['imageSource'];
@@ -125,11 +170,11 @@ class SongSingerModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['imageSource'] = imageSource;
-    data['isBest'] = isBest;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['imageSource'] = imageSource;
+    _data['isBest'] = isBest;
+    return _data;
   }
 }
