@@ -38,137 +38,97 @@ class _SingerPageState extends State<SingerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(
-                    widget.artistDetail.imageSource
-                ),
-                fit: BoxFit.fitHeight,
-              opacity: 0.3
-            )
+      body: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
+
+      var singerAllAlbum = state.singerAllAlbum;
+
+      return CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(widget.artistDetail.name),
+            backgroundColor: Colors.purple,
+            expandedHeight: 250,
+            stretch: true,
+            stretchTriggerOffset: 40,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.network(
+                widget.artistDetail.imageSource,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-          child: Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.009),
-              Expanded(
-                flex: 2,
-                child: CustomAppBar(
-                  title: "Singer Page",
-                  singerName: widget.artistDetail.name,
-                  haveMenuButton: false,
-                ),
-              ),
-              // SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-              Expanded(
-                flex: 8,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    left: 30,
-                    right: 30
-                  ),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.purple.withOpacity(0.5),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            widget.artistDetail.imageSource
-                        ),
-                        fit: BoxFit.fill
-                      )
-                  ),
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-              Expanded(
-                flex: 12,
-                child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
-
-                  var singerAllAlbum = state.singerAllAlbum;
-
-                  return Container(
-                    margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.09,
-                      right: MediaQuery.of(context).size.width * 0.09
-                    ),
-                    child: AnimatedGridView(
-                        crossAxisCount: 2,
-                        mainAxisExtent: 250,
-                        crossAxisSpacing: 1,
-                      cacheExtent: 5000,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      // itemCount: singerAllAlbum.length,
-                        // itemExtent: 120.0,
-                        children: List.generate(
-                            singerAllAlbum.length,
-                                (index) => GestureDetector(
-                          // onTap: (){
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => PlayMusicPage(
-                          //             imagePath: singerAllAlbum[index].imageSource!,
-                          //             musicFiles: singerAllAlbum[index].musics!,
-                          //             singerName: singerAllAlbum[index].name!,
-                          //             musicFile: singerAllAlbum[index].,
-                          //           ))
-                          //   );
-                          // },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height * 0.02,
-                              top: MediaQuery.of(context).size.height * 0.02,
-                            ),
-                            child: Column(
-                              children: [
-                                Flexible(
-                                  flex: 8,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width * 0.3,
-                                    height: MediaQuery.of(context).size.width * 0.7,
-                                    decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.purple.withOpacity(0.5),
-                                            blurRadius: 10,
-                                          ),
-                                        ],
-                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                        image: DecorationImage(
-                                          image: NetworkImage(singerAllAlbum[index].imageSource.toString()),
-                                          fit: BoxFit.fill,
-                                        )
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200.0,
+            mainAxisSpacing: 10.0,
+            crossAxisSpacing: 10.0,
+            childAspectRatio: 1.0,),
+            // crossAxisCount: 2,
+            // mainAxisExtent: 250,
+            // crossAxisSpacing: 1,
+            // cacheExtent: 5000,
+            // primary: false,
+            // scrollDirection: Axis.vertical,
+            // itemCount: singerAllAlbum.length,
+            // itemExtent: 120.0,
+            delegate: SliverChildBuilderDelegate((context, index) =>
+                GestureDetector(
+                  // onTap: (){
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => PlayMusicPage(
+                  //             imagePath: singerAllAlbum[index].imageSource!,
+                  //             musicFiles: singerAllAlbum[index].musics!,
+                  //             singerName: singerAllAlbum[index].name!,
+                  //             musicFile: singerAllAlbum[index].,
+                  //           ))
+                  //   );
+                  // },
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.02,
+                        top: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      child: Column(
+                        children: [
+                          Flexible(
+                            flex: 5,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              height: MediaQuery.of(context).size.width * 0.6,
+                              decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.purple.withOpacity(0.5),
+                                      blurRadius: 20,
                                     ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.width * 0.02,
-                                ),
-                                Flexible(
-                                    flex: 1,
-                                    child: Text(singerAllAlbum[index].name!))
-                              ],
-                            )),
-                                )
-                        )
-                    ),
-                  );
-                }),
-              ),
-            ],
-          ),
-        ),
-      ),
+                                  ],
+                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                  image: DecorationImage(
+                                    image: NetworkImage(singerAllAlbum[index].imageSource.toString()),
+                                    fit: BoxFit.fill,
+                                  )
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.width * 0.02,
+                          ),
+                          Flexible(
+                              flex: 1,
+                              child: Text(singerAllAlbum[index].name!))
+                        ],
+                      )),
+                ),
+                childCount: singerAllAlbum.length
+            ),
+
+          )
+        ],
+      );
+      })
     );
   }
 }
