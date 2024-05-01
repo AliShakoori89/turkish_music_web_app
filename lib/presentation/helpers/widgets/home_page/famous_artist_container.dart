@@ -53,6 +53,7 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
               child: AnimatedListView(
                 duration: 100,
                 scrollDirection: Axis.horizontal,
+                cacheExtent: 1000,
                 children: List.generate(artistList.length, (index) {
                   return InkWell(
                     onTap: () {

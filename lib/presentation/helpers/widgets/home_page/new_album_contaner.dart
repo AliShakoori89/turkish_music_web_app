@@ -54,6 +54,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                       crossAxisCount: 2,
                       mainAxisExtent: 220,
                       crossAxisSpacing: 50,
+                      cacheExtent: 1000,
                       children: List.generate(
                           newAlbum!.data!.length,
                           (index) {

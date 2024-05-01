@@ -42,6 +42,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                 child: AnimatedListView(
                   duration: 100,
                   scrollDirection: Axis.horizontal,
+                  cacheExtent: 1000,
                   children: List.generate(
                       state.category.length,
                           (index) => Padding(

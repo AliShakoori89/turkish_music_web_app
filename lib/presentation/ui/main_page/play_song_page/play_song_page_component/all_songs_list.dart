@@ -19,6 +19,7 @@ class AllSongsList extends StatelessWidget {
             itemCount: state.playBoxSong!.length,
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
+            cacheExtent: 1000,
             itemBuilder: (BuildContext context,
                 int index) {
               return InkWell(

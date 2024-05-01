@@ -103,6 +103,7 @@ class _SingerPageState extends State<SingerPage> {
                         crossAxisCount: 2,
                         mainAxisExtent: 250,
                         crossAxisSpacing: 1,
+                      cacheExtent: 5000,
                       primary: false,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
