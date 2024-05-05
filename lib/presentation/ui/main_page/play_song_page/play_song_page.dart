@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shaky_animated_listview/animators/grid_animator.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
@@ -15,6 +17,7 @@ import '../../../bloc/play_box_bloc/event.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 import '../../../helpers/widgets/custom_app_bar.dart';
+import 'package:intl/intl.dart';
 
 class PlayMusicPage extends StatefulWidget {
 
@@ -32,9 +35,11 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
 //
   bool loop = false;
 
+
   @override
   void initState() {
     super.initState();
+
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
   }
 
@@ -238,25 +243,36 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                     stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
                                     builder: ((context, snapshot) {
                                       if (snapshot.hasData) {
-                                        final currentDuration = ((snapshot.data?.inSeconds ?? 0) / 100).toStringAsPrecision(2);
+                                        final currentDurationSecond = (snapshot.data?.inSeconds ?? 0);
+                                        final currentDurationMinute = (snapshot.data?.inMinutes ?? 0).toString().padLeft(2 , "0");
                                         return Column(
                                           children: [
                                             Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(currentDuration),
-                                                    Text("${double.parse(state.songModel.minute!) * 60 + double.parse(state.songModel.second!)}")],
+                                                  children: [Row(
+                                                    children: [
+                                                      Text(currentDurationMinute),
+                                                      Text(":"),
+                                                      Text((currentDurationSecond % 60).toString().padLeft(2 , "0")),
+                                                    ],
+                                                  ), Row(
+                                                    children: [
+                                                      Text("${state.songModel.minute}".padLeft(2 , "0")),
+                                                      Text(":"),
+                                                      Text("${state.songModel.second}".padLeft(2 , "0")),
+                                                    ],
+                                                  )],
                                                 )),
                                             SliderTheme(
                                               data: SliderTheme.of(context)
                                                   .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
                                               child: Slider(
-                                                  activeColor: Colors.green,
+                                                  activeColor: Colors.purple,
                                                   inactiveColor: Colors.black,
                                                   value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
-                                                  max: double.parse(state.songModel.minute!) * 60 + double.parse(state.songModel.second!),
+                                                  max: double.parse(state.songModel.minute) * 60 + double.parse(state.songModel.second),
                                                   min: 0,
                                                   // activeColor: Theme.of(context).colorScheme.background,
                                                   onChangeEnd: (value) {},
@@ -270,6 +286,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         return const SizedBox();
                                       }
                                     })),
+                                // double.parse(state.songModel.minute!) * 60 + double.parse(state.songModel.second!),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
