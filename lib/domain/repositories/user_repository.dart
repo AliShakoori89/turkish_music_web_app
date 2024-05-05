@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/user_model.dart';
@@ -8,7 +9,7 @@ import '../../data/network/api_base_helper.dart';
 
 class SignUserRepository {
 
-  final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
+  final String? apiKey = dotenv.env['map.apikey'];
 
   FutureOr<String?> requestPublic(String email) async {
     ApiBaseHelper api = ApiBaseHelper();

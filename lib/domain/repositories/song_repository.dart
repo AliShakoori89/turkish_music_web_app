@@ -1,9 +1,10 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
 class SongRepository {
 
-  final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
+  final String? apiKey = dotenv.env['map.apikey'];
 
   @override
   Future<dynamic> getMusic(int id) async {

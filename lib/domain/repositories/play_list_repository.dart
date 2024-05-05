@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import '../../data/network/api_base_helper.dart';
 
 class PlayListRepository {
 
-  final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
+  final String? apiKey = dotenv.env['map.apikey'];
 
   @override
   addToPlayList(int userID, int musicID) async {

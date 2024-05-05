@@ -1,18 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
-import 'package:simple_audio/simple_audio.dart';
-import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page.dart';
-
-import '../../../data/model/song_model.dart';
 import '../../../data/model/singer_model.dart';
-import '../../helpers/widgets/custom_app_bar.dart';
 
 class SingerPage extends StatefulWidget {
   SingerPage({super.key, required this.artistDetail});
@@ -64,14 +55,6 @@ class _SingerPageState extends State<SingerPage> {
             mainAxisSpacing: 10.0,
             crossAxisSpacing: 10.0,
             childAspectRatio: 1.0,),
-            // crossAxisCount: 2,
-            // mainAxisExtent: 250,
-            // crossAxisSpacing: 1,
-            // cacheExtent: 5000,
-            // primary: false,
-            // scrollDirection: Axis.vertical,
-            // itemCount: singerAllAlbum.length,
-            // itemExtent: 120.0,
             delegate: SliverChildBuilderDelegate((context, index) =>
                 GestureDetector(
                   // onTap: (){
