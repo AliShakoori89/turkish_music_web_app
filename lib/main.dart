@@ -21,6 +21,7 @@ import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc/song_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
@@ -72,9 +73,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(SignUserRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
-                SongBloc(SongRepository())),
+        BlocProvider(create: (context) => SongBloc()..add(FetchNewSongs())),
         BlocProvider(
             create: (BuildContext context) =>
                 NewSongBloc(NewSongRepository())),

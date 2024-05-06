@@ -15,6 +15,7 @@ import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart
 import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
 import '../../../bloc/song_bloc/bloc.dart';
+import '../../../bloc/song_bloc/bloc/song_bloc.dart';
 import '../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 import '../../../helpers/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +49,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     return Scaffold(
         body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
             listener: (context, state) {
-
               context
                   .read<AudioControlBloc>()
                   .add(PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
@@ -92,7 +92,13 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                             flex: 1,
                             child: CustomAppBar(
                               title: "Now Playing",
-                              singerName: state.songModel.album == null ? "" : state.songModel.album!.singer!.name!,
+                              singerName: state.songModel.album == null
+                                  ? ""
+                                  : state.songModel.album!.singer == null
+                                  ? ""
+                                  :  state.songModel.album!.singer!.name == null
+                                  ? ""
+                                  : state.songModel.album!.singer!.name!,
                               haveMenuButton: false,
                             ),
                           ),
@@ -147,7 +153,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                               onPressed: () {
                                                 context
                                                     .read<CurrentSelectedSongBloc>()
-                                                    .add(PlayPreviousSong(songs: state.songDetail!));
+                                                    .add(PlayPreviousSong(songs: BlocProvider.of<SongBloc>(context).songs));
                                               },
                                               icon: Container(
                                                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -217,7 +223,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                               onPressed: () {
                                                 context
                                                     .read<CurrentSelectedSongBloc>()
-                                                    .add(PlayNextSong(songs: state.songDetail ?? []));
+                                                    .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).songs));
                                               },
                                               icon: Container(
                                                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -272,7 +278,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                                   activeColor: Colors.purple,
                                                   inactiveColor: Colors.black,
                                                   value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
-                                                  max: double.parse(state.songModel.minute) * 60 + double.parse(state.songModel.second),
+                                                  max: double.parse(state.songModel.minute ?? "0") * 60 + double.parse(state.songModel.second ?? "0"),
                                                   min: 0,
                                                   // activeColor: Theme.of(context).colorScheme.background,
                                                   onChangeEnd: (value) {},
