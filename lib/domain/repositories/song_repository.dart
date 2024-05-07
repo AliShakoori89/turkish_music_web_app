@@ -17,17 +17,17 @@ class SongRepository {
   //   return response.data;
   // }
 
-  // @override
-  // Future<dynamic> getAllMusic() async {
-  //   ApiBaseHelper api = ApiBaseHelper();
-  //   final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
-  //   final productJson = json.decode(response.body);
-  //   print("##################################################productJson:                   "+ productJson.toString());
-  //   var AllSongData = GetAllMusicDataModel.fromJson(productJson);
-  //   print("response.data:                   ");
-  //   print("response.data:                   "+AllSongData.toString());
-  //   return response;
-  // }
+  @override
+  Future<dynamic> getAllMusic() async {
+    ApiBaseHelper api = ApiBaseHelper();
+    final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
+    final productJson = json.decode(response.body);
+    print("##################################################productJson:                   "+ productJson.toString());
+    var AllSongData = GetAllMusicDataModel.fromJson(productJson);
+    print("response.data:                   ");
+    print("response.data:                   "+AllSongData.toString());
+    return response;
+  }
 
   @override
   Future<dynamic> getAllNewMusic() async {
@@ -47,14 +47,6 @@ class SongRepository {
         for(int i = 0 ; i < songList.length ; i++){
           songList[i]['fileSource'] = songList[i]['fileSource'].substring(0, 4) + "s" +songList[i]['fileSource'].substring(4, songList[i]['fileSource'].length);
         }
-        // print("*********************                            "+songDataModel.name.toString());
-        // SongDataModel songDataModel = SongDataModel();
-        // songDataModel.id = GetAllMusicDataModel().id;
-        // songDataModel.name = GetAllMusicDataModel().name;
-        // songDataModel.fileSource = GetAllMusicDataModel().fileSource;
-        // songDataModel.imageSource = GetAllMusicDataModel().imageSource;
-        // songDataModel.minute = GetAllMusicDataModel().minute;
-        // songDataModel.second = GetAllMusicDataModel().second;
 
         songs = songList.map((e) => SongDataModel.fromJson(e)).toList();
         print("songs          *****************                 "+songs[0].fileSource.toString());

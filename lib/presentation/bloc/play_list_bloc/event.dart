@@ -26,13 +26,4 @@ class RemoveMusicFromPlaylistEvent extends PlayListEvent{
   List<Object> get props => [userID, musicID];
 }
 
-class GetAllMusicInPlaylistEvent extends PlayListEvent{
-  final int userID;
-
-  GetAllMusicInPlaylistEvent({
-    required this.userID
-  });
-
-  @override
-  List<Object> get props => [userID];
-}
+class GetAllMusicInPlaylistEvent extends PlayListEvent{}

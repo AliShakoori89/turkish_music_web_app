@@ -3,7 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/animators/grid_animator.dart';
+import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/play_list_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/download_button.dart';
@@ -17,6 +21,7 @@ import '../../../bloc/play_box_bloc/event.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/bloc/song_bloc.dart';
 import '../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
+import '../../../bloc/user_bloc/bloc.dart';
 import '../../../helpers/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 
@@ -32,9 +37,12 @@ class PlayMusicPage extends StatefulWidget {
   State<PlayMusicPage> createState() => PlayMusicPageState();
 }
 
-class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserver {
+class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
 //
   bool loop = false;
+  bool _isFavorite = false;
+  late final AnimationController _controller = AnimationController(
+      duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
 
 
   @override
@@ -42,6 +50,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     super.initState();
 
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
+
   }
 
   @override
@@ -57,6 +66,9 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
               if (state is LoadingNewSong) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is SelectedSongFetched) {
+
+                var songID = state.songModel.id;
+
                 return Container(
                   height: double.infinity,
                   margin: EdgeInsets.only(
@@ -115,13 +127,40 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         fontSize: 15, color: Colors.grey),
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: LikeButton(
-                                    name: state.songModel.name!,
-                                    isIcon: true,
+                            Expanded(
+                                flex: 1,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _isFavorite = !_isFavorite;
+                                    });
+                                    _controller
+                                        .reverse()
+                                        .then((value) => _controller.forward());
+
+                                    if(_isFavorite){
+                                      BlocProvider.of<PlaylistBloc>(context).add(AddMusicToPlaylistEvent(userID: 3, musicID: songID!));
+                                    }else{
+                                      BlocProvider.of<PlaylistBloc>(context).add(RemoveMusicFromPlaylistEvent(userID: 3, musicID: songID!));
+
+                                    }
+                                  },
+                                  child: ScaleTransition(
+                                    scale: Tween(begin: 0.7, end: 1.0).animate(
+                                        CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
+                                    child: _isFavorite
+                                        ? const Icon(
+                                      Icons.favorite,
+                                      size: 30,
+                                      color: Colors.red,
+                                    )
+                                        : const Icon(
+                                      Icons.favorite_border,
+                                      size: 30,
+                                    ),
                                   ),
-                                ),
+                                )
+                            )
                               ],
                             ),
                           ),
@@ -292,7 +331,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         return const SizedBox();
                                       }
                                     })),
-                                // double.parse(state.songModel.minute!) * 60 + double.parse(state.songModel.second!),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
