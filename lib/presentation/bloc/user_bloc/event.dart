@@ -27,14 +27,14 @@ class FirstLoginEvent extends UserEvent{
 
 class SecondLoginEvent extends UserEvent{
   final String email;
-  final String verficationToken;
+  final String verificationToken;
 
   SecondLoginEvent({
-    required this.email, required this.verficationToken
+    required this.email, required this.verificationToken
   });
 
   @override
-  List<Object> get props => [email, verficationToken];
+  List<Object> get props => [email, verificationToken];
 }
 
 //********************************************************************

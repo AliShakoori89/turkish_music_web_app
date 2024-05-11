@@ -113,14 +113,18 @@ class AlbumDataMusicModel {
   String? fileSource;
   int? albumId;
   String? album;
+  String? minute;
+  String? second;
 
   AlbumDataMusicModel(
-      {this.id,
-        this.name,
-        this.imageSource,
-        this.fileSource,
-        this.albumId,
-        this.album});
+    {this.id,
+      this.name,
+      this.imageSource,
+      this.fileSource,
+      this.albumId,
+      this.album,
+      this.minute,
+      this.second});
 
   AlbumDataMusicModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -129,6 +133,8 @@ class AlbumDataMusicModel {
     fileSource = json['fileSource'];
     albumId = json['albumId'];
     album = json['album'];
+    minute = json['minute'];
+    second = json['second'];
   }
 
   Map<String, dynamic> toJson() {
@@ -139,6 +145,8 @@ class AlbumDataMusicModel {
     data['fileSource'] = fileSource;
     data['albumId'] = albumId;
     data['album'] = album;
+    data['minute'] = minute;
+    data['second'] = second;
     return data;
   }
 }

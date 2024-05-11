@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page.dart';
 import '../../../data/model/singer_model.dart';
+import '../../../data/model/song_model.dart';
+import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 
 class SingerPage extends StatefulWidget {
   SingerPage({super.key, required this.artistDetail});
@@ -57,18 +60,46 @@ class _SingerPageState extends State<SingerPage> {
             childAspectRatio: 1.0,),
             delegate: SliverChildBuilderDelegate((context, index) =>
                 GestureDetector(
-                  // onTap: (){
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => PlayMusicPage(
-                  //             imagePath: singerAllAlbum[index].imageSource!,
-                  //             musicFiles: singerAllAlbum[index].musics!,
-                  //             singerName: singerAllAlbum[index].name!,
-                  //             musicFile: singerAllAlbum[index].,
-                  //           ))
-                  //   );
-                  // },
+                  onTap: (){
+
+                    print("*********              "+state.singerAllAlbum[index].musics![index].imageSource!);
+
+                    // print("*********              "+state.singerAllAlbum[index].musics![index].second!);
+                    // print("*********              "+state.singerAllAlbum[index].musics![index].minute!);
+                    var path = state.singerAllAlbum[index].musics![index].fileSource!.substring(0, 4)
+                        + "s"
+                        + state.singerAllAlbum[index].musics![index].fileSource!.substring(4, state.singerAllAlbum[index].musics![index].fileSource?.length);
+
+                    var newPath = path.replaceAll(" ", "%20");
+
+                    SongDataModel songDataModel = SongDataModel(
+                        id : state.singerAllAlbum[index].musics![index].id,
+                        name: state.singerAllAlbum[index].musics![index].name,
+                        imageSource: state.singerAllAlbum[index].musics![index].imageSource,
+                        fileSource: newPath,
+                        minute: state.singerAllAlbum[index].musics![index].minute,
+                        second: state.singerAllAlbum[index].musics![index].second,
+                        album: null,
+                        albumId: null,
+                        categories: null
+                    );
+
+                    print("*********              "+newPath);
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                  songModel: songDataModel
+                              )),
+                              child: PlayMusicPage(
+                                  songName: state.singerAllAlbum[index].musics![index].name!,
+                                  songFile: newPath
+                              ),
+
+                            )));
+                  },
                   child: Padding(
                       padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).size.height * 0.02,
