@@ -65,7 +65,11 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                             Expanded(
                                 flex: 5,
                                 child: InkWell(
-                                  onTap: () {},
+                                  customBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  onTap: () {
+                                  },
                                   child: Container(
                                     decoration: BoxDecoration(
                                         boxShadow: [

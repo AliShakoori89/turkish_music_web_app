@@ -49,21 +49,29 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                         padding: EdgeInsets.only(
                           right: MediaQuery.of(context).size.width * 0.030,
                         ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.purple.withOpacity(0.5),
-                                  blurRadius: 10,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  image: NetworkImage(state.category[index].imageSource),
-                                  fit: BoxFit.fill
-                              )
+                        child: InkWell(
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          width: MediaQuery.of(context).size.width * 0.3,
+                          onTap: (){
+
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.purple.withOpacity(0.5),
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: NetworkImage(state.category[index].imageSource),
+                                    fit: BoxFit.fill
+                                )
+                            ),
+                            width: MediaQuery.of(context).size.width * 0.3,
+                          ),
                         ),
                       )),
                 ),

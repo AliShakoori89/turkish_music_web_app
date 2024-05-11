@@ -56,6 +56,9 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                 cacheExtent: 1000,
                 children: List.generate(artistList.length, (index) {
                   return InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,

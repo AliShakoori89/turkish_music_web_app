@@ -93,6 +93,9 @@ class NewMusicContainerState extends State<NewMusicContainer> {
 
                                     )));
                           },
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               border: Border.all(
