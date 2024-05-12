@@ -42,7 +42,6 @@ class NewMusicContainerState extends State<NewMusicContainer> {
             return const NewSongShimmerContainer();
           }
           else if(state.status.isSuccess){
-            print("111111111111111111111111111111111");
             return Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: CarouselSlider(
@@ -73,10 +72,10 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                 + "s"
                                 + newSong[index].fileSource.substring(4, newSong[index].fileSource.length),
                             minute: newSong[index].minute,
-                           second: newSong[index].second,
-                              album: null,
-                              albumId: null,
-                              categories: null
+                            second: newSong[index].second,
+                            album: null,
+                            albumId: null,
+                            categories: null
                             );
 
                             Navigator.push(
@@ -87,8 +86,9 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                         songModel: songDataModel
                                       )),
                                       child: PlayMusicPage(
-                                          songName: state.newSong[index].name,
-                                          songFile: state.newSong[index].fileSource
+                                        songName: state.newSong[index].name,
+                                        songFile: state.newSong[index].fileSource,
+                                        newSongList: newSong,
                                       ),
 
                                     )));

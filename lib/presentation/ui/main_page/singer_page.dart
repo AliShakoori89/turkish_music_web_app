@@ -99,8 +99,9 @@ class _SingerPageState extends State<SingerPage> {
                                     songModel: songDataModel
                                 )),
                                 child: PlayMusicPage(
-                                    songName: state.singerAllAlbum[index].musics![index].name!,
-                                    songFile: newPath
+                                  songName: state.singerAllAlbum[index].musics![index].name!,
+                                  songFile: newPath,
+                                  albumSongList: state.singerAllAlbum[index].musics,
                                 ),
         
                               )));

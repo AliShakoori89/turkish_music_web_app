@@ -15,6 +15,9 @@ import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/normalize_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/play_list_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/repeat_button.dart';
+import '../../../../data/model/album_model.dart';
+import '../../../../data/model/new-song_model.dart';
+import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
@@ -29,8 +32,13 @@ class PlayMusicPage extends StatefulWidget {
 
   final String songName;
   final String songFile;
+  List<SongDataModel>? songList;
+  List<NewSongDataModel>? newSongList;
+  List<AlbumDataMusicModel>? albumSongList;
 
-  PlayMusicPage({super.key, required this.songName, required this.songFile});
+  PlayMusicPage({super.key, required this.songName,
+    required this.songFile, this.songList,
+    this.newSongList, this.albumSongList});
 
 
   @override
@@ -38,7 +46,7 @@ class PlayMusicPage extends StatefulWidget {
 }
 
 class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
-//
+
   bool loop = false;
   bool _isFavorite = false;
   late final AnimationController _controller = AnimationController(
@@ -124,7 +132,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                   child: Text(
                                     state.songModel.name!,
                                     style: const TextStyle(
-                                        fontSize: 15, color: Colors.grey),
+                                        fontSize: 15, color: Colors.white60),
                                   ),
                                 ),
                             Expanded(
@@ -344,8 +352,14 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                           ),
                           SizedBox(height: 15,),
                           const Spacer(),
-                          const Flexible(
-                              flex: 4, child: AllSongsList())
+                          Flexible(
+                              flex: 4,
+                              child: AllSongsList(
+                                newSongList: widget.newSongList,
+                                songList: widget.songList,
+                                albumSongList: widget.albumSongList,
+                              )
+                          )
                         ],
                       ),
                     ),
@@ -357,10 +371,5 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
             }
         )
     );
-  }
-
-  changeFilePath(String path){
-    String songFile = path.substring(0, 4) + "s" + path.substring(4, path.length);
-    return songFile;
   }
 }
