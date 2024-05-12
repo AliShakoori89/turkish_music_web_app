@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
-import 'package:turkish_music_app/presentation/ui/detail_page.dart';
+import 'package:turkish_music_app/presentation/ui/music_page/detail_page.dart';
 import '../../../helpers/widgets/top_arrow_icon.dart';
 
 class MusicPage extends StatelessWidget {

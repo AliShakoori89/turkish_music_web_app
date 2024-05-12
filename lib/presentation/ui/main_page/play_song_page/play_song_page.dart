@@ -147,9 +147,9 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         .then((value) => _controller.forward());
 
                                     if(_isFavorite){
-                                      BlocProvider.of<PlaylistBloc>(context).add(AddMusicToPlaylistEvent(userID: 3, musicID: songID!));
+                                      BlocProvider.of<PlaylistBloc>(context).add(AddMusicToPlaylistEvent(musicID: songID!));
                                     }else{
-                                      BlocProvider.of<PlaylistBloc>(context).add(RemoveMusicFromPlaylistEvent(userID: 3, musicID: songID!));
+                                      BlocProvider.of<PlaylistBloc>(context).add(RemoveMusicFromPlaylistEvent(musicID: songID!));
 
                                     }
                                   },

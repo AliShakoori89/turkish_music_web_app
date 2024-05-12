@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/const/custom_divider.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_card.dart';
+import 'package:turkish_music_app/presentation/ui/music_page/playlist_page.dart';
 
 class CustomPageWithCards extends StatelessWidget {
 
@@ -25,10 +26,19 @@ class CustomPageWithCards extends StatelessWidget {
       child: ListView.builder(
         itemCount: rowNumber,
         itemBuilder: (context, index) {
-          return CustomCard(
-            customColor: customColor,
-            title: title[index],
-            customIcon: customIcon[index],
+          return InkWell(
+            child: CustomCard(
+              customColor: customColor,
+              title: title[index],
+              customIcon: customIcon[index],
+            ),
+            onTap: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PlaylistPage())
+              );
+            },
           );
         },
       ),

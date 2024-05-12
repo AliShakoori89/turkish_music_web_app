@@ -20,7 +20,7 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
     try {
       emit(state.copyWith(status: PlayListStatus.loading));
 
-      await playListRepository.addToPlayList(event.userID, event.musicID);
+      await playListRepository.addToPlayList(event.musicID);
 
       emit(
         state.copyWith(
@@ -37,7 +37,7 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
     try {
       emit(state.copyWith(status: PlayListStatus.loading));
 
-      await playListRepository.removeFromPlayList(event.userID, event.musicID);
+      await playListRepository.removeFromPlayList(event.musicID);
 
 
       emit(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/ui/detail_page.dart';
+import 'package:turkish_music_app/presentation/ui/music_page/detail_page.dart';
 
 class TitleText extends StatelessWidget {
 
