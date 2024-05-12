@@ -298,7 +298,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                       if (snapshot.hasData) {
                                         final currentDurationSecond = (snapshot.data?.inSeconds ?? 0);
                                         final currentDurationMinute = (snapshot.data?.inMinutes ?? 0).toString().padLeft(2 , "0");
-                                        print("^^^^^^^^^^                  "+(double.parse(state.songModel.minute ?? "0") * 60 + double.parse(state.songModel.second ?? "0")).toString());
                                         return Column(
                                           children: [
                                             Padding(

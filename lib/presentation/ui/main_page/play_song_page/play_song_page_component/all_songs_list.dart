@@ -20,26 +20,15 @@ class AllSongsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    print("%%%%%%%%%%%              "+albumSongList!.length.toString());
-    return
-      // BlocBuilder<PlayBoxBloc, PlayBoxState>(
-      //   builder: (context, state)
-
-          // return
-            ListView.builder(
+    return ListView.builder(
             itemCount: songList != null ? songList!.length : newSongList != null ? newSongList!.length : albumSongList!.length,
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             cacheExtent: 1000,
             itemBuilder: (BuildContext context, int index) {
 
-              print(index);
               return InkWell(
-
                 onTap: (){
-
-                  print(index);
 
                   var path = songList != null
                       ? songList![index]
@@ -60,8 +49,6 @@ class AllSongsList extends StatelessWidget {
                       + albumSongList![index].fileSource!.substring(4, albumSongList![index].fileSource!.length);
 
                   var newPath = path.replaceAll(" ", "%20");
-
-                  print("fileSource              "+newPath);
 
                   SongDataModel songDataModel = SongDataModel(
                   id: songList != null ? songList![index].id : newSongList != null ? newSongList![index].id : albumSongList![index].id,
