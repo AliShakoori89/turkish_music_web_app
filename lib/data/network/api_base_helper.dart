@@ -10,7 +10,7 @@ class ApiBaseHelper {
 
 
   Future<dynamic> get(String url,
-      {String accessToken = '', String query = "", String page = "", String count = ""}) async {
+      {String accessToken = "", String query = "", String page = "", String count = ""}) async {
     try {
 
       final queryParameters = {
@@ -31,6 +31,8 @@ class ApiBaseHelper {
 
       final response = await http.get(address, headers: headers);
 
+      print("responseeeeeeeeeeeeeeeeeeeee            "+response.statusCode.toString());
+
       return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -50,13 +52,20 @@ class ApiBaseHelper {
 
       Map<String, String> headers;
 
+      print('address                    '+address.toString());
+
       headers = {
         'Content-type': 'application/json',
         'Authorization': 'bearer $accessToken'
       };
 
       final response = await http.post(address, body: body, headers: headers);
+
+      print("response                       "+response.statusCode.toString());
+
       var responseJson = _returnResponse(response);
+
+      print("responseJson                       "+responseJson.statusCode.toString());
       return responseJson;
 
     } on SocketException {

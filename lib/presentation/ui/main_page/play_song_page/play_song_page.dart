@@ -236,6 +236,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                               } else {
                                                 BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
                                               }
+                                              print("enddddddddddddddddddddddddddddddddddddddd");
                                             },
                                             icon: Container(
                                                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

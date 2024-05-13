@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../data/model/playListSongModel.dart';
 import '../../data/network/api_base_helper.dart';
 
 class PlayListRepository {
@@ -18,15 +20,27 @@ class PlayListRepository {
       "apiKey": apiKey
     });
 
-    await api.post('/api/PlayList/AddToPlayList', body);
+    String accessToken = await getAccessTokenValue();
 
-    Get.showSnackbar(
-      GetSnackBar(
-        message: 'Add to playlist ...',
-        showProgressIndicator: true,
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    final response = await api.post('/api/PlayList/AddToPlayList', body, accessToken: accessToken);
+
+    print("res          "+response.statusCode);
+
+    if (response.statusCode == 200) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'Add to playlist ...',
+          showProgressIndicator: true,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return true;
+    }
+    else {
+      return false;
+    }
+
+
   }
 
   @override
@@ -38,25 +52,45 @@ class PlayListRepository {
       "musicId": musicID,
       "apiKey": apiKey
     });
-    await api.post('/api/PlayList/RemoveFromPlayList', body);
 
-    Get.showSnackbar(
-      GetSnackBar(
-        message: 'Remove from playlist ...',
-        showProgressIndicator: true,
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    String accessToken = await getAccessTokenValue();
+
+    final response = await api.post('/api/PlayList/RemoveFromPlayList', body, accessToken: accessToken);
+
+    if (response.statusCode == 200) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'Remove from playlist ...',
+          showProgressIndicator: true,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   @override
-  getMusicToPlayList() async{
+  Future<dynamic> getMusicFromPlayList() async{
 
     ApiBaseHelper api = ApiBaseHelper();
 
-    var body = jsonEncode({
-      "apiKey": apiKey
-    });
-    await api.post('/api/PlayList/GetPlayListOfCurrentUser', body);
+    String accessToken = await getAccessTokenValue();
+
+    var response = await api.get('/api/PlayList/GetPlayListOfCurrentUser', accessToken: accessToken);
+
+    final productJson = json.decode(response.body);
+    // print("productJsonnnnnnnnnnnnnnn           "+productJson.toString());
+    var PlayListData = PlaylistModel.fromJson(productJson);
+    print("PlayListData                      "+PlayListData.data!.musics.toString());
+    return PlayListData.data!.musics;
+  }
+
+  getAccessTokenValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+    return accessToken;
   }
 }
