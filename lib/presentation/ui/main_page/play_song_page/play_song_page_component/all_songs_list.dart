@@ -2,14 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../../../../bloc/play_box_bloc/bloc.dart';
-import '../../../../bloc/play_box_bloc/state.dart';
 import '../play_song_page.dart';
 
 class AllSongsList extends StatelessWidget {

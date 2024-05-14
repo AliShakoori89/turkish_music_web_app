@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/state.dart';
 import '../../../data/model/playListSongModel.dart';
 import '../../../domain/repositories/play_list_repository.dart';

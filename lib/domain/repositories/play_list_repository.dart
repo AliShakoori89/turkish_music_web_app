@@ -90,12 +90,10 @@ class PlayListRepository {
 
   addMusicIDToList(int id){
     playlistIDs.add(id);
-    print("addMusicIDToList         playlistIDs                          "+playlistIDs.toString());
   }
 
   removeMusicIDFromList(int id){
     playlistIDs.remove(id);
-    print("removeMusicIDFromList       playlistIDs                          "+playlistIDs.toString());
   }
 
   bool isMusicInPlaylist(int id){

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
-
-import '../../bloc/play_box_bloc/bloc.dart';
 import '../../bloc/play_list_bloc/bloc.dart';
 import '../../bloc/play_list_bloc/state.dart';
 

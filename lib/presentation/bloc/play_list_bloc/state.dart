@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:turkish_music_app/data/model/song_model.dart';
-
 import '../../../data/model/playListSongModel.dart';
 
 enum PlayListStatus { initial, success, error, loading }

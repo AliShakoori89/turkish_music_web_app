@@ -1,17 +1,12 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shaky_animated_listview/animators/grid_animator.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/state.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/download_button.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/like_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/normalize_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/play_list_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/repeat_button.dart';
@@ -21,12 +16,9 @@ import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
-import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/bloc/song_bloc.dart';
 import '../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
-import '../../../bloc/user_bloc/bloc.dart';
 import '../../../helpers/widgets/custom_app_bar.dart';
-import 'package:intl/intl.dart';
 
 class PlayMusicPage extends StatefulWidget {
 
