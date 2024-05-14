@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +8,7 @@ import '../../data/network/api_base_helper.dart';
 class PlayListRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
+  List playlistIDs = [];
 
   @override
   addToPlayList(int musicID) async {
@@ -24,8 +24,6 @@ class PlayListRepository {
 
     final response = await api.post('/api/PlayList/AddToPlayList', body, accessToken: accessToken);
 
-    print("res          "+response.statusCode);
-
     if (response.statusCode == 200) {
       Get.showSnackbar(
         GetSnackBar(
@@ -39,8 +37,6 @@ class PlayListRepository {
     else {
       return false;
     }
-
-
   }
 
   @override
@@ -82,9 +78,7 @@ class PlayListRepository {
     var response = await api.get('/api/PlayList/GetPlayListOfCurrentUser', accessToken: accessToken);
 
     final productJson = json.decode(response.body);
-    // print("productJsonnnnnnnnnnnnnnn           "+productJson.toString());
     var PlayListData = PlaylistModel.fromJson(productJson);
-    print("PlayListData                      "+PlayListData.data!.musics.toString());
     return PlayListData.data!.musics;
   }
 
@@ -92,5 +86,24 @@ class PlayListRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
     return accessToken;
+  }
+
+  addMusicIDToList(int id){
+    playlistIDs.add(id);
+    print("addMusicIDToList         playlistIDs                          "+playlistIDs.toString());
+  }
+
+  removeMusicIDFromList(int id){
+    playlistIDs.remove(id);
+    print("removeMusicIDFromList       playlistIDs                          "+playlistIDs.toString());
+  }
+
+  bool isMusicInPlaylist(int id){
+    bool exist = playlistIDs.contains(id);
+    if(exist){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

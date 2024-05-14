@@ -14,6 +14,9 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
     on<AddMusicToPlaylistEvent>(_mapAddMusicToPlaylistEventToState);
     on<RemoveMusicFromPlaylistEvent>(_mapRemoveMusicFromPlaylistEventToState);
     on<GetAllMusicInPlaylistEvent>(_mapGetAllMusicInPlaylistEventToState);
+    on<SaveSongIDEvent>(_mapSaveSongIDEventToState);
+    on<RemoveSongIDEvent>(_mapRemoveSongIDEventToState);
+    on<SearchSongIDEvent>(_mapSearchSongIDEventToState);
   }
 
   void _mapAddMusicToPlaylistEventToState(
@@ -21,11 +24,14 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
     try {
       emit(state.copyWith(status: PlayListStatus.loading));
 
-      await playListRepository.addToPlayList(event.musicID);
+      await playListRepository.addToPlayList(event.songID);
+      List<PlaylistMusicModel> playlistSongs = await playListRepository.getMusicFromPlayList();
+
 
       emit(
         state.copyWith(
             status: PlayListStatus.success,
+          playlistSongs: playlistSongs
         ),
       );
     } catch (error) {
@@ -39,11 +45,12 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
       emit(state.copyWith(status: PlayListStatus.loading));
 
       await playListRepository.removeFromPlayList(event.musicID);
-
+      List<PlaylistMusicModel> playlistSongs = await playListRepository.getMusicFromPlayList();
 
       emit(
         state.copyWith(
           status: PlayListStatus.success,
+          playlistSongs: playlistSongs
         ),
       );
     } catch (error) {
@@ -64,6 +71,58 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
         state.copyWith(
           status: PlayListStatus.success,
           playlistSongs: playlistSongs
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: PlayListStatus.error));
+    }
+  }
+
+  void _mapSaveSongIDEventToState(
+      SaveSongIDEvent event, Emitter<PlaylistState> emit) async {
+    try {
+      emit(state.copyWith(status: PlayListStatus.loading));
+      playListRepository.addMusicIDToList(event.songID);
+      bool isFavorite = playListRepository.isMusicInPlaylist(event.songID);
+
+      emit(
+        state.copyWith(
+            status: PlayListStatus.success,
+          isFavorite: isFavorite
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: PlayListStatus.error));
+    }
+  }
+
+  void _mapRemoveSongIDEventToState(
+      RemoveSongIDEvent event, Emitter<PlaylistState> emit) async {
+    try {
+      emit(state.copyWith(status: PlayListStatus.loading));
+      playListRepository.removeMusicIDFromList(event.songID);
+      bool isFavorite =  playListRepository.isMusicInPlaylist(event.songID);
+
+      emit(
+        state.copyWith(
+          status: PlayListStatus.success,
+          isFavorite: isFavorite
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: PlayListStatus.error));
+    }
+  }
+
+  void _mapSearchSongIDEventToState(
+      SearchSongIDEvent event, Emitter<PlaylistState> emit) async {
+    try {
+      emit(state.copyWith(status: PlayListStatus.loading));
+      bool isFavorite = playListRepository.isMusicInPlaylist(event.songID);
+      emit(
+        state.copyWith(
+          status: PlayListStatus.success,
+          isFavorite: isFavorite
         ),
       );
     } catch (error) {

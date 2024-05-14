@@ -72,6 +72,7 @@ class PlaylistMusicModel {
   String? minute;
   String? second;
   List<PlaylistCategoriesModel>? categories;
+  String? singerName;
   int? albumId;
   PlaylistAlbumModel? album;
 
@@ -83,6 +84,7 @@ class PlaylistMusicModel {
         this.minute,
         this.second,
         this.categories,
+        this.singerName,
         this.albumId,
         this.album});
 
@@ -99,6 +101,7 @@ class PlaylistMusicModel {
         categories!.add(new PlaylistCategoriesModel.fromJson(v));
       });
     }
+    singerName = json['singerName'];
     albumId = json['albumId'];
     album = json['album'] != null ? new PlaylistAlbumModel.fromJson(json['album']) : null;
   }
@@ -111,6 +114,10 @@ class PlaylistMusicModel {
     data['fileSource'] = this.fileSource;
     data['minute'] = this.minute;
     data['second'] = this.second;
+    if (this.categories != null) {
+      data['categories'] = this.categories!.map((v) => v.toJson()).toList();
+    }
+    data['singerName'] = this.singerName;
     if (this.categories != null) {
       data['categories'] = this.categories!.map((v) => v.toJson()).toList();
     }

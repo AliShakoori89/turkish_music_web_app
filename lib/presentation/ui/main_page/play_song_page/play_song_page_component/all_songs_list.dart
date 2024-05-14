@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
+import '../../../../../generated/assets.dart';
 import '../../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../../bloc/play_box_bloc/bloc.dart';
 import '../../../../bloc/play_box_bloc/state.dart';
@@ -20,6 +23,7 @@ class AllSongsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView.builder(
             itemCount: songList != null ? songList!.length : newSongList != null ? newSongList!.length : albumSongList!.length,
             scrollDirection: Axis.vertical,
@@ -80,6 +84,10 @@ class AllSongsList extends StatelessWidget {
                               songList: songList,
                               newSongList: newSongList,
                               albumSongList: albumSongList,
+                              songID: songList != null
+                                  ? songList![index].id!
+                                  : newSongList != null ? newSongList![index].id
+                                  : albumSongList![index].id!,
                             ),
 
                           )),
@@ -104,6 +112,42 @@ class AllSongsList extends StatelessWidget {
                         margin: const EdgeInsets.only(
                             right: 5
                         ),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl: songList != null
+                              ? songList![index].imageSource!
+                              : newSongList != null
+                              ? newSongList![index].imageSource
+                              : albumSongList![0].imageSource!,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                            ),
+                          ),
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.black12,
+                            highlightColor: Colors.grey[400]!,
+                            child: Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.black12,
+                                    shape: BoxShape.circle),
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                height: MediaQuery.of(context).size.width * 0.2
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                              decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(Assets.imagesNoImage)
+                                  ),
+                                  color: Colors.black12,
+                                  shape: BoxShape.circle),
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              height: MediaQuery.of(context).size.width * 0.2
+                          )
+                        ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius
                                 .circular(15),
@@ -119,31 +163,29 @@ class AllSongsList extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 5,),
-                      Column(
+                      albumSongList == null
+                          ? Column(
                         crossAxisAlignment: CrossAxisAlignment
                             .start,
                         children: [
                           Text(songList != null
                               ? songList![index].name!
-                              : newSongList != null
-                              ? newSongList![index].name
-                              : albumSongList![index].name!,
+                              : newSongList![index].name,
                             style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
                             ),),
-                          songList != null 
-                              ? Text(songList != null
+                          Text(songList != null
                               ? songList![index].album!.singer!.name!
-                              : newSongList != null ? newSongList![index].singer.name
-                              : "",
+                              : newSongList![index].singer.name,
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.white54
                             ),)
-                              : Text("")
+
                         ],
-                      ),
+                      )
+                          : Text(albumSongList![index].name!,)
                     ],
                   ),
                 ),

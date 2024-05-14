@@ -17,27 +17,32 @@ class PlaylistState extends Equatable{
   const PlaylistState({
     required this.status,
     required this.playlistSongs,
+    required this.isFavorite
   });
 
   static PlaylistState initial() => const PlaylistState(
     status: PlayListStatus.initial,
     playlistSongs: <PlaylistMusicModel>[],
+    isFavorite: false
   );
 
   final PlayListStatus status;
   final List<PlaylistMusicModel> playlistSongs;
+  final bool isFavorite;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, playlistSongs];
+  List<Object?> get props => [status, playlistSongs, isFavorite];
 
   PlaylistState copyWith({
     PlayListStatus? status,
     List<PlaylistMusicModel>? playlistSongs,
+    bool? isFavorite
   }) {
     return PlaylistState(
       status: status ?? this.status,
       playlistSongs: playlistSongs ?? this.playlistSongs,
+      isFavorite: isFavorite ?? this.isFavorite
     );
   }
 }

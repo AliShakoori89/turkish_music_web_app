@@ -3,13 +3,13 @@ abstract class PlayListEvent {
 }
 
 class AddMusicToPlaylistEvent extends PlayListEvent{
-  final int musicID;
+  final int songID;
 
   AddMusicToPlaylistEvent({
-    required this.musicID});
+    required this.songID});
 
   @override
-  List<Object> get props => [musicID];
+  List<Object> get props => [songID];
 }
 
 class RemoveMusicFromPlaylistEvent extends PlayListEvent{
@@ -23,3 +23,33 @@ class RemoveMusicFromPlaylistEvent extends PlayListEvent{
 }
 
 class GetAllMusicInPlaylistEvent extends PlayListEvent{}
+
+class SaveSongIDEvent extends PlayListEvent{
+  final int songID;
+
+  SaveSongIDEvent({
+    required this.songID});
+
+  @override
+  List<Object> get props => [songID];
+}
+
+class RemoveSongIDEvent extends PlayListEvent{
+  final int songID;
+
+  RemoveSongIDEvent({
+    required this.songID});
+
+  @override
+  List<Object> get props => [songID];
+}
+
+class SearchSongIDEvent extends PlayListEvent{
+  final int songID;
+
+  SearchSongIDEvent({
+    required this.songID});
+
+  @override
+  List<Object> get props => [songID];
+}

@@ -17,13 +17,14 @@ class PlaylistPage extends StatelessWidget {
 
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Playlist"),
+        centerTitle: true,
+      ),
         body: BlocBuilder<PlaylistBloc, PlaylistState>(builder: (context, state) {
-          print("************             "+state.playlistSongs.length.toString());
 
           return ListView.builder(
               scrollDirection: Axis.vertical,
-              shrinkWrap: true,
               cacheExtent: 1000,
               itemCount: state.playlistSongs.length,
               itemBuilder: (BuildContext context, int index) {
@@ -35,32 +36,53 @@ class PlaylistPage extends StatelessWidget {
                     top: 15,
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        margin: const EdgeInsets.only(right: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            image: DecorationImage(
-                                image: NetworkImage(state
-                                    .playlistSongs[index].imageSource
-                                    .toString()),
-                                fit: BoxFit.cover)),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Text(
-                            state.playlistSongs[index].name!,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          Container(
+                            height: 60,
+                            width: 60,
+                            margin: const EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: NetworkImage(state
+                                        .playlistSongs[index].imageSource
+                                        .toString()),
+                                    fit: BoxFit.cover)),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                state.playlistSongs[index].name!,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                state.playlistSongs[index].singerName!,
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white54
+                                  )
+                              )
+                            ],
                           ),
                         ],
                       ),
+                      IconButton(
+                          onPressed: (){
+                            BlocProvider.of<PlaylistBloc>(context).add(
+                                RemoveMusicFromPlaylistEvent(musicID: state.playlistSongs[index].id!));
+                            BlocProvider.of<PlaylistBloc>(context).add(RemoveSongIDEvent(songID: state.playlistSongs[index].id!));
+                          },
+                          icon: Icon(Icons.close,
+                          size: 15,))
                     ],
                   ),
                 );

@@ -32,12 +32,13 @@ class PlayMusicPage extends StatefulWidget {
 
   final String songName;
   final String songFile;
+  final int songID;
   List<SongDataModel>? songList;
   List<NewSongDataModel>? newSongList;
   List<AlbumDataMusicModel>? albumSongList;
 
   PlayMusicPage({super.key, required this.songName,
-    required this.songFile, this.songList,
+    required this.songFile, required this.songID, this.songList,
     this.newSongList, this.albumSongList});
 
 
@@ -48,21 +49,22 @@ class PlayMusicPage extends StatefulWidget {
 class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
 
   bool loop = false;
-  bool _isFavorite = false;
+  List playlistIDs = [];
   late final AnimationController _controller = AnimationController(
       duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
-
 
   @override
   void initState() {
     super.initState();
-
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
-
+    BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: widget.songID));
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
         body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
             listener: (context, state) {
@@ -71,6 +73,8 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                   .add(PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
             },
             builder: (context, state) {
+
+
               if (state is LoadingNewSong) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is SelectedSongFetched) {
@@ -95,7 +99,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                       end: Alignment.bottomCenter,
                     ),
                     image: DecorationImage(
-                      image: NetworkImage(state.songModel.imageSource!),
+                      image: NetworkImage(state.songModel.imageSource!,),
                       fit: BoxFit.fitHeight,
                       colorFilter: ColorFilter.mode(
                           Colors.black.withOpacity(0.2), BlendMode.dstATop),
@@ -135,40 +139,49 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         fontSize: 15, color: Colors.white60),
                                   ),
                                 ),
-                            Expanded(
+                                BlocBuilder<PlaylistBloc, PlaylistState>(
+                                builder: (context, state) {
+                                  bool isFavorite = state.isFavorite;
+                                return Expanded(
                                 flex: 1,
                                 child: GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      _isFavorite = !_isFavorite;
+                                      isFavorite = !isFavorite;
                                     });
                                     _controller
                                         .reverse()
                                         .then((value) => _controller.forward());
 
-                                    if(_isFavorite){
-                                      BlocProvider.of<PlaylistBloc>(context).add(AddMusicToPlaylistEvent(musicID: songID!));
+                                    if(isFavorite){
+                                      BlocProvider.of<PlaylistBloc>(context).add(AddMusicToPlaylistEvent(songID: songID!));
+                                      BlocProvider.of<PlaylistBloc>(context).add(SaveSongIDEvent(songID: songID));
+                                      print("true");
                                     }else{
                                       BlocProvider.of<PlaylistBloc>(context).add(RemoveMusicFromPlaylistEvent(musicID: songID!));
-
+                                      BlocProvider.of<PlaylistBloc>(context).add(RemoveSongIDEvent(songID: songID));
+                                      print("false");
                                     }
                                   },
                                   child: ScaleTransition(
                                     scale: Tween(begin: 0.7, end: 1.0).animate(
                                         CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
-                                    child: _isFavorite
-                                        ? const Icon(
-                                      Icons.favorite,
-                                      size: 30,
-                                      color: Colors.red,
-                                    )
-                                        : const Icon(
-                                      Icons.favorite_border,
-                                      size: 30,
-                                    ),
+                                    child: isFavorite
+                                            ? const Icon(
+                                          Icons.favorite,
+                                          size: 30,
+                                          color: Colors.red,
+                                        )
+                                            : const Icon(
+                                          Icons.favorite_border,
+                                          size: 30,
+                                        )
+
+
                                   ),
                                 )
-                            )
+                            );
+    })
                               ],
                             ),
                           ),
@@ -372,4 +385,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
         )
     );
   }
+
+
 }

@@ -88,6 +88,7 @@ class NewMusicContainerState extends State<NewMusicContainer> {
                                       child: PlayMusicPage(
                                         songName: state.newSong[index].name,
                                         songFile: state.newSong[index].fileSource,
+                                        songID: state.newSong[index].id,
                                         newSongList: newSong,
                                       ),
 

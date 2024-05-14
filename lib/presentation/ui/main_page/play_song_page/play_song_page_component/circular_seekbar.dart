@@ -1,5 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_seek_bar/circular_seek_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../../../../generated/assets.dart';
 
 class CustomCircularSeekBar extends StatelessWidget {
 
@@ -27,16 +31,40 @@ class CustomCircularSeekBar extends StatelessWidget {
       animDurationMillis: 10000,
 
       child: Container(
-        margin: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-            color: Colors.amber,
-            shape: BoxShape.circle,
-            image: DecorationImage(
-                image: NetworkImage(songImage),
-                fit: BoxFit.fitHeight)),
+      margin: EdgeInsets.all(20),
+        child: CachedNetworkImage(
+          fit: BoxFit.cover,
+          imageUrl: songImage,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: imageProvider, fit: BoxFit.cover),
+            ),
+          ),
+          placeholder: (context, url) => Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.grey[400]!,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.black12,
+                    shape: BoxShape.circle),
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.width * 0.2
+            ),
+          ),
+          errorWidget: (context, url, error) => Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Assets.imagesNoImage)
+                ),
+                  color: Colors.black12,
+                  shape: BoxShape.circle),
+              width: MediaQuery.of(context).size.width * 0.2,
+              height: MediaQuery.of(context).size.width * 0.2
+          ),
+        ),
       ),
-      // maxProgress: 120,
-      // minProgress: 0,
     );
   }
 }
