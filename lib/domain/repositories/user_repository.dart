@@ -9,9 +9,13 @@ import '../../data/network/api_base_helper.dart';
 
 class SignUserRepository {
 
-  final String? apiKey = dotenv.env['map.apikey'];
+
 
   FutureOr<String?> requestPublic(String email) async {
+
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
+
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       'email': email,
@@ -38,6 +42,9 @@ class SignUserRepository {
 
 
   firstLogin(String email) async {
+
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
 
     ApiBaseHelper api = ApiBaseHelper();
 
@@ -67,6 +74,10 @@ class SignUserRepository {
   }
 
   Future<bool> secondLogin(String email, String verificationToken) async {
+
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
+
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       'email': email,

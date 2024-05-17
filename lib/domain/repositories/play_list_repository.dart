@@ -7,11 +7,13 @@ import '../../data/network/api_base_helper.dart';
 
 class PlayListRepository {
 
-  final String? apiKey = dotenv.env['map.apikey'];
   List playlistIDs = [];
 
   @override
   addToPlayList(int musicID) async {
+
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
 
     ApiBaseHelper api = ApiBaseHelper();
 
@@ -41,6 +43,9 @@ class PlayListRepository {
 
   @override
   removeFromPlayList(int musicID) async{
+
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
 
     ApiBaseHelper api = ApiBaseHelper();
 

@@ -33,11 +33,16 @@ class CustomPageWithCards extends StatelessWidget {
               customIcon: customIcon[index],
             ),
             onTap: (){
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PlaylistPage())
-              );
+              if(title[index] == "Playlist"){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PlaylistPage())
+                );
+              }else if(title[index] == "Downloads"){
+
+              }
+
             },
           );
         },

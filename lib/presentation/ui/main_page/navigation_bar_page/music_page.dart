@@ -10,19 +10,11 @@ class MusicPage extends StatelessWidget {
 
   List customIcon = [
     Icons.playlist_play_outlined,
-    Icons.mic_none_rounded,
-    Icons.album,
-    Icons.favorite,
     Icons.download,
-    Icons.podcasts
   ];
   List title = [
-    "Playlists",
-    "Artists",
-    "Albums",
-    "Favorites",
+    "Playlist",
     "Downloads",
-    "Podcasts"
   ];
 
   @override
@@ -38,11 +30,11 @@ class MusicPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 9,
+                  flex: 3,
                   child: CustomPageWithCards(
                     title: title,
                     customIcon: customIcon,
-                    rowNumber: 6,
+                    rowNumber: title.length,
                     customColor: Colors.white,)
                 ),
                 const Expanded(

@@ -1,17 +1,20 @@
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'http_exception.dart';
 
 class ApiBaseHelper {
 
   final String baseUrl = 'api.turkishmusicapi.ir';
-  final String apiKey = 'YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst';
 
 
 
   Future<dynamic> get(String url,
       {String accessToken = "", String query = "", String page = "", String count = ""}) async {
     try {
+
+      await dotenv.load();
+      final String? apiKey = dotenv.get("apiKey");
 
       final queryParameters = {
         'apiKey': apiKey,
@@ -39,12 +42,12 @@ class ApiBaseHelper {
 
     try {
 
-      final queryParameters = {
-        'apiKey': apiKey
-      };
+      // final queryParameters = {
+      //   'apiKey': apiKey
+      // };
 
       final Uri address =
-      Uri(host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
+      Uri(host: baseUrl, scheme: "https", query: query, path: url);
 
       Map<String, String> headers;
 
@@ -53,7 +56,11 @@ class ApiBaseHelper {
         'Authorization': 'bearer $accessToken'
       };
 
+      print(address);
+      print(body);
+
       final response = await http.post(address, body: body, headers: headers);
+      print(response.statusCode.toString());
       var responseJson = _returnResponse(response);
       return responseJson;
     } on SocketException {

@@ -67,6 +67,10 @@ dependencies:
   audioplayers: ^4.1.0
   flutter_dotenv: ^5.1.0
   cached_network_image: ^3.3.1
+  flutter_downloader: ^1.11.7
+  flowder_ex: ^0.2.2
+  open_file: ^3.3.2
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

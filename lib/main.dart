@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
@@ -35,27 +36,15 @@ Future<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
 
+  await FlutterDownloader.initialize(
+      debug: true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl: true // option: set to false to disable working with http links (default: false)
+  );
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = (prefs.getString('accessToken') == null)
       ? false
       : true;
-
-  // await SimpleAudio.init(
-  //   useMediaController: true,
-  //   shouldNormalizeVolume: false,
-  //   dbusName: "com.erikas.SimpleAudio",
-  //   actions: [
-  //     MediaControlAction.rewind,
-  //     MediaControlAction.skipPrev,
-  //     MediaControlAction.playPause,
-  //     MediaControlAction.skipNext,
-  //     MediaControlAction.fastForward,
-  //   ],
-  //   androidNotificationIconPath: "mipmap/ic_launcher",
-  //   androidCompactActions: [1, 2, 3],
-  //   applePreferSkipButtons: true,
-  //
-  // );
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }

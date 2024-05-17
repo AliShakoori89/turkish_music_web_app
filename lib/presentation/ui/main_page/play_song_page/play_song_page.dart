@@ -190,7 +190,10 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    DownloadButton(),
+                                    DownloadButton(
+                                        songFilePath: state.songModel.fileSource!,
+                                        songName: state.songModel.name!
+                                    ),
                                     NormalizeButton()
                                   ],
                                 ),
