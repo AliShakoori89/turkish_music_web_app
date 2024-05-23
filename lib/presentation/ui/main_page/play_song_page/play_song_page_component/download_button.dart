@@ -11,6 +11,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../data/model/file_model.dart';
+import '../../../../../permision_type.dart';
+import '../../../../../request_permission_manager.dart';
 
 class DownloadButton extends StatefulWidget {
 
@@ -26,127 +28,103 @@ class DownloadButton extends StatefulWidget {
 
 class _DownloadButtonState extends State<DownloadButton> {
 
-  late final String path;
-  late DownloaderUtils options;
-  late DownloaderCore core;
-
-  List<FileModel> fileList = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    initPlatformState();
-    generateFileList();
+  Future<String> getFilePath(String filename) async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+    return join(appDocPath, filename);
   }
 
-  Future<void> initPlatformState() async {
-    _setPath();
-    if (!mounted) return;
+  Future<void> saveFileLocally(String filename, List<int> bytes) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = join(directory.path, filename);
+    File file = File(path);
+    await file.writeAsBytes(bytes);
+    print("File saved at $path");
   }
 
-  generateFileList() {
-    fileList
-      ..add(FileModel(
-        fileName: widget.songName,
-        url: widget.songFilePath,
-        progress: 0.0,
-      ));
+  Future<String> getApplicationDocumentsPath() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
   }
 
-  void _setPath() async {
-    Directory _path = await getApplicationDocumentsDirectory();
-
-    String _localPath = _path.path + Platform.pathSeparator + 'Download';
-
-    final savedDir = Directory(_localPath);
-    bool hasExisted = await savedDir.exists();
-    if (!hasExisted) {
-      savedDir.create();
-    }
-
-    print("%%%%%%%%%%%%%%%%%                              "+_localPath);
-
-    path = _localPath;
+  Future<File> createAndWriteFile(String fileName, String content) async {
+    final path = await getApplicationDocumentsPath();
+    final file = File('$path/$fileName');
+    return file.writeAsString(content);
   }
 
-  generateWidgetList() {
-    List<Widget> widgetList = [];
+  Future<File> writeTextFile(String fileName, String content) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/$fileName';
+    final file = File(filePath);
 
-    fileList.asMap().forEach((index, element) {
-      widgetList.add(Row(
-        children: [
-          Container(
-            width: 200,
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Text(fileList[index].fileName!),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-            ),
-            onPressed: () async {
-              options = DownloaderUtils(
-                progressCallback: (current, total) {
-                  final progress = (current / total) * 100;
-                  print('Downloading: $progress');
-
-                  setState(() {
-                    fileList[index].progress = (current / total);
-                  });
-                },
-                file: File('$path/${fileList[index].fileName}'),
-                progress: ProgressImplementation(),
-                onDone: () {
-                  setState(() {
-                    fileList[index].progress = 0.0;
-                  });
-                  OpenFile.open('$path/${fileList[index].fileName}')
-                      .then((value) {
-                    // delete the file.
-                    File f = File('$path/${fileList[index].fileName}');
-                    f.delete();
-                  });
-                },
-                deleteOnCancel: true,
-                accessToken: '',
-              );
-              core = await Flowder.download(
-                fileList[index].url!,
-                options,
-              );
-            },
-            child: Column(
-              children: [
-                if (fileList[index].progress == 0.0)
-                  Icon(
-                    Icons.download,
-                  ),
-                if (fileList[index].progress != 0.0)
-                  LinearPercentIndicator(
-                    width: 100.0,
-                    lineHeight: 14.0,
-                    percent: fileList[index].progress!,
-                    backgroundColor: Colors.blue,
-                    progressColor: Colors.white,
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ));
-    });
-
-    return widgetList;
+    // Write the file
+    return file.writeAsString(content);
   }
+
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-          children: [
-            ...generateWidgetList(),
-          ],
-        ));
+    return IconButton(
+        onPressed: () async{
+
+          // RequestPermissionManager(PermissionType.storage)
+          //     .onPermissionDenied(() {
+          //   // Handle permission denied for location
+          //   print('storage permission denied');
+          // }).onPermissionGranted(() {
+          //   // Handle permission granted for location
+          //   print('storage permission granted');
+          // }).onPermissionPermanentlyDenied(() {
+          //   // Handle permission permanently denied for location
+          //   print('storage permission permanently denied');
+          // }).execute();
+
+          // var name = await getFilePath(widget.songName);
+          // String url = widget.songFilePath; // The download link
+          // String filename = widget.songName; // Creates a string filename
+          //
+          // Directory directory = await getApplicationDocumentsDirectory();
+          // String path = join(directory.path, filename);
+          // File file = File("https://api.turkishmusicapi.ir/TurkishMusicFiles/NewMusicFiles/2024-05-01-22-05-47-kelepce.mp3");
+          // List<int> fileBytes = await file.readAsBytes();
+          // _download(url);
+
+          // print("url             "+url);
+          // print("filename               "+filename);
+          // print("name                        "+name);
+          // print("file                  "+file.toString());
+
+          // print("fileBytes                    "+fileBytes.toString());
+
+          await FlutterDownloader.enqueue(
+            url: widget.songFilePath,
+            savedDir: "/storage/emulated/0/Download",
+            fileName: widget.songName, // Optional: define a filename
+            showNotification: true, // Optional: show a notification with progress
+            openFileFromNotification: true, // Optional: open the file when tapped
+          );
+          // saveFileLocally(filename, fileBytes);
+          //
+          // saveFileLocally(filename, );
+        },
+        icon: Icon(Icons.download));
+  }
+
+  void _download(String url) async {
+    final status = await Permission.storage.request();
+
+    if(status.isGranted) {
+      final externalDir = await getExternalStorageDirectory();
+
+      final id = await FlutterDownloader.enqueue(
+        url: url,
+        savedDir: externalDir!.path,
+        showNotification: true,
+        openFileFromNotification: true,
+      );
+    } else {
+      print('Permission Denied');
+    }
   }
 }

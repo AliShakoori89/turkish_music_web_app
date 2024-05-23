@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/main.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
@@ -38,7 +41,6 @@ Future<void> main() async{
 
   await FlutterDownloader.initialize(
       debug: true, // optional: set to false to disable printing logs to console (default: true)
-      ignoreSsl: true // option: set to false to disable working with http links (default: false)
   );
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,12 +51,12 @@ Future<void> main() async{
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
+
 class MyApp extends StatelessWidget {
 
   final bool isLoggedIn;
-  // final List result;
 
-  const MyApp({super.key, required this.isLoggedIn});
+  MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -102,15 +104,12 @@ class MyApp extends StatelessWidget {
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
         isLoggedIn
-            ? MainPage(
-        )
-            :
-        // const MainPage()
-        AuthenticatePage()
+            ? MainPage()
+            : AuthenticatePage()
             // : const ErrorInternetConnectionPage()
       ),
     );
   }
+
+
 }
-
-

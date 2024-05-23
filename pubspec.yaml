@@ -71,6 +71,7 @@ dependencies:
   flowder_ex: ^0.2.2
   open_file: ^3.3.2
   percent_indicator: ^4.2.3
+  logger: ^2.3.0
 
 dev_dependencies:
   flutter_test:
