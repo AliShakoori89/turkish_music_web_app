@@ -32,7 +32,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              const TitleText(title: "Category", haveSeeAll: false),
+              TitleText(title: "Category", haveSeeAll: false),
               Container(
                 padding: EdgeInsets.symmetric(
                     horizontal: MediaQuery.of(context).size.width * 0.0052,

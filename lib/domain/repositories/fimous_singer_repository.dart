@@ -31,9 +31,15 @@ class SingerRepository {
   @override
   Future<dynamic> getSinger() async {
     ApiBaseHelper api = ApiBaseHelper();
-    final response = await api.get('/api/Album/GetNewAlbums');
+    List<SingerDataModel> allSinger = [];
+
+    final response = await api.get('/api/Singer/GetAll');
     final productJson = json.decode(response.body);
-    var newDongData = NewAlbumModel.fromJson(productJson);
-    return newDongData.data;
+    var singer = SingerModel.fromJson(productJson);
+
+    for(int i = 0 ; i < singer.data.length ; i++){
+      allSinger.add(singer.data[i]);
+    }
+    return allSinger;
   }
 }

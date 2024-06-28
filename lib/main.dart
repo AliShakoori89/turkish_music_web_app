@@ -16,7 +16,7 @@ import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_box_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_song_repository.dart';
-import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
+import 'package:turkish_music_app/domain/repositories/fimous_singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';

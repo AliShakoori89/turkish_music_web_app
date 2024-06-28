@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
-import 'package:turkish_music_app/data/model/new_album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
@@ -30,7 +28,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleText(title: "New Album", haveSeeAll: false),
+        TitleText(title: "New Album", haveSeeAll: false),
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.02,

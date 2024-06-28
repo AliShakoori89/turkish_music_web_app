@@ -15,26 +15,31 @@ class SingerState extends Equatable{
   const SingerState({
     required this.status,
     required this.famousSinger,
+    required this.allSinger
   });
 
   static SingerState initial() => const SingerState(
       status: SingerStatus.initial,
+      allSinger: <SingerDataModel>[],
       famousSinger: <SingerDataModel>[]
   );
 
   final SingerStatus status;
   final List<SingerDataModel> famousSinger;
+  final List<SingerDataModel> allSinger;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, famousSinger];
+  List<Object?> get props => [status, famousSinger, allSinger];
 
   SingerState copyWith({
     SingerStatus? status,
+    List<SingerDataModel>? allSinger,
     List<SingerDataModel>? famousSinger,
   }) {
     return SingerState(
         status: status ?? this.status,
+        allSinger: allSinger ?? this.allSinger,
         famousSinger: famousSinger ?? this.famousSinger
     );
   }

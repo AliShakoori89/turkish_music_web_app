@@ -10,15 +10,15 @@ import '../../../bloc/singer_bloc/state.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../const/title.dart';
 
-class FamousArtistContainer extends StatefulWidget {
+class SingerContainer extends StatefulWidget {
 
-  const FamousArtistContainer({super.key});
+  const SingerContainer({super.key});
 
   @override
-  State<FamousArtistContainer> createState() => _FamousArtistContainerState();
+  State<SingerContainer> createState() => _SingerContainerState();
 }
 
-class _FamousArtistContainerState extends State<FamousArtistContainer> {
+class _SingerContainerState extends State<SingerContainer> {
 
   @override
   void initState() {
@@ -29,22 +29,26 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
   @override
   Widget build(BuildContext context) {
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        const TitleText(title: "Singer", haveSeeAll: true),
-        BlocBuilder<SingerBloc, SingerState>(builder: (context, state) {
+    return BlocBuilder<SingerBloc, SingerState>(builder: (context, state) {
 
-          List<SingerDataModel> artistList = state.famousSinger;
+      List<SingerDataModel> artistList = state.famousSinger;
+      List<SingerDataModel> allSinger = state.allSinger;
 
-          if(state.status.isLoading){
-            return ArtistShimmerContainer(shimmerLength: artistList.length);
-          }
-          if(state.status.isSuccess){
-            return Container(
+      if(state.status.isLoading){
+        return ArtistShimmerContainer(shimmerLength: artistList.length);
+      }
+      else if(state.status.isSuccess){
+        return Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            TitleText(
+              title: "Singer",
+              haveSeeAll: true,
+              allSinger: allSinger,
+            ),
+            Container(
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.0052,
                   vertical: MediaQuery.of(context).size.width * 0.0055),
@@ -61,15 +65,19 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                     ),
                     onTap: () {
                       Navigator.push(
-                        context,
+                          context,
                           MaterialPageRoute(
-                              builder: (context) => SingerPage(
-                                artistDetail: artistList[index],
-                              ))
+                              builder: (context) =>
+                                  SingerPage(
+                                    artistDetail: artistList[index],
+                                  ))
                       );
                     },
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.22,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * 0.22,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -105,14 +113,14 @@ class _FamousArtistContainerState extends State<FamousArtistContainer> {
                   );
                 }),
               ),
-            );
-          }
-          if(state.status.isError){
-            return ArtistShimmerContainer(shimmerLength: artistList.length);
-          }
-          return ArtistShimmerContainer(shimmerLength: artistList.length);
-        }),
-      ],
-    );
+            )
+          ],
+        );
+      }
+      else if(state.status.isError){
+        return ArtistShimmerContainer(shimmerLength: artistList.length);
+      }
+      return ArtistShimmerContainer(shimmerLength: artistList.length);
+    });
   }
 }
