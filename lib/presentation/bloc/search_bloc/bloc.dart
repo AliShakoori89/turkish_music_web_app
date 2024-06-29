@@ -20,7 +20,7 @@ class SearchWordBloc extends Bloc<SearchWordEvent, SearchWordState> {
     try {
       emit(state.copyWith(status: SearchWordStatus.loading));
 
-      List<String> especialWord = await searchRepository.getFamousSinger();
+      List<String> especialWord = await searchRepository.getSearchSong(event.especialWord);
 
       emit(
         state.copyWith(

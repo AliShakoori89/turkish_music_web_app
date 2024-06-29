@@ -22,10 +22,7 @@ class SongRepository {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
     final productJson = json.decode(response.body);
-    print("##################################################productJson:                   "+ productJson.toString());
     var AllSongData = GetAllMusicDataModel.fromJson(productJson);
-    print("response.data:                   ");
-    print("response.data:                   "+AllSongData.toString());
     return response;
   }
 
@@ -35,21 +32,15 @@ class SongRepository {
     try {
       final response = await api.get(
           '/api/NewMusic/GetAll');
-      print("response.statusCode                    "+response.statusCode.toString());
       if (response.statusCode == 200) {
         List<SongDataModel> songs = [];
-        print("response.data                    "+response.body.toString());
         final data = jsonDecode(response.body);
-        print("data                              "+data.toString());
         final List<dynamic> songList = data['data'];
-        print("songList                            "+songList.toString());
-        print(songList[0]['fileSource']);
         for(int i = 0 ; i < songList.length ; i++){
           songList[i]['fileSource'] = songList[i]['fileSource'].substring(0, 4) + "s" +songList[i]['fileSource'].substring(4, songList[i]['fileSource'].length);
         }
 
         songs = songList.map((e) => SongDataModel.fromJson(e)).toList();
-        print("songs          *****************                 "+songs[0].fileSource.toString());
         return songs;
       }
     } catch (e) {
