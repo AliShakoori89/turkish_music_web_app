@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
+import 'package:turkish_music_app/presentation/bloc/search_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/search_bloc/state.dart';
 
+import '../../../bloc/search_bloc/event.dart';
 import '../../../helpers/widgets/custom_app_bar.dart';
 
 class MusicItem implements Comparable<MusicItem> {
@@ -28,64 +32,66 @@ class ItemSearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const Expanded(
-              flex: 1,
-              child: Text('Search Page',
-                style: TextStyle(
-                  fontSize: 14,
-                ),),
-            ),
-            Expanded(
-              flex: 10,
-              child: ListView.builder(
-                itemCount: music.length,
-                itemBuilder: (context, index) {
-                  final musicItem = music[index];
-        
-                  return ListTile(
-                    title: Text(musicItem.trackName),
-                    subtitle: Text(musicItem.singerName),
-                  );
-                },
+    return BlocBuilder<SearchWordBloc, SearchWordState>(builder: (context, state) {
+      return Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const Expanded(
+                flex: 1,
+                child: Text('Search Page',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),),
               ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Search Singer or Track name',
-        backgroundColor: Colors.grey.withOpacity(0.2),
-        onPressed: () => showSearch(
-          context: context,
-          delegate: SearchPage(
-            onQueryUpdate: print1,
-            items: music,
-            searchLabel: 'Search Singer or Track name ',
-            suggestion: const Center(
-              child: Text('Filter track by track name or singer'),
-            ),
-            failure: const Center(
-              child: Text('Not found :('),
-            ),
-            filter: (musicItem) => [
-              musicItem.trackName,
-              musicItem.singerName,
+              Expanded(
+                flex: 10,
+                child: ListView.builder(
+                  itemCount: music.length,
+                  itemBuilder: (context, index) {
+                    final musicItem = music[index];
+
+                    return ListTile(
+                      title: Text(musicItem.trackName),
+                      subtitle: Text(musicItem.singerName),
+                    );
+                  },
+                ),
+              ),
             ],
-            sort: (a, b) => a.compareTo(b),
-            builder: (musicItem) => ListTile(
-              title: Text(musicItem.trackName),
-              subtitle: Text(musicItem.singerName),
-            ),
           ),
         ),
-        child: const Icon(Icons.search),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Search Singer or Track name',
+          backgroundColor: Colors.grey.withOpacity(0.2),
+          onPressed: () => showSearch(
+            context: context,
+            delegate: SearchPage(
+              onQueryUpdate: print1,
+              items: music,
+              searchLabel: 'Search Singer or Track name ',
+              suggestion: const Center(
+                child: Text('Filter track by track name or singer'),
+              ),
+              failure: const Center(
+                child: Text('Not found :('),
+              ),
+              filter: (musicItem) => [
+                musicItem.trackName,
+                musicItem.singerName,
+              ],
+              sort: (a, b) => a.compareTo(b),
+              builder: (musicItem) => ListTile(
+                title: Text(musicItem.trackName),
+                subtitle: Text(musicItem.singerName),
+              ),
+            ),
+          ),
+          child: const Icon(Icons.search),
+        ),
+      );
+    });
   }
 
   void print1(Object? object) {
@@ -94,6 +100,8 @@ class ItemSearchPage extends StatelessWidget {
       print("please type ...");
     } else {
       print(line);
+      BlocProvider.of<SearchWordBloc>(context).add(
+          SearchEspecialWordEvent(especialWord: line));
     }
   }
 }

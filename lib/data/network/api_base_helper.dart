@@ -10,7 +10,7 @@ class ApiBaseHelper {
 
 
   Future<dynamic> get(String url,
-      {String accessToken = "", String query = "", String page = "", String count = ""}) async {
+      {String accessToken = "", String query = "", String page = "", String count = "", String searchChar = ""}) async {
     try {
 
       await dotenv.load();
@@ -19,7 +19,8 @@ class ApiBaseHelper {
       final queryParameters = {
         'apiKey': apiKey,
         "page": page,
-        "count": count
+        "count": count,
+        "searchChar": searchChar
       };
 
       Map<String, String> headers;
