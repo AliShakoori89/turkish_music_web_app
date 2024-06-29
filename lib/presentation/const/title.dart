@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/ui/music_page/detail_page.dart';
-import 'package:turkish_music_app/presentation/ui/singer_page.dart';
+import 'package:turkish_music_app/presentation/ui/all_singer_page.dart';
 
 import '../../data/model/singer_model.dart';
 
@@ -9,7 +9,9 @@ class TitleText extends StatelessWidget {
   final String title;
   final bool haveSeeAll;
   List<SingerDataModel>? allSinger;
-  TitleText({super.key, required this.title, required this.haveSeeAll, this.allSinger});
+  List<String>? allSingerName;
+
+  TitleText({super.key, required this.title, required this.haveSeeAll, this.allSinger, this.allSingerName});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class TitleText extends StatelessWidget {
 
             if(title == "Singer"){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                  AllSingerPage(allSinger: allSinger!,)));
+                  AllSingerPage(allSinger: allSinger!, allSingerName: allSingerName!,)));
             }else{
               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
               const DetailPage(

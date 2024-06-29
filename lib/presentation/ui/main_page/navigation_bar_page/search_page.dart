@@ -58,19 +58,19 @@ class ItemSearchPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Search people',
+        tooltip: 'Search Singer or Track name',
         backgroundColor: Colors.grey.withOpacity(0.2),
         onPressed: () => showSearch(
           context: context,
           delegate: SearchPage(
-            onQueryUpdate: print,
+            onQueryUpdate: print1,
             items: music,
-            searchLabel: 'Search people',
+            searchLabel: 'Search Singer or Track name ',
             suggestion: const Center(
               child: Text('Filter track by track name or singer'),
             ),
             failure: const Center(
-              child: Text('No person found :('),
+              child: Text('Not found :('),
             ),
             filter: (musicItem) => [
               musicItem.trackName,
@@ -86,6 +86,15 @@ class ItemSearchPage extends StatelessWidget {
         child: const Icon(Icons.search),
       ),
     );
+  }
+
+  void print1(Object? object) {
+    String line = "$object";
+    if (object == null) {
+      print("please type ...");
+    } else {
+      print(line);
+    }
   }
 }
 

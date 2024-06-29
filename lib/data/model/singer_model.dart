@@ -22,7 +22,7 @@ class SingerModel {
   });
 
   factory SingerModel.fromJson(Map<String, dynamic> json) => SingerModel(
-    data: List<SingerDataModel>.from(json["data"].map((x) => SingerDataModel.fromJson(x))),
+    data: List<SingerDataModel>.from(json["data"].map((x) => SingerDataModel.fromJson(x)))..sort((a, b) => a.name.compareTo(b.name)),
     success: json["success"],
     message: json["message"],
     lastPage: json["lastPage"],

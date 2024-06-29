@@ -23,6 +23,8 @@ class _SingerContainerState extends State<SingerContainer> {
   @override
   void initState() {
     BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
+    BlocProvider.of<SingerBloc>(context).add(GetAllSingerNameEvent());
+    BlocProvider.of<SingerBloc>(context).add(GetAllSingerEvent());
     super.initState();
   }
 
@@ -33,11 +35,13 @@ class _SingerContainerState extends State<SingerContainer> {
 
       List<SingerDataModel> artistList = state.famousSinger;
       List<SingerDataModel> allSinger = state.allSinger;
+      List<String> allSingerName = state.allSingerName;
 
       if(state.status.isLoading){
         return ArtistShimmerContainer(shimmerLength: artistList.length);
       }
       else if(state.status.isSuccess){
+
         return Column(
           children: [
             const SizedBox(
@@ -47,6 +51,7 @@ class _SingerContainerState extends State<SingerContainer> {
               title: "Singer",
               haveSeeAll: true,
               allSinger: allSinger,
+              allSingerName: allSingerName,
             ),
             Container(
               padding: EdgeInsets.symmetric(

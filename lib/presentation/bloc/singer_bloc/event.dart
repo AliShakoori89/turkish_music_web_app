@@ -6,4 +6,6 @@ class GetFamousSingerEvent extends SingerEvent{}
 
 class GetAllSingerEvent extends SingerEvent{}
 
+class GetAllSingerNameEvent extends SingerEvent{}
+
 

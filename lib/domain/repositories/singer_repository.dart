@@ -19,8 +19,11 @@ class SingerRepository {
     final productJson = json.decode(response.body);
     var singer = SingerModel.fromJson(productJson);
 
+    print("getFamousSinger              "+singer.data.toString());
+
     for(int i = 0 ; i < singer.data.length ; i++){
       if(singer.data[i].isBest == true){
+        print(singer.data[i].name);
         isBestSinger.add(singer.data[i]);
       }else{
       }
@@ -29,7 +32,7 @@ class SingerRepository {
   }
 
   @override
-  Future<dynamic> getSinger() async {
+  Future<dynamic> getAllSinger() async {
     ApiBaseHelper api = ApiBaseHelper();
     List<SingerDataModel> allSinger = [];
 
@@ -41,5 +44,20 @@ class SingerRepository {
       allSinger.add(singer.data[i]);
     }
     return allSinger;
+  }
+
+  @override
+  Future<dynamic> getAllSingerName() async {
+    ApiBaseHelper api = ApiBaseHelper();
+    List<String> allSingerName = [];
+
+    final response = await api.get('/api/Singer/GetAll');
+    final productJson = json.decode(response.body);
+    var singer = SingerModel.fromJson(productJson);
+
+    for(int i = 0 ; i < singer.data.length ; i++){
+      allSingerName.add(singer.data[i].name);
+    }
+    return allSingerName;
   }
 }
