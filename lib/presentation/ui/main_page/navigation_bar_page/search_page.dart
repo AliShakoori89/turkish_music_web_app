@@ -7,14 +7,14 @@ import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../play_song_page/play_song_page.dart';
 
-class ItemSearchPage extends StatefulWidget {
-  const ItemSearchPage({super.key});
+class searchPage extends StatefulWidget {
+  const searchPage({super.key});
 
   @override
-  State<ItemSearchPage> createState() => _ItemSearchPageState();
+  State<searchPage> createState() => _searchPageState();
 }
 
-class _ItemSearchPageState extends State<ItemSearchPage> {
+class _searchPageState extends State<searchPage> {
 
   @override
   void initState() {

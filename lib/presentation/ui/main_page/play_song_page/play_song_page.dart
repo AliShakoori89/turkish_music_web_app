@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/state.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/all_songs_list.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/container_all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/download_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/normalize_button.dart';
@@ -76,14 +76,8 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                 return Container(
                   height: double.infinity,
                   margin: EdgeInsets.only(
-                      right: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.05,
-                      left: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.05),
+                      right: MediaQuery.of(context).size.width * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.05),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       colors: [Colors.purple, Colors.black],
@@ -244,7 +238,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                               } else {
                                                 BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
                                               }
-                                              print("enddddddddddddddddddddddddddddddddddddddd");
                                             },
                                             icon: Container(
                                                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -361,15 +354,16 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                           SizedBox(height: 15,),
                           const Spacer(),
                         widget.newSongList == null
-                            || widget.songList == null
-                            || widget.albumSongList == null
+                            && widget.songList == null
+                            && widget.albumSongList == null
                             ? Container()
                             : Flexible(
                               flex: 4,
-                              child: AllSongsList(
+                              child: ContainerAllSongsList(
                                 newSongList: widget.newSongList,
                                 songList: widget.songList,
                                 albumSongList: widget.albumSongList,
+                                songName: state.songModel.name!
                               )
                           )
                         ],
