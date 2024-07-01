@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:turkish_music_app/data/model/get_all_musics_model.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
@@ -9,21 +7,17 @@ class SongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  // @override
-  // Future<dynamic> getMusic(int id) async {
-  //   ApiBaseHelper api = ApiBaseHelper();
-  //   final SongModel response = await api.get('/api/Music/GetOneMusic/$id');
-  //   print("response.data:                   "+response.data.toString());
-  //   return response.data;
-  // }
-
   @override
   Future<dynamic> getAllMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
+    List<SongDataModel> allSongs = [];
     final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
-    final productJson = json.decode(response.body);
-    var AllSongData = GetAllMusicDataModel.fromJson(productJson);
-    return response;
+    final data = jsonDecode(response.body);
+    final List<dynamic> allSongList = data['data'];
+
+    allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
+
+    return allSongs;
   }
 
   @override

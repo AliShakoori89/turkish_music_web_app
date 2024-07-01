@@ -14,7 +14,7 @@ class AllSingerPage extends StatefulWidget {
   State<AllSingerPage> createState() => _AllSingerPageState();
 }
 
-class _AllSingerPageState extends State<AllSingerPage> {
+class _AllSingerPageState extends State<AllSingerPage>{
 
   final alphabets = List.generate(26, (index) => String.fromCharCode(index + 65));
   int _searchIndex = 0;

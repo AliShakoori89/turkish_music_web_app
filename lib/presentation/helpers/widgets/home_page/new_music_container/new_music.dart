@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
@@ -18,7 +17,7 @@ class NewMusic extends StatefulWidget {
   State<NewMusic> createState() => _NewMusicState();
 }
 
-class _NewMusicState extends State<NewMusic> with AutomaticKeepAliveClientMixin{
+class _NewMusicState extends State<NewMusic>{
 
   @override
   void initState() {
@@ -28,6 +27,7 @@ class _NewMusicState extends State<NewMusic> with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
+
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
       List<NewSongDataModel> newSong = state.newSong;
@@ -123,8 +123,4 @@ class _NewMusicState extends State<NewMusic> with AutomaticKeepAliveClientMixin{
       return const NewSongShimmerContainer();
     });
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

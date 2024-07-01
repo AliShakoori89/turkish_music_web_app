@@ -64,8 +64,6 @@ class PlaylistBloc extends Bloc<PlayListEvent, PlaylistState> {
 
       List<PlaylistMusicModel> playlistSongs = await playListRepository.getMusicFromPlayList();
 
-      print("playlistSongs           "+playlistSongs.length.toString());
-
       emit(
         state.copyWith(
           status: PlayListStatus.success,

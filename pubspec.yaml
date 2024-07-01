@@ -73,6 +73,7 @@ dependencies:
   percent_indicator: ^4.2.3
   logger: ^2.3.0
   scrollable_positioned_list: ^0.3.8
+  delayed_widget: ^1.1.2
 
 dev_dependencies:
   flutter_test:

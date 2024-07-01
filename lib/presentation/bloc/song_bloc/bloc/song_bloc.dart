@@ -9,28 +9,35 @@ part 'song_state.dart';
 class SongBloc extends Bloc<SongEvent, SongState> {
   final SongRepository songRepo = SongRepository();
   final List<SongDataModel> songs = [];
+  final List<SongDataModel> allSongs = [];
 
   SongBloc() : super(SongInitial()) {
     on<FetchNewSongs>((event, emit) async {
       try {
-        await getAllSongs();
-
-        print("songssssssssssssssssssssssss                  "+songs.toString());
+        await getAllNewSongs();
         emit(SongListLoaded(songList: songs));
       } catch (e) {
         emit(SongListErrorState(e.toString()));
       }
     });
 
-    on<FetchAllSongs>((event, emit) {
-      emit(SongLoading());
-      emit(SongListLoaded(songList: songs));
+    on<FetchAllSongs>((event, emit) async{
+      try {
+        await getAllSongs();
+        emit(SongListLoaded(songList: songs));
+      } catch (e) {
+        emit(SongListErrorState(e.toString()));
+      }
     });
   }
 
-  getAllSongs() async {
+  getAllNewSongs() async {
     final songsList = await songRepo.getAllNewMusic();
-    print("songsList:                "+songsList.toString());
     songs.addAll(songsList);
+  }
+
+  getAllSongs() async {
+    final songsList = await songRepo.getAllMusic();
+    allSongs.addAll(songsList);
   }
 }

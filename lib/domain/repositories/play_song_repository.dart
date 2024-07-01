@@ -6,7 +6,6 @@ class IsPlayingMusicRepository {
   setMusicIsPlaying(String filePath, String singerName, String singerImage, bool isPlaying) async{
 
     final prefs = await SharedPreferences.getInstance();
-    print("setMusicIsPlaying               "+(!isPlaying).toString());
     await prefs.setString('filePath', filePath);
     await prefs.setString('singerName', singerName);
     await prefs.setString('singerImage', singerImage);
@@ -41,14 +40,12 @@ class IsPlayingMusicRepository {
   FutureOr<bool?> getIsPlaying() async{
     final prefs = await SharedPreferences.getInstance();
     final bool? isPlaying = prefs.getBool('isPlaying');
-    print("getIsPlaying                "+isPlaying.toString());
     return isPlaying;
   }
 
   FutureOr<String?> getPreviousSong() async{
     final prefs = await SharedPreferences.getInstance();
     final String? previousSongFile = prefs.getString('previousSongFile');
-    print("getIsPlaying                "+previousSongFile.toString());
     return previousSongFile;
   }
 }

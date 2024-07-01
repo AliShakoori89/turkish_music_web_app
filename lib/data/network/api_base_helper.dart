@@ -61,7 +61,6 @@ class ApiBaseHelper {
       print(body);
 
       final response = await http.post(address, body: body, headers: headers);
-      print(response.statusCode.toString());
       var responseJson = _returnResponse(response);
       return responseJson;
     } on SocketException {

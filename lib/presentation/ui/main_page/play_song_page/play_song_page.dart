@@ -360,7 +360,11 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                           ),
                           SizedBox(height: 15,),
                           const Spacer(),
-                          Flexible(
+                        widget.newSongList == null
+                            || widget.songList == null
+                            || widget.albumSongList == null
+                            ? Container()
+                            : Flexible(
                               flex: 4,
                               child: AllSongsList(
                                 newSongList: widget.newSongList,

@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
 import '../bloc/user_bloc/bloc.dart';
 import '../bloc/user_bloc/event.dart';

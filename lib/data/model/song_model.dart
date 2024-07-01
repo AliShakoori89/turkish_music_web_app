@@ -42,6 +42,7 @@ class SongDataModel {
     this.fileSource,
     this.minute,
     this.second,
+    this.singerName,
     this.categories,
     this.albumId,
     this.album,
@@ -52,6 +53,7 @@ class SongDataModel {
   String? fileSource;
   String? minute;
   String? second;
+  String? singerName;
   List<SongCategoriesModel>? categories;
   int? albumId;
   SongAlbumModel? album;
@@ -63,6 +65,7 @@ class SongDataModel {
     fileSource = json['fileSource'];
     minute = json['minute'];
     second = json['second'];
+    singerName = json['singerName'];
     if (json['categories'] != null) {
       categories = <SongCategoriesModel>[];
       json['categories'].forEach((v) {
@@ -80,6 +83,7 @@ class SongDataModel {
     _data['fileSource'] = fileSource;
     _data['minute'] = minute;
     _data['second'] = second;
+    _data['singerName'] = singerName;
     if (this.categories != null) {
       _data['categories'] = this.categories!.map((v) => v.toJson()).toList();
     }    _data['albumId'] = albumId;

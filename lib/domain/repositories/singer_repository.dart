@@ -19,11 +19,8 @@ class SingerRepository {
     final productJson = json.decode(response.body);
     var singer = SingerModel.fromJson(productJson);
 
-    print("getFamousSinger              "+singer.data.toString());
-
     for(int i = 0 ; i < singer.data.length ; i++){
       if(singer.data[i].isBest == true){
-        print(singer.data[i].name);
         isBestSinger.add(singer.data[i]);
       }else{
       }

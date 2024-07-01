@@ -10,26 +10,17 @@ import '../../../bloc/singer_bloc/state.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../const/title.dart';
 
-class SingerContainer extends StatefulWidget {
+class SingerContainer extends StatelessWidget {
 
   const SingerContainer({super.key});
 
-  @override
-  State<SingerContainer> createState() => _SingerContainerState();
-}
-
-class _SingerContainerState extends State<SingerContainer> {
-
-  @override
-  void initState() {
-    BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
-    BlocProvider.of<SingerBloc>(context).add(GetAllSingerNameEvent());
-    BlocProvider.of<SingerBloc>(context).add(GetAllSingerEvent());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+
+    BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
+    BlocProvider.of<SingerBloc>(context).add(GetAllSingerNameEvent());
+    BlocProvider.of<SingerBloc>(context).add(GetAllSingerEvent());
 
     return BlocBuilder<SingerBloc, SingerState>(builder: (context, state) {
 
@@ -128,4 +119,8 @@ class _SingerContainerState extends State<SingerContainer> {
       return ArtistShimmerContainer(shimmerLength: artistList.length);
     });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
