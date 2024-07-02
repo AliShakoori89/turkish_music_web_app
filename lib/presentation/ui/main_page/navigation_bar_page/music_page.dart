@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/random_play_button.dart';
 import 'package:turkish_music_app/presentation/ui/music_page/detail_page.dart';
 import '../../../helpers/widgets/top_arrow_icon.dart';
 
@@ -105,12 +106,7 @@ class MusicPage extends StatelessWidget {
                                         songName: "MoOooooOoch",
                                         imagePath: "assets/images/tarkan.png",
                                         align: MainAxisAlignment.start),
-                                    // PlayButton(
-                                    //   isPlaying: isPlaying,
-                                    //   player: player,
-                                    //   audioPlayer: audioPlayer,
-                                    //   musicFile: musicFile
-                                    // )
+
                                   ])
                             ],
                           ),

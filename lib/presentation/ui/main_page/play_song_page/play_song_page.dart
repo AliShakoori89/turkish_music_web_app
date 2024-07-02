@@ -50,12 +50,12 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     super.initState();
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
     BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: widget.songID));
+    BlocProvider.of<AudioControlBloc>(context).add(
+        PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
   }
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Scaffold(
         body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
@@ -65,7 +65,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                   .add(PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
             },
             builder: (context, state) {
-
 
               if (state is LoadingNewSong) {
                 return const Center(child: CircularProgressIndicator());
@@ -224,8 +223,10 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                     BlocBuilder<AudioControlBloc, AudioControlState>(
                                       buildWhen: (previous, current) {
                                         if (previous is AudioPlayedState && current is AudioPlayedState) {
+                                          print("false");
                                           return false;
                                         } else {
+                                          print("true");
                                           return true;
                                         }
                                       },
@@ -234,8 +235,10 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                             padding: const EdgeInsets.all(1),
                                             onPressed: () async {
                                               if (state is AudioPausedState) {
+                                                print(state);
                                                 BlocProvider.of<AudioControlBloc>(context).add(ResumeSong());
                                               } else {
+                                                print(state);
                                                 BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
                                               }
                                             },
