@@ -107,7 +107,8 @@ class MusicPage extends StatelessWidget {
                                         imagePath: "assets/images/tarkan.png",
                                         align: MainAxisAlignment.start),
 
-                                  ])
+                                  ]),
+
                             ],
                           ),
                         ),

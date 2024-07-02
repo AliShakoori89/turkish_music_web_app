@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/play_list_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/container_all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/circular_seekbar.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/download_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/favorite.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/next_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/normalize_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/play_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/play_list_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/previous_button.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/progressbar.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/repeat_button.dart';
 import '../../../../data/model/album_model.dart';
 import '../../../../data/model/new-song_model.dart';
@@ -16,9 +20,7 @@ import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/play_box_bloc/bloc.dart';
 import '../../../bloc/play_box_bloc/event.dart';
-import '../../../bloc/song_bloc/bloc/song_bloc.dart';
 import '../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
-import '../../../helpers/widgets/custom_app_bar.dart';
 
 class PlayMusicPage extends StatefulWidget {
 
@@ -99,16 +101,14 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                         children: [
                           Flexible(
                             flex: 1,
-                            child: CustomAppBar(
-                              title: "Now Playing",
-                              singerName: state.songModel.album == null
-                                  ? ""
-                                  : state.songModel.album!.singer == null
-                                  ? ""
-                                  :  state.songModel.album!.singer!.name == null
-                                  ? ""
-                                  : state.songModel.album!.singer!.name!,
-                              haveMenuButton: false,
+                            child: Center(
+                              child: Text(
+                                "Now Playing",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
                             ),
                           ),
                           Flexible(
@@ -124,49 +124,10 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                         fontSize: 15, color: Colors.white60),
                                   ),
                                 ),
-                                BlocBuilder<PlaylistBloc, PlaylistState>(
-                                builder: (context, state) {
-                                  bool isFavorite = state.isFavorite;
-                                return Expanded(
-                                flex: 1,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isFavorite = !isFavorite;
-                                    });
-                                    _controller
-                                        .reverse()
-                                        .then((value) => _controller.forward());
-
-                                    if(isFavorite){
-                                      BlocProvider.of<PlaylistBloc>(context).add(AddMusicToPlaylistEvent(songID: songID!));
-                                      BlocProvider.of<PlaylistBloc>(context).add(SaveSongIDEvent(songID: songID));
-                                      print("true");
-                                    }else{
-                                      BlocProvider.of<PlaylistBloc>(context).add(RemoveMusicFromPlaylistEvent(musicID: songID!));
-                                      BlocProvider.of<PlaylistBloc>(context).add(RemoveSongIDEvent(songID: songID));
-                                      print("false");
-                                    }
-                                  },
-                                  child: ScaleTransition(
-                                    scale: Tween(begin: 0.7, end: 1.0).animate(
-                                        CurvedAnimation(parent: _controller, curve: Curves.easeOut)),
-                                    child: isFavorite
-                                            ? const Icon(
-                                          Icons.favorite,
-                                          size: 30,
-                                          color: Colors.red,
-                                        )
-                                            : const Icon(
-                                          Icons.favorite_border,
-                                          size: 30,
-                                        )
-
-
-                                  ),
-                                )
-                            );
-    })
+                                FavoriteButton(
+                                  controller: _controller,
+                                  songID: songID!,
+                                ),
                               ],
                             ),
                           ),
@@ -193,157 +154,14 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    BlocBuilder<SongBloc, SongState>(
-                                        builder: (context, state) {
-                                          return IconButton(
-                                              padding: const EdgeInsets.all(1),
-                                              // style: AppTheme.lightTheme.iconButtonTheme.style,
-                                              onPressed: () {
-                                                context
-                                                    .read<CurrentSelectedSongBloc>()
-                                                    .add(PlayPreviousSong(songs: BlocProvider.of<SongBloc>(context).songs));
-                                              },
-                                              icon: Container(
-                                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      offset: const Offset(
-                                                        1.0,
-                                                        1.0,
-                                                      ),
-                                                      blurRadius: 10.0,
-                                                      spreadRadius: 7.0,
-                                                    ),
-                                                    BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
-                                                  ]),
-                                                  child: const Icon(Icons.skip_previous_rounded,
-                                                    color: Colors.white,)));
-                                        }),
-                                    BlocBuilder<AudioControlBloc, AudioControlState>(
-                                      buildWhen: (previous, current) {
-                                        if (previous is AudioPlayedState && current is AudioPlayedState) {
-                                          print("false");
-                                          return false;
-                                        } else {
-                                          print("true");
-                                          return true;
-                                        }
-                                      },
-                                      builder: (context, state) {
-                                        return IconButton(
-                                            padding: const EdgeInsets.all(1),
-                                            onPressed: () async {
-                                              if (state is AudioPausedState) {
-                                                print(state);
-                                                BlocProvider.of<AudioControlBloc>(context).add(ResumeSong());
-                                              } else {
-                                                print(state);
-                                                BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
-                                              }
-                                            },
-                                            icon: Container(
-                                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.black.withOpacity(0.1),
-                                                    offset: const Offset(
-                                                      1.0,
-                                                      1.0,
-                                                    ),
-                                                    blurRadius: 10.0,
-                                                    spreadRadius: 7.0,
-                                                  ),
-                                                  BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
-                                                ]),
-                                                child: state is AudioPlayedState
-                                                    ? const Icon(
-                                                  Icons.pause,
-                                                  color: Colors.white,
-                                                  size: 40,)
-                                                    : const Icon(
-                                                  Icons.play_arrow_rounded,
-                                                  color: Colors.white,
-                                                  size: 40,)));
-                                      },
-                                    ),
-
-                                    BlocBuilder<SongBloc, SongState>(
-                                        builder: (context, state) {
-                                          return IconButton(
-                                              padding: const EdgeInsets.all(1),
-                                              onPressed: () {
-                                                context
-                                                    .read<CurrentSelectedSongBloc>()
-                                                    .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).songs));
-                                              },
-                                              icon: Container(
-                                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black.withOpacity(0.1),
-                                                      offset: const Offset(
-                                                        1.0,
-                                                        1.0,
-                                                      ),
-                                                      blurRadius: 10.0,
-                                                      spreadRadius: 7.0,
-                                                    ),
-                                                    BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
-                                                  ]),
-                                                  child: const Icon(Icons.skip_next_rounded,
-                                                    color: Colors.white,)));
-
-                                        })
+                                    PreviousButton(),
+                                    PlayButton(),
+                                    NextButton()
                                   ],
                                 ),
-                                StreamBuilder(
-                                    stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
-                                    builder: ((context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        final currentDurationSecond = (snapshot.data?.inSeconds ?? 0);
-                                        final currentDurationMinute = (snapshot.data?.inMinutes ?? 0).toString().padLeft(2 , "0");
-                                        return Column(
-                                          children: [
-                                            Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [Row(
-                                                    children: [
-                                                      Text(currentDurationMinute),
-                                                      Text(":"),
-                                                      Text((currentDurationSecond % 60).toString().padLeft(2 , "0")),
-                                                    ],
-                                                  ), Row(
-                                                    children: [
-                                                      Text("${state.songModel.minute}".padLeft(2 , "0")),
-                                                      Text(":"),
-                                                      Text("${state.songModel.second}".padLeft(2 , "0")),
-                                                    ],
-                                                  )],
-                                                )),
-                                            SliderTheme(
-                                              data: SliderTheme.of(context)
-                                                  .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
-                                              child: Slider(
-                                                  activeColor: Colors.purple,
-                                                  inactiveColor: Colors.black,
-                                                  value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
-                                                  max: double.parse(state.songModel.minute ?? "0") * 60 + double.parse(state.songModel.second ?? "0"),
-                                                  min: 0,
-                                                  // activeColor: Theme.of(context).colorScheme.background,
-                                                  onChangeEnd: (value) {},
-                                                  onChanged: (val) {
-                                                    BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
-                                                  }),
-                                            )
-                                          ],
-                                        );
-                                      } else {
-                                        return const SizedBox();
-                                      }
-                                    })),
+                                Progressbar(
+                                    minute: state.songModel.minute!,
+                                    second: state.songModel.second!),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
