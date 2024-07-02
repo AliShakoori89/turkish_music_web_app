@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page.dart';
-import '../../../data/model/singer_model.dart';
-import '../../../data/model/song_model.dart';
-import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page.dart';
+import '../../data/model/singer_model.dart';
+import '../../data/model/song_model.dart';
+import '../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 
 class SingerPage extends StatefulWidget {
   SingerPage({super.key, required this.artistDetail});

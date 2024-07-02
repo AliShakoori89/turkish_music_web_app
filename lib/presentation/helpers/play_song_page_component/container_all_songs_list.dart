@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/playing_song_animation.dart';
+import 'package:turkish_music_app/presentation/helpers/play_song_page_component/playing_song_animation.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../../generated/assets.dart';
-import '../../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../play_song_page.dart';
+import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
+import '../../ui/play_song_page.dart';
 
 class ContainerAllSongsList extends StatelessWidget {
 

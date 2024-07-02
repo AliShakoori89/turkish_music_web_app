@@ -13,7 +13,7 @@ import '../bloc/user_bloc/bloc.dart';
 import '../bloc/user_bloc/event.dart';
 import '../const/custom_icon/music_icons.dart';
 import '../const/error_internet_connection_page.dart';
-import 'main_page/main_page.dart';
+import 'main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
   const AuthenticatePage({super.key});

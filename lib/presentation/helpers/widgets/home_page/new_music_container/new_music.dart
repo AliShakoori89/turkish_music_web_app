@@ -8,7 +8,7 @@ import '../../../../bloc/new_song_bloc/bloc.dart';
 import '../../../../bloc/new_song_bloc/event.dart';
 import '../../../../bloc/new_song_bloc/state.dart';
 import '../../../../const/shimmer_container/new_music_shimmer_container.dart';
-import '../../../../ui/main_page/play_song_page/play_song_page.dart';
+import '../../../../ui/play_song_page.dart';
 
 class NewMusic extends StatefulWidget {
   const NewMusic({super.key});

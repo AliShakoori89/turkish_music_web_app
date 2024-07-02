@@ -5,7 +5,7 @@ import 'package:search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc/song_bloc.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../play_song_page/play_song_page.dart';
+import '../../play_song_page.dart';
 
 class searchPage extends StatefulWidget {
   const searchPage({super.key});

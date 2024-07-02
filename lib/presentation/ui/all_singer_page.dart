@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../data/model/singer_model.dart';
-import 'main_page/singer_page.dart';
+import 'singer_page.dart';
 
 class AllSingerPage extends StatefulWidget {
   const AllSingerPage({super.key, required this.allSinger, required this.allSingerName});

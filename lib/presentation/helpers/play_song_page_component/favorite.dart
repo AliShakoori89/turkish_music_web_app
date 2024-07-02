@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../bloc/play_list_bloc/bloc.dart';
-import '../../../../bloc/play_list_bloc/event.dart';
-import '../../../../bloc/play_list_bloc/state.dart';
+import '../../bloc/play_list_bloc/bloc.dart';
+import '../../bloc/play_list_bloc/event.dart';
+import '../../bloc/play_list_bloc/state.dart';
 
 class FavoriteButton extends StatefulWidget {
   const FavoriteButton({super.key, required this.controller, required this.songID});

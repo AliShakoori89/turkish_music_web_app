@@ -31,7 +31,7 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc/song_bloc.dar
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page.dart';
 
 Future<void> main() async{
 

@@ -8,8 +8,8 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:vertical_nav_bar/vertical_nav_bar.dart';
-import '../../const/custom_icon/music_icons.dart';
-import '../../const/error_internet_connection_page.dart';
+import '../const/custom_icon/music_icons.dart';
+import '../const/error_internet_connection_page.dart';
 
 class MainPage extends StatefulWidget {
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
+import '../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 
 class Progressbar extends StatelessWidget {
   const Progressbar({super.key, required this.minute, required this.second});

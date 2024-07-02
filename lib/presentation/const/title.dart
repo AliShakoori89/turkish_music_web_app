@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/ui/music_page/detail_page.dart';
+import 'package:turkish_music_app/presentation/ui/profile_page.dart';
 import 'package:turkish_music_app/presentation/ui/all_singer_page.dart';
 
 import '../../data/model/singer_model.dart';

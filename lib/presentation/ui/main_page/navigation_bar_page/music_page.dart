@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/play_song_page/play_song_page_component/random_play_button.dart';
-import 'package:turkish_music_app/presentation/ui/music_page/detail_page.dart';
+import 'package:turkish_music_app/presentation/ui/profile_page.dart';
+import '../../../helpers/play_song_page_component/next_button.dart';
+import '../../../helpers/play_song_page_component/play_button.dart';
+import '../../../helpers/play_song_page_component/previous_button.dart';
 import '../../../helpers/widgets/top_arrow_icon.dart';
 
 class MusicPage extends StatelessWidget {
@@ -39,7 +41,7 @@ class MusicPage extends StatelessWidget {
                     customColor: Colors.white,)
                 ),
                 const Expanded(
-                  flex: 5,
+                  flex: 7,
                   child: Column(
                     children: [
                       Expanded(
@@ -99,7 +101,7 @@ class MusicPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     SingerNameTrackNameImage(
                                         singerName: "Tarkan",
@@ -108,7 +110,13 @@ class MusicPage extends StatelessWidget {
                                         align: MainAxisAlignment.start),
 
                                   ]),
-
+                              Row(
+                                children: [
+                                  PreviousButton(),
+                                  PlayButton(),
+                                  NextButton()
+                                ],
+                              ),
                             ],
                           ),
                         ),
