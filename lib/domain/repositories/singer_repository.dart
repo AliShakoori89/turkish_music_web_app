@@ -25,7 +25,7 @@ class SingerRepository {
       }else{
       }
     }
-    return isBestSinger;
+    return isBestSinger.reversed.toList();
   }
 
   @override
