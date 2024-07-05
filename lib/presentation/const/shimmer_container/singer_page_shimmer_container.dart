@@ -42,8 +42,8 @@ class SingerPageShimmerContainer extends StatelessWidget {
                 child: AnimatedGridView(
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
-                    mainAxisExtent: 170,
-                    crossAxisSpacing: 50,
+                    mainAxisExtent: MediaQuery.of(context).size.width / 3,
+                    crossAxisSpacing: MediaQuery.of(context).size.width / 9,
                     children: List.generate(
                         8,
                             (index) =>

@@ -28,8 +28,8 @@ class CategoryShimmerContainer extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.black12,
                           borderRadius: BorderRadius.circular(5.0)),
-                      width: 100,
-                      height: 100
+                      width: MediaQuery.of(context).size.height / 8,
+                      height: MediaQuery.of(context).size.height / 8
                   ),
                 )
             );

@@ -15,8 +15,8 @@ class NewAlbumShimmerContainer extends StatelessWidget {
       child: AnimatedGridView(
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
-          mainAxisExtent: 170,
-          crossAxisSpacing: 50,
+          mainAxisExtent: MediaQuery.of(context).size.width / 3,
+          crossAxisSpacing: MediaQuery.of(context).size.width / 9,
           children: List.generate(
               4,
                   (index) =>
@@ -25,11 +25,11 @@ class NewAlbumShimmerContainer extends StatelessWidget {
                         highlightColor: Colors.grey[400]!,
                         child: Container(
                           margin: EdgeInsets.all(5),
-                          height: 50,
+                          height: MediaQuery.of(context).size.width / 8,
                           decoration: BoxDecoration(
                             color: Colors.black12,
                               borderRadius: BorderRadius.circular(5.0)),
-                          width: 50,
+                          width: MediaQuery.of(context).size.width / 8,
                         )
                       )))
     );
