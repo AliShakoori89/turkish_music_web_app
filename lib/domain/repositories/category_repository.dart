@@ -8,7 +8,6 @@ class CategoryRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  @override
   Future<dynamic> getAllCategory() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Category/GetAll');

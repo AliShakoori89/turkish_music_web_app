@@ -10,7 +10,6 @@ class AlbumRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  @override
   Future<dynamic> getNewAlbum() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Album/GetNewAlbums');
@@ -19,7 +18,6 @@ class AlbumRepository {
     return newDongData;
   }
 
-  @override
   Future<dynamic> getSingerAllAlbum(int id) async {
     ApiBaseHelper api = ApiBaseHelper();
     final SharedPreferences prefs = await SharedPreferences.getInstance();

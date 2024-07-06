@@ -7,7 +7,6 @@ class SongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  @override
   Future<dynamic> getAllMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     List<SongDataModel> allSongs = [];
@@ -20,7 +19,6 @@ class SongRepository {
     return allSongs;
   }
 
-  @override
   Future<dynamic> getAllNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     try {

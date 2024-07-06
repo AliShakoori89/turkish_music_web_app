@@ -9,7 +9,6 @@ class SingerRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  @override
   Future<dynamic> getFamousSinger() async {
 
     ApiBaseHelper api = ApiBaseHelper();
@@ -28,7 +27,6 @@ class SingerRepository {
     return isBestSinger.reversed.toList();
   }
 
-  @override
   Future<dynamic> getAllSinger() async {
     ApiBaseHelper api = ApiBaseHelper();
     List<SingerDataModel> allSinger = [];
@@ -43,7 +41,6 @@ class SingerRepository {
     return allSinger;
   }
 
-  @override
   Future<dynamic> getAllSingerName() async {
     ApiBaseHelper api = ApiBaseHelper();
     List<String> allSingerName = [];

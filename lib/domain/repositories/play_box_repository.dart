@@ -7,7 +7,7 @@ import '../../data/network/api_base_helper.dart';
 class PlayBoxRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
-  @override
+
   Future<dynamic> getPlayBox(String songName) async {
     ApiBaseHelper api = ApiBaseHelper();
     List<NewSongDataModel> renewSongData =  [];
@@ -23,14 +23,12 @@ class PlayBoxRepository {
     return renewSongData;
   }
 
-  @override
   Future<dynamic> getSongTime(String songFile) async {
 
     double songTime = 0;
     return songTime;
   }
 
-  @override
   Future<dynamic> getSongMinute(String songFile) async {
 
     int songEndMinute = 0 ;
@@ -41,7 +39,6 @@ class PlayBoxRepository {
     return songEndMinute;
   }
 
-  @override
   Future<dynamic> getSongSecond(String songFile) async {
 
     String songEndSecond = '0';

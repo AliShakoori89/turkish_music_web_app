@@ -8,7 +8,6 @@ class NewSongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  @override
   Future<dynamic> getNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/NewMusic/GetAll');

@@ -9,7 +9,6 @@ class PlayListRepository {
 
   List playlistIDs = [];
 
-  @override
   addToPlayList(int musicID) async {
 
     await dotenv.load();
@@ -41,7 +40,6 @@ class PlayListRepository {
     }
   }
 
-  @override
   removeFromPlayList(int musicID) async{
 
     await dotenv.load();
@@ -73,7 +71,6 @@ class PlayListRepository {
     }
   }
 
-  @override
   Future<dynamic> getMusicFromPlayList() async{
 
     ApiBaseHelper api = ApiBaseHelper();
