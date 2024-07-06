@@ -10,6 +10,7 @@ class MiniPlayingContainerRepository {
   Future<bool> isItTheFirstTimeTtIsShown() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final bool? firstShow = prefs.getBool('firstShowMiniPlayingContainer');
+    print("firstShow                "+firstShow.toString());
     if(firstShow != null){
       return firstShow;
     }else{

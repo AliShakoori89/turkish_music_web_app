@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/mini_palying_container.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
-import 'package:turkish_music_app/presentation/helpers/widgets/singer_name_trackName_image.dart';
 import 'package:turkish_music_app/presentation/ui/profile_page.dart';
-import '../../../helpers/play_song_page_component/next_button.dart';
-import '../../../helpers/play_song_page_component/play_button.dart';
-import '../../../helpers/play_song_page_component/previous_button.dart';
-import '../../../helpers/widgets/top_arrow_icon.dart';
 
 class MusicPage extends StatelessWidget {
 
@@ -25,7 +23,11 @@ class MusicPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: Stack(
+          child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
+
+      bool visibility = state.visibility;
+
+      return Stack(
             children: [
               Container(
                 margin: EdgeInsets.only(
@@ -43,7 +45,7 @@ class MusicPage extends StatelessWidget {
                         rowNumber: title.length,
                         customColor: Colors.white,)
                     ),
-                    const Expanded(
+                    Expanded(
                       flex: 7,
                       child: Column(
                         children: [
@@ -67,6 +69,7 @@ class MusicPage extends StatelessWidget {
                               songName: 'Okadar',
                               singerName: "Tarkan",
                               singerImage: "assets/images/tarkan.png",
+                              visibility: visibility,
                             ),
                           )
                         ],
@@ -75,43 +78,10 @@ class MusicPage extends StatelessWidget {
                   ],
                 ),
               ),
-              MiniPalyingContainer(),
+              MiniPlayingContainer(visibility: visibility,)
             ],
-          ),
+          );})
         )
       );
   }
 }
-
-// class CircleButton extends StatelessWidget {
-//   const CircleButton({
-//     required this.onPressed,
-//     required this.child,
-//     this.size = 35,
-//     this.color = Colors.blue,
-//     super.key,
-//   });
-//
-//   final void Function()? onPressed;
-//   final Widget child;
-//   final double size;
-//   final Color color;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: size,
-//       width: size,
-//       child: ClipOval(
-//         child: Material(
-//           color: color,
-//           child: InkWell(
-//             canRequestFocus: false,
-//             onTap: onPressed,
-//             child: child,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

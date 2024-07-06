@@ -29,12 +29,6 @@ class TitleText extends StatelessWidget {
             if(title == "Singer"){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
                   AllSingerPage(allSinger: allSinger!, allSingerName: allSingerName!,)));
-            }else{
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-              const DetailPage(
-                songName: "Şımarık",
-                singerName: "Tarkan",
-                singerImage: "assets/images/tarkan.png",)));
             }
           },
           child: const Text(

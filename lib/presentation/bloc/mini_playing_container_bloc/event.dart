@@ -3,6 +3,7 @@ abstract class MiniPlayingContainerEvent {
 }
 
 class FirstPlayingSongEvent extends MiniPlayingContainerEvent{}
+class CheckPlayingSongEvent extends MiniPlayingContainerEvent{}
 
 // class GetSingerAllAlbumEvent extends AlbumEvent{
 //   final int id;

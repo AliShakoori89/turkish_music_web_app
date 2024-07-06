@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import '../../data/model/album_model.dart';
@@ -54,6 +56,8 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
     BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: widget.songID));
     BlocProvider.of<AudioControlBloc>(context).add(
         PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
+
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
   }
 
   @override

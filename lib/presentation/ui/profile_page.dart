@@ -8,67 +8,72 @@ class DetailPage extends StatelessWidget {
   const DetailPage({super.key,
     required this.songName,
     required this.singerName,
-    required this.singerImage});
+    required this.singerImage,
+    required this.visibility});
 
   final String songName;
   final String singerName;
   final String singerImage;
+  final bool visibility;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.all(10),
-        child: AnimatedListView(
-          duration: 100,
-          scrollDirection: Axis.vertical,
-          children: List.generate(
-              10,
-                  (index) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.12,
-                                height: MediaQuery.of(context).size.height * 0.065,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  image: DecorationImage(
-                                      image: AssetImage(singerImage),
+    return Container(
+      margin: EdgeInsets.only(
+          left: 10,
+          right: 10,
+          top: 10,
+          bottom: visibility == true ? 90 : 0
+      ),
+      child: AnimatedListView(
+        duration: 100,
+        scrollDirection: Axis.vertical,
+        children: List.generate(
+            10,
+                (index) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.12,
+                          height: MediaQuery.of(context).size.height * 0.065,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  image: AssetImage(singerImage),
                                   fit: BoxFit.fill)
-                                ),
-                              ),
-                              SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(songName),
-                                  Text(singerName)
-                                ],
-                              )
-                            ],
                           ),
                         ),
-                      ),
-                      Flexible(
-                        child: IconButton(
-                            onPressed: () => BottomDialog(
-                              songImage: "assets/images/tarkan.png",
-                              singerName: singerName,
-                                songName: songName,
-                                ).showBottomDialog(context),
-                            icon: const Icon(Icons.more_vert,
-                            size: 20,)),
-                      )
-                    ],
-                  )),
-        ),
+                        SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(songName),
+                            Text(singerName)
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: IconButton(
+                      onPressed: () => BottomDialog(
+                        songImage: "assets/images/tarkan.png",
+                        singerName: singerName,
+                        songName: songName,
+                      ).showBottomDialog(context),
+                      icon: const Icon(Icons.more_vert,
+                        size: 20,)),
+                )
+              ],
+            )),
       ),
     );
   }

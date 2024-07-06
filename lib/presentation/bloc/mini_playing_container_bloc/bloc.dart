@@ -10,6 +10,7 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
   MiniPlayingContainerBloc(this.miniPlayingContainerRepository) : super(
       MiniPlayingContainerState.initial()){
     on<FirstPlayingSongEvent>(_mapFirstLoginEventToState);
+    on<CheckPlayingSongEvent>(_mapCheckLoginEventToState);
   }
 
   void _mapFirstLoginEventToState(
@@ -20,6 +21,22 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
       emit(
         state.copyWith(
             status: MiniPlayingContainerStatus.success,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: MiniPlayingContainerStatus.error));
+    }
+  }
+
+  void _mapCheckLoginEventToState(
+      CheckPlayingSongEvent event, Emitter<MiniPlayingContainerState> emit) async {
+    try {
+      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      bool visibility = await miniPlayingContainerRepository.isItTheFirstTimeTtIsShown();
+      emit(
+        state.copyWith(
+          status: MiniPlayingContainerStatus.success,
+          visibility: visibility
         ),
       );
     } catch (error) {

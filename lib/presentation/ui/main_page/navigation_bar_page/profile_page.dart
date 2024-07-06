@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/helpers/play_song_page_component/mini_palying_container.dart';
+import '../../../bloc/mini_playing_container_bloc/bloc.dart';
+import '../../../bloc/mini_playing_container_bloc/state.dart';
 import '../../../const/custom_divider.dart';
 import '../../../helpers/widgets/about_button.dart';
 import '../../../helpers/widgets/exit_account-button.dart';
@@ -35,11 +39,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          top: 10,
-                          left: 8,
-                          right: 8,
-                          bottom: 10
-                      ),
+                          top: 10, left: 8, right: 8, bottom: 10),
                       child: Row(
                         children: [
                           Icon(Icons.person_outline_rounded),
@@ -49,20 +49,13 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: 20,
-                        right: 10
-                      ),
+                      padding: EdgeInsets.only(top: 20, right: 10),
                       child: Text("alishakoori89@gmail.com",
-                      style: TextStyle(
-                        color: Colors.grey
-                      )),
+                          style: TextStyle(color: Colors.grey)),
                     ),
                   ],
                 ),
-                CustomDivider(
-                    dividerColor : Colors.grey
-                ),
+                CustomDivider(dividerColor: Colors.grey),
               ],
             ),
             ShareButton(),
@@ -73,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
             ExitButton()
           ],
         ),
-      ),
+      )
     );
   }
 
