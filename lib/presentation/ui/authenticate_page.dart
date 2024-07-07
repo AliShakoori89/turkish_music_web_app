@@ -1,4 +1,5 @@
-import 'dart:async';
+// presentation/ui/authenticate_page.dart
+import 'dart:async';import 'dart:async';
 import 'dart:ui';
 import 'dart:developer' as developer;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -245,6 +246,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             style: TextStyle(
                               color: Colors.white.withOpacity(.7),
                               fontSize: 50,
+                              fontFamily: "Salsa",
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1,
                               wordSpacing: 4,
@@ -260,19 +262,28 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                 Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
                             const SizedBox(height: 10,),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                component2(
+                                Expanded(
+                                  flex: 4,
+                                  child: component2(
                                   'LOG IN',
                                     2.58,
                                   emailFormKey
+                                )
                                 ),
-                                SizedBox(width: size.width / 20),
-                                component2(
+                                Spacer(
+                                  flex: 1,
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: component2(
                                   'SIGN UP',
                                   2.58,
                                   emailFormKey,
                                 ),
+                                )                                                
+                                
                               ],
                             ),
                           ],
@@ -387,7 +398,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                           borderColor: Colors.white,
                           fillColor: Colors.white.withOpacity(.05),
                           focusedBorderColor: const Color(0xffb188ef),
-                          fieldWidth: 35,
+                          fieldWidth: 30,
                           filled: true,
                           showFieldAsBox: true,
                           handleControllers: (controllers) {

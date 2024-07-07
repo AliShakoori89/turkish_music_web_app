@@ -11,6 +11,8 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
       MiniPlayingContainerState.initial()){
     on<FirstPlayingSongEvent>(_mapFirstLoginEventToState);
     on<CheckPlayingSongEvent>(_mapCheckLoginEventToState);
+    on<WriteRequirementForMiniPlayingSongContainerEvent>(_mapWriteRequirementForMiniPlayingSongContainerEventToState);
+    on<ReadRequirementForMiniPlayingSongContainerEvent>(_mapReadRequirementForMiniPlayingSongContainerEventToState);
   }
 
   void _mapFirstLoginEventToState(
@@ -43,4 +45,37 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
       emit(state.copyWith(status: MiniPlayingContainerStatus.error));
     }
   }
+
+  void _mapWriteRequirementForMiniPlayingSongContainerEventToState(
+      WriteRequirementForMiniPlayingSongContainerEvent event, Emitter<MiniPlayingContainerState> emit) async {
+    try {
+      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      await miniPlayingContainerRepository.writeMiniPlayingRequirement(event.songName, event.songFile, event.songImage);
+      emit(
+        state.copyWith(
+          status: MiniPlayingContainerStatus.success,
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: MiniPlayingContainerStatus.error));
+    }
+  }
+
+  void _mapReadRequirementForMiniPlayingSongContainerEventToState(
+      ReadRequirementForMiniPlayingSongContainerEvent event, Emitter<MiniPlayingContainerState> emit) async {
+    try {
+      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      List miniPlayingContainerRequirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
+      emit(
+        state.copyWith(
+          status: MiniPlayingContainerStatus.success,
+          requirement: miniPlayingContainerRequirement
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: MiniPlayingContainerStatus.error));
+    }
+  }
+
+
 }

@@ -13,28 +13,33 @@ class MiniPlayingContainerState extends Equatable{
 
   const MiniPlayingContainerState({
     required this.status,
-    required this.visibility
+    required this.visibility,
+    required this.requirement
   });
 
   static MiniPlayingContainerState initial() => const MiniPlayingContainerState(
     status: MiniPlayingContainerStatus.initial,
-    visibility: false
+    visibility: false,
+    requirement: []
   );
 
   final MiniPlayingContainerStatus status;
   final bool visibility;
+  final List requirement;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, visibility];
+  List<Object?> get props => [status, visibility, requirement];
 
   MiniPlayingContainerState copyWith({
     MiniPlayingContainerStatus? status,
-    bool? visibility
+    bool? visibility,
+    List? requirement
   }) {
     return MiniPlayingContainerState(
       status: status ?? this.status,
-      visibility: visibility ?? this.visibility
+      visibility: visibility ?? this.visibility,
+      requirement:  requirement ?? this.requirement
     );
   }
 }

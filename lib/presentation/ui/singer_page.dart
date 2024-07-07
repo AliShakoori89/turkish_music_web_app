@@ -97,7 +97,6 @@ class _SingerPageState extends State<SingerPage> {
 
                           var newPath = path.replaceAll(" ", "%20");
 
-
                           SongDataModel songDataModel = SongDataModel(
                               id : state.singerAllAlbum[index].musics![index].id,
                               name: state.singerAllAlbum[index].musics![index].name,
@@ -105,12 +104,11 @@ class _SingerPageState extends State<SingerPage> {
                               fileSource: newPath,
                               minute: state.singerAllAlbum[index].musics![index].minute,
                               second: state.singerAllAlbum[index].musics![index].second,
+                              singerName: widget.artistDetail.name,
                               album: null,
                               albumId: null,
                               categories: null
                           );
-
-
 
                           Navigator.push(
                               context,
@@ -120,12 +118,12 @@ class _SingerPageState extends State<SingerPage> {
                                         songModel: songDataModel
                                     )),
                                     child: PlayMusicPage(
-                                      songName: state.singerAllAlbum[index].musics![index].name!,
-                                      songFile: newPath,
+                                      songName: songDataModel.name!,
+                                      songFile: songDataModel.fileSource!,
                                       albumSongList: state.singerAllAlbum[index].musics,
-                                      songID: state.singerAllAlbum[index].musics![index].id!,
-                                      singerName: state.singerAllAlbum[index].singer!.name!,
-                                      songImage: state.singerAllAlbum[index].imageSource!,
+                                      songID: songDataModel.id!,
+                                      singerName: songDataModel.singerName!,
+                                      songImage: songDataModel.imageSource!,
                                     ),
 
                                   )));
