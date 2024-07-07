@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/previous_button.dart';
-import '../../../data/model/album_model.dart';
-import '../../../data/model/new-song_model.dart';
-import '../../../data/model/song_model.dart';
 import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../widgets/singer_name_trackName_image.dart';
@@ -28,6 +26,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   void initState() {
     // TODO: implement initState
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadRequirementForMiniPlayingSongContainerEvent());
     super.initState();
   }
   @override
@@ -39,12 +38,8 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.12,
           decoration: BoxDecoration(
+            color: Colors.black,
             borderRadius: BorderRadius.circular(15),
-            gradient: LinearGradient(
-              colors: [Colors.purple, Colors.black, Colors.purple],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
           ),
           child: Column(
             children: [
@@ -63,32 +58,41 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                 },
                 child: const TopArrow(),
               ),
-              Container(
-                margin: EdgeInsets.only(left: 45, right: 45),
-                child: const Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+              BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
+
+                List requirement = state.requirement;
+
+                print("requirement                 "+requirement.toString());
+
+                //List requirement = [songName, songFile, songImage, singerName];
+
+                return Container(
+                  margin: EdgeInsets.only(left: 45, right: 45),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            SingerNameTrackNameImage(
+                                singerName: requirement[3],
+                                songName: requirement[0],
+                                imagePath: requirement[2],
+                                align: MainAxisAlignment.start),
+                          ]),
+                      Row(
                         children: [
-                          SingerNameTrackNameImage(
-                              singerName: "Tarkan",
-                              songName: "MoOooooOoch",
-                              imagePath: "assets/images/tarkan.png",
-                              align: MainAxisAlignment.start),
-                        ]),
-                    Row(
-                      children: [
-                        PreviousButton(),
-                        PlayButton(),
-                        NextButton()
-                      ],
-                    ),
-                  ],
-                ),
-              )
+                          PreviousButton(),
+                          PlayButton(),
+                          NextButton()
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ],
           )),
     )

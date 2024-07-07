@@ -61,6 +61,11 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
         PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
 
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteRequirementForMiniPlayingSongContainerEvent(
+        songName: widget.songName,
+        songFile: widget.songFile,
+        songImage: widget.songImage,
+        singerName: widget.singerName));
   }
 
   @override

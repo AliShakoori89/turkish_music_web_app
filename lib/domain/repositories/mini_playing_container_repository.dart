@@ -17,11 +17,12 @@ class MiniPlayingContainerRepository {
     }
   }
 
-  Future<dynamic> writeMiniPlayingRequirement(String songName, String songFile, String songImage) async{
+  Future<dynamic> writeMiniPlayingRequirement(String songName, String songFile, String songImage, String singerName) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('songName', songName);
     await prefs.setString('songFile', songFile);
     await prefs.setString('songImage', songImage);
+    await prefs.setString('singerName', singerName);
   }
 
   Future<List> readMiniPlayingRequirement() async{
@@ -29,7 +30,8 @@ class MiniPlayingContainerRepository {
     final String songName = prefs.getString('songName')!;
     final String songFile = prefs.getString('songFile')!;
     final String songImage = prefs.getString('songImage')!;
-    List requirement = [songName, songFile, songImage];
+    final String singerName = prefs.getString('singerName')!;
+    List requirement = [songName, songFile, songImage, singerName];
     return requirement;
   }
 }

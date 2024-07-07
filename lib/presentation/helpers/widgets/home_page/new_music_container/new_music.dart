@@ -87,7 +87,7 @@ class _NewMusicState extends State<NewMusic>{
                                     songFile: state.newSong[index].fileSource,
                                     songID: state.newSong[index].id,
                                     songImage: state.newSong[index].imageSource,
-                                    singerName: state.newSong[index].singer.name,
+                                    singerName: songDataModel.singerName!,
                                     newSongList: newSong,
                                   ),
 

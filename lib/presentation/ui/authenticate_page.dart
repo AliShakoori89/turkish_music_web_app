@@ -335,6 +335,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
               obscureText: isPassword,
               keyboardType:
               isEmail ? TextInputType.emailAddress : TextInputType.text,
+              textAlignVertical: TextAlignVertical.center,
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Enter email';

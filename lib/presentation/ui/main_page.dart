@@ -129,48 +129,45 @@ class _MainPageState extends State<MainPage> {
     return !isOffline
         ? Scaffold(
         body: Center(
-          child: Row(
+          child: Stack(
             children: [
-              Stack(
-                children: [
-                  myRoutes[currentRoute],
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: VerticalNavBar(
-                      selectedIndex: currentRoute,
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.10,
-                      backgroundColor: Colors.black.withOpacity(0.5),
-                      borderRadius: 15,
-                      onItemSelected: (value) {
-                        setState(() {
-                          navigateRoutes(value);
-                        });
-                      },
-                      items: const [
-                        VerticalNavBarItem(
-                            customIcon: Icons.home,
-                            iconSize: 25.0
-                        ),
-                        VerticalNavBarItem(
-                            customIcon: Icons.person,
-                            iconSize:25.0
-                        ),
-                        VerticalNavBarItem(
-                            customIcon: MusicIcon.music,
-                            iconSize:18.0
-                        ),
-                        VerticalNavBarItem(
-                            customIcon: Icons.search,
-                            iconSize:25.0
-                        ),
-                      ],
+              myRoutes[currentRoute],
+              Positioned(
+                bottom: 120,
+                right: 0,
+                child: VerticalNavBar(
+                  selectedIndex: currentRoute,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  width: MediaQuery.of(context).size.width * 0.10,
+                  backgroundColor: Colors.black.withOpacity(0.5),
+                  borderRadius: 15,
+                  onItemSelected: (value) {
+                    setState(() {
+                      navigateRoutes(value);
+                    });
+                  },
+                  items: const [
+                    VerticalNavBarItem(
+                        customIcon: Icons.home,
+                        iconSize: 25.0
                     ),
-                  ),
-                ],
-              ),
+                    VerticalNavBarItem(
+                        customIcon: Icons.person,
+                        iconSize:25.0
+                    ),
+                    VerticalNavBarItem(
+                        customIcon: MusicIcon.music,
+                        iconSize:18.0
+                    ),
+                    VerticalNavBarItem(
+                        customIcon: Icons.search,
+                        iconSize:25.0
+                    ),
+                  ],
+                ),
+              )
             ],
-          ),
+          )
         )
     )
         : const ErrorInternetConnectionPage();

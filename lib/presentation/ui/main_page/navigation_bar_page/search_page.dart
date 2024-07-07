@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc/song_bloc.dart';
-import 'package:turkish_music_app/presentation/helpers/play_song_page_component/mini_palying_container.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
+import '../../../bloc/mini_playing_container_bloc/bloc.dart';
+import '../../../bloc/mini_playing_container_bloc/state.dart';
+import '../../../helpers/play_song_page_component/mini_palying_container.dart';
 import '../../play_song_page.dart';
 
 class searchPage extends StatefulWidget {
@@ -31,97 +33,123 @@ class _searchPageState extends State<searchPage> {
 
       return Scaffold(
       body: SafeArea(
-        child:  Column(
-        children: [
-          const SizedBox(height: 20),
-          const Expanded(
-            flex: 1,
-            child: Text('Search Page',
-              style: TextStyle(
-                fontSize: 14,
-              ),),
-          ),
-          Expanded(
-            flex: 10,
-            child: DelayedWidget(
-                delayDuration: Duration(milliseconds: 1000),// Not required
-                animationDuration: Duration(seconds: 1),// Not required
-                animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
-                child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(music[index].name!),
-                    );
-                  },
-                )),
-          )
-        ],
-      )
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Search Singer or Track name',
-        backgroundColor: Colors.grey.withOpacity(0.2),
-        onPressed: () => showSearch(
-          context: context,
-          delegate: SearchPage(
-            onQueryUpdate: print,
-            items: music,
-            searchLabel: 'Search Singer or Track name ',
-            suggestion: const Center(
-              child: Text('Filter track by track name or singer'),
-            ),
-            failure: const Center(
-              child: Text('Not found :('),
-            ),
-            filter: (musicItem) => [
-              musicItem.name],
-            // sort: (a, b) => a.compareTo(b),
-            builder: (musicItem) => GestureDetector(
-              onTap: (){
-                SongDataModel songDataModel = SongDataModel(
-                    id : musicItem.id,
-                    name: musicItem.name,
-                    imageSource: musicItem.imageSource,
-                    fileSource: musicItem.fileSource!.substring(0, 4)
-                        + "s"
-                        + musicItem.fileSource!.substring(4, musicItem.fileSource!.length),
-                    singerName: musicItem.singerName,
-                    minute: musicItem.minute,
-                    second: musicItem.second,
-                    album: musicItem.album,
-                    albumId: musicItem.albumId,
-                    categories: musicItem.categories
-                );
+        child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
-                              songModel: songDataModel
-                          )),
-                          child: PlayMusicPage(
-                            songName: musicItem.name!,
-                            songFile: musicItem.fileSource!,
-                            songID: musicItem.id!,
-                            singerName: musicItem.singerName!,
-                            songImage: musicItem.album!.imageSource!
+        bool visibility = state.visibility;
+
+        return Stack(
+          children: [
+            Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Text('Search Page',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                          onPressed: () => showSearch(
+                            context: context,
+                            delegate: SearchPage(
+                              onQueryUpdate: print,
+                              items: music,
+                              searchLabel: 'Search Singer or Track name ',
+                              suggestion: const Center(
+                                child: Text('Filter track by track name or singer'),
+                              ),
+                              failure: const Center(
+                                child: Text('Not found :('),
+                              ),
+                              filter: (musicItem) => [
+                                musicItem.name],
+                              // sort: (a, b) => a.compareTo(b),
+                              builder: (musicItem) => GestureDetector(
+                                onTap: (){
+                                  SongDataModel songDataModel = SongDataModel(
+                                      id : musicItem.id,
+                                      name: musicItem.name,
+                                      imageSource: musicItem.imageSource,
+                                      fileSource: musicItem.fileSource!.substring(0, 4)
+                                          + "s"
+                                          + musicItem.fileSource!.substring(4, musicItem.fileSource!.length),
+                                      singerName: musicItem.singerName,
+                                      minute: musicItem.minute,
+                                      second: musicItem.second,
+                                      album: musicItem.album,
+                                      albumId: musicItem.albumId,
+                                      categories: musicItem.categories
+                                  );
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => BlocProvider(
+                                            create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                                songModel: songDataModel
+                                            )),
+                                            child: PlayMusicPage(
+                                                songName: musicItem.name!,
+                                                songFile: musicItem.fileSource!,
+                                                songID: musicItem.id!,
+                                                singerName: musicItem.singerName!,
+                                                songImage: musicItem.album!.imageSource!
+                                            ),
+
+                                          )));
+                                },
+                                child: ListTile(
+                                  title: Text(musicItem.name!),
+                                ),
+                              ),
+                            ),
                           ),
-
-                        )));
-              },
-              child: ListTile(
-                title: Text(musicItem.name!),
+                          icon: Icon(Icons.search)),
+                    )
+                  ],
+                ),
               ),
+              Expanded(
+                flex: 10,
+                child: DelayedWidget(
+                    delayDuration: Duration(milliseconds: 1000),// Not required
+                    animationDuration: Duration(seconds: 1),// Not required
+                    animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
+                    child: ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: GestureDetector(
+                            onTap: (){
+
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(music[index].name!),
+                                Text(music[index].singerName!,
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.5)
+                                ),),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    )),
+              )],
             ),
-          ),
-        ),
-        child: const Icon(Icons.search),
+            MiniPlayingContainer(visibility: visibility)
+          ],
+        );
+        })
       ),
     );
-    //   BlocBuilder<SearchWordBloc, SearchWordState>(builder: (context, state) {
-    //   return
     });
   }
 }

@@ -22,51 +22,63 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        margin: EdgeInsets.only(
-          right: MediaQuery.of(context).size.width * 0.033,
-          left: MediaQuery.of(context).size.width * 0.033,
-          top: MediaQuery.of(context).size.height * 0.08,
-        ),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+    return Scaffold(
+      body: SafeArea(child:
+          BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
+              builder: (context, state) {
+
+        bool visibility = state.visibility;
+
+        return Stack(
           children: [
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 10, left: 8, right: 8, bottom: 10),
-                      child: Row(
+            Container(
+              margin: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.033,
+                left: MediaQuery.of(context).size.width * 0.033,
+                top: MediaQuery.of(context).size.height * 0.08,
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(Icons.person_outline_rounded),
-                          SizedBox(width: 10),
-                          Text("Profile Email"),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 8, right: 8, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(Icons.person_outline_rounded),
+                                SizedBox(width: 10),
+                                Text("Profile Email"),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 20, right: 10),
+                            child: Text("alishakoori89@gmail.com",
+                                style: TextStyle(color: Colors.grey)),
+                          ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20, right: 10),
-                      child: Text("alishakoori89@gmail.com",
-                          style: TextStyle(color: Colors.grey)),
-                    ),
-                  ],
-                ),
-                CustomDivider(dividerColor: Colors.grey),
-              ],
+                      CustomDivider(dividerColor: Colors.grey),
+                    ],
+                  ),
+                  ShareButton(),
+                  ReportButton(),
+                  HelpButton(),
+                  AboutButton(),
+                  ExitAccountButton(),
+                  ExitButton()
+                ],
+              ),
             ),
-            ShareButton(),
-            ReportButton(),
-            HelpButton(),
-            AboutButton(),
-            ExitAccountButton(),
-            ExitButton()
+            MiniPlayingContainer(visibility: visibility)
           ],
-        ),
-      )
+        );
+      })),
     );
   }
 

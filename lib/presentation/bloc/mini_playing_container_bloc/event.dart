@@ -10,11 +10,13 @@ class WriteRequirementForMiniPlayingSongContainerEvent extends MiniPlayingContai
   final String songName;
   final String songFile;
   final String songImage;
+  final String singerName;
 
-  WriteRequirementForMiniPlayingSongContainerEvent({required this.songName, required this.songFile, required this.songImage});
+  WriteRequirementForMiniPlayingSongContainerEvent({required this.songName,
+    required this.songFile, required this.songImage, required this.singerName});
 
   @override
-  List<Object> get props => [songName, songFile, songImage];
+  List<Object> get props => [songName, songFile, songImage, singerName];
 }
 
 class ReadRequirementForMiniPlayingSongContainerEvent extends MiniPlayingContainerEvent{
