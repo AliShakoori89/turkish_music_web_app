@@ -67,10 +67,13 @@ class _NewMusicState extends State<NewMusic>{
                                 + newSong[index].fileSource.substring(4, newSong[index].fileSource.length),
                             minute: newSong[index].minute,
                             second: newSong[index].second,
+                            singerName: newSong[index].singer.name,
                             album: null,
                             albumId: null,
                             categories: null
                         );
+
+
 
                         Navigator.push(
                             context,
@@ -83,6 +86,8 @@ class _NewMusicState extends State<NewMusic>{
                                     songName: state.newSong[index].name,
                                     songFile: state.newSong[index].fileSource,
                                     songID: state.newSong[index].id,
+                                    songImage: state.newSong[index].imageSource,
+                                    singerName: state.newSong[index].singer.name,
                                     newSongList: newSong,
                                   ),
 

@@ -78,7 +78,9 @@ class MusicPage extends StatelessWidget {
                   ],
                 ),
               ),
-              MiniPlayingContainer(visibility: visibility,)
+              MiniPlayingContainer(
+                visibility: visibility
+              )
             ],
           );})
         )

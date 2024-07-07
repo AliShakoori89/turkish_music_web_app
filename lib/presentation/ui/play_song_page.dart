@@ -29,13 +29,15 @@ class PlayMusicPage extends StatefulWidget {
   final String songName;
   final String songFile;
   final int songID;
+  final String singerName;
+  final String songImage;
   List<SongDataModel>? songList;
   List<NewSongDataModel>? newSongList;
   List<AlbumDataMusicModel>? albumSongList;
 
   PlayMusicPage({super.key, required this.songName,
     required this.songFile, required this.songID, this.songList,
-    this.newSongList, this.albumSongList});
+    this.newSongList, this.albumSongList, required this.singerName, required this.songImage});
 
 
   @override
@@ -80,6 +82,7 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
 
                 return Container(
                   height: double.infinity,
+                  width: double.infinity,
                   margin: EdgeInsets.only(
                       right: MediaQuery.of(context).size.width * 0.05,
                       left: MediaQuery.of(context).size.width * 0.05),
@@ -100,7 +103,6 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: SafeArea(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Flexible(
@@ -119,15 +121,25 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
                             flex: 1,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Expanded(
-                                  flex: 10,
-                                  child: Text(
-                                    state.songModel.name!,
-                                    style: const TextStyle(
-                                        fontSize: 15, color: Colors.white60),
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      state.songModel.name!,
+                                      style: const TextStyle(
+                                          fontSize: 15, color: Colors.white),
+                                    ),
+                                    Text(
+                                      state.songModel.singerName!,
+                                      style: const TextStyle(
+                                          fontSize: 13, color: Colors.white60),
+                                    ),
+                                  ],
                                 ),
+                                Spacer(flex: 10,),
                                 FavoriteButton(
                                   controller: _controller,
                                   songID: songID!,

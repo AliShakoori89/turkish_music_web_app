@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/previous_button.dart';
+import '../../../data/model/album_model.dart';
+import '../../../data/model/new-song_model.dart';
+import '../../../data/model/song_model.dart';
 import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../widgets/singer_name_trackName_image.dart';
@@ -9,7 +12,9 @@ import '../widgets/top_arrow_icon.dart';
 import 'next_button.dart';
 
 class MiniPlayingContainer extends StatefulWidget {
-  const MiniPlayingContainer({super.key, required this.visibility});
+
+  MiniPlayingContainer({super.key,
+  required this.visibility});
 
   final bool visibility;
 

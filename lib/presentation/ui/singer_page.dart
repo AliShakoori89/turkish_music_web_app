@@ -124,6 +124,8 @@ class _SingerPageState extends State<SingerPage> {
                                       songFile: newPath,
                                       albumSongList: state.singerAllAlbum[index].musics,
                                       songID: state.singerAllAlbum[index].musics![index].id!,
+                                      singerName: state.singerAllAlbum[index].singer!.name!,
+                                      songImage: state.singerAllAlbum[index].imageSource!,
                                     ),
 
                                   )));

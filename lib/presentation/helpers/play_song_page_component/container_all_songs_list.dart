@@ -94,6 +94,14 @@ class ContainerAllSongsList extends StatelessWidget {
                                   ? songList![index].id!
                                   : newSongList != null ? newSongList![index].id
                                   : albumSongList![index].id!,
+                              songImage: songList != null
+                                  ? songList![index].imageSource!
+                                  : newSongList != null ? newSongList![index].imageSource
+                                  : albumSongList![index].imageSource!,
+                              singerName: songList != null
+                                  ? songList![index].singerName!
+                                  : newSongList != null ? newSongList![index].singer.name
+                                  : "",
                             ),
 
                           )),

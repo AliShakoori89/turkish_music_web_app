@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc/song_bloc.dart';
+import 'package:turkish_music_app/presentation/helpers/play_song_page_component/mini_palying_container.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../play_song_page.dart';
@@ -85,6 +86,7 @@ class _searchPageState extends State<searchPage> {
                     fileSource: musicItem.fileSource!.substring(0, 4)
                         + "s"
                         + musicItem.fileSource!.substring(4, musicItem.fileSource!.length),
+                    singerName: musicItem.singerName,
                     minute: musicItem.minute,
                     second: musicItem.second,
                     album: musicItem.album,
@@ -103,6 +105,8 @@ class _searchPageState extends State<searchPage> {
                             songName: musicItem.name!,
                             songFile: musicItem.fileSource!,
                             songID: musicItem.id!,
+                            singerName: musicItem.singerName!,
+                            songImage: musicItem.album!.imageSource!
                           ),
 
                         )));
