@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../bloc/song_bloc/bloc/song_bloc.dart';
+import '../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
 
 class NextButton extends StatelessWidget {
-  const NextButton({super.key});
+  const NextButton({super.key, required this.pageName});
+
+  final String pageName;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +17,19 @@ class NextButton extends StatelessWidget {
           return IconButton(
               padding: const EdgeInsets.all(1),
               onPressed: () {
-                context
-                    .read<CurrentSelectedSongBloc>()
-                    .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).songs));
+
+                if(pageName == "SingerPage"){
+                  context
+                      .read<CurrentSelectedSongBloc>()
+                      .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).allSongs));
+                }else{
+                  context
+                      .read<CurrentSelectedSongBloc>()
+                      .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).songs));
+                }
+
+                // BlocProvider.of<AudioControlBloc>(context).add(
+                //     PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
               },
               icon: Container(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

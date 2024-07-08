@@ -99,6 +99,8 @@ class _SingerPageState extends State<SingerPage> {
                         GestureDetector(
                           onTap: (){
 
+                            print(state.singerAllAlbum[index].musics);
+
                             var path = state.singerAllAlbum[index].musics![index].fileSource!.substring(0, 4)
                                 + "s"
                                 + state.singerAllAlbum[index].musics![index].fileSource!.substring(4, state.singerAllAlbum[index].musics![index].fileSource?.length);

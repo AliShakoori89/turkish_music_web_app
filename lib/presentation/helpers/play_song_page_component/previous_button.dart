@@ -4,7 +4,9 @@ import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../bloc/song_bloc/bloc/song_bloc.dart';
 
 class PreviousButton extends StatelessWidget {
-  const PreviousButton({super.key});
+  const PreviousButton({super.key, required this.pageName});
+
+  final String pageName;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +16,16 @@ class PreviousButton extends StatelessWidget {
               padding: const EdgeInsets.all(1),
               // style: AppTheme.lightTheme.iconButtonTheme.style,
               onPressed: () {
-                context
-                    .read<CurrentSelectedSongBloc>()
-                    .add(PlayPreviousSong(songs: BlocProvider.of<SongBloc>(context).songs));
+
+                if(pageName == "SingerPage"){
+                  context
+                      .read<CurrentSelectedSongBloc>()
+                      .add(PlayPreviousSong(songs: BlocProvider.of<SongBloc>(context).allSongs));
+                }else{
+                  context
+                      .read<CurrentSelectedSongBloc>()
+                      .add(PlayPreviousSong(songs: BlocProvider.of<SongBloc>(context).songs));
+                }
               },
               icon: Container(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

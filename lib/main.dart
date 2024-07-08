@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) =>
                 UserBloc(SignUserRepository())),
         BlocProvider(create: (context) => SongBloc()..add(FetchNewSongs())),
+        BlocProvider(create: (context) => SongBloc()..add(FetchAllSongs())),
         BlocProvider(
             create: (BuildContext context) =>
                 NewSongBloc(NewSongRepository())),
@@ -104,7 +105,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         initialRoute: '/',
           routes: <String, WidgetBuilder>{
-            '/home': (BuildContext context) => HomePage(),
+            '/home': (BuildContext context) => MainPage(),
           },
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?

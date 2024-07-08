@@ -9,21 +9,29 @@ class SongRepository {
 
   Future<dynamic> getAllMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
-    List<SongDataModel> allSongs = [];
-    final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
-    final data = jsonDecode(response.body);
-    final List<dynamic> allSongList = data['data'];
 
-    allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
-
-    return allSongs;
+    try {
+      final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
+      if (response.statusCode == 200) {
+        List<SongDataModel> allSongs = [];
+        final data = jsonDecode(response.body);
+        final List<dynamic> allSongList = data['data'];
+        print(allSongList.length);
+        for(int i = 0 ; i < allSongList.length ; i++){
+          allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) + "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
+        }
+        allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
+        return allSongs.reversed;
+      }
+    }catch (e) {
+      throw e.toString();
+    }
   }
 
   Future<dynamic> getAllNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     try {
-      final response = await api.get(
-          '/api/NewMusic/GetAll');
+      final response = await api.get('/api/NewMusic/GetAll');
       if (response.statusCode == 200) {
         List<SongDataModel> songs = [];
         final data = jsonDecode(response.body);
@@ -31,9 +39,8 @@ class SongRepository {
         for(int i = 0 ; i < songList.length ; i++){
           songList[i]['fileSource'] = songList[i]['fileSource'].substring(0, 4) + "s" +songList[i]['fileSource'].substring(4, songList[i]['fileSource'].length);
         }
-
         songs = songList.map((e) => SongDataModel.fromJson(e)).toList();
-        return songs;
+        return songs.reversed;
       }
     } catch (e) {
       throw e.toString();

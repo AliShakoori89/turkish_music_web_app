@@ -79,9 +79,9 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                         flex: 1,
                         child: Row(
                           children: [
-                            PreviousButton(),
+                            PreviousButton(pageName: requirement[4]),
                             PlayButton(),
-                            NextButton()
+                            NextButton(pageName: requirement[4],)
                           ],
                         ),
                       ),

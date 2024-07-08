@@ -23,9 +23,6 @@ class ContainerAllSongsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print("songName             "+songName);
-
-
     return ListView.builder(
             itemCount: songList != null
                 ? songList!.length

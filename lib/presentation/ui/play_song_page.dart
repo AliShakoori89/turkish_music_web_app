@@ -67,21 +67,21 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
         songName: widget.songName,
         songFile: widget.songFile,
         songImage: widget.songImage,
-        singerName: widget.singerName));
+        singerName: widget.singerName,
+        pageName: widget.pageName));
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop){
-        if (kDebugMode) {
-          if(widget.pageName == "NewSong" || widget.pageName == "searchPage"){
-            Navigator.of(context).pushNamed('/home');
-          }else{
-            Navigator.pop(context);
-          }
+    return WillPopScope(
+      onWillPop: () async{
+        if(widget.pageName == "NewSong" || widget.pageName == "searchPage" || widget.pageName == "ContainerAllSongsList"){
+          Navigator.of(context).pushNamed('/home');
+          return true;
+        }else{
+          Navigator.of(context).pop();
+          return false;
         }
       },
       child: Scaffold(
@@ -152,7 +152,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                             fontSize: 15, color: Colors.white),
                                       ),
                                       Text(
-                                        state.songModel.singerName!,
+                                        widget.singerName,
                                         style: const TextStyle(
                                             fontSize: 13, color: Colors.white60),
                                       ),
@@ -189,9 +189,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      PreviousButton(),
+                                      PreviousButton(pageName: widget.pageName,),
                                       PlayButton(),
-                                      NextButton()
+                                      NextButton(pageName: widget.pageName,)
                                     ],
                                   ),
                                   Progressbar(

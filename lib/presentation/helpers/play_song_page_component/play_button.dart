@@ -10,10 +10,8 @@ class PlayButton extends StatelessWidget {
     return BlocBuilder<AudioControlBloc, AudioControlState>(
       buildWhen: (previous, current) {
         if (previous is AudioPlayedState && current is AudioPlayedState) {
-          print("false");
           return false;
         } else {
-          print("true");
           return true;
         }
       },
@@ -22,10 +20,8 @@ class PlayButton extends StatelessWidget {
             padding: const EdgeInsets.all(1),
             onPressed: () async {
               if (state is AudioPausedState) {
-                print(state);
                 BlocProvider.of<AudioControlBloc>(context).add(ResumeSong());
               } else {
-                print(state);
                 BlocProvider.of<AudioControlBloc>(context).add(PauseSong());
               }
             },

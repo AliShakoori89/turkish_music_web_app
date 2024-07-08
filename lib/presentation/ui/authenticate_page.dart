@@ -398,8 +398,13 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                           numberOfFields: 6,
                           borderColor: Colors.white,
                           fillColor: Colors.white.withOpacity(.05),
+                          borderWidth: 0.25,
+                          margin: EdgeInsets.only(
+                            right: 2,
+                            left: 2
+                          ),
                           focusedBorderColor: const Color(0xffb188ef),
-                          fieldWidth: 30,
+                          fieldWidth: 35,
                           filled: true,
                           showFieldAsBox: true,
                           handleControllers: (controllers) {

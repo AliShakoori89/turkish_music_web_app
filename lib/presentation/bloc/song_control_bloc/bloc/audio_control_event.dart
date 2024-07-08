@@ -13,7 +13,3 @@ final class PauseSong extends AudioControlEvent {}
 final class ResumeSong extends AudioControlEvent {}
 
 final class SongCompleted extends AudioControlEvent {}
-
-final class UpdateTimeDuration extends AudioControlEvent {}
-
-final class UpdateSeekPositionDuration extends AudioControlEvent {}

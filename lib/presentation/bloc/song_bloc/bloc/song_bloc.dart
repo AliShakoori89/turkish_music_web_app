@@ -24,7 +24,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     on<FetchAllSongs>((event, emit) async{
       try {
         await getAllSongs();
-        emit(SongListLoaded(songList: songs));
+        emit(SongListLoaded(songList: allSongs));
       } catch (e) {
         emit(SongListErrorState(e.toString()));
       }
