@@ -10,14 +10,14 @@ import '../../../../bloc/new_song_bloc/state.dart';
 import '../../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../../ui/play_song_page.dart';
 
-class NewMusic extends StatefulWidget {
-  const NewMusic({super.key});
+class NewSong extends StatefulWidget {
+  const NewSong({super.key});
 
   @override
-  State<NewMusic> createState() => _NewMusicState();
+  State<NewSong> createState() => _NewSongState();
 }
 
-class _NewMusicState extends State<NewMusic>{
+class _NewSongState extends State<NewSong>{
 
   @override
   void initState() {
@@ -82,13 +82,14 @@ class _NewMusicState extends State<NewMusic>{
                                   create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
                                       songModel: songDataModel
                                   )),
-                                  child: PlayMusicPage(
+                                  child: PlaySongPage(
                                     songName: state.newSong[index].name,
                                     songFile: state.newSong[index].fileSource,
                                     songID: state.newSong[index].id,
                                     songImage: state.newSong[index].imageSource,
                                     singerName: songDataModel.singerName!,
                                     newSongList: newSong,
+                                    pageName: "NewSong",
                                   ),
 
                                 )));

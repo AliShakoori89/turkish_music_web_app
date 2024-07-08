@@ -35,10 +35,12 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
     try {
       emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       bool visibility = await miniPlayingContainerRepository.isItTheFirstTimeTtIsShown();
+      List miniPlayingContainerRequirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
       emit(
         state.copyWith(
           status: MiniPlayingContainerStatus.success,
-          visibility: visibility
+          visibility: visibility,
+          requirement: miniPlayingContainerRequirement
         ),
       );
     } catch (error) {

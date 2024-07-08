@@ -26,7 +26,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   void initState() {
     // TODO: implement initState
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadRequirementForMiniPlayingSongContainerEvent());
     super.initState();
   }
   @override
@@ -62,32 +61,29 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
                 List requirement = state.requirement;
 
-                print("requirement                 "+requirement.toString());
-
-                //List requirement = [songName, songFile, songImage, singerName];
-
                 return Container(
                   margin: EdgeInsets.only(left: 45, right: 45),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                      Expanded(
+                        flex: 1,
+                        child: SingerNameTrackNameImage(
+                            singerName: requirement[3],
+                            songName: requirement[0],
+                            imagePath: requirement[2],
+                            align: MainAxisAlignment.start),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Row(
                           children: [
-                            SingerNameTrackNameImage(
-                                singerName: requirement[3],
-                                songName: requirement[0],
-                                imagePath: requirement[2],
-                                align: MainAxisAlignment.start),
-                          ]),
-                      Row(
-                        children: [
-                          PreviousButton(),
-                          PlayButton(),
-                          NextButton()
-                        ],
+                            PreviousButton(),
+                            PlayButton(),
+                            NextButton()
+                          ],
+                        ),
                       ),
                     ],
                   ),

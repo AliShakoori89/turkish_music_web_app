@@ -30,6 +30,7 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/bloc/audio
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 
 Future<void> main() async{
 
@@ -102,6 +103,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
         initialRoute: '/',
+          routes: <String, WidgetBuilder>{
+            '/home': (BuildContext context) => HomePage(),
+          },
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
         isLoggedIn

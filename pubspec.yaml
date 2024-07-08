@@ -74,6 +74,7 @@ dependencies:
   logger: ^2.3.0
   scrollable_positioned_list: ^0.3.8
   delayed_widget: ^1.1.2
+  overflow_text_animated: ^0.0.6
 
 dev_dependencies:
   flutter_test:

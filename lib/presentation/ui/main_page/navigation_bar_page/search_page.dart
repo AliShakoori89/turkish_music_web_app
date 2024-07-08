@@ -93,12 +93,13 @@ class _searchPageState extends State<searchPage> {
                                             create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
                                                 songModel: songDataModel
                                             )),
-                                            child: PlayMusicPage(
-                                                songName: musicItem.name!,
-                                                songFile: musicItem.fileSource!,
-                                                songID: musicItem.id!,
-                                                singerName: musicItem.singerName!,
-                                                songImage: musicItem.album!.imageSource!
+                                            child: PlaySongPage(
+                                              songName: musicItem.name!,
+                                              songFile: musicItem.fileSource!,
+                                              songID: musicItem.id!,
+                                              singerName: musicItem.singerName!,
+                                              songImage: musicItem.album!.imageSource!,
+                                              pageName: "searchPage",
                                             ),
 
                                           )));

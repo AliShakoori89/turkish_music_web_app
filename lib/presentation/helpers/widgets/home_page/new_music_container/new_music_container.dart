@@ -18,7 +18,7 @@ class NewMusicContainerState extends State<NewMusicContainer>{
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
           ),
-          NewMusic(),
+          NewSong(),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.055,
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/mini_palying_container.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/state.dart';

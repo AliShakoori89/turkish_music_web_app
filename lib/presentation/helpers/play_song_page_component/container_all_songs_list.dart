@@ -78,7 +78,7 @@ class ContainerAllSongsList extends StatelessWidget {
                             create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
                                 songModel: songDataModel
                             )),
-                            child: PlayMusicPage(
+                            child: PlaySongPage(
                               songName: songList != null
                                   ? songList![index].name!
                                   : newSongList != null ? newSongList![index].name
@@ -102,6 +102,7 @@ class ContainerAllSongsList extends StatelessWidget {
                                   ? songList![index].singerName!
                                   : newSongList != null ? newSongList![index].singer.name
                                   : "",
+                              pageName: "ContainerAllSongsList",
                             ),
 
                           )),

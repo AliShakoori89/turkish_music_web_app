@@ -1,5 +1,6 @@
 // presentation/ui/play_song_page.dart
 import 'dart:ui';import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
@@ -25,27 +26,28 @@ import '../helpers/play_song_page_component/previous_button.dart';
 import '../helpers/play_song_page_component/progressbar.dart';
 import '../helpers/play_song_page_component/repeat_button.dart';
 
-class PlayMusicPage extends StatefulWidget {
+class PlaySongPage extends StatefulWidget {
 
   final String songName;
   final String songFile;
   final int songID;
   final String singerName;
   final String songImage;
+  final String pageName;
   List<SongDataModel>? songList;
   List<NewSongDataModel>? newSongList;
   List<AlbumDataMusicModel>? albumSongList;
 
-  PlayMusicPage({super.key, required this.songName,
+  PlaySongPage({super.key, required this.songName,
     required this.songFile, required this.songID, this.songList,
-    this.newSongList, this.albumSongList, required this.singerName, required this.songImage});
+    this.newSongList, this.albumSongList, required this.singerName, required this.songImage, required this.pageName});
 
 
   @override
-  State<PlayMusicPage> createState() => PlayMusicPageState();
+  State<PlaySongPage> createState() => PlaySongPageState();
 }
 
-class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
+class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
 
   bool loop = false;
   List playlistIDs = [];
@@ -71,154 +73,166 @@ class PlayMusicPageState extends State<PlayMusicPage> with WidgetsBindingObserve
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-        body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
-            listener: (context, state) {
-              context
-                  .read<AudioControlBloc>()
-                  .add(PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
-            },
-            builder: (context, state) {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop){
+        if (kDebugMode) {
+          if(widget.pageName == "NewSong" || widget.pageName == "searchPage"){
+            Navigator.of(context).pushNamed('/home');
+          }else{
+            Navigator.pop(context);
+          }
+        }
+      },
+      child: Scaffold(
+          body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
+              listener: (context, state) {
+                context
+                    .read<AudioControlBloc>()
+                    .add(PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
+              },
+              builder: (context, state) {
 
-              if (state is LoadingNewSong) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is SelectedSongFetched) {
+                if (state is LoadingNewSong) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is SelectedSongFetched) {
 
-                var songID = state.songModel.id;
+                  var songID = state.songModel.id;
 
-                return Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                      right: MediaQuery.of(context).size.width * 0.05,
-                      left: MediaQuery.of(context).size.width * 0.05),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.purple, Colors.black],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                  return Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.05,
+                        left: MediaQuery.of(context).size.width * 0.05),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Colors.purple, Colors.black],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(state.songModel.imageSource!,),
+                        fit: BoxFit.fitHeight,
+                        colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(0.2), BlendMode.dstATop),
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(state.songModel.imageSource!,),
-                      fit: BoxFit.fitHeight,
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.2), BlendMode.dstATop),
-                    ),
-                  ),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                    child: SafeArea(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Center(
-                              child: Text(
-                                "Now Playing",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: SafeArea(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Center(
+                                child: Text(
+                                  "Now Playing",
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      state.songModel.name!,
-                                      style: const TextStyle(
-                                          fontSize: 15, color: Colors.white),
-                                    ),
-                                    Text(
-                                      state.songModel.singerName!,
-                                      style: const TextStyle(
-                                          fontSize: 13, color: Colors.white60),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(flex: 10,),
-                                FavoriteButton(
-                                  controller: _controller,
-                                  songID: songID!,
-                                ),
-                              ],
+                            Flexible(
+                              flex: 1,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        state.songModel.name!,
+                                        style: const TextStyle(
+                                            fontSize: 15, color: Colors.white),
+                                      ),
+                                      Text(
+                                        state.songModel.singerName!,
+                                        style: const TextStyle(
+                                            fontSize: 13, color: Colors.white60),
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(flex: 10,),
+                                  FavoriteButton(
+                                    controller: _controller,
+                                    songID: songID!,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          CustomCircularSeekBar(
-                            songImage: state.songModel.imageSource!,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              right: 20,
-                              left: 20
+                            CustomCircularSeekBar(
+                              songImage: state.songModel.imageSource!,
                             ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    DownloadButton(
-                                        songFilePath: state.songModel.fileSource!,
-                                        songName: state.songModel.name!
-                                    ),
-                                    NormalizeButton()
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    PreviousButton(),
-                                    PlayButton(),
-                                    NextButton()
-                                  ],
-                                ),
-                                Progressbar(
-                                    minute: state.songModel.minute!,
-                                    second: state.songModel.second!),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    PlayListButton(),
-                                    RepeatButton(loop: loop)
-                                  ],
-                                ),
-                              ],
+                            Container(
+                              margin: EdgeInsets.only(
+                                right: 20,
+                                left: 20
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      DownloadButton(
+                                          songFilePath: state.songModel.fileSource!,
+                                          songName: state.songModel.name!
+                                      ),
+                                      NormalizeButton()
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      PreviousButton(),
+                                      PlayButton(),
+                                      NextButton()
+                                    ],
+                                  ),
+                                  Progressbar(
+                                      minute: state.songModel.minute!,
+                                      second: state.songModel.second!),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      PlayListButton(),
+                                      RepeatButton(loop: loop)
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 15,),
-                          const Spacer(),
-                        widget.newSongList == null
-                            && widget.songList == null
-                            && widget.albumSongList == null
-                            ? Container()
-                            : Flexible(
-                              flex: 4,
-                              child: ContainerAllSongsList(
-                                newSongList: widget.newSongList,
-                                songList: widget.songList,
-                                albumSongList: widget.albumSongList,
-                                songName: state.songModel.name!
-                              )
-                          )
-                        ],
+                            SizedBox(height: 15,),
+                            const Spacer(),
+                          widget.newSongList == null
+                              && widget.songList == null
+                              && widget.albumSongList == null
+                              ? Container()
+                              : Flexible(
+                                flex: 4,
+                                child: ContainerAllSongsList(
+                                  newSongList: widget.newSongList,
+                                  songList: widget.songList,
+                                  albumSongList: widget.albumSongList,
+                                  songName: state.songModel.name!
+                                )
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              } else {
-                return const Center(child: Text('Something went wrong'));
+                  );
+                } else {
+                  return const Center(child: Text('Something went wrong'));
+                }
               }
-            }
-        )
+          )
+      ),
     );
   }
 
