@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer' as developer;
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -127,49 +128,54 @@ class _MainPageState extends State<MainPage> {
     ];
 
     return !isOffline
-        ? Scaffold(
-        body: Center(
-          child: Stack(
-            children: [
-              myRoutes[currentRoute],
-              Positioned(
-                bottom: 120,
-                right: 0,
-                child: VerticalNavBar(
-                  selectedIndex: currentRoute,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  width: MediaQuery.of(context).size.width * 0.10,
-                  backgroundColor: Colors.black.withOpacity(0.5),
-                  borderRadius: 15,
-                  onItemSelected: (value) {
-                    setState(() {
-                      navigateRoutes(value);
-                    });
-                  },
-                  items: const [
-                    VerticalNavBarItem(
-                        customIcon: Icons.home,
-                        iconSize: 25.0
-                    ),
-                    VerticalNavBarItem(
-                        customIcon: Icons.person,
-                        iconSize:25.0
-                    ),
-                    VerticalNavBarItem(
-                        customIcon: MusicIcon.music,
-                        iconSize:18.0
-                    ),
-                    VerticalNavBarItem(
-                        customIcon: Icons.search,
-                        iconSize:25.0
-                    ),
-                  ],
-                ),
-              )
-            ],
+        ? WillPopScope(
+            onWillPop: (){
+              exit(0);
+            },
+          child: Scaffold(
+          body: Center(
+            child: Stack(
+              children: [
+                myRoutes[currentRoute],
+                Positioned(
+                  bottom: 120,
+                  right: 0,
+                  child: VerticalNavBar(
+                    selectedIndex: currentRoute,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.10,
+                    backgroundColor: Colors.black.withOpacity(0.5),
+                    borderRadius: 15,
+                    onItemSelected: (value) {
+                      setState(() {
+                        navigateRoutes(value);
+                      });
+                    },
+                    items: const [
+                      VerticalNavBarItem(
+                          customIcon: Icons.home,
+                          iconSize: 25.0
+                      ),
+                      VerticalNavBarItem(
+                          customIcon: Icons.person,
+                          iconSize:25.0
+                      ),
+                      VerticalNavBarItem(
+                          customIcon: MusicIcon.music,
+                          iconSize:18.0
+                      ),
+                      VerticalNavBarItem(
+                          customIcon: Icons.search,
+                          iconSize:25.0
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )
           )
+              ),
         )
-    )
         : const ErrorInternetConnectionPage();
   }
 }
