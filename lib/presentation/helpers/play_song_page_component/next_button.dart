@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../../bloc/song_bloc/bloc/song_bloc.dart';
-import '../../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
+import '../../bloc/song_bloc/song_bloc.dart';
 
 class NextButton extends StatelessWidget {
   const NextButton({super.key, required this.pageName});

@@ -2,7 +2,7 @@ import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc/song_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/song_bloc/song_bloc.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';

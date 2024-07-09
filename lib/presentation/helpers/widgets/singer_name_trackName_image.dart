@@ -23,7 +23,7 @@ class SingerNameTrackNameImage extends StatelessWidget {
         Expanded(
           flex: 1,
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.14,
+            // width: MediaQuery.of(context).size.width * 0.14,
             height: MediaQuery.of(context).size.height * 0.065,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -33,9 +33,9 @@ class SingerNameTrackNameImage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

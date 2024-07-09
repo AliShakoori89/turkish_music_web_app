@@ -3,7 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/model/song_model.dart';
+import '../../../data/model/song_model.dart';
 
 part 'audio_control_event.dart';
 part 'audio_control_state.dart';

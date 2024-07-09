@@ -1,6 +1,4 @@
-// presentation/ui/play_song_page.dart
-import 'dart:ui';import 'dart:ui';
-import 'package:flutter/foundation.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
@@ -13,7 +11,7 @@ import '../../data/model/song_model.dart';
 import '../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../bloc/play_box_bloc/bloc.dart';
 import '../bloc/play_box_bloc/event.dart';
-import '../bloc/song_control_bloc/bloc/audio_control_bloc.dart';
+import '../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../helpers/play_song_page_component/circular_seekbar.dart';
 import '../helpers/play_song_page_component/container_all_songs_list.dart';
 import '../helpers/play_song_page_component/download_button.dart';

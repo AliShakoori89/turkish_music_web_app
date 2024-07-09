@@ -18,7 +18,8 @@ class SongRepository {
         final List<dynamic> allSongList = data['data'];
         print(allSongList.length);
         for(int i = 0 ; i < allSongList.length ; i++){
-          allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) + "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
+          allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) +
+              "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
         }
         allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
         return allSongs.reversed;
@@ -37,7 +38,8 @@ class SongRepository {
         final data = jsonDecode(response.body);
         final List<dynamic> songList = data['data'];
         for(int i = 0 ; i < songList.length ; i++){
-          songList[i]['fileSource'] = songList[i]['fileSource'].substring(0, 4) + "s" +songList[i]['fileSource'].substring(4, songList[i]['fileSource'].length);
+          songList[i]['fileSource'] = songList[i]['fileSource'].substring(0, 4) + "s"
+              +songList[i]['fileSource'].substring(4, songList[i]['fileSource'].length);
         }
         songs = songList.map((e) => SongDataModel.fromJson(e)).toList();
         return songs.reversed;

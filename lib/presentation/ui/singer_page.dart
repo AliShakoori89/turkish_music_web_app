@@ -99,21 +99,22 @@ class _SingerPageState extends State<SingerPage> {
                         GestureDetector(
                           onTap: (){
 
+                            print(index);
                             print(state.singerAllAlbum[index].musics);
 
-                            var path = state.singerAllAlbum[index].musics![index].fileSource!.substring(0, 4)
+                            var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
                                 + "s"
-                                + state.singerAllAlbum[index].musics![index].fileSource!.substring(4, state.singerAllAlbum[index].musics![index].fileSource?.length);
+                                + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
 
                             var newPath = path.replaceAll(" ", "%20");
 
                             SongDataModel songDataModel = SongDataModel(
-                                id : state.singerAllAlbum[index].musics![index].id,
-                                name: state.singerAllAlbum[index].musics![index].name,
-                                imageSource: state.singerAllAlbum[index].musics![index].imageSource,
+                                id : state.singerAllAlbum[index].musics![0].id,
+                                name: state.singerAllAlbum[index].musics![0].name,
+                                imageSource: state.singerAllAlbum[index].musics![0].imageSource,
                                 fileSource: newPath,
-                                minute: state.singerAllAlbum[index].musics![index].minute,
-                                second: state.singerAllAlbum[index].musics![index].second,
+                                minute: state.singerAllAlbum[index].musics![0].minute,
+                                second: state.singerAllAlbum[index].musics![0].second,
                                 singerName: widget.artistDetail.name,
                                 album: null,
                                 albumId: null,

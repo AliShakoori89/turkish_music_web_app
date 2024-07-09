@@ -62,7 +62,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                 List requirement = state.requirement;
 
                 return Container(
-                  margin: EdgeInsets.only(left: 45, right: 45),
+                  margin: EdgeInsets.only(left: 20),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
