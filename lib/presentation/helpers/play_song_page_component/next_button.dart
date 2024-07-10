@@ -10,7 +10,8 @@ class NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SongBloc, SongState>(
+    return
+      BlocBuilder<SongBloc, SongState>(
         builder: (context, state) {
           return IconButton(
               padding: const EdgeInsets.all(1),
@@ -26,8 +27,7 @@ class NextButton extends StatelessWidget {
                       .add(PlayNextSong(songs: BlocProvider.of<SongBloc>(context).songs));
                 }
 
-                // BlocProvider.of<AudioControlBloc>(context).add(
-                //     PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
+
               },
               icon: Container(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

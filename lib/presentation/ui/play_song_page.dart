@@ -11,6 +11,7 @@ import '../../data/model/song_model.dart';
 import '../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../bloc/play_box_bloc/bloc.dart';
 import '../bloc/play_box_bloc/event.dart';
+import '../bloc/song_bloc/song_bloc.dart';
 import '../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../helpers/play_song_page_component/circular_seekbar.dart';
 import '../helpers/play_song_page_component/container_all_songs_list.dart';
@@ -67,6 +68,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
         songImage: widget.songImage,
         singerName: widget.singerName,
         pageName: widget.pageName));
+
+    BlocProvider.of<SongBloc>(context).add(FetchNewSongs());
+    BlocProvider.of<SongBloc>(context).add(FetchAllSongs());
   }
 
   @override

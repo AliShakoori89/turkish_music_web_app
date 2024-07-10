@@ -62,8 +62,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(SignUserRepository())),
-        BlocProvider(create: (context) => SongBloc()..add(FetchNewSongs())),
-        BlocProvider(create: (context) => SongBloc()..add(FetchAllSongs())),
+        BlocProvider(create: (context) => SongBloc()),
         BlocProvider(
             create: (BuildContext context) =>
                 NewSongBloc(NewSongRepository())),

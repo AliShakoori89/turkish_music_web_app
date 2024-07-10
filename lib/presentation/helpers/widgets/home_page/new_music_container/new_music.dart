@@ -73,7 +73,7 @@ class _NewSongState extends State<NewSong>{
                             categories: null
                         );
 
-
+                        print("=============             "+newSong.toString());
 
                         Navigator.push(
                             context,

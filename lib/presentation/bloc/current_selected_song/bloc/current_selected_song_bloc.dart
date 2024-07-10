@@ -11,6 +11,8 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
   SongDataModel? get currentSelectedSong => _currentSelectedSong;
 
   CurrentSelectedSongBloc() : super(CurrentSelectedSongInitial()) {
+
+
     on<SelectSong>((event, emit) {
       emit(LoadingNewSong());
       _currentSelectedSong = event.songModel;
