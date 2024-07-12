@@ -27,4 +27,13 @@ class AlbumRepository {
     var singerAllAlbum = AlbumModel.fromJson(productJson);
     return singerAllAlbum.data;
   }
+
+  Future<dynamic> getAlbumLength(int id) async {
+    ApiBaseHelper api = ApiBaseHelper();
+    final response = await api.get('api/Album/GetOneAlbum/$id');
+    ///api/Album/GetOneAlbum/{id}
+    final productJson = json.decode(response.body);
+    // var newDongData = NewAlbumModel.fromJson(productJson);
+    // return newDongData;
+  }
 }

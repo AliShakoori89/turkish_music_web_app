@@ -81,7 +81,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                           children: [
                             PreviousButton(pageName: requirement[4]),
                             PlayButton(),
-                            NextButton(pageName: requirement[4],)
+                            // NextButton(pageName: requirement[4],)
                           ],
                         ),
                       ),

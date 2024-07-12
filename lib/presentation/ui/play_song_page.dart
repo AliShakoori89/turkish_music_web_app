@@ -49,7 +49,6 @@ class PlaySongPage extends StatefulWidget {
 class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
 
   bool loop = false;
-  List playlistIDs = [];
   late final AnimationController _controller = AnimationController(
       duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
 
@@ -97,7 +96,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
 
                 if (state is LoadingNewSong) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is SelectedSongFetched) {
+                }
+                else if (state is SelectedSongFetched) {
 
                   var songID = state.songModel.id;
 
@@ -191,9 +191,12 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      PreviousButton(pageName: widget.pageName,),
+                                      PreviousButton(
+                                        pageName: widget.pageName,),
                                       PlayButton(),
-                                      NextButton(pageName: widget.pageName,)
+                                      NextButton(
+                                        pageName: widget.pageName,
+                                        )
                                     ],
                                   ),
                                   Progressbar(

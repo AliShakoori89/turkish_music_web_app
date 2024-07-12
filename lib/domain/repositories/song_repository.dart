@@ -16,7 +16,6 @@ class SongRepository {
         List<SongDataModel> allSongs = [];
         final data = jsonDecode(response.body);
         final List<dynamic> allSongList = data['data'];
-        print(allSongList.length);
         for(int i = 0 ; i < allSongList.length ; i++){
           allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) +
               "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
