@@ -11,7 +11,8 @@ import '../../data/model/song_model.dart';
 import '../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../bloc/play_box_bloc/bloc.dart';
 import '../bloc/play_box_bloc/event.dart';
-import '../bloc/song_bloc/song_bloc.dart';
+import '../bloc/song_bloc/bloc.dart';
+import '../bloc/song_bloc/event.dart';
 import '../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../helpers/play_song_page_component/circular_seekbar.dart';
 import '../helpers/play_song_page_component/container_all_songs_list.dart';
@@ -33,13 +34,15 @@ class PlaySongPage extends StatefulWidget {
   final String singerName;
   final String songImage;
   final String pageName;
+  final int albumID;
   List<SongDataModel>? songList;
   List<NewSongDataModel>? newSongList;
   List<AlbumDataMusicModel>? albumSongList;
 
   PlaySongPage({super.key, required this.songName,
     required this.songFile, required this.songID, this.songList,
-    this.newSongList, this.albumSongList, required this.singerName, required this.songImage, required this.pageName});
+    this.newSongList, this.albumSongList, required this.singerName,
+    required this.songImage, required this.pageName, required this.albumID});
 
 
   @override
@@ -196,6 +199,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                       PlayButton(),
                                       NextButton(
                                         pageName: widget.pageName,
+                                        albumID: widget.albumID,
                                         )
                                     ],
                                   ),

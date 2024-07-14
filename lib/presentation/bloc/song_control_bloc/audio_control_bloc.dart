@@ -11,6 +11,11 @@ part 'audio_control_state.dart';
 enum SongControlStatus { play, pause }
 
 class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
+
+  SongDataModel? _currentSelectedSong;
+
+  SongDataModel? get currentSelectedSong => _currentSelectedSong;
+
   Stream<Duration> get positionStream => _audioPlayer.onPositionChanged;
 
   StreamSubscription? _audioStream;
@@ -26,7 +31,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     });
 
     on<SongCompleted>((event, emit) async {
-      emit(AudioPausedState());
+      final Source source = UrlSource(event.SongAlbumModel.musics ?? "");
+      emit(PlayNextSong());
     });
 
     on<PlaySong>((event, emit) async {
@@ -44,6 +50,19 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       await _audioPlayer.resume();
       emit(AudioPlayedState());
     });
+
+    on<PlayNextSong>((event, emit) async{
+      emit(AudioLoadingNewSong());
+      final SongDataModel nextSong;
+      final index = getCurrentSongIndex(event.songs);
+      if (index == event.songs.length - 1) {
+        nextSong = event.songs.elementAt(0);
+      } else {
+        nextSong = event.songs.elementAt(index + 1);
+      }
+      _currentSelectedSong = nextSong;
+      emit(SelectedSongFetched(songModel: nextSong));
+    });
   }
 
   stopAudio() async {
@@ -59,5 +78,10 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     _audioStream?.cancel();
     _audioPlayer.dispose();
     return super.close();
+  }
+
+  getCurrentSongIndex(List<SongDataModel> songs) {
+    final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
+    return currentSongIndex;
   }
 }

@@ -114,7 +114,7 @@ class _SingerPageState extends State<SingerPage> {
                                 second: state.singerAllAlbum[index].musics![0].second,
                                 singerName: widget.artistDetail.name,
                                 album: null,
-                                albumId: null,
+                                albumId: state.singerAllAlbum[index].id,
                                 categories: null
                             );
 
@@ -132,6 +132,7 @@ class _SingerPageState extends State<SingerPage> {
                                         songID: songDataModel.id!,
                                         singerName: songDataModel.singerName!,
                                         songImage: songDataModel.imageSource!,
+                                        albumID: songDataModel.albumId!,
                                         pageName: "SingerPage",
                                       ),
 

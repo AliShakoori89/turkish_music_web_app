@@ -13,6 +13,7 @@ import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_box_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
+import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
@@ -23,7 +24,7 @@ import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/song_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(SignUserRepository())),
-        BlocProvider(create: (context) => SongBloc()),
+        BlocProvider(create: (context) => SongBloc(SongRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 NewSongBloc(NewSongRepository())),

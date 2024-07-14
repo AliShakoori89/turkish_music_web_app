@@ -56,7 +56,6 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                       children: List.generate(
                           newAlbum!.data!.length,
                           (index) {
-                            print(newAlbum.data![index].imageSource!);
                             return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

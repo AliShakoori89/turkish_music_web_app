@@ -23,7 +23,6 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
       emit(LoadingNewSong());
       final SongDataModel nextSong;
       final index = getCurrentSongIndex(event.songs);
-      print("))))))))))))))))        "+event.songs.length.toString());
       if (index == event.songs.length - 1) {
         nextSong = event.songs.elementAt(0);
       } else {
@@ -49,7 +48,6 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
 
   getCurrentSongIndex(List<SongDataModel> songs) {
     final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
-    print("qqqqqqqqqqqqqq                "+_currentSelectedSong!.albumId.toString());
     return currentSongIndex;
   }
 }

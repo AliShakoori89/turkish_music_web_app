@@ -2,11 +2,13 @@ import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/song_bloc.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/state.dart';
+import '../../../bloc/song_bloc/bloc.dart';
+import '../../../bloc/song_bloc/event.dart';
+import '../../../bloc/song_bloc/state.dart';
 import '../../../helpers/play_song_page_component/mini_palying_container.dart';
 import '../../play_song_page.dart';
 
@@ -29,7 +31,7 @@ class _searchPageState extends State<searchPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<SongBloc, SongState>(builder: (context, state) {
 
-      List<SongDataModel> music = BlocProvider.of<SongBloc>(context).allSongs;
+      List<SongDataModel> music = state.allSongList;
 
       return Scaffold(
       body: SafeArea(
@@ -100,6 +102,7 @@ class _searchPageState extends State<searchPage> {
                                               singerName: musicItem.singerName!,
                                               songImage: musicItem.album!.imageSource!,
                                               pageName: "searchPage",
+                                              albumID: 0,
                                             ),
 
                                           )));

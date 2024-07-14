@@ -89,6 +89,7 @@ class _NewSongState extends State<NewSong>{
                                     songImage: state.newSong[index].imageSource,
                                     singerName: songDataModel.singerName!,
                                     newSongList: newSong,
+                                    albumID: 0,
                                     pageName: "NewSong",
                                   ),
 

@@ -65,7 +65,7 @@ class ContainerAllSongsList extends StatelessWidget {
                   second: songList != null ? songList![index].second : newSongList != null ? newSongList![index].second : albumSongList![index].second,
                   minute:  songList != null ? songList![index].minute : newSongList != null ? newSongList![index].minute : albumSongList![index].minute,
                   categories: null,
-                  albumId: null,
+                  albumId: songList != null ? songList![index].albumId : newSongList != null ? 0 : albumSongList![index].albumId,
                   album: null);
 
                   Navigator.pushAndRemoveUntil(
@@ -100,6 +100,10 @@ class ContainerAllSongsList extends StatelessWidget {
                                   : newSongList != null ? newSongList![index].singer.name
                                   : "",
                               pageName: "ContainerAllSongsList",
+                              albumID: songList != null
+                                  ? songList![index].albumId!
+                                  : newSongList != null ? 0
+                                  : songList![index].albumId!,
                             ),
 
                           )),
