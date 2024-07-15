@@ -30,11 +30,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       }
     });
 
-    on<SongCompleted>((event, emit) async {
-      final Source source = UrlSource(event.SongAlbumModel.musics ?? "");
-      emit(PlayNextSong());
-    });
-
     on<PlaySong>((event, emit) async {
       final Source source = UrlSource(event.currentSong.fileSource ?? "");
       await _audioPlayer.play(source);
@@ -51,18 +46,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       emit(AudioPlayedState());
     });
 
-    on<PlayNextSong>((event, emit) async{
-      emit(AudioLoadingNewSong());
-      final SongDataModel nextSong;
-      final index = getCurrentSongIndex(event.songs);
-      if (index == event.songs.length - 1) {
-        nextSong = event.songs.elementAt(0);
-      } else {
-        nextSong = event.songs.elementAt(index + 1);
-      }
-      _currentSelectedSong = nextSong;
-      emit(SelectedSongFetched(songModel: nextSong));
-    });
   }
 
   stopAudio() async {

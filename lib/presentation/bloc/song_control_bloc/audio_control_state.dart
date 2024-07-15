@@ -10,11 +10,3 @@ final class AudioPlayedState extends AudioControlState {}
 final class AudioPausedState extends AudioControlState {}
 
 final class AudioErrorState extends AudioControlState {}
-
-final class AudioLoadingNewSong extends AudioControlState {}
-
-final class AudioSelectedSongFetched extends AudioControlState {
-  final SongDataModel songModel;
-
-  AudioSelectedSongFetched({required this.songModel});
-}
