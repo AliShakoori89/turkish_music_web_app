@@ -24,10 +24,21 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   AudioPlayer get audioPlayer => _audioPlayer;
 
   AudioControlBloc() : super(AudioControlInitial()) {
-    _audioStream = _audioPlayer.eventStream.listen((event) {
-      if (event.position == event.duration) {
-        add(SongCompleted());
+    _audioStream = _audioPlayer.onPlayerComplete.listen((event) {
+    add(SongCompleted());
+    });
+
+    on<SongCompleted>((event, emit) async {
+      emit(AudioLoadingNewSong());
+      final SongDataModel nextSong;
+      final index = getCurrentSongIndex(event.songs);
+      if (index == event.songs.length - 1) {
+        nextSong = event.songs.elementAt(0);
+      } else {
+        nextSong = event.songs.elementAt(index + 1);
       }
+      _currentSelectedSong = nextSong;
+      emit(AudioSelectedSongFetched(songModel: nextSong));
     });
 
     on<PlaySong>((event, emit) async {
@@ -44,6 +55,23 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     on<ResumeSong>((event, emit) async {
       await _audioPlayer.resume();
       emit(AudioPlayedState());
+    });
+
+    on<initialSong>((event, emit) async {
+      emit(AudioControlInitial());
+    });
+
+    on<PlayNextSong>((event, emit) {
+      emit(AudioLoadingNewSong());
+      final SongDataModel nextSong;
+      final index = getCurrentSongIndex(event.songs);
+      if (index == event.songs.length - 1) {
+        nextSong = event.songs.elementAt(0);
+      } else {
+        nextSong = event.songs.elementAt(index + 1);
+      }
+      _currentSelectedSong = nextSong;
+      emit(AudioSelectedSongFetched(songModel: nextSong));
     });
 
   }

@@ -47,7 +47,7 @@ class _NextButtonState extends State<NextButton> {
             } else {
               context
                   .read<CurrentSelectedSongBloc>()
-                  .add(PlayNextSong(songs: state.newSongList));
+                  .add(PlayPreviousSong(songs: state.newSongList));
             }
           },
           icon: Container(

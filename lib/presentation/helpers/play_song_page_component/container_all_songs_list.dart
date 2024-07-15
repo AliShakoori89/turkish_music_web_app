@@ -103,7 +103,7 @@ class ContainerAllSongsList extends StatelessWidget {
                               albumID: songList != null
                                   ? songList![index].albumId!
                                   : newSongList != null ? 0
-                                  : songList![index].albumId!,
+                                  : albumSongList![index].albumId!,
                             ),
 
                           )),

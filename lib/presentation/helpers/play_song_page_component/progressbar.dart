@@ -46,8 +46,6 @@ class Progressbar extends StatelessWidget {
                       value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
                       max: double.parse(minute ?? "0") * 60 + double.parse(second ?? "0"),
                       min: 0,
-                      // activeColor: Theme.of(context).colorScheme.background,
-                      onChangeEnd: (value) {},
                       onChanged: (val) {
                         BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
                       }),
@@ -55,7 +53,21 @@ class Progressbar extends StatelessWidget {
               ],
             );
           } else {
-            return const SizedBox();
+            return SliderTheme(
+              data: SliderTheme.of(context)
+                  .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
+              child: Slider(
+                  activeColor: Colors.purple,
+                  inactiveColor: Colors.black,
+                  value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
+                  max: double.parse(minute ?? "0") * 60 + double.parse(second ?? "0"),
+                  min: 0,
+                  // activeColor: Theme.of(context).colorScheme.background,
+                  onChangeEnd: (value) {},
+                  onChanged: (val) {
+                    BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
+                  }),
+            );
           }
         }));
   }
