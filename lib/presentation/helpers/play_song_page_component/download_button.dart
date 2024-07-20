@@ -67,64 +67,8 @@ class _DownloadButtonState extends State<DownloadButton> {
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () async{
-
-          // RequestPermissionManager(PermissionType.storage)
-          //     .onPermissionDenied(() {
-          //   // Handle permission denied for location
-          //   print('storage permission denied');
-          // }).onPermissionGranted(() {
-          //   // Handle permission granted for location
-          //   print('storage permission granted');
-          // }).onPermissionPermanentlyDenied(() {
-          //   // Handle permission permanently denied for location
-          //   print('storage permission permanently denied');
-          // }).execute();
-
-          // var name = await getFilePath(widget.songName);
-          // String url = widget.songFilePath; // The download link
-          // String filename = widget.songName; // Creates a string filename
-          //
-          // Directory directory = await getApplicationDocumentsDirectory();
-          // String path = join(directory.path, filename);
-          // File file = File("https://api.turkishmusicapi.ir/TurkishMusicFiles/NewMusicFiles/2024-05-01-22-05-47-kelepce.mp3");
-          // List<int> fileBytes = await file.readAsBytes();
-          // _download(url);
-
-          // print("url             "+url);
-          // print("filename               "+filename);
-          // print("name                        "+name);
-          // print("file                  "+file.toString());
-
-          // print("fileBytes                    "+fileBytes.toString());
-
-          await FlutterDownloader.enqueue(
-            url: widget.songFilePath,
-            savedDir: "/storage/emulated/0/Download",
-            fileName: widget.songName, // Optional: define a filename
-            showNotification: true, // Optional: show a notification with progress
-            openFileFromNotification: true, // Optional: open the file when tapped
-          );
-          // saveFileLocally(filename, fileBytes);
-          //
-          // saveFileLocally(filename, );
         },
         icon: Icon(Icons.download));
   }
 
-  void _download(String url) async {
-    final status = await Permission.storage.request();
-
-    if(status.isGranted) {
-      final externalDir = await getExternalStorageDirectory();
-
-      final id = await FlutterDownloader.enqueue(
-        url: url,
-        savedDir: externalDir!.path,
-        showNotification: true,
-        openFileFromNotification: true,
-      );
-    } else {
-      print('Permission Denied');
-    }
-  }
 }

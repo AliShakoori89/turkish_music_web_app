@@ -19,12 +19,12 @@ import '../helpers/play_song_page_component/container_all_songs_list.dart';
 import '../helpers/play_song_page_component/download_button.dart';
 import '../helpers/play_song_page_component/favorite.dart';
 import '../helpers/play_song_page_component/next_button.dart';
-import '../helpers/play_song_page_component/normalize_button.dart';
+import '../helpers/play_song_page_component/repeat_button.dart';
 import '../helpers/play_song_page_component/play_button.dart';
 import '../helpers/play_song_page_component/play_list_button.dart';
 import '../helpers/play_song_page_component/previous_button.dart';
 import '../helpers/play_song_page_component/progressbar.dart';
-import '../helpers/play_song_page_component/repeat_button.dart';
+import '../helpers/play_song_page_component/loop_button.dart';
 
 class PlaySongPage extends StatefulWidget {
 
@@ -51,7 +51,6 @@ class PlaySongPage extends StatefulWidget {
 
 class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver , SingleTickerProviderStateMixin {
 
-  bool loop = false;
   late final AnimationController _controller = AnimationController(
       duration: const Duration(milliseconds: 200), vsync: this, value: 1.0);
 
@@ -188,7 +187,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                           songFilePath: state.songModel.fileSource!,
                                           songName: state.songModel.name!
                                       ),
-                                      NormalizeButton()
+                                      repeatButton()
                                     ],
                                   ),
                                   Row(
@@ -210,7 +209,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       PlayListButton(),
-                                      RepeatButton(loop: loop)
+                                      loopButton()
                                     ],
                                   ),
                                 ],

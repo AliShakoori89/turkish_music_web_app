@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:turkish_music_app/data/model/song_model.dart';
 
 import '../../data/model/new-song_model.dart';
 import '../../data/network/api_base_helper.dart';
@@ -8,7 +9,7 @@ class NewSongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  Future<dynamic> getNewMusic() async {
+  Future<List<NewSongDataModel>> getNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/NewMusic/GetAll');
     final productJson = json.decode(response.body);
