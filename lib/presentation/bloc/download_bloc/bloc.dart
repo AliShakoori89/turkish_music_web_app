@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/state.dart';
