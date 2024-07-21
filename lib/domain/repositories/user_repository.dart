@@ -28,7 +28,7 @@ class SignUserRepository {
       return 'sent';
     }
     else {
-      Get.snackbar("Registration", "The desired user exists .",
+      Get.snackbar("Registration", "The desired user exists !!!",
           backgroundColor: const Color(
               0xFFC20808).withOpacity(0.2));
 

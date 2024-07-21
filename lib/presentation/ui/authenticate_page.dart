@@ -1,5 +1,5 @@
 // presentation/ui/authenticate_page.dart
-import 'dart:async';import 'dart:async';
+import 'dart:async';
 import 'dart:ui';
 import 'dart:developer' as developer;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -387,13 +387,24 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 }
                 else if(string == "LOG IN"){
 
-                  registerBloc.add(FirstLoginEvent(email: emailController.text));
+                  // registerBloc.add(FirstLoginEvent(email: emailController.text));
 
                   showDialog(
                     context: context,
                     builder: (_) {
                       return AlertDialog(
-                        title: const Text('Enter Code : '),
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Enter Code : '),
+                            Text("Please wait for the code by email ...",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey
+                            ),),
+                          ],
+                        ),
                         content:  OtpTextField(
                           numberOfFields: 6,
                           borderColor: Colors.white,
@@ -404,6 +415,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             left: 2
                           ),
                           focusedBorderColor: const Color(0xffb188ef),
+                          keyboardType: TextInputType.number,
                           fieldWidth: 35,
                           filled: true,
                           showFieldAsBox: true,
