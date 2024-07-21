@@ -1,18 +1,13 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:flowder_ex/flowder_ex.dart';
-import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path/path.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/download_bloc/event.dart';
 
-import '../../../../../data/model/file_model.dart';
-import '../../../../../permision_type.dart';
-import '../../../../../request_permission_manager.dart';
+import '../../bloc/download_bloc/state.dart';
 
 class DownloadButton extends StatefulWidget {
 
@@ -28,47 +23,52 @@ class DownloadButton extends StatefulWidget {
 
 class _DownloadButtonState extends State<DownloadButton> {
 
-  Future<String> getFilePath(String filename) async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-    return join(appDocPath, filename);
+  late TargetPlatform platform;
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) {
+      platform = TargetPlatform.android;
+    } else {
+      platform = TargetPlatform.iOS;
+    }
   }
-
-  Future<void> saveFileLocally(String filename, List<int> bytes) async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, filename);
-    File file = File(path);
-    await file.writeAsBytes(bytes);
-    print("File saved at $path");
-  }
-
-  Future<String> getApplicationDocumentsPath() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
-  Future<File> createAndWriteFile(String fileName, String content) async {
-    final path = await getApplicationDocumentsPath();
-    final file = File('$path/$fileName');
-    return file.writeAsString(content);
-  }
-
-  Future<File> writeTextFile(String fileName, String content) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/$fileName';
-    final file = File(filePath);
-
-    // Write the file
-    return file.writeAsString(content);
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () async{
+        onPressed: () {
+          BlocProvider.of<DownloadBloc>(context).add(
+              DownloadFileEvent(songFilePath: widget.songFilePath, songName: widget.songName, platform: platform));
+
         },
-        icon: Icon(Icons.download));
+        icon: BlocBuilder<DownloadBloc, DownloadState>(builder: (context, state) {
+          if(state.status.isInitial ){
+            return Icon(Icons.download_sharp,
+              color: Colors.grey,);
+          }
+          else if(state.status.isLoading ){
+            return SizedBox(
+              width: 15,
+              height: 15,
+              child: CircularProgressIndicator(
+                color: Colors.purple,
+              ),
+            );
+          }
+          else if(state.status.isSuccess){
+            return Icon(Icons.download_sharp,
+              color: Colors.grey);
+          }
+          else if(state.status.isError){
+            return Icon(Icons.download_sharp,
+              color: Colors.grey);
+          }
+          return Container(width: 5,height: 5,color: Colors.black,);
+    })
+        //
+    );
   }
 
 }

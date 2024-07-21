@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:path/path.dart';
@@ -25,7 +26,7 @@ class DatabaseHelper{
 
   static Database? _database;
 
-  Future<Database> get database async =>
+  FutureOr<Database> get database async =>
       _database ??= await _initiateDatabase();
 
   _initiateDatabase() async {
@@ -35,7 +36,7 @@ class DatabaseHelper{
         version: _databaseVersion, onCreate: _onCreate);
   }
 
-  Future _onCreate(Database db, int version) async {
+  FutureOr _onCreate(Database db, int version) async {
     await db.execute('CREATE TABLE $musicTable ('
         '$columnSongId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
         '$columnSongName TEXT,'

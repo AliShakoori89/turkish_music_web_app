@@ -7,7 +7,6 @@ import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../widgets/singer_name_trackName_image.dart';
 import '../widgets/top_arrow_icon.dart';
-import 'next_button.dart';
 
 class MiniPlayingContainer extends StatefulWidget {
 

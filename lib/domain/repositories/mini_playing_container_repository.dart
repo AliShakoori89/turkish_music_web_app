@@ -1,13 +1,15 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MiniPlayingContainerRepository {
 
-  Future<dynamic> firstShowMiniPlayingContainer() async{
+  FutureOr<dynamic> firstShowMiniPlayingContainer() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('firstShowMiniPlayingContainer', true);
   }
 
-  Future<bool> isItTheFirstTimeTtIsShown() async{
+  FutureOr<bool> isItTheFirstTimeTtIsShown() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final bool? firstShow = prefs.getBool('firstShowMiniPlayingContainer');
     if(firstShow != null){
@@ -17,7 +19,7 @@ class MiniPlayingContainerRepository {
     }
   }
 
-  Future<dynamic> writeMiniPlayingRequirement(String songName, String songFile, String songImage,
+  FutureOr<dynamic> writeMiniPlayingRequirement(String songName, String songFile, String songImage,
       String singerName, String pageName) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('songName', songName);
@@ -27,7 +29,7 @@ class MiniPlayingContainerRepository {
     await prefs.setString('pageName', pageName);
   }
 
-  Future<List> readMiniPlayingRequirement() async{
+  FutureOr<List> readMiniPlayingRequirement() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String songName = prefs.getString('songName')!;
     final String songFile = prefs.getString('songFile')!;

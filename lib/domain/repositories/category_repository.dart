@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -8,7 +9,7 @@ class CategoryRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  Future<dynamic> getAllCategory() async {
+  FutureOr<dynamic> getAllCategory() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Category/GetAll');
 

@@ -5,7 +5,7 @@ import '../../bloc/song_bloc/bloc.dart';
 import '../../bloc/song_bloc/state.dart';
 
 class PreviousButton extends StatelessWidget {
-  const PreviousButton({super.key, required this.pageName});
+  const PreviousButton({key, required this.pageName});
 
   final String pageName;
 
@@ -33,7 +33,7 @@ class PreviousButton extends StatelessWidget {
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
-                      offset: const Offset(
+                      offset: Offset(
                         1.0,
                         1.0,
                       ),

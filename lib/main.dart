@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
+import 'package:turkish_music_app/domain/repositories/download_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_list_repository.dart';
@@ -17,6 +19,7 @@ import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
@@ -30,15 +33,11 @@ import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page.dart';
 
-Future<void> main() async{
+FutureOr<void> main() async{
 
   await dotenv.load(fileName: ".env");
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  await FlutterDownloader.initialize(
-      debug: true, // optional: set to false to disable printing logs to console (default: true)
-  );
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = (prefs.getString('accessToken') == null)
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
 
   final bool isLoggedIn;
 
-  MyApp({super.key, required this.isLoggedIn});
+  MyApp({key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +93,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 MiniPlayingContainerBloc(MiniPlayingContainerRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                DownloadBloc(DownloadRepository())),
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -103,6 +105,18 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
           routes: <String, WidgetBuilder>{
             '/home': (BuildContext context) => MainPage(),
+          },
+          onInit: () async {
+            try {
+              var status = await Permission.storage.request();
+              if (status.isGranted) {
+                print('isGranted');
+              } else if (status.isPermanentlyDenied) {
+                openAppSettings();
+              }
+            } catch (e) {
+              print('~~error~~~>>>>>> $e');
+            }
           },
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?

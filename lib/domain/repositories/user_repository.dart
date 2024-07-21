@@ -9,8 +9,6 @@ import '../../data/network/api_base_helper.dart';
 
 class SignUserRepository {
 
-
-
   FutureOr<String?> requestPublic(String email) async {
 
     await dotenv.load();
@@ -73,7 +71,7 @@ class SignUserRepository {
     }
   }
 
-  Future<bool> secondLogin(String email, String verificationToken) async {
+  FutureOr<bool> secondLogin(String email, String verificationToken) async {
 
     await dotenv.load();
     final String? apiKey = dotenv.get("apiKey");
@@ -97,7 +95,7 @@ class SignUserRepository {
     }
   }
 
-  Future<UserModel> getCurrentUser() async {
+  FutureOr<UserModel> getCurrentUser() async {
     ApiBaseHelper api = ApiBaseHelper();
 
     String accessToken = await getAccessTokenValue();

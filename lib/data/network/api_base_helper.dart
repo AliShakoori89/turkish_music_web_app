@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ class ApiBaseHelper {
 
 
 
-  Future<dynamic> get(String url,
+  FutureOr<dynamic> get(String url,
       {String accessToken = "", String query = "", String page = "", String count = "", String searchChar = ""}) async {
     try {
 
@@ -39,7 +40,7 @@ class ApiBaseHelper {
     }
   }
 
-  Future<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
+  FutureOr<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
 
     try {
 

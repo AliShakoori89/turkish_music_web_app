@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -71,7 +72,7 @@ class PlayListRepository {
     }
   }
 
-  Future<dynamic> getMusicFromPlayList() async{
+  FutureOr<dynamic> getMusicFromPlayList() async{
 
     ApiBaseHelper api = ApiBaseHelper();
 

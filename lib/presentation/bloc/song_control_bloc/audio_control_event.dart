@@ -1,24 +1,24 @@
 part of 'audio_control_bloc.dart';
 
 @immutable
-sealed class AudioControlEvent {}
+class AudioControlEvent {}
 
-final class PlaySong extends AudioControlEvent {
+class PlaySong extends AudioControlEvent {
   final SongDataModel currentSong;
   PlaySong({required this.currentSong});
 }
 
-final class PauseSong extends AudioControlEvent {}
+class PauseSong extends AudioControlEvent {}
 
-final class initialSong extends AudioControlEvent {}
+class initialSong extends AudioControlEvent {}
 
-final class ResumeSong extends AudioControlEvent {}
+class ResumeSong extends AudioControlEvent {}
 
-final class StopRepeating extends AudioControlEvent {}
+class StopRepeating extends AudioControlEvent {}
 
-final class RepeatSong extends AudioControlEvent {}
+class RepeatSong extends AudioControlEvent {}
 
-final class SongCompleted extends AudioControlEvent {
+class SongCompleted extends AudioControlEvent {
   final List<SongDataModel> songs;
   SongCompleted({required this.songs});
 }

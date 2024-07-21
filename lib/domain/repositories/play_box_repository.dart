@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../../data/model/new-song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
@@ -8,7 +8,7 @@ class PlayBoxRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  Future<dynamic> getPlayBox(String songName) async {
+  FutureOr<dynamic> getPlayBox(String songName) async {
     ApiBaseHelper api = ApiBaseHelper();
     List<NewSongDataModel> renewSongData =  [];
     final response = await api.get('/api/NewMusic/GetAll');
@@ -23,23 +23,19 @@ class PlayBoxRepository {
     return renewSongData;
   }
 
-  Future<dynamic> getSongTime(String songFile) async {
+  FutureOr<dynamic> getSongTime(String songFile) async {
 
     double songTime = 0;
     return songTime;
   }
 
-  Future<dynamic> getSongMinute(String songFile) async {
+  FutureOr<dynamic> getSongMinute(String songFile) async {
 
     int songEndMinute = 0 ;
-
-
-
-
     return songEndMinute;
   }
 
-  Future<dynamic> getSongSecond(String songFile) async {
+  FutureOr<dynamic> getSongSecond(String songFile) async {
 
     String songEndSecond = '0';
 

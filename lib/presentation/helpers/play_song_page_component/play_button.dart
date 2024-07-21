@@ -31,7 +31,7 @@ class PlayButton extends StatelessWidget {
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
-                    offset: const Offset(
+                    offset: Offset(
                       1.0,
                       1.0,
                     ),

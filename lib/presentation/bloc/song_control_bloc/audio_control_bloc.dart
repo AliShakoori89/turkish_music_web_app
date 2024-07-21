@@ -31,18 +31,18 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   AudioControlBloc() : super(AudioControlInitial()) {
     _audioStream = _audioPlayer.onPlayerComplete.listen((event) async{
       List<NewSongDataModel> songs = await newSongRepository.getNewMusic();
-      SongDataModel songDataModel = SongDataModel(
-        id: NewSongDataModel[].id,
-        name: ,
-        singerName: ,
-        album: ,
-        albumId: ,
-        fileSource: ,
-        imageSource: ,
-        minute: ,
-        second: ,
-      );
-      add(SongCompleted(songs: songs));
+      // SongDataModel songDataModel = SongDataModel(
+      //   id: songs[0].id,
+      //   name: songs[0].id,
+      //   singerName: songs[0].id,
+      //   album: songs[0].id,
+      //   albumId: songs[0].id,
+      //   fileSource: songs[0].id,
+      //   imageSource: songs[0].id,
+      //   minute: songs[0].id,
+      //   second: songs[0].id,
+      // );
+      // add(SongCompleted(songs: songDataModel));
     });
 
     on<SongCompleted>((event, emit) async {
@@ -107,9 +107,12 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   }
 
   @override
-  Future<void> close() {
-    _audioStream?.cancel();
-    _audioPlayer.dispose();
+  Future<void> close() async {
+    if (_audioStream != null) {
+      await _audioStream!.cancel(); // Use await to ensure it finishes
+      _audioStream = null; // Optionally set to null for safety
+    }
+    await _audioPlayer.dispose(); // Use await for proper disposal
     return super.close();
   }
 

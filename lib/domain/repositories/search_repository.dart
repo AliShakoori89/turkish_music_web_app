@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/model/get_all_musics_model.dart';
@@ -7,7 +8,7 @@ class SearchRepository {
 
 final String? apiKey = dotenv.env['map.apikey'];
 
-  Future<dynamic> getSearchSong(String searchWord) async {
+FutureOr<dynamic> getSearchSong(String searchWord) async {
 
     ApiBaseHelper api = ApiBaseHelper();
 

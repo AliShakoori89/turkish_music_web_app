@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
@@ -7,7 +8,7 @@ class SongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  Future<dynamic> getAllMusic() async {
+  FutureOr<dynamic> getAllMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
 
     try {
@@ -28,7 +29,7 @@ class SongRepository {
     }
   }
 
-  Future<dynamic> getAllNewMusic() async {
+  FutureOr<dynamic> getAllNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     try {
       final response = await api.get('/api/NewMusic/GetAll');
@@ -48,7 +49,7 @@ class SongRepository {
     }
   }
 
-  Future<dynamic> getAlbumAllSongs(int id) async {
+  FutureOr<dynamic> getAlbumAllSongs(int id) async {
     ApiBaseHelper api = ApiBaseHelper();
     try {
       final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
