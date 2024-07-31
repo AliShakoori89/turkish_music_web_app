@@ -34,6 +34,7 @@ class ApiBaseHelper {
       final Uri address = Uri(
           host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
       final response = await http.get(address, headers: headers);
+      print("response                             "+response.statusCode.toString());
       return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');

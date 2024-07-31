@@ -75,6 +75,7 @@ dependencies:
   dio: ^5.5.0+1
   fluttertoast: ^8.0.2
   flutter_local_notifications: ^17.2.1+2
+  otp_timer_button: ^1.1.1
 
 dev_dependencies:
   flutter_test:

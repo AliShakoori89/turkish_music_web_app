@@ -22,7 +22,7 @@ class SongRepository {
               "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
         }
         allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
-        return allSongs.reversed;
+        return allSongs;
       }
     }catch (e) {
       throw e.toString();
