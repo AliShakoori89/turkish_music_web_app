@@ -2,6 +2,7 @@ import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
+import '../../../../data/model/album_model.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
@@ -83,9 +84,7 @@ class _searchPageState extends State<searchPage> {
                                       singerName: musicItem.singerName,
                                       minute: musicItem.minute,
                                       second: musicItem.second,
-                                      album: musicItem.album,
                                       albumId: musicItem.albumId,
-                                      categories: musicItem.categories
                                   );
 
                                   Navigator.push(
@@ -103,6 +102,7 @@ class _searchPageState extends State<searchPage> {
                                               songImage: musicItem.album!.imageSource!,
                                               pageName: "searchPage",
                                               albumID: 0,
+                                              albumSongList: [],
                                             ),
 
                                           )));

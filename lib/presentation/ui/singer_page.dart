@@ -6,6 +6,7 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page.dart';
+import '../../data/model/album_model.dart';
 import '../../data/model/singer_model.dart';
 import '../../data/model/song_model.dart';
 import '../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
@@ -126,14 +127,14 @@ class _SingerPageState extends State<SingerPage> {
                                           songModel: songDataModel
                                       )),
                                       child: PlaySongPage(
-                                        songName: songDataModel.name!,
-                                        songFile: songDataModel.fileSource!,
-                                        albumSongList: state.singerAllAlbum[index].musics,
-                                        songID: songDataModel.id!,
-                                        singerName: songDataModel.singerName!,
-                                        songImage: songDataModel.imageSource!,
-                                        albumID: songDataModel.albumId!,
+                                        songName: state.singerAllAlbum[index].name!,
+                                        songFile: newPath,
+                                        songID: state.singerAllAlbum[index].id!,
+                                        singerName: widget.artistDetail.name,
+                                        songImage: state.singerAllAlbum[index].imageSource!,
+                                        albumID: state.singerAllAlbum[index].id!,
                                         pageName: "SingerPage",
+                                        albumSongList: state.singerAllAlbum[index].musics!
                                       ),
 
                                     )));

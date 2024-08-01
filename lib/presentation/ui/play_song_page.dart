@@ -34,15 +34,14 @@ class PlaySongPage extends StatefulWidget {
   final String singerName;
   final String songImage;
   final String pageName;
-  final int albumID;
-  List<SongDataModel>? songList;
-  List<NewSongDataModel>? newSongList;
-  List<AlbumDataMusicModel>? albumSongList;
+  int? albumID;
+
+  final List<AlbumDataMusicModel> albumSongList;
 
   PlaySongPage({super.key, required this.songName,
-    required this.songFile, required this.songID, this.songList,
-    this.newSongList, this.albumSongList, required this.singerName,
-    required this.songImage, required this.pageName, required this.albumID});
+    required this.songFile, required this.songID,
+    required this.albumSongList, required this.singerName,
+    required this.songImage, required this.pageName, this.albumID});
 
 
   @override
@@ -194,11 +193,12 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       PreviousButton(
-                                        pageName: widget.pageName,),
+                                        pageName: widget.pageName,
+                                        albumSongs: widget.albumSongList,),
                                       PlayButton(),
                                       NextButton(
                                         pageName: widget.pageName,
-                                        albumID: widget.albumID,
+                                        categoryAllSongs: widget.albumSongList,
                                         )
                                     ],
                                   ),
@@ -217,16 +217,13 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                             ),
                             SizedBox(height: 15,),
                             const Spacer(),
-                          widget.newSongList == null
-                              && widget.songList == null
-                              && widget.albumSongList == null
-                              ? Container()
-                              : Flexible(
+                            Flexible(
                                 flex: 4,
                                 child: ContainerAllSongsList(
-                                  newSongList: widget.newSongList,
-                                  songList: widget.songList,
-                                  albumSongList: widget.albumSongList,
+                                  // newSongList: widget.newSongList,
+                                  // songList: widget.songList,
+                                  singerName: widget.singerName,
+                                  categoryAllSongs: widget.albumSongList,
                                   songName: state.songModel.name!
                                 )
                             )

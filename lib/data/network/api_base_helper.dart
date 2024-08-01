@@ -9,7 +9,6 @@ class ApiBaseHelper {
   final String baseUrl = 'api.turkishmusicapi.ir';
 
 
-
   FutureOr<dynamic> get(String url,
       {String accessToken = "", String query = "", String page = "", String count = "", String searchChar = ""}) async {
     try {
@@ -34,7 +33,6 @@ class ApiBaseHelper {
       final Uri address = Uri(
           host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
       final response = await http.get(address, headers: headers);
-      print("response                             "+response.statusCode.toString());
       return response;
     } on SocketException {
       throw FetchDataException('No Internet connection');
@@ -44,10 +42,6 @@ class ApiBaseHelper {
   FutureOr<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
 
     try {
-
-      // final queryParameters = {
-      //   'apiKey': apiKey
-      // };
 
       final Uri address =
       Uri(host: baseUrl, scheme: "https", query: query, path: url);

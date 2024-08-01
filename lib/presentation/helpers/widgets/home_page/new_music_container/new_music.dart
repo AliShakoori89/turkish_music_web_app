@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
@@ -30,7 +31,7 @@ class _NewSongState extends State<NewSong>{
 
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
-      List<NewSongDataModel> newSong = state.newSong;
+      List<AlbumDataMusicModel> newSong = state.newSong;
 
       if(state.status.isLoading){
         return const NewSongShimmerContainer();
@@ -62,18 +63,16 @@ class _NewSongState extends State<NewSong>{
                             id : newSong[index].id,
                             name: newSong[index].name,
                             imageSource: newSong[index].imageSource,
-                            fileSource: newSong[index].fileSource.substring(0, 4)
+                            fileSource: newSong[index].fileSource!.substring(0, 4)
                                 + "s"
-                                + newSong[index].fileSource.substring(4, newSong[index].fileSource.length),
+                                + newSong[index].fileSource!.substring(4, newSong[index].fileSource!.length),
                             minute: newSong[index].minute,
                             second: newSong[index].second,
-                            singerName: newSong[index].singer.name,
+                            singerName: newSong[index].singerName,
                             album: null,
                             albumId: null,
                             categories: null
                         );
-
-                        print("=============             "+newSong.toString());
 
                         Navigator.push(
                             context,
@@ -83,12 +82,15 @@ class _NewSongState extends State<NewSong>{
                                       songModel: songDataModel
                                   )),
                                   child: PlaySongPage(
-                                    songName: state.newSong[index].name,
-                                    songFile: state.newSong[index].fileSource,
-                                    songID: state.newSong[index].id,
-                                    songImage: state.newSong[index].imageSource,
-                                    singerName: songDataModel.singerName!,
-                                    newSongList: newSong,
+                                    songName: state.newSong[index].name!,
+                                    songFile:
+                                    state.newSong[index].fileSource!.substring(0, 4)
+                                      + "s"
+                                      + state.newSong[index].fileSource!.substring(4, state.newSong[index].fileSource!.length),
+                                    songID: state.newSong[index].id!,
+                                    songImage: state.newSong[index].imageSource!,
+                                    singerName: state.newSong[index].singerName!,
+                                    albumSongList: newSong,
                                     albumID: 0,
                                     pageName: "NewSong",
                                   ),
@@ -103,7 +105,7 @@ class _NewSongState extends State<NewSong>{
                                 strokeAlign: BorderSide.strokeAlignOutside),
                             borderRadius: BorderRadius.circular(25.0),
                             image: DecorationImage(
-                                image: NetworkImage(newSong[index].imageSource),
+                                image: NetworkImage(newSong[index].imageSource!),
                                 opacity: 0.3,
                                 fit: BoxFit.fitWidth
                             )
@@ -111,7 +113,7 @@ class _NewSongState extends State<NewSong>{
                         child: Container(
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(newSong[index].imageSource),
+                                  image: NetworkImage(newSong[index].imageSource!),
                                   fit: BoxFit.contain
                               )
                           ),

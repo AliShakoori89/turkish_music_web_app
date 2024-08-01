@@ -12,23 +12,20 @@ import '../../ui/play_song_page.dart';
 
 class ContainerAllSongsList extends StatelessWidget {
 
-  List<SongDataModel>? songList;
-  List<NewSongDataModel>? newSongList;
-  List<AlbumDataMusicModel>? albumSongList;
+  final List<AlbumDataMusicModel> categoryAllSongs;
   final String songName;
+  final String singerName;
 
 
-  ContainerAllSongsList({super.key, this.songList, this.newSongList, this.albumSongList, required this.songName});
+  ContainerAllSongsList({super.key, required this.categoryAllSongs, required this.songName, required this.singerName});
 
   @override
   Widget build(BuildContext context) {
 
+    // print("Singer Name                            "+categoryAllSongs[0].singerName!);
+
     return ListView.builder(
-            itemCount: songList != null
-                ? songList!.length
-                : newSongList != null
-                ? newSongList!.length
-                : albumSongList!.length,
+            itemCount: categoryAllSongs.length,
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             cacheExtent: 1000,
@@ -37,36 +34,25 @@ class ContainerAllSongsList extends StatelessWidget {
               return InkWell(
                 onTap: (){
 
-                  var path = songList != null
-                      ? songList![index]
-                      .fileSource!.substring(0, 4)
-                      + "s"
-                      + songList![index]
-                          .fileSource!.substring(4, songList![index]
-                          .fileSource!.length)
-                      : newSongList != null ? newSongList![index]
-                      .fileSource.substring(0, 4)
-                      + "s"
-                      + newSongList![index]
-                          .fileSource.substring(4, newSongList![index]
-                          .fileSource.length)
-                      : albumSongList![index].fileSource!
+                  var path = categoryAllSongs[index].fileSource!
                       .substring(0, 4)
                       + "s"
-                      + albumSongList![index].fileSource!.substring(4, albumSongList![index].fileSource!.length);
+                      + categoryAllSongs[index].fileSource!.substring(4, categoryAllSongs[index].fileSource!.length);
 
                   var newPath = path.replaceAll(" ", "%20");
 
                   SongDataModel songDataModel = SongDataModel(
-                  id: songList != null ? songList![index].id : newSongList != null ? newSongList![index].id : albumSongList![index].id,
-                  name: songList != null ? songList![index].name : newSongList != null ? newSongList![index].name : albumSongList![index].name,
-                  imageSource: songList != null ? songList![index].imageSource : newSongList != null ? newSongList![index].imageSource : albumSongList![index].imageSource,
-                  fileSource: newPath,
-                  second: songList != null ? songList![index].second : newSongList != null ? newSongList![index].second : albumSongList![index].second,
-                  minute:  songList != null ? songList![index].minute : newSongList != null ? newSongList![index].minute : albumSongList![index].minute,
-                  categories: null,
-                  albumId: songList != null ? songList![index].albumId : newSongList != null ? 0 : albumSongList![index].albumId,
-                  album: null);
+                    id : categoryAllSongs[index].id,
+                    name: categoryAllSongs[index].name,
+                    imageSource: categoryAllSongs[index].imageSource,
+                    fileSource: categoryAllSongs[index].fileSource!.substring(0, 4)
+                        + "s"
+                        + categoryAllSongs[index].fileSource!.substring(4, categoryAllSongs[index].fileSource!.length),
+                    singerName: singerName,
+                    minute: categoryAllSongs[index].minute,
+                    second: categoryAllSongs[index].second,
+                    albumId: categoryAllSongs[index].albumId,
+                  );
 
                   Navigator.pushAndRemoveUntil(
                       context,
@@ -76,34 +62,13 @@ class ContainerAllSongsList extends StatelessWidget {
                                 songModel: songDataModel
                             )),
                             child: PlaySongPage(
-                              songName: songList != null
-                                  ? songList![index].name!
-                                  : newSongList != null ? newSongList![index].name
-                                  : albumSongList![index].name!,
-                              songFile: songList != null
-                                  ? songList![index].fileSource!
-                                  : newSongList != null ? newSongList![index].fileSource
-                                  : albumSongList![index].fileSource!,
-                              songList: songList,
-                              newSongList: newSongList,
-                              albumSongList: albumSongList,
-                              songID: songList != null
-                                  ? songList![index].id!
-                                  : newSongList != null ? newSongList![index].id
-                                  : albumSongList![index].id!,
-                              songImage: songList != null
-                                  ? songList![index].imageSource!
-                                  : newSongList != null ? newSongList![index].imageSource
-                                  : albumSongList![index].imageSource!,
-                              singerName: songList != null
-                                  ? songList![index].singerName!
-                                  : newSongList != null ? newSongList![index].singer.name
-                                  : "",
+                              songName: categoryAllSongs[index].name!,
+                              songFile: newPath,
+                              albumSongList: categoryAllSongs,
+                              songID: categoryAllSongs[index].id!,
+                              songImage: categoryAllSongs[index].imageSource!,
+                              singerName: singerName,
                               pageName: "ContainerAllSongsList",
-                              albumID: songList != null
-                                  ? songList![index].albumId!
-                                  : newSongList != null ? 0
-                                  : albumSongList![index].albumId!,
                             ),
 
                           )),
@@ -137,11 +102,7 @@ class ContainerAllSongsList extends StatelessWidget {
                               ),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: songList != null
-                                    ? songList![index].imageSource!
-                                    : newSongList != null
-                                    ? newSongList![index].imageSource
-                                    : albumSongList![0].imageSource!,
+                                imageUrl: categoryAllSongs![index].imageSource!,
                                 imageBuilder: (context, imageProvider) => Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
@@ -175,31 +136,22 @@ class ContainerAllSongsList extends StatelessWidget {
                                   borderRadius: BorderRadius
                                       .circular(15),
                                   image: DecorationImage(
-                                      image: NetworkImage(
-                                        songList != null
-                                            ? songList![index].imageSource!
-                                            : newSongList != null
-                                            ? newSongList![index].imageSource
-                                            : albumSongList![0].imageSource!),
+                                      image: NetworkImage(categoryAllSongs![index].imageSource!),
                                       fit: BoxFit.cover
                                   )
                               ),
                             ),
                             const SizedBox(width: 5,),
-                            albumSongList == null
+                            categoryAllSongs == null
                                 ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(songList != null
-                                    ? songList![index].name!
-                                    : newSongList![index].name,
+                                Text(categoryAllSongs![index].name!,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold
                                   ),),
-                                Text(songList != null
-                                    ? songList![index].album!.singer!.name!
-                                    : newSongList![index].singer.name,
+                                Text(categoryAllSongs![index].singerName!,
                                   style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.white54
@@ -207,18 +159,12 @@ class ContainerAllSongsList extends StatelessWidget {
 
                               ],
                             )
-                                : Text(albumSongList![index].name!,)
+                                : Text(categoryAllSongs![index].name!,)
                           ],
                         ),
-                        albumSongList != null
-                            ? albumSongList![index].name == songName
-                                ? PlayingSongAnimation()
-                                : Container()
-                        : newSongList != null
-                            ? newSongList![index].name == songName
-                                ? PlayingSongAnimation()
-                                : Container()
-                            : Container(),
+                        categoryAllSongs![index].name == songName
+                            ? PlayingSongAnimation()
+                            : Container()
                       ],
                     ),
                   ),

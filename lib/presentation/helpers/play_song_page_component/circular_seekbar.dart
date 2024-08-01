@@ -56,7 +56,8 @@ class CustomCircularSeekBar extends StatelessWidget {
           errorWidget: (context, url, error) => Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(Assets.imagesNoImage)
+                  image: AssetImage(Assets.imagesNoImage),
+                  fit: BoxFit.cover
                 ),
                   color: Colors.black12,
                   shape: BoxShape.circle),

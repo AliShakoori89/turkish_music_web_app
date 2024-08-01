@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 
+import '../../../data/model/album_model.dart';
 import '../../../data/model/song_model.dart';
 import '../../../domain/repositories/new_song_repository.dart';
 
@@ -29,8 +30,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   AudioPlayer get audioPlayer => _audioPlayer;
 
   AudioControlBloc() : super(AudioControlInitial()) {
-    _audioStream = _audioPlayer.onPlayerComplete.listen((event) async{
-      List<NewSongDataModel> songs = await newSongRepository.getNewMusic();
+    // _audioStream = _audioPlayer.onPlayerComplete.listen((event) async{
+    //   List<NewSongDataModel> songs = await newSongRepository.getNewMusic();
       // SongDataModel songDataModel = SongDataModel(
       //   id: songs[0].id,
       //   name: songs[0].id,
@@ -43,11 +44,10 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       //   second: songs[0].id,
       // );
       // add(SongCompleted(songs: songDataModel));
-    });
+    // });
 
     on<SongCompleted>((event, emit) async {
       int i = getCurrentSongIndex(event.songs)+1;
-      print("iiiiiiiiiiiiiiiiiiiii                          "+i.toString());
       final Source source = UrlSource(event.songs[i].fileSource ?? "");
       await _audioPlayer.play(source);
       emit(AudioCompleteState());

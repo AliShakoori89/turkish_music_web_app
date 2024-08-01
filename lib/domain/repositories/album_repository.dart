@@ -25,6 +25,7 @@ class AlbumRepository {
     final response = await api.get('/api/Album/GetAlbumsBySingerId/$id', accessToken: accessToken!);
     final productJson = json.decode(response.body);
     var singerAllAlbum = AlbumModel.fromJson(productJson);
+    print(singerAllAlbum.data!.length.toString());
     return singerAllAlbum.data;
   }
 }

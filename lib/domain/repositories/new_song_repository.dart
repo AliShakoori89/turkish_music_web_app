@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../../data/model/album_model.dart';
 import '../../data/model/new-song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
@@ -8,12 +9,28 @@ class NewSongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  FutureOr<List<NewSongDataModel>> getNewMusic() async {
+  FutureOr<List<AlbumDataMusicModel>> getNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
+    List<AlbumDataMusicModel> allNewMusics = [];
     final response = await api.get('/api/NewMusic/GetAll');
     final productJson = json.decode(response.body);
     var newSongData = NewMusicModel.fromJson(productJson);
-    return newSongData.data;
+
+    for(int i = 0 ; i < 4 ; i++){
+      AlbumDataMusicModel albumDataMusicModel = AlbumDataMusicModel(
+        second: newSongData.data[i].second,
+        minute: newSongData.data[i].minute,
+        imageSource: newSongData.data[i].imageSource,
+        fileSource: newSongData.data[i].fileSource,
+        singerName: newSongData.data[i].singer.name,
+        name: newSongData.data[i].name,
+        id: newSongData.data[i].id,
+      );
+      allNewMusics.add(albumDataMusicModel);
+    }
+
+
+    return allNewMusics;
   }
 
 }
