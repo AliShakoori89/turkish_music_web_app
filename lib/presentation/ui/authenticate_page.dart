@@ -420,11 +420,14 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                           ),
                         ),
                         content:  Container(
+                          // color: Colors.amber,
                           height: size.height / 7,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
+                              SizedBox(
+                                height: 5),
                               OtpTextField(
                                 numberOfFields: 6,
                                 borderColor: Colors.white,
@@ -434,6 +437,9 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                   right: 2,
                                   left: 2
                                 ),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+                                ],
                                 focusedBorderColor: const Color(0xffb188ef),
                                 keyboardType: TextInputType.number,
                                 fieldWidth: 35,
