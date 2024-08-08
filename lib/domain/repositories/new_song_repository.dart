@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/model/album_model.dart';
 import '../../data/model/new-song_model.dart';
 import '../../data/network/api_base_helper.dart';
 
 class NewSongRepository {
+
+  final cache = DefaultCacheManager();
 
   final String? apiKey = dotenv.env['map.apikey'];
 

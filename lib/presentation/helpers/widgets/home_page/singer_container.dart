@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
@@ -28,99 +29,87 @@ class SingerContainer extends StatelessWidget {
       List<SingerDataModel> allSinger = state.allSinger;
       List<String> allSingerName = state.allSingerName;
 
-      if(state.status.isLoading){
-        return ArtistShimmerContainer(shimmerLength: artistList.length);
-      }
-      else if(state.status.isSuccess){
-
-        return Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            TitleText(
-              title: "Singer",
-              haveSeeAll: true,
-              allSinger: allSinger,
-              allSingerName: allSingerName,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.0052,
-                  vertical: MediaQuery.of(context).size.width * 0.0055),
-              height: MediaQuery.of(context).size.height * 0.2,
-              width: double.infinity,
-              child: AnimatedListView(
-                duration: 100,
-                scrollDirection: Axis.horizontal,
-                cacheExtent: 1000,
-                children: List.generate(artistList.length, (index) {
-                  return InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SingerPage(
-                                    artistDetail: artistList[index],
-                                  ))
-                      );
-                    },
-                    child: SizedBox(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width * 0.22,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Container(
+      return Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          TitleText(
+            title: "Singer",
+            haveSeeAll: true,
+            allSinger: allSinger,
+            allSingerName: allSingerName,
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.0052,
+                vertical: MediaQuery.of(context).size.width * 0.0055),
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: double.infinity,
+            child: AnimatedListView(
+              duration: 100,
+              scrollDirection: Axis.horizontal,
+              cacheExtent: 1000,
+              children: List.generate(artistList.length, (index) {
+                return InkWell(
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                SingerPage(
+                                  artistDetail: artistList[index],
+                                ))
+                    );
+                  },
+                  child: SizedBox(
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.22,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: CachedNetworkImage(
+                            imageUrl: artistList[index].imageSource,
+                            imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
+                                  border: Border.all(
+                                      width: 1,
                                       color: Colors.purple.withOpacity(0.5),
-                                      blurRadius: 10,
-                                    ),
-                                  ],
+                                      strokeAlign: BorderSide.strokeAlignOutside),
                                   shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          artistList[index].imageSource),
-                                      fit: BoxFit.fill)),
-                              width: MediaQuery.of(context).size.width * 0.2,
+                              image: DecorationImage(
+                                  image: NetworkImage(artistList[index].imageSource),
+                                  fit: BoxFit.fitWidth
+                              )),
                             ),
+                            placeholder: (context, url) => ArtistShimmerContainer(shimmerLength: artistList.length,),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: UnderImageSingerAndSongName(
-                                singerName: artistList[index].name,
-                                isArtist: false),
-                          ),
-                          Spacer()
-                        ],
-                      ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: UnderImageSingerAndSongName(
+                              singerName: artistList[index].name,
+                              isArtist: false),
+                        ),
+                        Spacer()
+                      ],
                     ),
-                  );
-                }),
-              ),
-            )
-          ],
-        );
-      }
-      else if(state.status.isError){
-        return ArtistShimmerContainer(shimmerLength: artistList.length);
-      }
-      return ArtistShimmerContainer(shimmerLength: artistList.length);
+                  ),
+                );
+              }),
+            ),
+          )
+        ],
+      );
     });
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }

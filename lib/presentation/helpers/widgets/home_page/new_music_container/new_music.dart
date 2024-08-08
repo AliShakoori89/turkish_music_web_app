@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
@@ -33,103 +35,102 @@ class _NewSongState extends State<NewSong>{
 
       List<AlbumDataMusicModel> newSong = state.newSong;
 
-      if(state.status.isLoading){
-        return const NewSongShimmerContainer();
-      }
-      else if(state.status.isSuccess){
-        return Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: CarouselSlider(
-                options: CarouselOptions(
-                  height: MediaQuery.of(context).size.height / 5,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 10),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 2000),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  pauseAutoPlayOnTouch: true,
-                  aspectRatio: 2.0,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                    });
-                  },
-                ),
-                items: List.generate(newSong.length, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: InkWell(
-                      onTap: (){
+      return Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: CarouselSlider(
+              options: CarouselOptions(
+                height: MediaQuery.of(context).size.height / 5,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 10),
+                autoPlayAnimationDuration: const Duration(milliseconds: 2000),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                pauseAutoPlayOnTouch: true,
+                aspectRatio: 2.0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                  });
+                },
+              ),
+              items: List.generate(newSong.length, (index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: InkWell(
+                    onTap: (){
 
-                        SongDataModel songDataModel = SongDataModel(
-                            id : newSong[index].id,
-                            name: newSong[index].name,
-                            imageSource: newSong[index].imageSource,
-                            fileSource: newSong[index].fileSource!.substring(0, 4)
-                                + "s"
-                                + newSong[index].fileSource!.substring(4, newSong[index].fileSource!.length),
-                            minute: newSong[index].minute,
-                            second: newSong[index].second,
-                            singerName: newSong[index].singerName,
-                            album: null,
-                            albumId: null,
-                            categories: null
-                        );
+                      SongDataModel songDataModel = SongDataModel(
+                          id : newSong[index].id,
+                          name: newSong[index].name,
+                          imageSource: newSong[index].imageSource,
+                          fileSource: newSong[index].fileSource!.substring(0, 4)
+                              + "s"
+                              + newSong[index].fileSource!.substring(4, newSong[index].fileSource!.length),
+                          minute: newSong[index].minute,
+                          second: newSong[index].second,
+                          singerName: newSong[index].singerName,
+                          album: null,
+                          albumId: null,
+                          categories: null
+                      );
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BlocProvider(
-                                  create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
-                                      songModel: songDataModel
-                                  )),
-                                  child: PlaySongPage(
-                                    songName: state.newSong[index].name!,
-                                    songFile:
-                                    state.newSong[index].fileSource!.substring(0, 4)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                    songModel: songDataModel
+                                )),
+                                child: PlaySongPage(
+                                  songName: state.newSong[index].name!,
+                                  songFile:
+                                  state.newSong[index].fileSource!.substring(0, 4)
                                       + "s"
                                       + state.newSong[index].fileSource!.substring(4, state.newSong[index].fileSource!.length),
-                                    songID: state.newSong[index].id!,
-                                    songImage: state.newSong[index].imageSource!,
-                                    singerName: state.newSong[index].singerName!,
-                                    albumSongList: newSong,
-                                    albumID: 0,
-                                    pageName: "NewSong",
-                                  ),
+                                  songID: state.newSong[index].id!,
+                                  songImage: state.newSong[index].imageSource!,
+                                  singerName: state.newSong[index].singerName!,
+                                  albumSongList: newSong,
+                                  albumID: 0,
+                                  pageName: "NewSong",
+                                ),
 
-                                )));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1,
-                                color: Colors.purple.withOpacity(0.5),
-                                strokeAlign: BorderSide.strokeAlignOutside),
-                            borderRadius: BorderRadius.circular(25.0),
-                            image: DecorationImage(
-                                image: NetworkImage(newSong[index].imageSource!),
-                                opacity: 0.3,
-                                fit: BoxFit.fitWidth
-                            )
-                        ),
-                        child: Container(
+                              )));
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: newSong[index].imageSource!,
+                      imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 1,
+                                  color: Colors.purple.withOpacity(0.5),
+                                  strokeAlign: BorderSide.strokeAlignOutside),
+                              borderRadius: BorderRadius.circular(25.0),
                               image: DecorationImage(
                                   image: NetworkImage(newSong[index].imageSource!),
-                                  fit: BoxFit.contain
+                                  opacity: 0.2,
+                                  fit: BoxFit.fitWidth
                               )
                           ),
-                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: newSong[index].imageSource!,
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(newSong[index].imageSource!),
+                                      fit: BoxFit.contain,
+                                  )
+                              ),
+                            )
+                        )
                       ),
+                      placeholder: (context, url) => NewSongShimmerContainer(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                  );
-                }
-                )
-            )
-        );
-      }
-      else if(state.status.isError){
-        return const NewSongShimmerContainer();
-      }
-      return const NewSongShimmerContainer();
+                  ),
+                );
+              }
+              )
+          )
+      );
     });
   }
 }
