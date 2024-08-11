@@ -14,9 +14,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<RegisterUserEvent>(_mapRegisterUserEventToState);
     on<FirstLoginEvent>(_mapFirstLoginEventToState);
     on<SecondLoginEvent>(_mapSecondLoginEventToState);
-    on<UserExistEvent>(_mapUserExistToState);
-    on<UserLoggedInEvent>(_mapUserLoggedInToState);
-    on<UserLoggedOutEvent>(_mapUserLoggedOutToState);
   }
 
   void _mapRegisterUserEventToState(
@@ -65,56 +62,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         state.copyWith(
             status: UserStatus.success,
             secondRegisterStatus: secondLoginStatus
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: UserStatus.error));
-    }
-  }
-
-  //*********************************************************************
-
-  void _mapUserExistToState(
-      UserExistEvent event, Emitter<UserState> emit) async {
-    try {
-      emit(state.copyWith(status: UserStatus.loading));
-
-      UserModel user = await signUpUserRepository.getCurrentUser();
-
-      await signUpUserRepository.saveUserInLocalStorage(user);
-
-      emit(
-        state.copyWith(
-            status: UserStatus.success,
-            user: user
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: UserStatus.error));
-    }
-  }
-
-  void _mapUserLoggedInToState(
-      UserLoggedInEvent event, Emitter<UserState> emit) async {
-    try {
-      emit(state.copyWith(status: UserStatus.loading));
-      emit(
-        state.copyWith(
-          status: UserStatus.success,
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: UserStatus.error));
-    }
-  }
-
-  void _mapUserLoggedOutToState(
-      UserLoggedOutEvent event, Emitter<UserState> emit) async {
-    try {
-      emit(state.copyWith(status: UserStatus.loading));
-      emit(
-        state.copyWith(
-          status: UserStatus.success,
         ),
       );
     } catch (error) {
