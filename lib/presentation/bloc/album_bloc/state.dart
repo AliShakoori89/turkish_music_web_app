@@ -22,15 +22,20 @@ class AlbumState extends Equatable{
     required this.albumLength
   });
 
-  static AlbumState initial() => const AlbumState(
+  static AlbumState initial() => AlbumState(
     status: AlbumStatus.initial,
-    newAlbum: null,
+    newAlbum: NewAlbumModel(
+      message: "",
+      data: [],
+      lastPage: 0,
+      success: false
+    ),
     singerAllAlbum: <AlbumDataModel>[],
     albumLength: 0
   );
 
   final AlbumStatus status;
-  final NewAlbumModel? newAlbum;
+  final NewAlbumModel newAlbum;
   final List<AlbumDataModel> singerAllAlbum;
   final int albumLength;
 
