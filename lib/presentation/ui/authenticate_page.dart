@@ -453,7 +453,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
                                   final registerBloc = BlocProvider.of<UserBloc>(context);
 
-                                  bool isTrue = await registerBloc.signUpUserRepository.secondLogin(emailController.text, verificationCode);
+                                  bool isTrue = await registerBloc.userRepository.secondLogin(emailController.text, verificationCode);
 
                                   if(isTrue){
                                     Get.snackbar("Check Authentication","Authentication Success...  WellCome",

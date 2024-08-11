@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
 
-class SignUserRepository {
+class UserRepository {
 
   FutureOr<String?> requestPublic(String email) async {
 
@@ -97,11 +97,9 @@ class SignUserRepository {
 
   FutureOr<UserModel> getCurrentUser() async {
     ApiBaseHelper api = ApiBaseHelper();
-
-    String accessToken = await getAccessTokenValue();
-
     final response =
-    await api.get('/api/User/testAuthorize', accessToken: accessToken);
+    await api.get('/api/User/testAuthorize');
+    print(response.statusCode);
     final productJson = json.decode(response.body);
 
     return UserModel.fromJson(productJson);
@@ -136,5 +134,4 @@ class SignUserRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("accessToken");
   }
-
 }

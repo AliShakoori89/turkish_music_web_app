@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/mini_palying_container.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/state.dart';
+import '../../../bloc/user_bloc/event.dart';
 import '../../../const/custom_divider.dart';
 import '../../../helpers/widgets/about_button.dart';
 import '../../../helpers/widgets/exit_account-button.dart';
@@ -21,6 +24,12 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientMixin{
 
   @override
+  void initState() {
+    BlocProvider.of<UserBloc>(context).add(GetCurrentUser());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child:
@@ -37,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                 left: MediaQuery.of(context).size.width * 0.033,
                 top: MediaQuery.of(context).size.height * 0.08,
               ),
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
@@ -56,11 +65,23 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 20, right: 10),
-                            child: Text("alishakoori89@gmail.com",
-                                style: TextStyle(color: Colors.grey)),
-                          ),
+                          BlocBuilder<UserBloc, UserState>(
+                              builder: (context, state) {
+
+                                var user = state.user;
+                                if(state.status.isLoading){
+                                  return CircularProgressIndicator();
+                                }else if(state.status.isSuccess){
+                                  return Padding(
+                                    padding: EdgeInsets.only(top: 20, right: 10),
+                                    child: Text(user!.data!.email!,
+                                        style: TextStyle(color: Colors.grey)),
+                                  );
+                                }else if(state.status.isError){
+                                  return Container();
+                                }
+                                return Container();
+                          }),
                         ],
                       ),
                       CustomDivider(dividerColor: Colors.grey),

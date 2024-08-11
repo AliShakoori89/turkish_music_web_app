@@ -6,14 +6,15 @@ import 'event.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
 
-  SignUserRepository signUpUserRepository = SignUserRepository();
+  UserRepository userRepository = UserRepository();
 
-  UserBloc(this.signUpUserRepository) : super(
+  UserBloc(this.userRepository) : super(
 
       UserState.initial()){
     on<RegisterUserEvent>(_mapRegisterUserEventToState);
     on<FirstLoginEvent>(_mapFirstLoginEventToState);
     on<SecondLoginEvent>(_mapSecondLoginEventToState);
+    on<GetCurrentUser>(_mapGetCurrentUserEventToState);
   }
 
   void _mapRegisterUserEventToState(
@@ -21,7 +22,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      await signUpUserRepository.requestPublic(event.email);
+      await userRepository.requestPublic(event.email);
 
       emit(
         state.copyWith(
@@ -38,7 +39,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      final bool? firstLoginStatus = await signUpUserRepository.firstLogin(event.email);
+      final bool? firstLoginStatus = await userRepository.firstLogin(event.email);
 
       emit(
         state.copyWith(
@@ -56,12 +57,30 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      final bool? secondLoginStatus = await signUpUserRepository.secondLogin(event.email, event.verificationToken);
+      final bool? secondLoginStatus = await userRepository.secondLogin(event.email, event.verificationToken);
 
       emit(
         state.copyWith(
             status: UserStatus.success,
             secondRegisterStatus: secondLoginStatus
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: UserStatus.error));
+    }
+  }
+
+  void _mapGetCurrentUserEventToState(
+      GetCurrentUser event, Emitter<UserState> emit) async {
+    try {
+      emit(state.copyWith(status: UserStatus.loading));
+
+      final UserModel currentUser = await userRepository.getCurrentUser();
+
+      emit(
+        state.copyWith(
+            status: UserStatus.success,
+          user: currentUser
         ),
       );
     } catch (error) {
