@@ -21,11 +21,11 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClientMixin{
+class _ProfilePageState extends State<ProfilePage>{
 
   @override
   void initState() {
-    BlocProvider.of<UserBloc>(context).add(GetCurrentUser());
+    BlocProvider.of<UserBloc>(context).add(GetCurrentUserEvent());
     super.initState();
   }
 
@@ -53,6 +53,7 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
@@ -69,18 +70,11 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
                               builder: (context, state) {
 
                                 var user = state.user;
-                                if(state.status.isLoading){
-                                  return CircularProgressIndicator();
-                                }else if(state.status.isSuccess){
-                                  return Padding(
-                                    padding: EdgeInsets.only(top: 20, right: 10),
-                                    child: Text(user!.data!.email!,
-                                        style: TextStyle(color: Colors.grey)),
-                                  );
-                                }else if(state.status.isError){
-                                  return Container();
-                                }
-                                return Container();
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(user.data!.email!,
+                                      style: TextStyle(color: Colors.grey)),
+                                );
                           }),
                         ],
                       ),
@@ -102,10 +96,6 @@ class _ProfilePageState extends State<ProfilePage> with AutomaticKeepAliveClient
       })),
     );
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }
 
 

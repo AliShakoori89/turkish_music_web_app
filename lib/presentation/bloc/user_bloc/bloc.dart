@@ -14,7 +14,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<RegisterUserEvent>(_mapRegisterUserEventToState);
     on<FirstLoginEvent>(_mapFirstLoginEventToState);
     on<SecondLoginEvent>(_mapSecondLoginEventToState);
-    on<GetCurrentUser>(_mapGetCurrentUserEventToState);
+    on<GetCurrentUserEvent>(_mapGetCurrentUserEventToState);
+    on<ExitAccountEvent>(_mapExitAccountEventToState);
   }
 
   void _mapRegisterUserEventToState(
@@ -71,7 +72,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   void _mapGetCurrentUserEventToState(
-      GetCurrentUser event, Emitter<UserState> emit) async {
+      GetCurrentUserEvent event, Emitter<UserState> emit) async {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
@@ -81,6 +82,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         state.copyWith(
             status: UserStatus.success,
           user: currentUser
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: UserStatus.error));
+    }
+  }
+
+  void _mapExitAccountEventToState(
+      ExitAccountEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(state.copyWith(status: UserStatus.loading));
+
+      final bool isExit = await userRepository.removeAccessTokenValue();
+
+      emit(
+        state.copyWith(
+          status: UserStatus.success,
+          isExit: isExit
         ),
       );
     } catch (error) {

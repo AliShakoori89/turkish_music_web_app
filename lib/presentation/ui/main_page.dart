@@ -145,8 +145,8 @@ class _MainPageState extends State<MainPage> {
                   child: VerticalNavBar(
                     selectedIndex: currentRoute,
                     height: MediaQuery.of(context).size.height * 0.3,
-                    width: MediaQuery.of(context).size.width * 0.10,
-                    backgroundColor: Colors.black.withOpacity(0.5),
+                    width: MediaQuery.of(context).size.width * 0.12,
+                    backgroundColor: Colors.purple.withOpacity(0.5),
                     borderRadius: 15,
                     onItemSelected: (value) {
                       setState(() {

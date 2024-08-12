@@ -97,9 +97,9 @@ class UserRepository {
 
   FutureOr<UserModel> getCurrentUser() async {
     ApiBaseHelper api = ApiBaseHelper();
-    final response =
-    await api.get('/api/User/testAuthorize');
-    print(response.statusCode);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? accessToken = prefs.getString('accessToken');
+    final response = await api.get('/api/User/testAuthorize', accessToken: accessToken!);
     final productJson = json.decode(response.body);
 
     return UserModel.fromJson(productJson);
@@ -133,5 +133,6 @@ class UserRepository {
   removeAccessTokenValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("accessToken");
+    return true;
   }
 }
