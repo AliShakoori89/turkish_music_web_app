@@ -36,7 +36,8 @@ class _DownloadButtonState extends State<DownloadButton> {
     return IconButton(
         onPressed: () {
           BlocProvider.of<DownloadBloc>(context).add(
-              DownloadFileEvent(songFilePath: widget.songFilePath, songName: widget.songName, platform: platform));
+              DownloadFileEvent(songFilePath: widget.songFilePath,
+                  songName: widget.songName, platform: platform));
 
         },
         icon: BlocBuilder<DownloadBloc, DownloadState>(builder: (context, state) {

@@ -127,10 +127,8 @@ class _MainPageState extends State<MainPage> {
       ),
     ];
 
-    return
-      // !isOffline
-      //   ?
-    WillPopScope(
+    return !isOffline
+        ? WillPopScope(
             onWillPop: (){
               exit(0);
             },
@@ -177,7 +175,7 @@ class _MainPageState extends State<MainPage> {
             )
           )
               ),
-        );
-        // : const ErrorInternetConnectionPage();
+        )
+        : const ErrorInternetConnectionPage();
   }
 }

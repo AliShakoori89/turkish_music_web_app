@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
@@ -105,18 +104,6 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
           routes: <String, WidgetBuilder>{
             '/home': (BuildContext context) => MainPage(),
-          },
-          onInit: () async {
-            try {
-              var status = await Permission.storage.request();
-              if (status.isGranted) {
-                print('isGranted');
-              } else if (status.isPermanentlyDenied) {
-                openAppSettings();
-              }
-            } catch (e) {
-              print('~~error~~~>>>>>> $e');
-            }
           },
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?

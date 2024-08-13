@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_card.dart';
+import 'package:turkish_music_app/presentation/ui/download_page.dart';
 import 'package:turkish_music_app/presentation/ui/playlist_page.dart';
 
 class CustomPageWithCards extends StatelessWidget {
@@ -39,7 +40,11 @@ class CustomPageWithCards extends StatelessWidget {
                         builder: (context) => PlaylistPage())
                 );
               }else if(title[index] == "Downloads"){
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DownloadPage())
+                );
               }
 
             },
