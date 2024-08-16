@@ -26,7 +26,7 @@ class DownloadRepository{
     } catch (e) {
       Get.showSnackbar(
         GetSnackBar(
-          messageText: Text("Download Successfully."),
+          messageText: Text("Download Failed."),
           icon: Icon(Icons.close),
           duration: Duration(seconds: 3),
           snackPosition: SnackPosition.BOTTOM,

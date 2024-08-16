@@ -3,14 +3,12 @@
     package="com.example.turkish_music_app">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> <!-- For Images-->
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEOS" /> <!-- For video-->
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- For Audio-->
-    <uses-permission
-        android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:name="${applicationName}"

@@ -5,6 +5,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../model/recently_played_song_Id_model.dart';
+
 class DatabaseHelper{
 
   DatabaseHelper();
@@ -12,13 +14,8 @@ class DatabaseHelper{
   static const _databaseName = "MusicDatabase.db";
   static const _databaseVersion = 1;
 
-  static const musicTable = 'MusicTable';
+  static const recentlyPlaylistTable = 'RecentlyPlaylistTable';
   static const columnSongId = 'SongId';
-  static const columnSongName = 'SongName';
-  static const columnSingerName = 'SingerName';
-  static const columnSingerId = 'SingerId';
-  static const columnDuration = 'Duration';
-  static const columnImagePath = 'ImagePath';
 
   DatabaseHelper._privateConstructor();
 
@@ -37,14 +34,25 @@ class DatabaseHelper{
   }
 
   FutureOr _onCreate(Database db, int version) async {
-    await db.execute('CREATE TABLE $musicTable ('
-        '$columnSongId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
-        '$columnSongName TEXT,'
-        '$columnSingerName TEXT,'
-        '$columnSingerId TEXT,'
-        '$columnDuration INTEGER,'
-        '$columnImagePath TEXT'
+    await db.execute('CREATE TABLE $recentlyPlaylistTable ('
+        '$columnSongId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL'
         ')'
     );
+  }
+
+  Future<bool> saveRecentlyPlayedSongId(RecentlyPlayedSongIdModel recentlyPlayedSongIdModel) async {
+    var dbExpense = await database;
+    await dbExpense.insert(recentlyPlaylistTable, recentlyPlayedSongIdModel.toJson());
+    return true;
+  }
+
+  Future<List<RecentlyPlayedSongIdModel>> getAllRecentlyPlayedSongId() async {
+    var dbExpense = await database;
+    var listMap = await dbExpense.rawQuery('SELECT * FROM $recentlyPlaylistTable');
+    var listRecentlyPlayedSongId = <RecentlyPlayedSongIdModel>[];
+    for (Map<String, dynamic> m in listMap) {
+      listRecentlyPlayedSongId.add(RecentlyPlayedSongIdModel.fromJson(m));
+    }
+    return listRecentlyPlayedSongId;
   }
 }

@@ -74,6 +74,10 @@ dependencies:
   dio: ^5.5.0+1
   fluttertoast: ^8.0.2
   otp_timer_button: ^1.1.1
+  permission_handler: ^11.3.1
+  baseflow_plugin_template: ^2.2.0
+  permission_handler_platform_interface: ^4.2.2
+  device_info_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:

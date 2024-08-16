@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
@@ -31,8 +33,14 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_cont
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page.dart';
+import 'package:baseflow_plugin_template/baseflow_plugin_template.dart';
+import 'package:turkish_music_app/request_permission_manager.dart';
+
 
 FutureOr<void> main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await requestStoragePermission();
 
   await dotenv.load(fileName: ".env");
 
@@ -44,6 +52,24 @@ FutureOr<void> main() async{
       : true;
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
+}
+
+
+Future<void> requestStoragePermission() async {
+  var status = await Permission.storage.status;
+  if (status.isDenied) {
+    // Request the permission
+    if (await Permission.storage.request().isGranted) {
+      // The permission is granted
+      print("Permission Granted");
+    } else {
+      // The permission is denied
+      print("Permission Denied");
+    }
+  } else if (status.isGranted) {
+    // The permission is already granted
+    print("Permission Already Granted");
+  }
 }
 
 
