@@ -66,9 +66,6 @@ class MusicPage extends StatelessWidget {
                           Expanded(
                             flex: 8,
                             child: DetailPage(
-                              songName: 'Okadar',
-                              singerName: "Tarkan",
-                              singerImage: "assets/images/tarkan.png",
                               visibility: visibility,
                             ),
                           )

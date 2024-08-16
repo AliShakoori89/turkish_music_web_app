@@ -8,7 +8,7 @@ class SongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  FutureOr<dynamic> getAllMusic() async {
+  FutureOr<dynamic> getAllSongs() async {
     ApiBaseHelper api = ApiBaseHelper();
 
     try {
@@ -29,7 +29,7 @@ class SongRepository {
     }
   }
 
-  FutureOr<dynamic> getAllNewMusic() async {
+  FutureOr<dynamic> getAllNewSongs() async {
     ApiBaseHelper api = ApiBaseHelper();
     try {
       final response = await api.get('/api/NewMusic/GetAll');
@@ -68,6 +68,27 @@ class SongRepository {
               "s" +albumSongs[i]['fileSource'].substring(4, albumSongs[i]['fileSource'].length);
         }
         allSongs = albumSongs.map((e) => SongDataModel.fromJson(e)).toList();
+        return allSongs;
+      }
+    }catch (e) {
+      throw e.toString();
+    }
+  }
+
+  FutureOr<dynamic> getSongByID(int id) async {
+    ApiBaseHelper api = ApiBaseHelper();
+
+    try {
+      final response = await api.get('/api/Music/GetOneMusic/$id');
+      if (response.statusCode == 200) {
+        List<SongDataModel> allSongs = [];
+        final data = jsonDecode(response.body);
+        final List<dynamic> allSongList = data['data'];
+        for(int i = 0 ; i < allSongList.length ; i++){
+          allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) +
+              "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
+        }
+        allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
         return allSongs;
       }
     }catch (e) {

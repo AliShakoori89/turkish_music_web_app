@@ -1,10 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/recently_played_song_Id_model.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/event.dart';
 import '../../data/model/album_model.dart';
 import '../../data/model/new-song_model.dart';
 import '../../data/model/song_model.dart';
@@ -58,8 +61,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     super.initState();
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
     BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: widget.songID));
-    BlocProvider.of<AudioControlBloc>(context).add(
-        PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
+    // BlocProvider.of<AudioControlBloc>(context).add(
+    //     PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
 
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteRequirementForMiniPlayingSongContainerEvent(
@@ -71,6 +74,12 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
 
     BlocProvider.of<SongBloc>(context).add(FetchNewSongs());
     BlocProvider.of<SongBloc>(context).add(FetchAllSongs());
+
+    RecentlyPlayedSongIdModel recentlyPlayedSongIdModel = RecentlyPlayedSongIdModel(
+      id: widget.songID
+    );
+
+    BlocProvider.of<RecentlyPlaySongBloc>(context).add(SavePlayedSongIDToRecentlyPlayedEvent(recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
   }
 
   @override

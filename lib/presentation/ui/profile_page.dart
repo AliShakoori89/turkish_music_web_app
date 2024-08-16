@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
+import '../../data/model/song_model.dart';
+import '../bloc/recently_play_song_bloc/bloc.dart';
+import '../bloc/recently_play_song_bloc/event.dart';
+import '../bloc/recently_play_song_bloc/state.dart';
 import '../const/custom_divider.dart';
+import '../const/no_music_widget.dart';
 import '../helpers/widgets/singer_name_trackName_image.dart';
 import '../helpers/widgets/song_detail_list.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   const DetailPage({super.key,
-    required this.songName,
-    required this.singerName,
-    required this.singerImage,
     required this.visibility});
 
-  final String songName;
-  final String singerName;
-  final String singerImage;
   final bool visibility;
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+
+  @override
+  void initState() {
+    BlocProvider.of<RecentlyPlaySongBloc>(context).add(GetAllPlayedSongsEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,58 +35,73 @@ class DetailPage extends StatelessWidget {
           left: 10,
           right: 10,
           top: 10,
-          bottom: visibility == true ? 90 : 0
+          bottom: widget.visibility == true ? 90 : 0
       ),
-      child: AnimatedListView(
-        duration: 100,
-        scrollDirection: Axis.vertical,
-        children: List.generate(
-            10,
-                (index) => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.12,
-                          height: MediaQuery.of(context).size.height * 0.065,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                  image: AssetImage(singerImage),
-                                  fit: BoxFit.fill)
-                          ),
-                        ),
-                        SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(songName),
-                            Text(singerName)
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Flexible(
-                  child: IconButton(
-                      onPressed: () => BottomDialog(
-                        songImage: "assets/images/tarkan.png",
-                        singerName: singerName,
-                        songName: songName,
-                      ).showBottomDialog(context),
-                      icon: const Icon(Icons.more_vert,
-                        size: 20,)),
-                )
-              ],
-            )),
-      ),
+      child: BlocBuilder<RecentlyPlaySongBloc , RecentlyPlaySongState>(
+        builder: (context, state){
+
+
+           if(state.status.isLoading){
+             return CircularProgressIndicator();
+           }else if(state.status.isSuccess){
+
+             return AnimatedListView(
+               duration: 100,
+               scrollDirection: Axis.vertical,
+               children: List.generate(
+                   state.allRecentlySongs.length,
+                       (index) => Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       Flexible(
+                         child: SizedBox(
+                           width: double.infinity,
+                           height: MediaQuery.of(context).size.height * 0.08,
+                           child: Row(
+                             children: [
+                               Container(
+                                 width: MediaQuery.of(context).size.width * 0.12,
+                                 height: MediaQuery.of(context).size.height * 0.065,
+                                 decoration: BoxDecoration(
+                                     borderRadius: BorderRadius.circular(15),
+                                     image: DecorationImage(
+                                         image: NetworkImage(state.allRecentlySongs[index].imageSource!),
+                                         fit: BoxFit.fill)
+                                 ),
+                               ),
+                               SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
+                               Column(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Text(state.allRecentlySongs[index].name!),
+                                   // Text(state.allRecentlySongs[index].singerName!)
+                                 ],
+                               )
+                             ],
+                           ),
+                         ),
+                       ),
+                       Flexible(
+                         child: IconButton(
+                             onPressed: () => BottomDialog(
+                               songImage: state.allRecentlySongs[index].imageSource!,
+                               singerName: state.allRecentlySongs[index].name!,
+                               songName: state.allRecentlySongs[index].singerName!,
+                             ).showBottomDialog(context),
+                             icon: const Icon(Icons.more_vert,
+                               size: 20,)),
+                       )
+                     ],
+                   )),
+             );
+           }else if(state.status.isError){
+             return NoMusicWidget();
+           }
+           return NoMusicWidget();
+        },
+      )
+
     );
   }
 }

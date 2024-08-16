@@ -121,7 +121,7 @@ class _searchPageState extends State<searchPage> {
               Expanded(
                 flex: 10,
                 child: DelayedWidget(
-                    delayDuration: Duration(milliseconds: 1000),// Not required
+                    delayDuration: Duration(milliseconds: 1500),// Not required
                     animationDuration: Duration(seconds: 1),// Not required
                     animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
                     child: ListView.builder(

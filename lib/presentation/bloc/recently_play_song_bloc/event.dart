@@ -4,12 +4,12 @@ abstract class RecentlyPlaySongEvent {
   List<Object> get props => [];
 }
 
-class GetAllSongsEvent extends RecentlyPlaySongEvent{}
+class GetAllPlayedSongsEvent extends RecentlyPlaySongEvent{}
 
-class SavePlaySongIDEvent extends RecentlyPlaySongEvent{
+class SavePlayedSongIDToRecentlyPlayedEvent extends RecentlyPlaySongEvent{
   final RecentlyPlayedSongIdModel recentlyPlayedSongIdModel;
 
-  SavePlaySongIDEvent({required this.recentlyPlayedSongIdModel});
+  SavePlayedSongIDToRecentlyPlayedEvent({required this.recentlyPlayedSongIdModel});
 
   @override
   List<Object> get props => [recentlyPlayedSongIdModel];
