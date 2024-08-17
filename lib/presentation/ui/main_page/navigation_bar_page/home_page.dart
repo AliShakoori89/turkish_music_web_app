@@ -42,7 +42,9 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                MiniPlayingContainer(visibility: visibility,),
+                MiniPlayingContainer(
+                  visibility: visibility,
+                  ),
               ],
             );
           })

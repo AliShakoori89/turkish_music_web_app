@@ -7,6 +7,7 @@ import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../widgets/singer_name_trackName_image.dart';
 import '../widgets/top_arrow_icon.dart';
+import 'next_button.dart';
 
 class MiniPlayingContainer extends StatefulWidget {
 
@@ -76,13 +77,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                       ),
                       Expanded(
                         flex: 1,
-                        child: Row(
-                          children: [
-                            // PreviousButton(pageName: requirement[4]),
-                            // PlayButton(),
-                            // NextButton(pageName: requirement[4],)
-                          ],
-                        ),
+                        child: PlayButton(),
                       ),
                     ],
                   ),
