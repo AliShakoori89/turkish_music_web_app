@@ -14,6 +14,7 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
       AlbumState.initial()){
     on<GetNewAlbumEvent>(_mapGetNewAlbumEventToState);
     on<GetSingerAllAlbumEvent>(_mapGetSingerAllAlbumEventToState);
+    on<GetAlbumAllSongsEvent>(_mapGetAlbumAllSongsEventToState);
   }
 
   void _mapGetNewAlbumEventToState(
@@ -41,6 +42,22 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
         state.copyWith(
             status: AlbumStatus.success,
             singerAllAlbum: singerAllAlbum
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: AlbumStatus.error));
+    }
+  }
+
+  void _mapGetAlbumAllSongsEventToState(
+      GetAlbumAllSongsEvent event, Emitter<AlbumState> emit) async {
+    try {
+      emit(state.copyWith(status: AlbumStatus.loading));
+      List<AlbumDataMusicModel> albumAllSongs = await albumRepository.getAlbumAllSongs(event.albumId);
+      emit(
+        state.copyWith(
+            status: AlbumStatus.success,
+            albumAllSongs: albumAllSongs
         ),
       );
     } catch (error) {

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:turkish_music_app/data/model/album_model.dart';
 
 import '../../../data/model/category_model.dart';
 import '../../../data/model/song_model.dart';
@@ -19,14 +20,16 @@ class SongState extends Equatable{
     required this.allSongList,
     required this.newSongList,
     required this.albumSongList,
+    required this.song,
     required this.callback
   });
 
-  static SongState initial() => const SongState(
+  static SongState initial() => SongState(
       status: SongStatus.initial,
-      allSongList: [],
-      newSongList: [],
-      albumSongList: [],
+      allSongList: const [],
+      newSongList: const [],
+      albumSongList: const [],
+      song: AlbumDataMusicModel(),
       callback: _defaultCallbackFunction
   );
 
@@ -34,17 +37,19 @@ class SongState extends Equatable{
   final List<SongDataModel> allSongList;
   final List<SongDataModel> newSongList;
   final List<SongDataModel> albumSongList;
+  final AlbumDataMusicModel song;
   final Function callback;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, allSongList, newSongList, albumSongList, callback];
+  List<Object?> get props => [status, allSongList, newSongList, albumSongList, song, callback];
 
   SongState copyWith({
     SongStatus? status,
     List<SongDataModel>? allSongList,
     List<SongDataModel>? newSongList,
     List<SongDataModel>? albumSongList,
+    AlbumDataMusicModel? song,
     Function? callback
   }) {
     return SongState(
@@ -52,6 +57,7 @@ class SongState extends Equatable{
       allSongList: allSongList ?? this.allSongList,
       newSongList: newSongList ?? this.newSongList,
       albumSongList: albumSongList ?? this.albumSongList,
+      song: song ?? this.song,
       callback: callback ?? this.callback
     );
   }

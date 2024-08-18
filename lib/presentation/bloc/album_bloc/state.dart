@@ -19,7 +19,8 @@ class AlbumState extends Equatable{
     required this.status,
     required this.newAlbum,
     required this.singerAllAlbum,
-    required this.albumLength
+    required this.albumLength,
+    required this.albumAllSongs
   });
 
   static AlbumState initial() => AlbumState(
@@ -31,29 +32,33 @@ class AlbumState extends Equatable{
       success: false
     ),
     singerAllAlbum: <AlbumDataModel>[],
+    albumAllSongs: <AlbumDataMusicModel>[],
     albumLength: 0
   );
 
   final AlbumStatus status;
   final NewAlbumModel newAlbum;
   final List<AlbumDataModel> singerAllAlbum;
+  final List<AlbumDataMusicModel> albumAllSongs;
   final int albumLength;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, newAlbum, singerAllAlbum, albumLength];
+  List<Object?> get props => [status, newAlbum, singerAllAlbum, albumLength, albumAllSongs];
 
   AlbumState copyWith({
     AlbumStatus? status,
     NewAlbumModel? newAlbum,
     List<AlbumDataModel>? singerAllAlbum,
+    List<AlbumDataMusicModel>? albumAllSongs,
     int? albumLength
   }) {
     return AlbumState(
       status: status ?? this.status,
       newAlbum: newAlbum ?? this.newAlbum,
       singerAllAlbum: singerAllAlbum ?? this.singerAllAlbum,
-      albumLength: albumLength ?? this.albumLength
+      albumLength: albumLength ?? this.albumLength,
+      albumAllSongs: albumAllSongs ?? this.albumAllSongs
     );
   }
 }

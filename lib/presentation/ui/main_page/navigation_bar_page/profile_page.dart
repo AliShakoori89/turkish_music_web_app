@@ -37,6 +37,8 @@ class _ProfilePageState extends State<ProfilePage>{
               builder: (context, state) {
 
         bool visibility = state.visibility;
+        int songID = state.songID;
+        int albumID = state.albumID;
 
         return Stack(
           children: [
@@ -90,7 +92,11 @@ class _ProfilePageState extends State<ProfilePage>{
                 ],
               ),
             ),
-            MiniPlayingContainer(visibility: visibility)
+            MiniPlayingContainer(
+              visibility: visibility,
+              songID: songID,
+              albumID: albumID,
+            )
           ],
         );
       })),

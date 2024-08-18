@@ -26,6 +26,8 @@ class MusicPage extends StatelessWidget {
           child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
 
       bool visibility = state.visibility;
+      int songID = state.songID;
+      int albumID = state.albumID;
 
       return Stack(
             children: [
@@ -77,6 +79,8 @@ class MusicPage extends StatelessWidget {
               ),
               MiniPlayingContainer(
                 visibility: visibility,
+                songID: songID,
+                albumID: albumID,
               )
             ],
           );})

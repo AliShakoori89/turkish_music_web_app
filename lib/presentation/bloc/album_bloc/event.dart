@@ -21,3 +21,12 @@ class GetAlbumLengthEvent extends AlbumEvent{
   List<Object> get props => [id];
 
 }
+
+class GetAlbumAllSongsEvent extends AlbumEvent{
+  final int albumId;
+
+  GetAlbumAllSongsEvent({required this.albumId});
+  @override
+  List<Object> get props => [albumId];
+
+}

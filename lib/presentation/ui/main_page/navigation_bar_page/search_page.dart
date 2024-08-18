@@ -25,7 +25,7 @@ class _searchPageState extends State<searchPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<SongBloc>(context).add(FetchAllSongs());
+    BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
     super.initState();
   }
   @override
@@ -39,6 +39,8 @@ class _searchPageState extends State<searchPage> {
         child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
 
         bool visibility = state.visibility;
+        int songID = state.songID;
+        int albumID = state.albumID;
 
         return Stack(
           children: [
@@ -149,7 +151,9 @@ class _searchPageState extends State<searchPage> {
               )],
             ),
             MiniPlayingContainer(
-                visibility: visibility)
+              visibility: visibility,
+              songID: songID,
+              albumID: albumID,)
           ],
         );
         })

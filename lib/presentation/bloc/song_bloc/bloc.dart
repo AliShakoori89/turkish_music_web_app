@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import '../../../data/model/song_model.dart';
@@ -10,13 +11,13 @@ class SongBloc extends Bloc<SongEvent, SongState> {
 
   SongBloc(this.songRepo) : super(
       SongState.initial()){
-    on<FetchNewSongs>(_mapFetchNewSongsEventToState);
-    on<FetchAllSongs>(_mapFetchAllSongsEventToState);
-    on<FetchAlbumSongs>(_mapFetchAlbumSongsEventToState);
+    on<FetchNewSongsEvent>(_mapFetchNewSongsEventToState);
+    on<FetchAllSongsEvent>(_mapFetchAllSongsEventToState);
+    on<FetchSongEvent>(_mapFetchSongEventToState);
   }
 
   void _mapFetchNewSongsEventToState(
-      FetchNewSongs event, Emitter<SongState> emit) async {
+      FetchNewSongsEvent event, Emitter<SongState> emit) async {
     try {
       emit(state.copyWith(status: SongStatus.loading));
       final List<SongDataModel> newSongs = [];
@@ -35,7 +36,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   }
 
   void _mapFetchAllSongsEventToState(
-      FetchAllSongs event, Emitter<SongState> emit) async {
+      FetchAllSongsEvent event, Emitter<SongState> emit) async {
     try {
       emit(state.copyWith(status: SongStatus.loading));
       final List<SongDataModel> allSongs = [];
@@ -53,19 +54,16 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     }
   }
 
-  void _mapFetchAlbumSongsEventToState(
-      FetchAlbumSongs event, Emitter<SongState> emit) async {
+  void _mapFetchSongEventToState(
+      FetchSongEvent event, Emitter<SongState> emit) async {
     try {
       emit(state.copyWith(status: SongStatus.loading));
 
-      final List<SongDataModel> albumSongs = [];
-      final List<SongDataModel> songsList = await songRepo.getAlbumAllSongs(event.id);
-      albumSongs.addAll(songsList);
-
+      AlbumDataMusicModel song = await songRepo.getSongByID(event.songID);
       emit(
         state.copyWith(
-          status: SongStatus.success,
-          albumSongList: albumSongs,
+            status: SongStatus.success,
+            song: song
         ),
       );
     } catch (error) {

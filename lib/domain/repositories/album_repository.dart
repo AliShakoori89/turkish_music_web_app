@@ -30,6 +30,13 @@ class AlbumRepository {
   }
 
   FutureOr<dynamic> getAlbumAllSongs(int id) async {
-
+    ApiBaseHelper api = ApiBaseHelper();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? accessToken = prefs.getString('accessToken');
+    final response = await api.get('/api/Album/GetOneAlbum/$id', accessToken: accessToken!);
+    final productJson = json.decode(response.body);
+    var singerAllAlbum = AlbumModel.fromJson(productJson);
+    print(singerAllAlbum.data!.length.toString());
+    return singerAllAlbum.data;
   }
 }

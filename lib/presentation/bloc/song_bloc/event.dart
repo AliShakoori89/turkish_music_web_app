@@ -2,10 +2,13 @@ abstract class SongEvent {
   List<Object> get props => [];
 }
 
-class FetchNewSongs extends SongEvent {}
-class FetchAllSongs extends SongEvent {}
-class FetchAlbumSongs extends SongEvent {
-  final int id;
+class FetchNewSongsEvent extends SongEvent {}
+class FetchAllSongsEvent extends SongEvent {}
+class FetchSongEvent extends SongEvent {
+  final int songID;
 
-  FetchAlbumSongs({required this.id});
+  FetchSongEvent({required this.songID});
+
+  @override
+  List<Object> get props => [songID];
 }

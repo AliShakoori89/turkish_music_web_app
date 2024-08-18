@@ -65,11 +65,12 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     //     PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
 
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
-    // BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
-    //     songID: widget.songID));
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
+        songID: widget.songID,
+    albumID: widget.albumID!));
 
-    BlocProvider.of<SongBloc>(context).add(FetchNewSongs());
-    BlocProvider.of<SongBloc>(context).add(FetchAllSongs());
+    BlocProvider.of<SongBloc>(context).add(FetchNewSongsEvent());
+    BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
 
     RecentlyPlayedSongIdModel recentlyPlayedSongIdModel = RecentlyPlayedSongIdModel(
       id: widget.songID

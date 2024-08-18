@@ -18,7 +18,11 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
           body: BlocBuilder<MiniPlayingContainerBloc,
               MiniPlayingContainerState>(builder: (context, state) {
+
             bool visibility = state.visibility;
+            int songID = state.songID;
+            int albumID = state.albumID;
+
             return Stack(
               children: [
                 Container(
@@ -44,6 +48,8 @@ class HomePage extends StatelessWidget {
                 ),
                 MiniPlayingContainer(
                   visibility: visibility,
+                  songID: songID,
+                  albumID: albumID,
                   ),
               ],
             );
