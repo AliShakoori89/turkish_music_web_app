@@ -136,10 +136,10 @@ class _SingerPageState extends State<SingerPage> {
                                     child: PlaySongPage(
                                         songName: state.singerAllAlbum[index].name!,
                                         songFile: newPath,
-                                        songID: state.singerAllAlbum[index].id!,
+                                        songID: songDataModel.id!,
                                         singerName: widget.artistDetail.name,
                                         songImage: state.singerAllAlbum[index].imageSource!,
-                                        albumID: state.singerAllAlbum[index].id!,
+                                        albumID: songDataModel.albumId!,
                                         pageName: "SingerPage",
                                         albumSongList: state.singerAllAlbum[index].musics!
                                     ),

@@ -46,16 +46,32 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       // add(SongCompleted(songs: songDataModel));
     // });
 
-    on<SongCompleted>((event, emit) async {
-      int i = getCurrentSongIndex(event.songs)+1;
-      final Source source = UrlSource(event.songs[i].fileSource ?? "");
-      await _audioPlayer.play(source);
-      emit(AudioCompleteState());
-    });
+    // on<SongCompleted>((event, emit) async {
+    //   int i = getCurrentSongIndex(event.songs)+1;
+    //   final Source source = UrlSource(event.songs[i].fileSource ?? "");
+    //   await _audioPlayer.play(source);
+    //   emit(AudioCompleteState());
+    // });
 
     on<PlaySong>((event, emit) async {
       final Source source = UrlSource(event.currentSong.fileSource ?? "");
-      await _audioPlayer.play(source);
+      await _audioPlayer.play(source)
+          .whenComplete(
+          (){
+            print("11111111111111111111111111111111111111111111111111111111111111111111111111");
+            // _audioPlayer.play(source);
+            // var index = getCurrentSongIndex(event.currentAlbum);
+            // final Source source = UrlSource(event.currentAlbum[index+1].fileSource ?? "");
+            // _audioPlayer.play(source);
+            // for(int i = 0 ; i < event.currentAlbum.length ; i++){
+            //   if( event.currentAlbum[i].id == event.currentSong.id){
+            //     final Source source = UrlSource(event.currentAlbum[i+1].fileSource ?? "");
+            //     _audioPlayer.play(source);
+            //   }
+            //
+            // }
+          }
+      );
       emit(AudioPlayedState());
     });
 
@@ -116,7 +132,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     return super.close();
   }
 
-  getCurrentSongIndex(List<SongDataModel> songs) {
+  getCurrentSongIndex(List<AlbumDataMusicModel> songs) {
     final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
     return currentSongIndex;
   }

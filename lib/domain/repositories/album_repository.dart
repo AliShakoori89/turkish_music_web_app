@@ -28,4 +28,8 @@ class AlbumRepository {
     print(singerAllAlbum.data!.length.toString());
     return singerAllAlbum.data;
   }
+
+  FutureOr<dynamic> getAlbumAllSongs(int id) async {
+
+  }
 }

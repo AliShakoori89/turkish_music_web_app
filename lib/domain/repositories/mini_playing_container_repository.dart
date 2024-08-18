@@ -19,24 +19,17 @@ class MiniPlayingContainerRepository {
     }
   }
 
-  FutureOr<dynamic> writeMiniPlayingRequirement(String songName, String songFile, String songImage,
-      String singerName, String pageName) async{
+  FutureOr<dynamic> writeMiniPlayingRequirement(int songID, int albumID) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('songName', songName);
-    await prefs.setString('songFile', songFile);
-    await prefs.setString('songImage', songImage);
-    await prefs.setString('singerName', singerName);
-    await prefs.setString('pageName', pageName);
+    await prefs.setInt('songID', songID);
+    await prefs.setInt('albumID', albumID);
   }
 
   FutureOr<List> readMiniPlayingRequirement() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String songName = prefs.getString('songName')!;
-    final String songFile = prefs.getString('songFile')!;
-    final String songImage = prefs.getString('songImage')!;
-    final String singerName = prefs.getString('singerName')!;
-    final String pageName = prefs.getString('pageName')!;
-    List requirement = [songName, songFile, songImage, singerName, pageName];
+    final int songID = prefs.getInt('songID')!;
+    final int albumID = prefs.getInt('albumID')!;
+    List requirement = [songID, albumID];
     return requirement;
   }
 }

@@ -154,19 +154,19 @@ class _MainPageState extends State<MainPage> {
                     items: const [
                       VerticalNavBarItem(
                           customIcon: Icons.home,
-                          iconSize: 25.0
+                        iconSize: 25
                       ),
                       VerticalNavBarItem(
                           customIcon: Icons.person,
-                          iconSize:25.0
+                        iconSize: 25
                       ),
                       VerticalNavBarItem(
                           customIcon: MusicIcon.music,
-                          iconSize:18.0
+                        iconSize: 20
                       ),
                       VerticalNavBarItem(
                           customIcon: Icons.search,
-                          iconSize:25.0
+                        iconSize: 25
                       ),
                     ],
                   ),

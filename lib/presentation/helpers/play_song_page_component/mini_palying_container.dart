@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/previous_button.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page.dart';
 import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../widgets/singer_name_trackName_image.dart';
@@ -40,52 +42,51 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
             color: Colors.black,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: Column(
+          child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
+              builder: (context, state) {
+
+            int songID = state.requirement[0];
+            int albumID = state.requirement[1];
+
+            return Column(
             children: [
               InkWell(
                 onTap: () {
                   // Navigator.push(
                   //   context,
-                  //   MaterialPageRoute(builder: (context) =>
-                  //       PlayMusicPage(
-                  //         imagePath: state.singerImage,
-                  //         singerName: state.singerName,
-                  //         musicFile: state.musicFile,
-                  //         musicFiles: [],
-                  //       )),
+                  //   PageTransition(
+                  //     curve: Curves.linear,
+                  //     type: PageTransitionType.bottomToTop,
+                  //     child: PlaySongPage(),
+                  //   ),
                   // );
                 },
                 child: const TopArrow(),
               ),
-              BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
-
-                List requirement = state.requirement;
-
-                return Container(
-                  margin: EdgeInsets.only(left: 20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: SingerNameTrackNameImage(
-                            singerName: requirement[3],
-                            songName: requirement[0],
-                            imagePath: requirement[2],
-                            align: MainAxisAlignment.start),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: PlayButton(),
-                      ),
-                    ],
-                  ),
-                );
-              }),
+              Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Expanded(
+                    //   flex: 1,
+                    //   // child: SingerNameTrackNameImage(
+                    //   //     singerName: requirement[3],
+                    //   //     songName: requirement[0],
+                    //   //     imagePath: requirement[2],
+                    //   //     align: MainAxisAlignment.start),
+                    // ),
+                    Expanded(
+                      flex: 1,
+                      child: PlayButton(),
+                    ),
+                  ],
+                ),
+              )
             ],
-          )),
-    )
+          );
+          })))
         : Container();
   }
 }

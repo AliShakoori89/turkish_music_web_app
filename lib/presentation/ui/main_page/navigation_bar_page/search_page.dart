@@ -148,7 +148,8 @@ class _searchPageState extends State<searchPage> {
                     )),
               )],
             ),
-            MiniPlayingContainer(visibility: visibility)
+            MiniPlayingContainer(
+                visibility: visibility)
           ],
         );
         })

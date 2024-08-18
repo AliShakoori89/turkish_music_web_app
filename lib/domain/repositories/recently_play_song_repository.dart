@@ -27,12 +27,15 @@ class RecentlyPlaySongRepository {
       final response = await api.get('/api/Music/GetOneMusic/${recentlyPlayedSongIDs[i].id}', accessToken: accessToken!);
       final productJson = json.decode(response.body);
       AlbumDataMusicModel song = AlbumDataMusicModel.fromJson(productJson['data']);
+      print(song.name);
+      print(song.singerName);
       allSong.add(song);
     }
     return allSong;
   }
 
   addPlayedSongID(RecentlyPlayedSongIdModel recentlyPlayedSongIdModel) async{
+    print(recentlyPlayedSongIdModel.id);
     return await helper.saveRecentlyPlayedSongId(recentlyPlayedSongIdModel);
   }
 }

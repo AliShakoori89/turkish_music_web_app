@@ -65,12 +65,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     //     PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
 
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteRequirementForMiniPlayingSongContainerEvent(
-        songName: widget.songName,
-        songFile: widget.songFile,
-        songImage: widget.songImage,
-        singerName: widget.singerName,
-        pageName: widget.pageName));
+    // BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
+    //     songID: widget.songID));
 
     BlocProvider.of<SongBloc>(context).add(FetchNewSongs());
     BlocProvider.of<SongBloc>(context).add(FetchAllSongs());
@@ -79,7 +75,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
       id: widget.songID
     );
 
-    BlocProvider.of<RecentlyPlaySongBloc>(context).add(SavePlayedSongIDToRecentlyPlayedEvent(recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
+    BlocProvider.of<RecentlyPlaySongBloc>(context).add(
+        SavePlayedSongIDToRecentlyPlayedEvent(recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
   }
 
   @override
@@ -100,7 +97,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
               listener: (context, state) {
                 context
                     .read<AudioControlBloc>()
-                    .add(PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
+                    .add(PlaySong(
+                    currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
+                    currentAlbum: widget.albumSongList));
               },
               builder: (context, state) {
 
