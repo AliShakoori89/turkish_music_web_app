@@ -17,7 +17,6 @@ class ApiBaseHelper {
       final String? apiKey = dotenv.get("apiKey");
 
       final queryParameters = {
-        'apiKey': apiKey,
         "page": page,
         "count": count,
         "searchChar": searchChar
@@ -27,6 +26,7 @@ class ApiBaseHelper {
 
       headers = {
         'Content-Type': 'application/json',
+        'ApiKey': '$apiKey',
         'Authorization': 'bearer $accessToken',
       };
 
@@ -42,6 +42,9 @@ class ApiBaseHelper {
 
   FutureOr<dynamic> post(String url, dynamic body, {String accessToken = '', String query = ''}) async {
 
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
+
     try {
 
       final Uri address =
@@ -51,6 +54,7 @@ class ApiBaseHelper {
 
       headers = {
         'Content-type': 'application/json',
+        'ApiKey': '$apiKey',
         'Authorization': 'bearer $accessToken'
       };
 

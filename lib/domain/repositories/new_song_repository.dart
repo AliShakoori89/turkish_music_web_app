@@ -29,6 +29,7 @@ class NewSongRepository {
         name: newSongData.data[i].name,
         id: newSongData.data[i].id,
       );
+      print("@@@@@@@@@@                "+newSongData.data[i].imageSource);
       allNewMusics.add(albumDataMusicModel);
     }
 

@@ -11,13 +11,9 @@ class UserRepository {
 
   FutureOr<String?> requestPublic(String email) async {
 
-    await dotenv.load();
-    final String? apiKey = dotenv.get("apiKey");
-
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
-      'email': email,
-      "apiKey": apiKey});
+      'email': email});
 
     final response = await api.post("/api/User/registerPublic",body);
     if (response.statusCode == 200) {
@@ -46,8 +42,7 @@ class UserRepository {
 
     ApiBaseHelper api = ApiBaseHelper();
 
-    var body = jsonEncode({'email': email, "verificationToken": "",
-      "apiKey": apiKey});
+    var body = jsonEncode({'email': email, "verificationToken": apiKey});
 
     final response = await api.post("/api/User/FirstStepLogin", body);
 
@@ -79,8 +74,7 @@ class UserRepository {
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       'email': email,
-      "verificationToken": verificationToken,
-      "apiKey": apiKey});
+      "verificationToken": verificationToken});
     final response = await api.post("/api/User/SecondStepLogin", body);
     var parsedJson = json.decode(response.body);
 

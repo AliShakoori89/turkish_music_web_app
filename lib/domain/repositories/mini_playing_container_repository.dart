@@ -21,14 +21,19 @@ class MiniPlayingContainerRepository {
 
   FutureOr<dynamic> writeMiniPlayingRequirement(int songID, int albumID) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("writeMiniPlayingRequirement      "+songID.toString());
+    print("writeMiniPlayingRequirement      "+albumID.toString());
     await prefs.setInt('songID', songID);
     await prefs.setInt('albumID', albumID);
   }
 
   FutureOr<List> readMiniPlayingRequirement() async{
+    print("4444444444444444444444444444444444444444");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final int songID = prefs.getInt('songID')!;
     final int albumID = prefs.getInt('albumID')!;
+    print("readMiniPlayingRequirement      "+songID.toString());
+    print("readMiniPlayingRequirement      "+albumID.toString());
     List requirement = [songID, albumID];
     return requirement;
   }

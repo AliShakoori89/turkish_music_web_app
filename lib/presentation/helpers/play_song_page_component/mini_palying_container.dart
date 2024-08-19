@@ -36,8 +36,8 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   @override
   void initState() {
     // TODO: implement initState
-    print(widget.songID);
-    print(widget.albumID);
+    print("#############              "+widget.songID.toString());
+    print("#############              "+widget.albumID.toString());
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
     BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
     BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
@@ -93,14 +93,14 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: SingerNameTrackNameImage(
-                                      singerName: "",
-                                      songName: state.song.name!,
-                                      imagePath: state.song.imageSource!,
-                                      align: MainAxisAlignment.start),
-                                ),
+                                // Expanded(
+                                //   flex: 1,
+                                //   child: SingerNameTrackNameImage(
+                                //       singerName: "",
+                                //       songName: state.song.name!,
+                                //       imagePath: state.song.imageSource!,
+                                //       align: MainAxisAlignment.start),
+                                // ),
                                 Expanded(
                                   flex: 1,
                                   child: PlayButton(),

@@ -53,7 +53,9 @@ class SongRepository {
     ApiBaseHelper api = ApiBaseHelper();
 
     try {
+      print("66666666666666666666666666666666666    "+id.toString());
       final response = await api.get('/api/Music/GetOneMusic/$id');
+      print("66666666666666666666666666666666666    "+response.statusCode.toString());
       if (response.statusCode == 200) {
         print("1111111111111111");
         List<SongDataModel> allSongs = [];
@@ -64,9 +66,6 @@ class SongRepository {
               "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
         }
         allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
-        for(int i = 0 ; i < allSongs.length ; i++){
-          print(allSongs[i].name);
-        }
 
         return allSongs;
       }
