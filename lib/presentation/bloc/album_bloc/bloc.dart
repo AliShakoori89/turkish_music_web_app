@@ -53,7 +53,7 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
       GetAlbumAllSongsEvent event, Emitter<AlbumState> emit) async {
     try {
       emit(state.copyWith(status: AlbumStatus.loading));
-      List<AlbumDataMusicModel> albumAllSongs = await albumRepository.getAlbumAllSongs(event.albumId);
+      List<AlbumDataMusicModel> albumAllSongs = await albumRepository.getAlbumAllSongsByID(event.albumId);
       emit(
         state.copyWith(
             status: AlbumStatus.success,

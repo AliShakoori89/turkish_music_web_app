@@ -18,25 +18,23 @@ class AlbumRepository {
     return newDongData;
   }
 
-  FutureOr<dynamic> getSingerAllAlbum(int id) async {
+  FutureOr<dynamic> getSingerAllAlbum(int singerID) async {
     ApiBaseHelper api = ApiBaseHelper();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('accessToken');
-    final response = await api.get('/api/Album/GetAlbumsBySingerId/$id', accessToken: accessToken!);
+    final response = await api.get('/api/Album/GetAlbumsBySingerId/$singerID', accessToken: accessToken!);
     final productJson = json.decode(response.body);
     var singerAllAlbum = AlbumModel.fromJson(productJson);
-    print(singerAllAlbum.data!.length.toString());
     return singerAllAlbum.data;
   }
 
-  FutureOr<dynamic> getAlbumAllSongs(int id) async {
+  FutureOr<dynamic> getAlbumAllSongsByID(int albumID) async {
     ApiBaseHelper api = ApiBaseHelper();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('accessToken');
-    final response = await api.get('/api/Album/GetOneAlbum/$id', accessToken: accessToken!);
+    final response = await api.get('/api/Album/GetOneAlbum/$albumID', accessToken: accessToken!);
     final productJson = json.decode(response.body);
-    var singerAllAlbum = AlbumModel.fromJson(productJson);
-    print(singerAllAlbum.data!.length.toString());
-    return singerAllAlbum.data;
+    var albumSongs = AlbumDataModel.fromJson(productJson['data']);
+    return albumSongs.musics;
   }
 }

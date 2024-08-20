@@ -37,14 +37,14 @@ class PlaySongPage extends StatefulWidget {
   final String singerName;
   final String songImage;
   final String pageName;
-  int? albumID;
+  final int albumID;
 
   final List<AlbumDataMusicModel> albumSongList;
 
   PlaySongPage({super.key, required this.songName,
     required this.songFile, required this.songID,
     required this.albumSongList, required this.singerName,
-    required this.songImage, required this.pageName, this.albumID});
+    required this.songImage, required this.pageName, required this.albumID});
 
 
   @override
@@ -61,13 +61,12 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     super.initState();
     BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
     BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: widget.songID));
-    // BlocProvider.of<AudioControlBloc>(context).add(
-    //     PlaySong(currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!));
+
 
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
-        songID: widget.songID,
-    albumID: widget.albumID!));
+      songID: widget.songID,
+      albumID: widget.albumID));
 
     BlocProvider.of<SongBloc>(context).add(FetchNewSongsEvent());
     BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
@@ -208,6 +207,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                       NextButton(
                                         pageName: widget.pageName,
                                         categoryAllSongs: widget.albumSongList,
+                                        songID: widget.songID,
+                                        albumID: widget.albumID
                                         )
                                     ],
                                   ),
@@ -241,7 +242,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                       ),
                     ),
                   );
-                } else {
+                }else {
                   return const Center(child: Text('Something went wrong'));
                 }
               }

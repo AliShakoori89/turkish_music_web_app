@@ -68,9 +68,6 @@ class UserRepository {
 
   FutureOr<bool> secondLogin(String email, String verificationToken) async {
 
-    await dotenv.load();
-    final String? apiKey = dotenv.get("apiKey");
-
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       'email': email,
@@ -108,8 +105,7 @@ class UserRepository {
   FutureOr<UserModel> getUserInLocalStorage() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('userData');
-    UserModel user =
-    UserModel.fromJson(jsonDecode(userData!));
+    UserModel user = UserModel.fromJson(jsonDecode(userData!));
     return user;
   }
 

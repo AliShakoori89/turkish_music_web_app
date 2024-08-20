@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/playing_song_animation.dart';
 import '../../../../../data/model/album_model.dart';
-import '../../../../../data/model/new-song_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../../generated/assets.dart';
 import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
@@ -21,8 +20,6 @@ class ContainerAllSongsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // print("Singer Name                            "+categoryAllSongs[0].singerName!);
 
     return ListView.builder(
             itemCount: categoryAllSongs.length,
@@ -64,6 +61,7 @@ class ContainerAllSongsList extends StatelessWidget {
                             child: PlaySongPage(
                               songName: categoryAllSongs[index].name!,
                               songFile: newPath,
+                              albumID: songDataModel.albumId!,
                               albumSongList: categoryAllSongs,
                               songID: categoryAllSongs[index].id!,
                               songImage: categoryAllSongs[index].imageSource!,
@@ -102,7 +100,7 @@ class ContainerAllSongsList extends StatelessWidget {
                               ),
                               child: CachedNetworkImage(
                                 fit: BoxFit.cover,
-                                imageUrl: categoryAllSongs![index].imageSource!,
+                                imageUrl: categoryAllSongs[index].imageSource!,
                                 imageBuilder: (context, imageProvider) => Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
@@ -136,22 +134,22 @@ class ContainerAllSongsList extends StatelessWidget {
                                   borderRadius: BorderRadius
                                       .circular(15),
                                   image: DecorationImage(
-                                      image: NetworkImage(categoryAllSongs![index].imageSource!),
+                                      image: NetworkImage(categoryAllSongs[index].imageSource!),
                                       fit: BoxFit.cover
                                   )
                               ),
                             ),
                             const SizedBox(width: 5,),
-                            categoryAllSongs == null
+                            categoryAllSongs.isEmpty
                                 ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(categoryAllSongs![index].name!,
+                                Text(categoryAllSongs[index].name!,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold
                                   ),),
-                                Text(categoryAllSongs![index].singerName!,
+                                Text(categoryAllSongs[index].singerName!,
                                   style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.white54
@@ -159,10 +157,10 @@ class ContainerAllSongsList extends StatelessWidget {
 
                               ],
                             )
-                                : Text(categoryAllSongs![index].name!,)
+                                : Text(categoryAllSongs[index].name!,)
                           ],
                         ),
-                        categoryAllSongs![index].name == songName
+                        categoryAllSongs[index].name == songName
                             ? PlayingSongAnimation()
                             : Container()
                       ],

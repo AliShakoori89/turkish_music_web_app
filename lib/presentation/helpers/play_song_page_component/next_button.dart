@@ -4,15 +4,20 @@ import '../../../data/model/album_model.dart';
 import '../../../data/model/new-song_model.dart';
 import '../../../data/model/song_model.dart';
 import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
+import '../../bloc/mini_playing_container_bloc/bloc.dart';
+import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../../bloc/song_bloc/bloc.dart';
 import '../../bloc/song_bloc/event.dart';
 import '../../bloc/song_bloc/state.dart';
 
 class NextButton extends StatelessWidget {
-  NextButton({super.key, required this.pageName, required this.categoryAllSongs});
+  NextButton({super.key, required this.pageName, required this.categoryAllSongs,
+    required this.songID, required this.albumID});
 
   final String pageName;
   final List<AlbumDataMusicModel> categoryAllSongs;
+  final int songID;
+  final int albumID;
   
   @override
   Widget build(BuildContext context) {
@@ -22,6 +27,10 @@ class NextButton extends StatelessWidget {
           context
               .read<CurrentSelectedSongBloc>()
               .add(PlayNextSong(songs: categoryAllSongs));
+
+          BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
+              songID: songID,
+              albumID: albumID));
         },
         icon: Container(
             padding: const EdgeInsets.symmetric(

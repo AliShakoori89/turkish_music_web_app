@@ -12,6 +12,8 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/play_button.dart';
 import 'package:turkish_music_app/presentation/helpers/play_song_page_component/previous_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page.dart';
+import '../../../data/model/song_model.dart';
+import '../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../widgets/singer_name_trackName_image.dart';
@@ -35,9 +37,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    print("#############              "+widget.songID.toString());
-    print("#############              "+widget.albumID.toString());
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
     BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
     BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
@@ -67,24 +66,48 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(
+
+                              SongDataModel songDataModel = SongDataModel(
+                                  id : state.song.id!,
+                                  name: state.song.name!,
+                                  imageSource: state.song.imageSource!,
+                                  fileSource: state.song.fileSource!,
+                                  minute: state.song.minute,
+                                  second: state.song.second,
+                                  singerName: state.song.singerName!,
+                                  album: null,
+                                  albumId: state.song.albumId,
+                                  categories: null
+                              );
+
+                            Navigator.push(
                                 context,
                                 PageTransition(
                                   curve: Curves.linear,
                                   type: PageTransitionType.bottomToTop,
-                                  child: PlaySongPage(
-                                    singerName: state.song.singerName!,
-                                    songFile: state.song.fileSource!,
-                                    songID: state.song.id!,
-                                    songImage: state.song.imageSource!,
-                                    songName: state.song.name!,
-                                    albumID: album[0].id,
-                                    albumSongList: album,
-                                    pageName: '',
-                                  ),
-                                ),
-                              );
-                            },
+                                  child: Builder(
+                                      builder: (context) => BlocProvider(
+                                            create: (context) =>
+                                                CurrentSelectedSongBloc()
+                                                  ..add(SelectSong(
+                                                      songModel:
+                                                          songDataModel)),
+                                            child: PlaySongPage(
+                                              songName: songDataModel.name!,
+                                              songFile:
+                                                  songDataModel.fileSource!,
+                                              songID: songDataModel.id!,
+                                              singerName:
+                                                  songDataModel.singerName!,
+                                              songImage:
+                                                  songDataModel.imageSource!,
+                                              albumID: songDataModel.albumId!,
+                                              albumSongList: album,
+                                              pageName: "",
+                                            ),
+                                          )),
+                                ));
+                          },
                             child: const TopArrow(),
                           ),
                           Container(
@@ -93,14 +116,14 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // Expanded(
-                                //   flex: 1,
-                                //   child: SingerNameTrackNameImage(
-                                //       singerName: "",
-                                //       songName: state.song.name!,
-                                //       imagePath: state.song.imageSource!,
-                                //       align: MainAxisAlignment.start),
-                                // ),
+                                Expanded(
+                                  flex: 1,
+                                  child: SingerNameTrackNameImage(
+                                      singerName: state.song.singerName!,
+                                      songName: state.song.name!,
+                                      imagePath: state.song.imageSource!,
+                                      align: MainAxisAlignment.start),
+                                ),
                                 Expanded(
                                   flex: 1,
                                   child: PlayButton(),
