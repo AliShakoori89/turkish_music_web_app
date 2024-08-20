@@ -10,8 +10,20 @@ import '../../../helpers/widgets/home_page/category_item.dart';
 import '../../../helpers/widgets/home_page/new_album_contaner.dart';
 import '../../../helpers/widgets/home_page/singer_container.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    print("HomePage            HomePage             HomePage                  HomePage");
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,9 +31,13 @@ class HomePage extends StatelessWidget {
           body: BlocBuilder<MiniPlayingContainerBloc,
               MiniPlayingContainerState>(builder: (context, state) {
 
+
+
             bool visibility = state.visibility;
             int songID = state.songID;
             int albumID = state.albumID;
+
+            print("HomePage    songID    "+songID.toString());
 
             return Stack(
               children: [

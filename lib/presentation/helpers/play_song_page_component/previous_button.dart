@@ -9,10 +9,12 @@ import '../../bloc/song_bloc/bloc.dart';
 import '../../bloc/song_bloc/state.dart';
 
 class PreviousButton extends StatelessWidget {
-  PreviousButton({key, required this.pageName, required this.albumSongs});
+  PreviousButton({key, required this.pageName, required this.albumSongs, required this.songID, required this.albumID});
 
   final String pageName;
   final List<AlbumDataMusicModel> albumSongs;
+  final int songID;
+  final int albumID;
 
   @override
   Widget build(BuildContext context) {

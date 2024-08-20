@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../data/model/album_model.dart';
 import '../../../../data/model/song_model.dart';
 
@@ -20,7 +21,7 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
       emit(SelectedSongFetched(songModel: event.songModel));
     });
 
-    on<PlayNextSong>((event, emit) {
+    on<PlayNextSong>((event, emit) async{
       SongDataModel songDataModel;
       emit(LoadingNewSong());
       final AlbumDataMusicModel nextSong;
@@ -54,11 +55,13 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
           albumId: nextSong.albumId,
         );
       }
+
       _currentSelectedSong = songDataModel;
+      await writeMiniPlayingRequirement(songDataModel.id!, songDataModel.albumId!);
       emit(SelectedSongFetched(songModel: songDataModel));
     });
 
-    on<PlayPreviousSong>((event, emit) {
+    on<PlayPreviousSong>((event, emit) async{
       SongDataModel songDataModel;
       emit(LoadingNewSong());
       final AlbumDataMusicModel previousSong;
@@ -93,7 +96,9 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
         );
       }
       _currentSelectedSong = songDataModel;
+      await writeMiniPlayingRequirement(songDataModel.id!, songDataModel.albumId!);
       emit(SelectedSongFetched(songModel: songDataModel));
+
     });
   }
 
@@ -101,5 +106,13 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
     print("_currentSelectedSong                                 "+_currentSelectedSong!.id.toString());
     final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
     return currentSongIndex;
+  }
+
+  writeMiniPlayingRequirement(int songID, int albumID) async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("writeMiniPlayingRequirement      "+songID.toString());
+    print("writeMiniPlayingRequirement      "+albumID.toString());
+    await prefs.setInt('songID', songID);
+    await prefs.setInt('albumID', albumID);
   }
 }

@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/ui/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page.dart';
 import '../../data/model/album_model.dart';
 import '../../data/model/singer_model.dart';
@@ -46,7 +48,12 @@ class _SingerPageState extends State<SingerPage> {
       canPop: false,
       onPopInvoked: (bool didPop){
         if (kDebugMode) {
-          Navigator.of(context).pushNamed('/home');
+          // Navigator.of(context).pushNamed('/home');
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => MainPage(),
+            ),
+          );
         }
       },
       child: Scaffold(

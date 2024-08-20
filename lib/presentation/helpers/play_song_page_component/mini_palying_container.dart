@@ -38,8 +38,9 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   @override
   void initState() {
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
-    BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
     BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+    BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
     super.initState();
   }
   @override
@@ -49,94 +50,127 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
       alignment: Alignment.bottomCenter,
       child: Container(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.12,
+          height: MediaQuery.of(context).size.height * 0.09,
           decoration: BoxDecoration(
-            color: Colors.black,
+            gradient: const LinearGradient(
+              colors: [Colors.black, Colors.purple, ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
             borderRadius: BorderRadius.circular(15),
           ),
-          child: BlocBuilder<AlbumBloc, AlbumState>(
-              builder: (context, state) {
+          child:
+          // BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
+          //   builder: (context, state) {
 
-                List<AlbumDataMusicModel> album = state.albumAllSongs;
+              // int songID = state.songID;
+              // print("int songID          "+songID.toString());
+              // BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: songID));
+              // return
+                BlocBuilder<AlbumBloc, AlbumState>(
+                  builder: (context, state) {
 
-                return BlocBuilder<SongBloc, SongState>(
-                    builder: (context, state) {
+                    List<AlbumDataMusicModel> album = state.albumAllSongs;
 
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
+                    return BlocBuilder<SongBloc, SongState>(
+                        builder: (context, state) {
 
-                              SongDataModel songDataModel = SongDataModel(
-                                  id : state.song.id!,
-                                  name: state.song.name!,
-                                  imageSource: state.song.imageSource!,
-                                  fileSource: state.song.fileSource!,
-                                  minute: state.song.minute,
-                                  second: state.song.second,
-                                  singerName: state.song.singerName!,
-                                  album: null,
-                                  albumId: state.song.albumId,
-                                  categories: null
-                              );
+                          if (state.status.isLoading){
+                            return Align(
+                              alignment: Alignment.bottomCenter,
+                              child: LinearProgressIndicator(
+                                minHeight: .5,
+                              ),
+                            );
+                          }else
+                            if(state.status.isSuccess){
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
 
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                  curve: Curves.linear,
-                                  type: PageTransitionType.bottomToTop,
-                                  child: Builder(
-                                      builder: (context) => BlocProvider(
-                                            create: (context) =>
+                                    SongDataModel songDataModel = SongDataModel(
+                                        id : state.song.id!,
+                                        name: state.song.name!,
+                                        imageSource: state.song.imageSource!,
+                                        fileSource: state.song.fileSource!,
+                                        minute: state.song.minute,
+                                        second: state.song.second,
+                                        singerName: state.song.singerName!,
+                                        album: null,
+                                        albumId: state.song.albumId,
+                                        categories: null
+                                    );
+
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.easeOut,
+                                          type: PageTransitionType.bottomToTop,
+                                          reverseDuration: Duration(milliseconds: 500),
+                                          child: Builder(
+                                              builder: (context) => BlocProvider(
+                                                create: (context) =>
                                                 CurrentSelectedSongBloc()
                                                   ..add(SelectSong(
                                                       songModel:
-                                                          songDataModel)),
-                                            child: PlaySongPage(
-                                              songName: songDataModel.name!,
-                                              songFile:
+                                                      songDataModel)),
+                                                child: PlaySongPage(
+                                                  songName: songDataModel.name!,
+                                                  songFile:
                                                   songDataModel.fileSource!,
-                                              songID: songDataModel.id!,
-                                              singerName:
+                                                  songID: songDataModel.id!,
+                                                  singerName:
                                                   songDataModel.singerName!,
-                                              songImage:
+                                                  songImage:
                                                   songDataModel.imageSource!,
-                                              albumID: songDataModel.albumId!,
-                                              albumSongList: album,
-                                              pageName: "",
-                                            ),
-                                          )),
-                                ));
-                          },
-                            child: const TopArrow(),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 20),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: SingerNameTrackNameImage(
-                                      singerName: state.song.singerName!,
-                                      songName: state.song.name!,
-                                      imagePath: state.song.imageSource!,
-                                      align: MainAxisAlignment.start),
+                                                  albumID: songDataModel.albumId!,
+                                                  albumSongList: album,
+                                                  pageName: "",
+                                                ),
+                                              )),
+                                        ));
+                                  },
+                                  child: const TopArrow(),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: PlayButton(),
-                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: SingerNameTrackNameImage(
+                                            singerName: state.song.singerName!,
+                                            songName: state.song.name!,
+                                            imagePath: state.song.imageSource!,
+                                            align: MainAxisAlignment.start),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: PlayButton(),
+                                      ),
+                                    ],
+                                  ),
+                                )
                               ],
-                            ),
-                          )
-                        ],
-                      );
-                    }
-                );
-              }
-          )))
+                            );
+                          }else if(state.status.isError){
+                            return Center(
+                              child: Text("error"),
+                            );
+                          }
+                          return Center(
+                            child: Text("error"),
+                          );
+                        }
+                    );
+                  }
+              // );}
+            )
+      ))
         : Container();
   }
 }

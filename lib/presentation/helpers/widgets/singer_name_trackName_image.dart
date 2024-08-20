@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 
@@ -22,20 +23,24 @@ class SingerNameTrackNameImage extends StatelessWidget {
       children: [
         Expanded(
           flex: 1,
-          child: Container(
-            // width: MediaQuery.of(context).size.width * 0.14,
-            height: MediaQuery.of(context).size.height * 0.065,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                    image: NetworkImage(imagePath),
-                    fit: BoxFit.fill)
+          child: CachedNetworkImage(
+            imageUrl: imagePath,
+            imageBuilder: (context, imageProvider) => Container(
+              // width: MediaQuery.of(context).size.width * 0.14,
+              height: MediaQuery.of(context).size.height * 0.065,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                      image: NetworkImage(imagePath),
+                      fit: BoxFit.fill)
+              ),
             ),
-          ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          )
         ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.01,),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +53,7 @@ class SingerNameTrackNameImage extends StatelessWidget {
                   child: OverflowTextAnimated(
                     text: songName,
                     style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 18,
                         color: Colors.white
                     ),
                     curve: Curves.fastEaseInToSlowEaseOut,
@@ -59,7 +64,7 @@ class SingerNameTrackNameImage extends StatelessWidget {
               ),
               DefaultTextStyle(
                   style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 13,
                       color: Colors.white
                   ),
                   child: Text(singerName)

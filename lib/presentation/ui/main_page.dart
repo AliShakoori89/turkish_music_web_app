@@ -144,7 +144,7 @@ class _MainPageState extends State<MainPage> {
                     selectedIndex: currentRoute,
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: MediaQuery.of(context).size.width * 0.12,
-                    backgroundColor: Colors.purple.withOpacity(0.5),
+                    backgroundColor: Colors.purple.withOpacity(0.7),
                     borderRadius: 15,
                     onItemSelected: (value) {
                       setState(() {

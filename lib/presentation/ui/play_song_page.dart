@@ -110,6 +110,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
 
                   var songID = state.songModel.id;
 
+                  print("11111111111111111111111                         1               "+state.songModel.id.toString());
+
                   return Container(
                     height: double.infinity,
                     width: double.infinity,
@@ -202,12 +204,14 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     children: [
                                       PreviousButton(
                                         pageName: widget.pageName,
-                                        albumSongs: widget.albumSongList,),
+                                        albumSongs: widget.albumSongList,
+                                        songID: state.songModel.id!,
+                                        albumID: widget.albumID),
                                       PlayButton(),
                                       NextButton(
                                         pageName: widget.pageName,
                                         categoryAllSongs: widget.albumSongList,
-                                        songID: widget.songID,
+                                        songID: state.songModel.id!,
                                         albumID: widget.albumID
                                         )
                                     ],
