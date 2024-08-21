@@ -10,66 +10,32 @@ import '../../../helpers/widgets/home_page/category_item.dart';
 import '../../../helpers/widgets/home_page/new_album_contaner.dart';
 import '../../../helpers/widgets/home_page/singer_container.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-
-  @override
-  void initState() {
-    print("HomePage            HomePage             HomePage                  HomePage");
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: BlocBuilder<MiniPlayingContainerBloc,
-              MiniPlayingContainerState>(builder: (context, state) {
-
-
-
-            bool visibility = state.visibility;
-            int songID = state.songID;
-            int albumID = state.albumID;
-
-            print("HomePage    songID    "+songID.toString());
-
-            return Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                    right: 10,
-                    left: 10,
-                    bottom: visibility == true ? 90 : 0
-                  ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AppHeader(),
-                        NewMusicContainer(),
-                        SingerContainer(),
-                        NewAlbumContainer(),
-                        CategoryItemContainer()
-                      ],
-                    ),
-                  ),
-                ),
-                MiniPlayingContainer(
-                  visibility: visibility,
-                  songID: songID,
-                  albumID: albumID,
-                  ),
-              ],
-            );
-          })
+          body: Container(
+            margin: EdgeInsets.only(
+                top: 10,
+                right: 10,
+                left: 10,
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppHeader(),
+                  NewMusicContainer(),
+                  SingerContainer(),
+                  NewAlbumContainer(),
+                  CategoryItemContainer()
+                ],
+              ),
+            ),
+          )
       ),
     );
   }

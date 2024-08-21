@@ -48,12 +48,7 @@ class _SingerPageState extends State<SingerPage> {
       canPop: false,
       onPopInvoked: (bool didPop){
         if (kDebugMode) {
-          // Navigator.of(context).pushNamed('/home');
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MainPage(),
-            ),
-          );
+          Navigator.of(context).pushNamed('/');
         }
       },
       child: Scaffold(

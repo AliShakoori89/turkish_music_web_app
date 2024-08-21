@@ -36,127 +36,112 @@ class _searchPageState extends State<searchPage> {
 
       return Scaffold(
       body: SafeArea(
-        child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(builder: (context, state) {
-
-        bool visibility = state.visibility;
-        int songID = state.songID;
-        int albumID = state.albumID;
-
-        return Stack(
+        child: Column(
           children: [
-            Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Text('Search Page',
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                          onPressed: () => showSearch(
-                            context: context,
-                            delegate: SearchPage(
-                              onQueryUpdate: print,
-                              items: music,
-                              searchLabel: 'Search Singer or Track name ',
-                              suggestion: const Center(
-                                child: Text('Filter track by track name or singer'),
-                              ),
-                              failure: const Center(
-                                child: Text('Not found :('),
-                              ),
-                              filter: (musicItem) => [
-                                musicItem.name],
-                              // sort: (a, b) => a.compareTo(b),
-                              builder: (musicItem) => GestureDetector(
-                                onTap: (){
-                                  SongDataModel songDataModel = SongDataModel(
-                                      id : musicItem.id,
-                                      name: musicItem.name,
-                                      imageSource: musicItem.imageSource,
-                                      fileSource: musicItem.fileSource!.substring(0, 4)
-                                          + "s"
-                                          + musicItem.fileSource!.substring(4, musicItem.fileSource!.length),
-                                      singerName: musicItem.singerName,
-                                      minute: musicItem.minute,
-                                      second: musicItem.second,
-                                      albumId: musicItem.albumId,
-                                  );
+            Expanded(
+              flex: 1,
+              child: Stack(
+                children: [
+                  Center(
+                    child: Text('Search Page',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        onPressed: () => showSearch(
+                          context: context,
+                          delegate: SearchPage(
+                            onQueryUpdate: print,
+                            items: music,
+                            searchLabel: 'Search Singer or Track name ',
+                            suggestion: const Center(
+                              child: Text('Filter track by track name or singer'),
+                            ),
+                            failure: const Center(
+                              child: Text('Not found :('),
+                            ),
+                            filter: (musicItem) => [
+                              musicItem.name],
+                            // sort: (a, b) => a.compareTo(b),
+                            builder: (musicItem) => GestureDetector(
+                              onTap: (){
+                                SongDataModel songDataModel = SongDataModel(
+                                  id : musicItem.id,
+                                  name: musicItem.name,
+                                  imageSource: musicItem.imageSource,
+                                  fileSource: musicItem.fileSource!.substring(0, 4)
+                                      + "s"
+                                      + musicItem.fileSource!.substring(4, musicItem.fileSource!.length),
+                                  singerName: musicItem.singerName,
+                                  minute: musicItem.minute,
+                                  second: musicItem.second,
+                                  albumId: musicItem.albumId,
+                                );
 
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => BlocProvider(
-                                            create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
-                                                songModel: songDataModel
-                                            )),
-                                            child: PlaySongPage(
-                                              songName: musicItem.name!,
-                                              songFile: musicItem.fileSource!,
-                                              songID: musicItem.id!,
-                                              singerName: musicItem.singerName!,
-                                              songImage: musicItem.album!.imageSource!,
-                                              pageName: "searchPage",
-                                              albumID: 0,
-                                              albumSongList: [],
-                                            ),
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BlocProvider(
+                                          create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                              songModel: songDataModel
+                                          )),
+                                          child: PlaySongPage(
+                                            songName: musicItem.name!,
+                                            songFile: musicItem.fileSource!,
+                                            songID: musicItem.id!,
+                                            singerName: musicItem.singerName!,
+                                            songImage: musicItem.album!.imageSource!,
+                                            pageName: "searchPage",
+                                            albumID: 0,
+                                            albumSongList: [],
+                                          ),
 
-                                          )));
-                                },
-                                child: ListTile(
-                                  title: Text(musicItem.name!),
-                                ),
+                                        )));
+                              },
+                              child: ListTile(
+                                title: Text(musicItem.name!),
                               ),
                             ),
                           ),
-                          icon: Icon(Icons.search)),
-                    )
-                  ],
-                ),
+                        ),
+                        icon: Icon(Icons.search)),
+                  )
+                ],
               ),
-              Expanded(
-                flex: 10,
-                child: DelayedWidget(
-                    delayDuration: Duration(milliseconds: 1500),// Not required
-                    animationDuration: Duration(seconds: 1),// Not required
-                    animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
-                    child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: GestureDetector(
-                            onTap: (){
-
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(music[index].name!),
-                                Text(music[index].singerName!,
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.5)
-                                ),),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    )),
-              )],
             ),
-            MiniPlayingContainer(
-              visibility: visibility,
-              songID: songID,
-              albumID: albumID,)
-          ],
-        );
-        })
+            Expanded(
+              flex: 10,
+              child: DelayedWidget(
+                  delayDuration: Duration(milliseconds: 1500),// Not required
+                  animationDuration: Duration(seconds: 1),// Not required
+                  animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
+                  child: ListView.builder(
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: GestureDetector(
+                          onTap: (){
+
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(music[index].name!),
+                              Text(music[index].singerName!,
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.5)
+                                ),),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )),
+            )],
+        )
       ),
     );
     });

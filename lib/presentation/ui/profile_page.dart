@@ -13,10 +13,6 @@ import '../helpers/widgets/singer_name_trackName_image.dart';
 import '../helpers/widgets/song_detail_list.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({super.key,
-    required this.visibility});
-
-  final bool visibility;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -38,7 +34,6 @@ class _DetailPageState extends State<DetailPage> {
             left: 10,
             right: 10,
             top: 10,
-            bottom: widget.visibility == true ? 90 : 0
         ),
         child: BlocBuilder<RecentlyPlaySongBloc , RecentlyPlaySongState>(
           builder: (context, state){

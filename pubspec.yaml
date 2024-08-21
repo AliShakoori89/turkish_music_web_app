@@ -79,6 +79,7 @@ dependencies:
   permission_handler_platform_interface: ^4.2.2
   device_info_plus: ^10.1.2
   page_transition: ^2.1.0
+  image_pixels: ^3.0.2
 
 dev_dependencies:
   flutter_test:

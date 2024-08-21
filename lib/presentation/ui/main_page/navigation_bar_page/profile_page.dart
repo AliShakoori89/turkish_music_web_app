@@ -32,74 +32,57 @@ class _ProfilePageState extends State<ProfilePage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child:
-          BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
-              builder: (context, state) {
-
-        bool visibility = state.visibility;
-        int songID = state.songID;
-        int albumID = state.albumID;
-
-        return Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.033,
-                left: MediaQuery.of(context).size.width * 0.033,
-                top: MediaQuery.of(context).size.height * 0.08,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 8, right: 8, bottom: 10),
-                            child: Row(
-                              children: [
-                                Icon(Icons.person_outline_rounded),
-                                SizedBox(width: 10),
-                                Text("Profile Email"),
-                              ],
-                            ),
-                          ),
-                          BlocBuilder<UserBloc, UserState>(
-                              builder: (context, state) {
-
-                                var user = state.user;
-                                return Padding(
-                                  padding: EdgeInsets.only(right: 10),
-                                  child: Text(user.data!.email!,
-                                      style: TextStyle(color: Colors.grey)),
-                                );
-                          }),
-                        ],
-                      ),
-                      CustomDivider(dividerColor: Colors.grey),
-                    ],
-                  ),
-                  ShareButton(),
-                  ReportButton(),
-                  HelpButton(),
-                  AboutButton(),
-                  ExitAccountButton(),
-                  ExitButton()
-                ],
-              ),
+      body: SafeArea(
+          child: Container(
+            margin: EdgeInsets.only(
+              right: MediaQuery.of(context).size.width * 0.033,
+              left: MediaQuery.of(context).size.width * 0.033,
+              top: MediaQuery.of(context).size.height * 0.08,
             ),
-            MiniPlayingContainer(
-              visibility: visibility,
-              songID: songID,
-              albumID: albumID,
-            )
-          ],
-        );
-      })),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 10, left: 8, right: 8, bottom: 10),
+                          child: Row(
+                            children: [
+                              Icon(Icons.person_outline_rounded),
+                              SizedBox(width: 10),
+                              Text("Profile Email"),
+                            ],
+                          ),
+                        ),
+                        BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) {
+
+                              var user = state.user;
+                              return Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Text(user.data!.email!,
+                                    style: TextStyle(color: Colors.grey)),
+                              );
+                            }),
+                      ],
+                    ),
+                    CustomDivider(dividerColor: Colors.grey),
+                  ],
+                ),
+                ShareButton(),
+                ReportButton(),
+                HelpButton(),
+                AboutButton(),
+                ExitAccountButton(),
+                ExitButton()
+              ],
+            ),
+          )),
     );
   }
 }
