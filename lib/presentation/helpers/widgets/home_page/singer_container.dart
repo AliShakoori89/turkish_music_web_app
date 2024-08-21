@@ -100,7 +100,6 @@ class SingerContainer extends StatelessWidget {
                               singerName: artistList[index].name,
                               isArtist: false),
                         ),
-                        Spacer()
                       ],
                     ),
                   ),

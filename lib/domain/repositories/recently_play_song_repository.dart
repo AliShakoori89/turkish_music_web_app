@@ -21,21 +21,36 @@ class RecentlyPlaySongRepository {
     ApiBaseHelper api = ApiBaseHelper();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('accessToken');
-
     List<AlbumDataMusicModel> allSong = [];
-    for(int i = 0 ; i < recentlyPlayedSongIDs.length ; i++){
+    for(int i = recentlyPlayedSongIDs.length ; i >= 0 ; i--){
+      print(i--);
+      print(recentlyPlayedSongIDs[i].id);
+
+
       final response = await api.get('/api/Music/GetOneMusic/${recentlyPlayedSongIDs[i].id}', accessToken: accessToken!);
       final productJson = json.decode(response.body);
-      AlbumDataMusicModel song = AlbumDataMusicModel.fromJson(productJson['data']);
-      print(song.name);
-      print(song.singerName);
-      allSong.add(song);
+      SongDataModel song = SongDataModel.fromJson(productJson['data']);
+
+      AlbumDataMusicModel generateSong = AlbumDataMusicModel(
+          singerName: song.singerName,
+          second: song.second,
+          name: song.name,
+          minute: song.minute,
+          imageSource: song.imageSource,
+          id: song.id,
+          fileSource: song.fileSource!.substring(0, 4) + "s"
+              +song.fileSource!.substring(4, song.fileSource!.length),
+          albumId: song.albumId
+      );
+
+      print(generateSong.name);
+      
+      allSong.add(generateSong);
     }
     return allSong;
   }
 
   addPlayedSongID(RecentlyPlayedSongIdModel recentlyPlayedSongIdModel) async{
-    print(recentlyPlayedSongIdModel.id);
     return await helper.saveRecentlyPlayedSongId(recentlyPlayedSongIdModel);
   }
 }

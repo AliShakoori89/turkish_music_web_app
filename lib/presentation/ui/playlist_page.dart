@@ -12,8 +12,6 @@ class PlaylistPage extends StatelessWidget {
 
     BlocProvider.of<PlaylistBloc>(context).add(GetAllMusicInPlaylistEvent());
 
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Playlist"),

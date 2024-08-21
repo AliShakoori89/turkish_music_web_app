@@ -42,10 +42,10 @@ class DatabaseHelper{
 
   Future<bool> saveRecentlyPlayedSongId(RecentlyPlayedSongIdModel recentlyPlayedSongIdModel) async {
     var dbExpense = await database;
-    print(recentlyPlayedSongIdModel.id);
-    print(recentlyPlayedSongIdModel.toJson());
+    print("data base                 "+"${recentlyPlayedSongIdModel.toJson()}");
     await dbExpense.insert(recentlyPlaylistTable, recentlyPlayedSongIdModel.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+
     return true;
   }
 
