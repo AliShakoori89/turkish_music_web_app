@@ -40,9 +40,11 @@ class _DetailPageState extends State<DetailPage> {
             
              if(state.status.isLoading){
                return Center(
-                   child: CircularProgressIndicator(
-                     color: Colors.purple,
-                   ));
+                   child: Image.asset(
+                     "assets/custom_icons/loading_play.gif",
+                     height: 125.0,
+                     width: 125.0,
+                   ),);
              }else if(state.status.isSuccess){
       
                return state.allRecentlySongs.isNotEmpty
