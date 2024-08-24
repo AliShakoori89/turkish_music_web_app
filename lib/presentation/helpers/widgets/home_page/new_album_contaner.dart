@@ -6,10 +6,13 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
+import '../../../../data/model/song_model.dart';
 import '../../../bloc/album_bloc/event.dart';
+import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
 import '../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../const/shimmer_container/new_album_shimmer_container.dart';
 import '../../../const/shimmer_container/new_music_shimmer_container.dart';
+import '../../../ui/play_song_page.dart';
 
 class NewAlbumContainer extends StatefulWidget {
   const NewAlbumContainer({super.key});
@@ -54,17 +57,52 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                   children: List.generate(
                       newAlbum.data!.length,
                           (index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                                flex: 5,
-                                child: InkWell(
-                                  customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  onTap: () {
-                                  },
+                        return GestureDetector(
+                          onTap: (){
+                            var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
+                                + "s"
+                                + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
+
+                            var newPath = path.replaceAll(" ", "%20");
+
+                            SongDataModel songDataModel = SongDataModel(
+                                id : state.singerAllAlbum[index].musics![0].id,
+                                name: state.singerAllAlbum[index].musics![0].name,
+                                imageSource: state.singerAllAlbum[index].musics![0].imageSource,
+                                fileSource: newPath,
+                                minute: state.singerAllAlbum[index].musics![0].minute,
+                                second: state.singerAllAlbum[index].musics![0].second,
+                                singerName: newAlbum.data![index].singer!.name!,
+                                album: null,
+                                albumId: state.singerAllAlbum[index].id,
+                                categories: null
+                            );
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BlocProvider(
+                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                          songModel: songDataModel
+                                      )),
+                                      child: PlaySongPage(
+                                          songName: state.singerAllAlbum[index].name!,
+                                          songFile: newPath,
+                                          songID: songDataModel.id!,
+                                          singerName: songDataModel.singerName!,
+                                          songImage: state.singerAllAlbum[index].imageSource!,
+                                          albumID: songDataModel.albumId!,
+                                          pageName: "SingerPage",
+                                          albumSongList: state.singerAllAlbum[index].musics!
+                                      ),
+
+                                    )));
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  flex: 5,
                                   child: CachedNetworkImage(
                                     imageUrl: newAlbum.data![index].imageSource!,
                                     imageBuilder: (context, imageProvider) => Container(
@@ -85,18 +123,16 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                     ),
                                     placeholder: (context, url) => NewSongShimmerContainer(),
                                     errorWidget: (context, url, error) => Icon(Icons.error),
-                                  ),
-
-                                )),
-                            Expanded(
-                              flex: 2,
-                              child: UnderImageSingerAndSongName(
-                                  singerName:
-                                  newAlbum.data![index].singer?.name,
-                                  albumName: newAlbum.data![index].name,
-                                  isArtist: true),
-                            ),
-                          ],
+                                  )),
+                              Expanded(
+                                flex: 2,
+                                child: UnderImageSingerAndSongName(
+                                    singerName: newAlbum.data![index].singer?.name,
+                                    albumName: newAlbum.data![index].name,
+                                    isArtist: true),
+                              ),
+                            ],
+                          ),
                         );
                       }
                   )

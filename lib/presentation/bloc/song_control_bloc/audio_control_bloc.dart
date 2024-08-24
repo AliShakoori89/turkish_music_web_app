@@ -33,16 +33,26 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
     // _audioStream = _audioPlayer.onPlayerComplete.listen((event) async{
     //   print("*********************************************************************");
+    //   // _audioPlayer.resume();
     // });
 
-    on<SongCompleted>((event, emit) async {
-      int i = getCurrentSongIndex(event.songs);
-      final Source source = UrlSource(event.songs[i].fileSource ?? "");
-      await _audioPlayer.play(source);
-    });
+    // on<SongCompleted>((event, emit) async {
+    //   int i = getCurrentSongIndex(event.songs);
+    //   print("iiiiiiiiiiiiiiiii            "+i.toString());
+    //   final Source source = UrlSource(event.songs[i].fileSource ?? "");
+    //   await _audioPlayer.play(source);
+    // });
 
     on<PlaySong>((event, emit) async {
       final Source source = UrlSource(event.currentSong.fileSource ?? "");
+      await _audioPlayer.play(source);
+      emit(AudioPlayedState());
+    });
+
+    on<PlayNexttSong>((event, emit) async {
+      int i = getCurrentSongIndex(event.currentAlbum, event.currentSong);
+      print("iiiiiiiiiiiiiiiii            "+i.toString());
+      final Source source = UrlSource(event.currentAlbum[i+1].fileSource ?? "");
       await _audioPlayer.play(source);
       emit(AudioPlayedState());
     });
@@ -90,8 +100,11 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     return super.close();
   }
 
-  getCurrentSongIndex(List<AlbumDataMusicModel> songs) {
-    final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
-    return currentSongIndex;
+  getCurrentSongIndex(List<AlbumDataMusicModel> songs, SongDataModel song) {
+    for(int i = 0 ; i < songs.length ; i++){
+      if(song.id == songs[i].id){
+        return i;
+      }
+    }
   }
 }

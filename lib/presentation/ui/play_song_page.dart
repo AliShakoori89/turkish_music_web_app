@@ -99,6 +99,16 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                     .add(PlaySong(
                     currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
                     currentAlbum: widget.albumSongList));
+
+                context
+                    .read<AudioControlBloc>()
+                    .audioPlayer.onPlayerComplete.listen((event) async{
+                  context
+                      .read<AudioControlBloc>()
+                      .add(PlayNexttSong(
+                      currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
+                      currentAlbum: widget.albumSongList));
+                });
               },
               builder: (context, state) {
 

@@ -11,6 +11,6 @@ class AudioPausedState extends AudioControlState {}
 
 class AudioRepeatState extends AudioControlState {}
 
-// class AudioCompleteState extends AudioControlState {}
+class AudioCompleteState extends AudioControlState {}
 
-// class AudioNextPlayState extends AudioControlState {}
+class AudioNextPlayState extends AudioControlState {}

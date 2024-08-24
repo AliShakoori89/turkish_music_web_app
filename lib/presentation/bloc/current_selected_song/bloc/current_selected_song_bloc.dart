@@ -26,6 +26,7 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
       emit(LoadingNewSong());
       final AlbumDataMusicModel nextSong;
       final index = getCurrentSongIndex(event.songs);
+      print("index           "+index.toString());
       if (index == event.songs.length - 1) {
         nextSong = event.songs.elementAt(0);
         songDataModel = SongDataModel(
@@ -103,15 +104,12 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
   }
 
   getCurrentSongIndex(List<AlbumDataMusicModel> songs) {
-    print("_currentSelectedSong                                 "+_currentSelectedSong!.id.toString());
     final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
     return currentSongIndex;
   }
 
   writeMiniPlayingRequirement(int songID, int albumID) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("writeMiniPlayingRequirement      "+songID.toString());
-    print("writeMiniPlayingRequirement      "+albumID.toString());
     await prefs.setInt('songID', songID);
     await prefs.setInt('albumID', albumID);
   }
