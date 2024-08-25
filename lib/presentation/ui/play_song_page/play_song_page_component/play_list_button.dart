@@ -9,7 +9,8 @@ class PlayListButton extends StatelessWidget {
       onTap: (){
 
       },
-      child: const Icon(
+      child: Icon(
+        size: MediaQuery.of(context).size.height / 40,
         Icons.playlist_play_outlined,
         color: Colors.grey,
       ),

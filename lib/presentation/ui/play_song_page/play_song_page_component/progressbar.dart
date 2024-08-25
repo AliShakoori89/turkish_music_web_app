@@ -19,24 +19,40 @@ class Progressbar extends StatelessWidget {
             final currentDurationMinute = (snapshot.data?.inMinutes ?? 0).toString().padLeft(2 , "0");
             return Column(
               children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Row(
-                        children: [
-                          Text(currentDurationMinute),
-                          Text(":"),
-                          Text((currentDurationSecond % 60).toString().padLeft(2 , "0")),
-                        ],
-                      ), Row(
-                        children: [
-                          Text("${minute}".padLeft(2 , "0")),
-                          Text(":"),
-                          Text("${second}".padLeft(2 , "0")),
-                        ],
-                      )],
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Row(
+                    children: [
+                      Text(currentDurationMinute,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.height / 60
+                      ),),
+                      Text(":",
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 60
+                          )),
+                      Text((currentDurationSecond % 60).toString().padLeft(2 , "0"),
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 60
+                          )),
+                    ],
+                  ), Row(
+                    children: [
+                      Text("${minute}".padLeft(2 , "0"),
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 60
+                          )),
+                      Text(":",
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 60
+                          )),
+                      Text("${second}".padLeft(2 , "0"),
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 60
+                          )),
+                    ],
+                  )],
+                ),
                 SliderTheme(
                   data: SliderTheme.of(context)
                       .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
@@ -55,7 +71,8 @@ class Progressbar extends StatelessWidget {
           } else {
             return SliderTheme(
               data: SliderTheme.of(context)
-                  .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
+                  .copyWith(thumbShape: const RoundSliderThumbShape(
+                  enabledThumbRadius: 5)),
               child: Slider(
                   activeColor: Colors.purple,
                   inactiveColor: Colors.black,

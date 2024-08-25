@@ -26,7 +26,9 @@ class PlayButton extends StatelessWidget {
               }
             },
             icon: Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 10),
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -40,14 +42,14 @@ class PlayButton extends StatelessWidget {
                   BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
                 ]),
                 child: state is AudioPlayedState
-                    ? const Icon(
+                    ? Icon(
                   Icons.pause,
                   color: Colors.white,
-                  size: 40,)
-                    : const Icon(
+                  size: MediaQuery.of(context).size.height / 20,)
+                    : Icon(
                   Icons.play_arrow_rounded,
                   color: Colors.white,
-                  size: 40,)));
+                  size: MediaQuery.of(context).size.height / 20,)));
       },
     );
   }

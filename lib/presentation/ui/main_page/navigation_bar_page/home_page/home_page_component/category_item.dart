@@ -25,61 +25,58 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Column(
-          children: [
-            TitleText(title: "Category", haveSeeAll: false),
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.0052,
-                  vertical: MediaQuery.of(context).size.height * 0.03),
-              height: MediaQuery.of(context).size.height * 0.2,
-              width: double.infinity,
-              child: AnimatedListView(
-                duration: 100,
-                scrollDirection: Axis.horizontal,
-                cacheExtent: 1000,
-                children: List.generate(
-                    state.category.length,
-                        (index) => Padding(
-                      padding: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width * 0.030,
+      return Column(
+        children: [
+          TitleText(title: "Category", haveSeeAll: false),
+          Container(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.0052,
+                vertical: MediaQuery.of(context).size.height * 0.03),
+            height: MediaQuery.of(context).size.height * 0.2,
+            width: double.infinity,
+            child: AnimatedListView(
+              duration: 100,
+              scrollDirection: Axis.horizontal,
+              cacheExtent: 1000,
+              children: List.generate(
+                  state.category.length,
+                      (index) => Padding(
+                    padding: EdgeInsets.only(
+                      right: MediaQuery.of(context).size.width * 0.030,
+                    ),
+                    child: InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      child: InkWell(
-                        customBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        onTap: (){
+                      onTap: (){
 
-                        },
-                        child: CachedNetworkImage(
-                          imageUrl: state.category[index].imageSource,
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.purple.withOpacity(0.5),
-                                    blurRadius: 10,
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                    image: NetworkImage(state.category[index].imageSource),
-                                    fit: BoxFit.fill
-                                )
-                            ),
-                            width: MediaQuery.of(context).size.width * 0.3,
+                      },
+                      child: CachedNetworkImage(
+                        imageUrl: state.category[index].imageSource,
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.purple.withOpacity(0.5),
+                                  blurRadius: 10,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                  image: NetworkImage(state.category[index].imageSource),
+                                  fit: BoxFit.fill
+                              )
                           ),
-                          placeholder: (context, url) => CategoryShimmerContainer(shimmerLength: 6,),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          width: MediaQuery.of(context).size.width * 0.3,
                         ),
+                        placeholder: (context, url) => CategoryShimmerContainer(shimmerLength: 6,),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
-                    )),
-              ),
+                    ),
+                  )),
             ),
-          ],
-        ),
+          ),
+        ],
       );
     });
 

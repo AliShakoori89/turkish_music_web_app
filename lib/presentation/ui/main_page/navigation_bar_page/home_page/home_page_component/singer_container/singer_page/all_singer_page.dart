@@ -1,6 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import '../../../data/model/singer_model.dart';
+import '../../../../../../../../data/model/singer_model.dart';
 import 'singer_page.dart';
 
 class AllSingerPage extends StatefulWidget {
@@ -72,15 +73,20 @@ class _AllSingerPageState extends State<AllSingerPage>{
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
-                              height: MediaQuery.of(context).size.width / 10,
-                              width: MediaQuery.of(context).size.width / 10,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(widget.allSinger[index].imageSource),
-                                  fit: BoxFit.fill
-                                )
+                            CachedNetworkImage(
+                              imageUrl: widget.allSinger[index].imageSource,
+                              imageBuilder: (context, imageProvider) => Container(
+                                height: MediaQuery.of(context).size.width / 8,
+                                width: MediaQuery.of(context).size.width / 8,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: NetworkImage(widget.allSinger[index].imageSource),
+                                        fit: BoxFit.fill
+                                    )
+                                ),
                               ),
+                              errorWidget: (context, url, error) => Icon(Icons.error),
                             ),
                             SizedBox(
                               width: 15,
@@ -113,19 +119,21 @@ class _AllSingerPageState extends State<AllSingerPage>{
           Container(
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(right: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: alphabets
-                  .map((alphabet) => InkWell(
-                onTap: () {
-                  setSearchIndex(alphabet);
-                },
-                child: Text(
-                  alphabet,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ))
-                  .toList(),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: alphabets
+                    .map((alphabet) => InkWell(
+                  onTap: () {
+                    setSearchIndex(alphabet);
+                  },
+                  child: Text(
+                    alphabet,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ))
+                    .toList(),
+              ),
             ),
           )
         ],

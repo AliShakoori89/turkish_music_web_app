@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/data/model/singer_model.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
-import 'package:turkish_music_app/presentation/ui/singer_page/singer_page.dart';
-import '../../../../../bloc/singer_bloc/bloc.dart';
-import '../../../../../bloc/singer_bloc/event.dart';
-import '../../../../../bloc/singer_bloc/state.dart';
-import '../../../../../const/shimmer_container/artist_shimmer_container.dart';
-import '../../../../../const/title.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
+import '../../../../../../bloc/singer_bloc/bloc.dart';
+import '../../../../../../bloc/singer_bloc/event.dart';
+import '../../../../../../bloc/singer_bloc/state.dart';
+import '../../../../../../const/shimmer_container/artist_shimmer_container.dart';
+import '../../../../../../const/title.dart';
 
 class SingerContainer extends StatelessWidget {
 

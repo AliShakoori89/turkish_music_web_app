@@ -42,7 +42,9 @@ class PreviousButton extends StatelessWidget {
               ),
               BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
             ]),
-            child: const Icon(Icons.skip_previous_rounded,
+            child: Icon(
+              size: MediaQuery.of(context).size.height / 40,
+              Icons.skip_previous_rounded,
               color: Colors.white,)));
   }
 }

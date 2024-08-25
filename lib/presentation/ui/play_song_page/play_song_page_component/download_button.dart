@@ -43,12 +43,13 @@ class _DownloadButtonState extends State<DownloadButton> {
         icon: BlocBuilder<DownloadBloc, DownloadState>(builder: (context, state) {
           if(state.status.isInitial ){
             return Icon(Icons.download_sharp,
+              size: MediaQuery.of(context).size.height / 40,
               color: Colors.grey,);
           }
           else if(state.status.isLoading ){
             return SizedBox(
-              width: 15,
-              height: 15,
+              width: MediaQuery.of(context).size.height / 40,
+              height: MediaQuery.of(context).size.height / 40,
               child: CircularProgressIndicator(
                 color: Colors.purple,
               ),
@@ -56,13 +57,18 @@ class _DownloadButtonState extends State<DownloadButton> {
           }
           else if(state.status.isSuccess){
             return Icon(Icons.download_sharp,
+                size: MediaQuery.of(context).size.height / 40,
               color: Colors.grey);
           }
           else if(state.status.isError){
             return Icon(Icons.download_sharp,
+                size: MediaQuery.of(context).size.height / 40,
               color: Colors.grey);
           }
-          return Container(width: 5,height: 5,color: Colors.black,);
+          return Container(
+            width: MediaQuery.of(context).size.height / 40,
+            height: MediaQuery.of(context).size.height / 40,
+            color: Colors.black,);
     })
         //
     );

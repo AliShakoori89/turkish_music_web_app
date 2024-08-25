@@ -46,14 +46,14 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                     scale: Tween(begin: 0.7, end: 1.0).animate(
                         CurvedAnimation(parent: widget.controller, curve: Curves.easeOut)),
                     child: isFavorite
-                        ? const Icon(
-                      Icons.favorite,
-                      size: 30,
+                        ? Icon(
+                      Icons.bookmark_border,
+                      size: MediaQuery.of(context).size.height / 30,
                       color: Colors.red,
                     )
-                        : const Icon(
-                      Icons.favorite_border,
-                      size: 30,
+                        : Icon(
+                      Icons.bookmark_border,
+                      size: MediaQuery.of(context).size.height / 30,
                     )
 
 

@@ -29,9 +29,13 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
 
   @override
   Widget build(BuildContext context) {
+
+    var height = MediaQuery.of(context).size.height;
+
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(height: MediaQuery.of(context).size.height / 20),
         TitleText(title: "New Album", haveSeeAll: false),
         Padding(
           padding: EdgeInsets.only(
@@ -45,7 +49,9 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
             var newAlbum = state.newAlbum;
 
             return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.45,
+              height: height < 650
+                  ? MediaQuery.of(context).size.height * 0.6
+                  : MediaQuery.of(context).size.height * 0.55,
               child: AnimatedGridView(
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,

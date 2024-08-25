@@ -136,7 +136,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                               image: NetworkImage(state.songModel.imageSource!,),
                               fit: BoxFit.fitHeight,
                               colorFilter: ColorFilter.mode(
-                                  Colors.black.withOpacity(0.2), BlendMode.dstATop),
+                                  Colors.black.withOpacity(0.2),
+                                  BlendMode.dstATop),
                             ),
                           ),
                           child: BackdropFilter(
@@ -169,13 +170,15 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                           children: [
                                             Text(
                                               state.songModel.name!,
-                                              style: const TextStyle(
-                                                  fontSize: 15, color: Colors.white),
+                                              style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.height / 60,
+                                                  color: Colors.white),
                                             ),
                                             Text(
                                               widget.singerName,
-                                              style: const TextStyle(
-                                                  fontSize: 13, color: Colors.white60),
+                                              style: TextStyle(
+                                                  fontSize: MediaQuery.of(context).size.height / 70,
+                                                  color: Colors.white60),
                                             ),
                                           ],
                                         ),
@@ -187,67 +190,79 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                       ],
                                     ),
                                   ),
-                                  CustomCircularSeekBar(
-                                    songImage: state.songModel.imageSource!,
-                                  ),
-                                  Container(
-                                    // margin: EdgeInsets.only(
-                                    //     right: 20,
-                                    //     left: 20
-                                    // ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            DownloadButton(
-                                                songFilePath: state.songModel.fileSource!,
-                                                songName: state.songModel.name!
-                                            ),
-                                            repeatButton()
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            PreviousButton(
-                                                pageName: widget.pageName,
-                                                albumSongs: widget.albumSongList,
-                                                songID: state.songModel.id!,
-                                                albumID: widget.albumID),
-                                            PlayButton(),
-                                            NextButton(
-                                                pageName: widget.pageName,
-                                                categoryAllSongs: widget.albumSongList,
-                                                songID: state.songModel.id!,
-                                                albumID: widget.albumID
-                                            )
-                                          ],
-                                        ),
-                                        Progressbar(
-                                            minute: state.songModel.minute!,
-                                            second: state.songModel.second!),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 15
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              PlayListButton(),
-                                              loopButton()
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                  Flexible(
+                                    flex: 6,
+                                    child: CustomCircularSeekBar(
+                                      songImage: state.songModel.imageSource!,
                                     ),
                                   ),
-                                  SizedBox(height: 15,),
-                                  const Spacer(),
                                   Flexible(
-                                      flex: 4,
+                                    flex: 6,
+                                    child: Container(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Flexible(
+                                            flex: 2,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                DownloadButton(
+                                                    songFilePath: state.songModel.fileSource!,
+                                                    songName: state.songModel.name!
+                                                ),
+                                                repeatButton()
+                                              ],
+                                            ),
+                                          ),
+                                          Flexible(
+                                            flex: 3,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                PreviousButton(
+                                                    pageName: widget.pageName,
+                                                    albumSongs: widget.albumSongList,
+                                                    songID: state.songModel.id!,
+                                                    albumID: widget.albumID),
+                                                PlayButton(),
+                                                NextButton(
+                                                    pageName: widget.pageName,
+                                                    categoryAllSongs: widget.albumSongList,
+                                                    songID: state.songModel.id!,
+                                                    albumID: widget.albumID
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Flexible(
+                                            flex: 3,
+                                            child: Progressbar(
+                                                minute: state.songModel.minute!,
+                                                second: state.songModel.second!),
+                                          ),
+                                          Flexible(
+                                            flex: 2,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 15
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  PlayListButton(),
+                                                  loopButton()
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                      flex: 3,
                                       child: ContainerAllSongsList(
                                       singerName: widget.singerName,
                                       categoryAllSongs: widget.albumSongList,

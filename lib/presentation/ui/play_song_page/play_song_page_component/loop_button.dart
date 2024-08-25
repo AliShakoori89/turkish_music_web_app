@@ -21,11 +21,13 @@ class _loopButtonState extends State<loopButton> {
         });
       },
       icon: loop
-          ? const Icon(
+          ? Icon(
+        size: MediaQuery.of(context).size.height / 40,
         Icons.loop,
         color: Colors.white,
       )
-          : const Icon(
+          : Icon(
+        size: MediaQuery.of(context).size.height / 40,
           Icons.loop,
           color: Colors.grey),
     );

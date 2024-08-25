@@ -30,11 +30,15 @@ class _repeatButtonState extends State<repeatButton> {
         }
       },
       icon: repeat
-          ? const Icon(
+          ? Icon(
+        size: MediaQuery.of(context).size.height / 40,
         Icons.repeat,
         color: Colors.white,
       )
-          : const Icon(Icons.repeat, color: Colors.grey),
+          : Icon(
+          Icons.repeat,
+          size: MediaQuery.of(context).size.height / 40,
+          color: Colors.grey),
     );
   }
 }

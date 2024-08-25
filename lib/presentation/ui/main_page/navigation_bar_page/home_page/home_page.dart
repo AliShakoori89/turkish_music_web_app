@@ -3,7 +3,7 @@ import '../../../../helpers/widgets/header.dart';
 import 'home_page_component/category_item.dart';
 import 'home_page_component/new_album_contaner.dart';
 import 'home_page_component/new_music_container/new_music_container.dart';
-import 'home_page_component/singer_container.dart';
+import 'home_page_component/singer_container/singer_container.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -26,7 +26,10 @@ class HomePage extends StatelessWidget {
                   NewMusicContainer(),
                   SingerContainer(),
                   NewAlbumContainer(),
-                  CategoryItemContainer()
+                  CategoryItemContainer(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  )
                 ],
               ),
             ),
