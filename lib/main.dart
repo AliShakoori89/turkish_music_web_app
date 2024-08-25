@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,7 +35,7 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
 
 FutureOr<void> main() async{
@@ -50,7 +52,10 @@ FutureOr<void> main() async{
       ? false
       : true;
 
-  runApp(MyApp(isLoggedIn: isLoggedIn));
+  runApp(
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => MyApp(isLoggedIn: isLoggedIn))); // Wrap your app
 }
 
 
@@ -125,6 +130,9 @@ class MyApp extends StatelessWidget {
                 RecentlyPlaySongBloc(RecentlyPlaySongRepository())),
       ],
       child: GetMaterialApp(
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),

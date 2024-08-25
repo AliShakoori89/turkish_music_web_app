@@ -2,17 +2,14 @@ import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
-import '../../../../data/model/album_model.dart';
+import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import '../../../../data/model/song_model.dart';
-import '../../../bloc/current_selected_song/bloc/current_selected_song_bloc.dart';
-import '../../../bloc/mini_playing_container_bloc/bloc.dart';
-import '../../../bloc/mini_playing_container_bloc/state.dart';
+import '../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_bloc/state.dart';
 import '../../../const/searching_error.dart';
-import '../../../helpers/play_song_page_component/mini_palying_container.dart';
-import '../../play_song_page.dart';
+import '../../play_song_page/play_song_page.dart';
 
 class searchPage extends StatefulWidget {
   const searchPage({super.key});
@@ -36,13 +33,7 @@ class _searchPageState extends State<searchPage> {
       List<SongDataModel> music = state.allSongList;
 
       if(state.status.isLoading){
-        return Center(
-          child: Image.asset(
-            "assets/custom_icons/loading_play.gif",
-            height: 125.0,
-            width: 125.0,
-          ),
-        );
+        return CustomIndicator();
       }
       else if(state.status.isSuccess){
         return Scaffold(
@@ -125,9 +116,7 @@ class _searchPageState extends State<searchPage> {
                   ),
                   Expanded(
                     flex: 10,
-                    child: DelayedWidget(
-                        delayDuration: Duration(milliseconds: 1500),// Not required
-                        animationDuration: Duration(seconds: 1),// Not required
+                    child: DelayedWidget(// Not required
                         animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
                         child: ListView.builder(
                           itemCount: 5,

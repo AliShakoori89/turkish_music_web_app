@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/ui/profile_page.dart';
-import 'package:turkish_music_app/presentation/ui/all_singer_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/recently_played_list.dart';
+import 'package:turkish_music_app/presentation/ui/singer_page/all_singer_page.dart';
 
 import '../../data/model/singer_model.dart';
 
