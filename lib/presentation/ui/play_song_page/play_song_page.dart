@@ -38,13 +38,15 @@ class PlaySongPage extends StatefulWidget {
   final String songImage;
   final String pageName;
   final int albumID;
+  final Orientation orientation;
 
   final List<AlbumDataMusicModel> albumSongList;
 
   PlaySongPage({super.key, required this.songName,
     required this.songFile, required this.songID,
     required this.albumSongList, required this.singerName,
-    required this.songImage, required this.pageName, required this.albumID});
+    required this.songImage, required this.pageName,
+    required this.albumID, required this.orientation});
 
 
   @override
@@ -264,9 +266,10 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                   Flexible(
                                       flex: 3,
                                       child: ContainerAllSongsList(
-                                      singerName: widget.singerName,
-                                      categoryAllSongs: widget.albumSongList,
-                                      songName: state.songModel.name!
+                                        singerName: widget.singerName,
+                                        categoryAllSongs: widget.albumSongList,
+                                        songName: state.songModel.name!,
+                                        orientation: widget.orientation,
                                     )
                                   )
                                 ],

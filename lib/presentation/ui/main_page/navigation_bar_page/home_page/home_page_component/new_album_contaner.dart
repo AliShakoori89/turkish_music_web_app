@@ -13,7 +13,9 @@ import '../../../../../const/shimmer_container/new_music_shimmer_container.dart'
 import '../../../../play_song_page/play_song_page.dart';
 
 class NewAlbumContainer extends StatefulWidget {
-  const NewAlbumContainer({super.key});
+  const NewAlbumContainer({super.key, required this.orientation});
+
+  final Orientation orientation;
 
   @override
   State<NewAlbumContainer> createState() => _NewAlbumContainerState();
@@ -36,7 +38,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: MediaQuery.of(context).size.height / 20),
-        TitleText(title: "New Album", haveSeeAll: false),
+        TitleText(title: "New Album", haveSeeAll: false, orientation: widget.orientation,),
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.02,
@@ -49,9 +51,10 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
             var newAlbum = state.newAlbum;
 
             return SizedBox(
-              height: height < 650
+              height: widget.orientation == Orientation.portrait ? height < 650
                   ? MediaQuery.of(context).size.height * 0.6
-                  : MediaQuery.of(context).size.height * 0.55,
+                  : MediaQuery.of(context).size.height * 0.55
+                  : MediaQuery.of(context).size.height,
               child: AnimatedGridView(
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
@@ -90,14 +93,15 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                           songModel: songDataModel
                                       )),
                                       child: PlaySongPage(
-                                          songName: state.singerAllAlbum[index].name!,
-                                          songFile: newPath,
-                                          songID: songDataModel.id!,
-                                          singerName: songDataModel.singerName!,
-                                          songImage: state.singerAllAlbum[index].imageSource!,
-                                          albumID: songDataModel.albumId!,
-                                          pageName: "SingerPage",
-                                          albumSongList: state.singerAllAlbum[index].musics!
+                                        songName: state.singerAllAlbum[index].name!,
+                                        songFile: newPath,
+                                        songID: songDataModel.id!,
+                                        singerName: songDataModel.singerName!,
+                                        songImage: state.singerAllAlbum[index].imageSource!,
+                                        albumID: songDataModel.albumId!,
+                                        pageName: "SingerPage",
+                                        albumSongList: state.singerAllAlbum[index].musics!,
+                                        orientation: widget.orientation,
                                       ),
 
                                     )));

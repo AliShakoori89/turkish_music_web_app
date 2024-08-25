@@ -13,8 +13,9 @@ import '../../../../../../const/title.dart';
 
 class SingerContainer extends StatelessWidget {
 
-  const SingerContainer({super.key});
+  const SingerContainer({super.key, required this.orientation});
 
+  final Orientation orientation;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +40,13 @@ class SingerContainer extends StatelessWidget {
             haveSeeAll: true,
             allSinger: allSinger,
             allSingerName: allSingerName,
+            orientation: orientation,
           ),
           Container(
             padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.0052,
+                horizontal: orientation == Orientation.portrait
+                    ? MediaQuery.of(context).size.width * 0.0052
+                    : MediaQuery.of(context).size.width * 0.1,
                 vertical: MediaQuery.of(context).size.width * 0.0055),
             height: MediaQuery.of(context).size.height * 0.2,
             width: double.infinity,
@@ -62,14 +66,14 @@ class SingerContainer extends StatelessWidget {
                             builder: (context) =>
                                 SingerPage(
                                   artistDetail: artistList[index],
+                                  orientation: orientation,
                                 ))
                     );
                   },
                   child: SizedBox(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.22,
+                    width: orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.width * 0.22
+                        : MediaQuery.of(context).size.width * 0.1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,

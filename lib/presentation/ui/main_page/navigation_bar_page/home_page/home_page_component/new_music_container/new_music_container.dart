@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'new_music.dart';
 
-class NewMusicContainer extends StatefulWidget {
+class NewMusicContainer extends StatelessWidget {
 
-  @override
-  State<NewMusicContainer> createState() => NewMusicContainerState();
-}
+  final Orientation orientation;
 
-class NewMusicContainerState extends State<NewMusicContainer>{
+  const NewMusicContainer({super.key, required this.orientation});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class NewMusicContainerState extends State<NewMusicContainer>{
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
           ),
-          NewSong(),
+          NewSong(orientation: orientation,),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.055,
           ),

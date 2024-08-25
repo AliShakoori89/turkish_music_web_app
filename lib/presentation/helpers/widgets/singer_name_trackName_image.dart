@@ -8,12 +8,14 @@ class SingerNameTrackNameImage extends StatelessWidget {
   final String singerName;
   final String imagePath;
   final MainAxisAlignment align;
+  final Orientation orientation;
 
   const SingerNameTrackNameImage({super.key,
-  required this.songName,
-  required this.singerName,
-  required this.imagePath,
-  required this.align});
+    required this.songName,
+    required this.singerName,
+    required this.imagePath,
+    required this.align,
+    required this.orientation});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,9 @@ class SingerNameTrackNameImage extends StatelessWidget {
             imageUrl: imagePath,
             imageBuilder: (context, imageProvider) => Container(
               // width: MediaQuery.of(context).size.width * 0.14,
-              height: MediaQuery.of(context).size.height * 0.065,
+              height: orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.height * 0.065
+                  : MediaQuery.of(context).size.height / 7,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(
@@ -40,7 +44,9 @@ class SingerNameTrackNameImage extends StatelessWidget {
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
         Expanded(
-          flex: 3,
+          flex: orientation == Orientation.portrait
+              ? 3
+              : 8,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

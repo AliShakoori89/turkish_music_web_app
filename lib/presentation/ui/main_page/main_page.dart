@@ -19,8 +19,8 @@ import '../../const/error_internet_connection_page.dart';
 
 class MainPage extends StatefulWidget {
 
-  const MainPage({super.key});
-
+  const MainPage({super.key, required this.orientation});
+  final Orientation orientation;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -127,7 +127,7 @@ class _MainPageState extends State<MainPage> {
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.07,
             ),
-            child: HomePage(),
+            child: HomePage(orientation: widget.orientation),
           )
         ),
       ),
@@ -146,7 +146,9 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: MusicPage(),
+          child: MusicPage(
+            orientation: widget.orientation,
+          ),
         ),
       ),
       Padding(
@@ -155,7 +157,9 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: searchPage(),
+          child: searchPage(
+            orientation: widget.orientation,
+          ),
         ),
       ),
     ];
@@ -175,8 +179,12 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   VerticalNavBar(
                     selectedIndex: currentRoute,
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: MediaQuery.of(context).size.width * 0.12,
+                    height: widget.orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.height * 0.3
+                        : MediaQuery.of(context).size.height * 0.8,
+                    width: widget.orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.width * 0.12
+                        : MediaQuery.of(context).size.width * 0.05,
                     backgroundColor: Colors.purple.withOpacity(0.7),
                     borderRadius: 15,
                     onItemSelected: (value) {
@@ -215,6 +223,7 @@ class _MainPageState extends State<MainPage> {
                           visibility: visibility,
                           songID: songID,
                           albumID: albumID,
+                          orientation: widget.orientation,
                         );
                       }
                   ),

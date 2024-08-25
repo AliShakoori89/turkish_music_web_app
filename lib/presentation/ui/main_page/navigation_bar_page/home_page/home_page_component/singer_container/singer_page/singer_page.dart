@@ -14,9 +14,10 @@ import '../../../../../../../bloc/current_selected_song/current_selected_song_bl
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
 
 class SingerPage extends StatefulWidget {
-  SingerPage({super.key, required this.artistDetail});
+  SingerPage({super.key, required this.artistDetail, required this.orientation});
 
   final SingerDataModel artistDetail;
+  final Orientation orientation;
 
   @override
   State<SingerPage> createState() => _SingerPageState(artistDetail);
@@ -57,7 +58,9 @@ class _SingerPageState extends State<SingerPage> {
                   SliverAppBar(
                     title: Text(widget.artistDetail.name),
                     backgroundColor: Colors.black,
-                    expandedHeight: MediaQuery.of(context).size.height / 4.2,
+                    expandedHeight: widget.orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.height / 4.2
+                        : MediaQuery.of(context).size.height / 1.5,
                     stretch: true,
                     stretchTriggerOffset: 40,
                     pinned: true,
@@ -130,14 +133,15 @@ class _SingerPageState extends State<SingerPage> {
                                           songModel: songDataModel
                                       )),
                                       child: PlaySongPage(
-                                          songName: state.singerAllAlbum[index].name!,
-                                          songFile: newPath,
-                                          songID: songDataModel.id!,
-                                          singerName: widget.artistDetail.name,
-                                          songImage: state.singerAllAlbum[index].imageSource!,
-                                          albumID: songDataModel.albumId!,
-                                          pageName: "SingerPage",
-                                          albumSongList: state.singerAllAlbum[index].musics!
+                                        songName: state.singerAllAlbum[index].name!,
+                                        songFile: newPath,
+                                        songID: songDataModel.id!,
+                                        singerName: widget.artistDetail.name,
+                                        songImage: state.singerAllAlbum[index].imageSource!,
+                                        albumID: songDataModel.albumId!,
+                                        pageName: "SingerPage",
+                                        albumSongList: state.singerAllAlbum[index].musics!,
+                                        orientation: widget.orientation,
                                       ),
 
                                     )));

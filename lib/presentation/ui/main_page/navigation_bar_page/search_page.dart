@@ -12,7 +12,8 @@ import '../../../const/searching_error.dart';
 import '../../play_song_page/play_song_page.dart';
 
 class searchPage extends StatefulWidget {
-  const searchPage({super.key});
+  const searchPage({super.key, required this.orientation});
+  final Orientation orientation;
 
   @override
   State<searchPage> createState() => _searchPageState();
@@ -99,6 +100,7 @@ class _searchPageState extends State<searchPage> {
                                                   pageName: "searchPage",
                                                   albumID: 0,
                                                   albumSongList: [],
+                                                  orientation: widget.orientation,
                                                 ),
 
                                               )));

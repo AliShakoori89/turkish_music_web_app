@@ -21,11 +21,12 @@ import '../../../helpers/widgets/top_arrow_icon.dart';
 class MiniPlayingContainer extends StatefulWidget {
 
   MiniPlayingContainer({super.key,
-  required this.visibility, required this.songID, required this.albumID});
+  required this.visibility, required this.songID, required this.albumID, required this.orientation});
 
   final bool visibility;
   final int songID ;
   final int albumID ;
+  final Orientation orientation;
 
   @override
   State<MiniPlayingContainer> createState() => _MiniPlayingContainerState();
@@ -46,7 +47,9 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
     return widget.visibility == true
         ? Container(
         width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.13,
+        height: widget.orientation == Orientation.portrait
+            ? MediaQuery.of(context).size.height * 0.13
+            : MediaQuery.of(context).size.height / 5,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Colors.black, Colors.purple, ],
@@ -55,15 +58,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
           ),
           borderRadius: BorderRadius.circular(15),
         ),
-        child:
-        // BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
-        //   builder: (context, state) {
-
-        // int songID = state.songID;
-        // print("int songID          "+songID.toString());
-        // BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: songID));
-        // return
-        BlocBuilder<AlbumBloc, AlbumState>(
+        child: BlocBuilder<AlbumBloc, AlbumState>(
             builder: (context, state) {
 
               List<AlbumDataMusicModel> album = state.albumAllSongs;
@@ -124,6 +119,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                             albumID: songDataModel.albumId!,
                                             albumSongList: album,
                                             pageName: "",
+                                            orientation: widget.orientation,
                                           ),
                                         )),
                                   ));
@@ -139,10 +135,12 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                 Expanded(
                                   flex: 3,
                                   child: SingerNameTrackNameImage(
-                                      singerName: state.song.singerName!,
-                                      songName: state.song.name!,
-                                      imagePath: state.song.imageSource!,
-                                      align: MainAxisAlignment.start),
+                                    singerName: state.song.singerName!,
+                                    songName: state.song.name!,
+                                    imagePath: state.song.imageSource!,
+                                    align: MainAxisAlignment.start,
+                                    orientation: widget.orientation,
+                                  ),
                                 ),
                                 Expanded(
                                   flex: 1,

@@ -14,9 +14,10 @@ class ContainerAllSongsList extends StatelessWidget {
   final List<AlbumDataMusicModel> categoryAllSongs;
   final String songName;
   final String singerName;
+  final Orientation orientation;
 
 
-  ContainerAllSongsList({super.key, required this.categoryAllSongs, required this.songName, required this.singerName});
+  ContainerAllSongsList({super.key, required this.categoryAllSongs, required this.songName, required this.singerName, required this.orientation});
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +68,7 @@ class ContainerAllSongsList extends StatelessWidget {
                               songImage: categoryAllSongs[index].imageSource!,
                               singerName: singerName,
                               pageName: "ContainerAllSongsList",
+                              orientation: orientation,
                             ),
 
                           )),

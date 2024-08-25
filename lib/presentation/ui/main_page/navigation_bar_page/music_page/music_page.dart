@@ -4,7 +4,9 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 
 class MusicPage extends StatelessWidget {
 
-  MusicPage({super.key});
+  final Orientation orientation;
+
+  MusicPage({super.key, required this.orientation});
 
   List customIcon = [
     Icons.playlist_play_outlined,
@@ -56,6 +58,7 @@ class MusicPage extends StatelessWidget {
                       Expanded(
                         flex: 8,
                         child: RecentlyPlaylist(
+                          orientation: orientation,
                         ),
                       )
                     ],

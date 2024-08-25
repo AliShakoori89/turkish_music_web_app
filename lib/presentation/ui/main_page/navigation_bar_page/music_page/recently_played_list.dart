@@ -17,6 +17,10 @@ import '../../../../helpers/widgets/song_detail_list.dart';
 
 class RecentlyPlaylist extends StatefulWidget {
 
+  final Orientation orientation;
+
+  const RecentlyPlaylist({super.key, required this.orientation});
+
   @override
   State<RecentlyPlaylist> createState() => _RecentlyPlaylistState();
 }
@@ -109,9 +113,10 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                         flex: 1,
                                         child: IconButton(
                                             onPressed: () => BottomDialog(
-                                                  songImage: state.allRecentlySongs[index].imageSource!,
-                                                  singerName: state.allRecentlySongs[index].name!,
-                                                  songName: state.allRecentlySongs[index].singerName!,
+                                              songImage: state.allRecentlySongs[index].imageSource!,
+                                              singerName: state.allRecentlySongs[index].name!,
+                                              songName: state.allRecentlySongs[index].singerName!,
+                                              orientation: widget.orientation
                                                 ).showBottomDialog(context),
                                             icon: const Icon(Icons.more_vert, size: 20,
                                             )),
@@ -149,6 +154,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                                 pageName: "searchPage",
                                                 albumID: 0,
                                                 albumSongList: state.allRecentlySongs,
+                                                orientation: widget.orientation,
                                               ),
       
                                             )));
@@ -173,10 +179,9 @@ class BottomDialog {
   final String songImage;
   final String songName;
   final String singerName;
+  final Orientation orientation;
 
-
-
-  BottomDialog({ required this.songImage, required this.songName, required this.singerName,});
+  BottomDialog({ required this.songImage, required this.songName, required this.singerName, required this.orientation});
 
   void showBottomDialog(BuildContext context) {
     showGeneralDialog(
@@ -209,6 +214,7 @@ class BottomDialog {
                     singerName: singerName,
                     imagePath: "assets/images/tarkan.png",
                     align: MainAxisAlignment.center,
+                    orientation: orientation,
                   ),
                   const SizedBox(height: 20,),
                   const SongDetailList(

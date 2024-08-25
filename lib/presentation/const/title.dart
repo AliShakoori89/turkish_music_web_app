@@ -6,10 +6,12 @@ class TitleText extends StatelessWidget {
 
   final String title;
   final bool haveSeeAll;
+  final Orientation orientation;
   List<SingerDataModel>? allSinger;
   List<String>? allSingerName;
 
-  TitleText({super.key, required this.title, required this.haveSeeAll, this.allSinger, this.allSingerName});
+  TitleText({super.key, required this.title, required this.haveSeeAll,
+    this.allSinger, this.allSingerName, required this.orientation});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,8 @@ class TitleText extends StatelessWidget {
 
             if(title == "Singer"){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                  AllSingerPage(allSinger: allSinger!, allSingerName: allSingerName!,)));
+                  AllSingerPage(allSinger: allSinger!, allSingerName: allSingerName!,
+                  orientation: orientation,)));
             }
           },
           child: const Text(

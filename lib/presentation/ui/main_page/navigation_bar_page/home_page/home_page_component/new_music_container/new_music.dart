@@ -13,7 +13,8 @@ import '../../../../../../const/shimmer_container/new_music_shimmer_container.da
 import '../../../../../play_song_page/play_song_page.dart';
 
 class NewSong extends StatefulWidget {
-  const NewSong({super.key});
+  const NewSong({super.key, required this.orientation});
+  final Orientation orientation;
 
   @override
   State<NewSong> createState() => _NewSongState();
@@ -38,7 +39,9 @@ class _NewSongState extends State<NewSong>{
           padding: const EdgeInsets.only(top: 10),
           child: CarouselSlider(
               options: CarouselOptions(
-                height: MediaQuery.of(context).size.height / 5,
+                height: widget.orientation == Orientation.portrait
+                    ? MediaQuery.of(context).size.height / 5
+                    : MediaQuery.of(context).size.height / 1.5,
                 autoPlay: true,
                 autoPlayInterval: const Duration(seconds: 10),
                 autoPlayAnimationDuration: const Duration(milliseconds: 2000),
@@ -90,6 +93,7 @@ class _NewSongState extends State<NewSong>{
                                   albumSongList: newSong,
                                   albumID: 0,
                                   pageName: "NewSong",
+                                  orientation: widget.orientation,
                                 ),
 
                               )));
@@ -97,6 +101,9 @@ class _NewSongState extends State<NewSong>{
                     child: CachedNetworkImage(
                       imageUrl: newSong[index].imageSource!,
                       imageBuilder: (context, imageProvider) => Container(
+                        width: widget.orientation == Orientation.portrait
+                            ? null
+                            : MediaQuery.of(context).size.width / 2,
                           decoration: BoxDecoration(
                               border: Border.all(
                                   width: 1,

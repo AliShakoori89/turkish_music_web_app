@@ -139,13 +139,13 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         initialRoute: '/',
           routes: <String, WidgetBuilder>{
-            '/home': (BuildContext context) => MainPage(),
+            '/home': (BuildContext context) => MainPage(orientation: MediaQuery.of(context).orientation),
           },
         home:
         // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
         isLoggedIn
-            ? MainPage()
-            : AuthenticatePage()
+            ? MainPage(orientation: MediaQuery.of(context).orientation,)
+            : AuthenticatePage(orientation: MediaQuery.of(context).orientation)
             // : const ErrorInternetConnectionPage()
       ),
     );
