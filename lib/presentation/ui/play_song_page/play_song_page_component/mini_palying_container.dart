@@ -44,12 +44,17 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   }
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery.of(context).size.width;
+
     return widget.visibility == true
         ? Container(
         width: double.infinity,
         height: widget.orientation == Orientation.portrait
             ? MediaQuery.of(context).size.height * 0.13
-            : MediaQuery.of(context).size.height / 5,
+            : width < 700
+            ? MediaQuery.of(context).size.height / 5.07
+            : MediaQuery.of(context).size.height / 6.5,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Colors.black, Colors.purple, ],

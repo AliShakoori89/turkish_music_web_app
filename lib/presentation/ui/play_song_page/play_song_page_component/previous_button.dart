@@ -14,19 +14,10 @@ class PreviousButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        padding: const EdgeInsets.all(1),
-        // style: AppTheme.lightTheme.iconButtonTheme.style,
         onPressed: () {
-
-          // if(pageName == "SingerPage"){
             context
                 .read<CurrentSelectedSongBloc>()
                 .add(PlayPreviousSong(songs: albumSongs));
-          // }else{
-          //   context
-          //       .read<CurrentSelectedSongBloc>()
-          //       .add(PlayPreviousSong(songs: songDataModel));
-          // }
         },
         icon: Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

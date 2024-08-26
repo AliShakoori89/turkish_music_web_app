@@ -31,6 +31,8 @@ class _NewSongState extends State<NewSong>{
   @override
   Widget build(BuildContext context) {
 
+    double width = MediaQuery.of(context).size.width;
+
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
       List<AlbumDataMusicModel> newSong = state.newSong;
@@ -41,13 +43,19 @@ class _NewSongState extends State<NewSong>{
               options: CarouselOptions(
                 height: widget.orientation == Orientation.portrait
                     ? MediaQuery.of(context).size.height / 5
-                    : MediaQuery.of(context).size.height / 1.5,
+                    : width < 700
+                    ? MediaQuery.of(context).size.height / 2
+                    : MediaQuery.of(context).size.height / 3 ,
+                viewportFraction: widget.orientation == Orientation.portrait
+                    ? 0.7
+                    : 0.5,
                 autoPlay: true,
+                enlargeCenterPage: true,
+                pageSnapping: true,
                 autoPlayInterval: const Duration(seconds: 10),
                 autoPlayAnimationDuration: const Duration(milliseconds: 2000),
                 autoPlayCurve: Curves.fastOutSlowIn,
                 pauseAutoPlayOnTouch: true,
-                aspectRatio: 2.0,
                 onPageChanged: (index, reason) {
                   setState(() {
                   });

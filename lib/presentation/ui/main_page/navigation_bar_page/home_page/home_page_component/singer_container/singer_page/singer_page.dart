@@ -160,24 +160,16 @@ class _SingerPageState extends State<SingerPage> {
                                         .imageSource!,
                                     imageBuilder: (context, imageProvider) =>
                                         Container(
-                                          width: MediaQuery
-                                              .of(context)
-                                              .size
-                                              .width * 0.3,
-                                          height: MediaQuery
-                                              .of(context)
-                                              .size
-                                              .width * 0.6,
+                                          width: MediaQuery.of(context).size.width * 0.3,
+                                          height: MediaQuery.of(context).size.width * 0.6,
                                           decoration: BoxDecoration(
                                               boxShadow: [
                                                 BoxShadow(
-                                                  color: Colors.purple
-                                                      .withOpacity(0.5),
+                                                  color: Colors.purple.withOpacity(0.5),
                                                   blurRadius: 20,
                                                 ),
                                               ],
-                                              borderRadius: const BorderRadius
-                                                  .all(Radius.circular(8)),
+                                              borderRadius: const BorderRadius.all(Radius.circular(8)),
                                               image: DecorationImage(
                                                 image: NetworkImage(
                                                     singerAllAlbum[index]
@@ -193,10 +185,7 @@ class _SingerPageState extends State<SingerPage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width * 0.02,
+                                  height: MediaQuery.of(context).size.width * 0.02,
                                 ),
                                 Flexible(
                                     flex: 1,

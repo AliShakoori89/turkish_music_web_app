@@ -35,141 +35,147 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Container(
         margin: EdgeInsets.only(
-            left: 10,
-            right: 10,
-            top: 10,
+          left: 10,
+          right: 10,
+          top: 10,
         ),
         child: BlocBuilder<RecentlyPlaySongBloc , RecentlyPlaySongState>(
           builder: (context, state){
-            
-             if(state.status.isLoading){
-               return CustomIndicator();
-             }else if(state.status.isSuccess){
-               return state.allRecentlySongs.isNotEmpty
-                   ? GestureDetector(
-                        child: AnimatedListView(
-                          scrollDirection: Axis.vertical,
-                          children: List.generate(
-                              state.allRecentlySongs.length,
-                              (index) => GestureDetector(
+
+            if(state.status.isLoading){
+              return CustomIndicator();
+            }else if(state.status.isSuccess){
+              return state.allRecentlySongs.isNotEmpty
+                  ? GestureDetector(
+                child: AnimatedListView(
+                  scrollDirection: Axis.vertical,
+                  children: List.generate(
+                      state.allRecentlySongs.length,
+                          (index) => GestureDetector(
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                flex: 10,
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: widget.orientation == Orientation.portrait
+                                      ? MediaQuery.of(context).size.height * 0.08
+                                      : MediaQuery.of(context).size.height / 6,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Flexible(
-                                        flex: 10,
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          height: MediaQuery.of(context).size.height * 0.08,
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: CachedNetworkImage(
-                                                  imageUrl: state.allRecentlySongs[index].imageSource!,
-                                                  imageBuilder: (context, imageProvider) =>                                               Container(
-                                                    width: MediaQuery.of(context).size.width * 0.12,
-                                                    height: MediaQuery.of(context).size.height * 0.065,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(15),
-                                                        image: DecorationImage(
-                                                            image: NetworkImage(state.allRecentlySongs[index].imageSource!),
-                                                            fit: BoxFit.fill)),
-                                                  ),
-                                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: MediaQuery.of(context).size.width * 0.03,
-                                              ),
-                                              Expanded(
-                                                flex: 8,
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    OverflowTextAnimated(
-                                                        text: state.allRecentlySongs[index].name!,
-                                                      style: TextStyle(
-                                                        fontWeight: FontWeight.w700
-                                                      ),),
-                                                    Text(state.allRecentlySongs[index].singerName!,
-                                                    style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontSize: 14
-                                                    ),)
-                                                  ],
-                                                ),
-                                              )
-                                            ],
+                                      Expanded(
+                                        flex: widget.orientation == Orientation.portrait
+                                            ? 2
+                                            : 1,
+                                        child: CachedNetworkImage(
+                                          imageUrl: state.allRecentlySongs[index].imageSource!,
+                                          imageBuilder: (context, imageProvider) =>                                               Container(
+                                            width: MediaQuery.of(context).size.width * 0.12,
+                                            height: widget.orientation == Orientation.portrait
+                                                ? MediaQuery.of(context).size.height * 0.065
+                                                : MediaQuery.of(context).size.height / 3,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(15),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(state.allRecentlySongs[index].imageSource!),
+                                                    fit: BoxFit.fill)),
                                           ),
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
                                         ),
                                       ),
-                                      Flexible(
-                                        flex: 1,
-                                        child: IconButton(
-                                            onPressed: () => BottomDialog(
-                                              songImage: state.allRecentlySongs[index].imageSource!,
-                                              singerName: state.allRecentlySongs[index].name!,
-                                              songName: state.allRecentlySongs[index].singerName!,
-                                              orientation: widget.orientation
-                                                ).showBottomDialog(context),
-                                            icon: const Icon(Icons.more_vert, size: 20,
-                                            )),
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width * 0.03,
+                                      ),
+                                      Expanded(
+                                        flex: widget.orientation == Orientation.portrait
+                                            ? 8
+                                            : 10,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            OverflowTextAnimated(
+                                              text: state.allRecentlySongs[index].name!,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700
+                                              ),),
+                                            Text(state.allRecentlySongs[index].singerName!,
+                                              style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 14
+                                              ),)
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
-                                  onTap: (){
-                                    SongDataModel songDataModel = SongDataModel(
-                                      id : state.allRecentlySongs[index].id,
-                                      name: state.allRecentlySongs[index].name,
-                                      imageSource: state.allRecentlySongs[index].imageSource,
-                                      fileSource: state.allRecentlySongs[index].fileSource!.substring(0, 4)
-                                          + "s"
-                                          + state.allRecentlySongs[index].fileSource!.substring(4,
-                                              state.allRecentlySongs[index].fileSource!.length),
-                                      singerName: "",
-                                      minute: state.allRecentlySongs[index].minute,
-                                      second: state.allRecentlySongs[index].second,
-                                      albumId: state.allRecentlySongs[index].albumId,
-                                    );
-      
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => BlocProvider(
-                                              create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
-                                                  songModel: songDataModel
-                                              )),
-                                              child: PlaySongPage(
-                                                songName: state.allRecentlySongs[index].name!,
-                                                songFile: state.allRecentlySongs[index].fileSource!,
-                                                songID: state.allRecentlySongs[index].id!,
-                                                singerName: '',
-                                                songImage: state.allRecentlySongs[index].imageSource!,
-                                                pageName: "searchPage",
-                                                albumID: 0,
-                                                albumSongList: state.allRecentlySongs,
-                                                orientation: widget.orientation,
-                                              ),
-      
-                                            )));
-                                  })),
-                        ),
-                      )
-                    : NoMusicWidget();
-             }else if(state.status.isError){
-               return NoMusicWidget();
-             }
-             return NoMusicWidget();
+                                ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: IconButton(
+                                    onPressed: () => BottomDialog(
+                                        songImage: state.allRecentlySongs[index].imageSource!,
+                                        singerName: state.allRecentlySongs[index].name!,
+                                        songName: state.allRecentlySongs[index].singerName!,
+                                        orientation: widget.orientation
+                                    ).showBottomDialog(context),
+                                    icon: const Icon(Icons.more_vert, size: 20,
+                                    )),
+                              )
+                            ],
+                          ),
+                          onTap: (){
+                            SongDataModel songDataModel = SongDataModel(
+                              id : state.allRecentlySongs[index].id,
+                              name: state.allRecentlySongs[index].name,
+                              imageSource: state.allRecentlySongs[index].imageSource,
+                              fileSource: state.allRecentlySongs[index].fileSource!.substring(0, 4)
+                                  + "s"
+                                  + state.allRecentlySongs[index].fileSource!.substring(4,
+                                      state.allRecentlySongs[index].fileSource!.length),
+                              singerName: "",
+                              minute: state.allRecentlySongs[index].minute,
+                              second: state.allRecentlySongs[index].second,
+                              albumId: state.allRecentlySongs[index].albumId,
+                            );
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BlocProvider(
+                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                          songModel: songDataModel
+                                      )),
+                                      child: PlaySongPage(
+                                        songName: state.allRecentlySongs[index].name!,
+                                        songFile: state.allRecentlySongs[index].fileSource!,
+                                        songID: state.allRecentlySongs[index].id!,
+                                        singerName: '',
+                                        songImage: state.allRecentlySongs[index].imageSource!,
+                                        pageName: "searchPage",
+                                        albumID: 0,
+                                        albumSongList: state.allRecentlySongs,
+                                        orientation: widget.orientation,
+                                      ),
+
+                                    )));
+                          })),
+                ),
+              )
+                  : NoMusicWidget();
+            }else if(state.status.isError){
+              return NoMusicWidget();
+            }
+            return NoMusicWidget();
           },
         )
-      
-      ),
+
     );
   }
 }

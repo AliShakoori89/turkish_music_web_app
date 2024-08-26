@@ -57,14 +57,15 @@ class Progressbar extends StatelessWidget {
                   data: SliderTheme.of(context)
                       .copyWith(thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5)),
                   child: Slider(
-                      activeColor: Colors.purple,
-                      inactiveColor: Colors.black,
-                      value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
-                      max: double.parse(minute ?? "0") * 60 + double.parse(second ?? "0"),
-                      min: 0,
-                      onChanged: (val) {
-                        BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
-                      }),
+
+                    activeColor: Colors.purple,
+                    inactiveColor: Colors.black,
+                    value: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
+                    max: double.parse(minute ?? "0") * 60 + double.parse(second ?? "0"),
+                    min: 0,
+                    onChanged: (val) {
+                      BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));
+                    }),
                 )
               ],
             );

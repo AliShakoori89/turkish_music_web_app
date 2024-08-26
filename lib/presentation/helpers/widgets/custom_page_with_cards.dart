@@ -10,19 +10,24 @@ class CustomPageWithCards extends StatelessWidget {
   final List customIcon;
   final int rowNumber;
   final Color customColor;
+  final Orientation orientation;
 
   const CustomPageWithCards({
     super.key,
     required this.title,
     required this.customIcon,
     required this.rowNumber,
-    required this.customColor});
+    required this.customColor,
+    required this.orientation});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.1
+        top: MediaQuery.of(context).size.height * 0.1,
+        right: orientation == Orientation.portrait
+            ? 0
+            : 30
       ),
       child: ListView.builder(
         itemCount: rowNumber,

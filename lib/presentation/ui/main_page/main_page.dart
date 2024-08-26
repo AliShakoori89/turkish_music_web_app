@@ -181,10 +181,10 @@ class _MainPageState extends State<MainPage> {
                     selectedIndex: currentRoute,
                     height: widget.orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height * 0.3
-                        : MediaQuery.of(context).size.height * 0.8,
+                        : MediaQuery.of(context).size.height * 0.3,
                     width: widget.orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.width * 0.12
-                        : MediaQuery.of(context).size.width * 0.05,
+                        : MediaQuery.of(context).size.width * 0.04,
                     backgroundColor: Colors.purple.withOpacity(0.7),
                     borderRadius: 15,
                     onItemSelected: (value) {

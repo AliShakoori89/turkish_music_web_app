@@ -32,12 +32,20 @@ class TitleText extends StatelessWidget {
                   orientation: orientation,)));
             }
           },
-          child: const Text(
-              "see all >>",
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey
-          )),
+          child: Padding(
+            padding: orientation != Orientation.portrait
+                ? const EdgeInsets.only(
+              right: 50
+            )
+                : EdgeInsets.all(0),
+            child: 
+            const Text(
+                "see all >>",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey
+            )),
+          ),
             )
             : const Text("")
       ],

@@ -6,12 +6,12 @@ class PlayingSongAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
-      height: 50,
+      height: MediaQuery.of(context).size.height / 10,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage(
-                  "assets/gif/playing music animation.gif"))),
+                  "assets/gif/playing music animation.gif"),
+          scale: 0.2)),
     );
   }
 }

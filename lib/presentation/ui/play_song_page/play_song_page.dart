@@ -92,7 +92,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
         }
       },
       child: Scaffold(
-          body: BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
+          body: widget.orientation == Orientation.portrait
+              ? BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
               listener: (context, state) {
                 context
                     .read<AudioControlBloc>()
@@ -274,6 +275,181 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                   )
                                 ],
                               ),
+                            ),
+                          ),
+                        );
+                      }
+                  );
+
+                }else {
+                  return const Center(child: Text('Something went wrong'));
+                }
+              }
+          )
+              : BlocConsumer<CurrentSelectedSongBloc, CurrentSelectedSongState>(
+              listener: (context, state) {
+                context
+                    .read<AudioControlBloc>()
+                    .add(PlaySong(
+                    currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
+                    currentAlbum: widget.albumSongList));
+
+                context
+                    .read<AudioControlBloc>()
+                    .audioPlayer.onPlayerComplete.listen((event) async{
+                  context
+                      .read<AudioControlBloc>()
+                      .add(PlayNexttSong(
+                      currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
+                      currentAlbum: widget.albumSongList));
+                });
+              },
+              builder: (context, state) {
+
+                if (state is SelectedSongFetched) {
+
+                  var songID = state.songModel.id;
+
+                  return ImagePixels(
+                      imageProvider: NetworkImage(state.songModel.imageSource!),
+                      builder: (context, img) {
+
+                        Color topLeftColor = img.pixelColorAt!(50, 50);
+
+                        return Container(
+                          height: double.infinity,
+                          width: double.infinity,
+                          margin: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * 0.05,
+                              left: MediaQuery.of(context).size.width * 0.05),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [topLeftColor, Colors.black],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            image: DecorationImage(
+                              image: NetworkImage(state.songModel.imageSource!,),
+                              fit: BoxFit.fitHeight,
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.2),
+                                  BlendMode.dstATop),
+                            ),
+                          ),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                            child: SafeArea(
+                              child: Row(
+                                children: [
+                                  ContainerAllSongsList(
+                                    singerName: widget.singerName,
+                                    categoryAllSongs: widget.albumSongList,
+                                    songName: state.songModel.name!,
+                                    orientation: widget.orientation,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    flex: 4,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    state.songModel.name!,
+                                                    style: TextStyle(
+                                                        fontSize: MediaQuery.of(context).size.height / 60,
+                                                        color: Colors.white),
+                                                  ),
+                                                  Text(
+                                                    widget.singerName,
+                                                    style: TextStyle(
+                                                        fontSize: MediaQuery.of(context).size.height / 70,
+                                                        color: Colors.white60),
+                                                  ),
+                                                ],
+                                              ),
+                                              Spacer(flex: 10,),
+                                              FavoriteButton(
+                                                controller: _controller,
+                                                songID: songID!,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        CustomCircularSeekBar(
+                                          songImage: state.songModel.imageSource!,
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 2,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    DownloadButton(
+                                                        songFilePath: state.songModel.fileSource!,
+                                                        songName: state.songModel.name!
+                                                    ),
+                                                    repeatButton()
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 3,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    PreviousButton(
+                                                        pageName: widget.pageName,
+                                                        albumSongs: widget.albumSongList,
+                                                        songID: state.songModel.id!,
+                                                        albumID: widget.albumID),
+                                                    PlayButton(),
+                                                    NextButton(
+                                                        pageName: widget.pageName,
+                                                        categoryAllSongs: widget.albumSongList,
+                                                        songID: state.songModel.id!,
+                                                        albumID: widget.albumID
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                  flex: 2,
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      PlayListButton(),
+                                                      SizedBox(width: 15,),
+                                                      loopButton()
+                                                    ],
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: Progressbar(
+                                              minute: state.songModel.minute!,
+                                              second: state.songModel.second!),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
                             ),
                           ),
                         );

@@ -15,7 +15,6 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        padding: EdgeInsets.all(1),
         onPressed: () {
           context
               .read<CurrentSelectedSongBloc>()

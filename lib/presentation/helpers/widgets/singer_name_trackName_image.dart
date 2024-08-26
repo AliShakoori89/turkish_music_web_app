@@ -28,10 +28,12 @@ class SingerNameTrackNameImage extends StatelessWidget {
           child: CachedNetworkImage(
             imageUrl: imagePath,
             imageBuilder: (context, imageProvider) => Container(
-              // width: MediaQuery.of(context).size.width * 0.14,
+              width: orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.width * 0.14
+                  : MediaQuery.of(context).size.height / 9,
               height: orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.height * 0.065
-                  : MediaQuery.of(context).size.height / 7,
+                  : MediaQuery.of(context).size.height / 9,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: DecorationImage(

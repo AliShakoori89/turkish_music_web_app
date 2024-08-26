@@ -36,48 +36,50 @@ class _ProfilePageState extends State<ProfilePage>{
               left: MediaQuery.of(context).size.width * 0.033,
               top: MediaQuery.of(context).size.height * 0.08,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 10, left: 8, right: 8, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person_outline_rounded),
-                              SizedBox(width: 10),
-                              Text("Profile Email"),
-                            ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 8, right: 8, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(Icons.person_outline_rounded),
+                                SizedBox(width: 10),
+                                Text("Profile Email"),
+                              ],
+                            ),
                           ),
-                        ),
-                        BlocBuilder<UserBloc, UserState>(
-                            builder: (context, state) {
-
-                              var user = state.user;
-                              return Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Text(user.data!.email!,
-                                    style: TextStyle(color: Colors.grey)),
-                              );
-                            }),
-                      ],
-                    ),
-                    CustomDivider(dividerColor: Colors.grey),
-                  ],
-                ),
-                ShareButton(),
-                ReportButton(),
-                HelpButton(),
-                AboutButton(),
-                ExitAccountButton(),
-                ExitButton()
-              ],
+                          BlocBuilder<UserBloc, UserState>(
+                              builder: (context, state) {
+              
+                                var user = state.user;
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 10),
+                                  child: Text(user.data!.email!,
+                                      style: TextStyle(color: Colors.grey)),
+                                );
+                              }),
+                        ],
+                      ),
+                      CustomDivider(dividerColor: Colors.grey),
+                    ],
+                  ),
+                  ShareButton(),
+                  ReportButton(),
+                  HelpButton(),
+                  AboutButton(),
+                  ExitAccountButton(),
+                  ExitButton()
+                ],
+              ),
             ),
           )),
     );

@@ -30,12 +30,15 @@ class MusicPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    flex: 3,
+                    flex: orientation == Orientation.portrait
+                        ? 3
+                        : 5,
                     child: CustomPageWithCards(
                       title: title,
                       customIcon: customIcon,
                       rowNumber: title.length,
-                      customColor: Colors.white,)
+                      customColor: Colors.white,
+                      orientation: orientation,)
                 ),
                 Expanded(
                   flex: 7,

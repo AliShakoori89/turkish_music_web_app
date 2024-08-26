@@ -32,7 +32,9 @@ class HomePage extends StatelessWidget {
                   NewAlbumContainer(orientation: orientation),
                   CategoryItemContainer(orientation: orientation),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.height * 0.05
+                        : MediaQuery.of(context).size.height * 0.1,
                   )
                 ],
               ),
