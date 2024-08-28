@@ -7,11 +7,11 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
-
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
+import '../custom_clipper/custom_clipper.dart';
 
 class SingerPage extends StatefulWidget {
   SingerPage({super.key, required this.artistDetail, required this.orientation});
@@ -36,6 +36,9 @@ class _SingerPageState extends State<SingerPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    Size size = MediaQuery.of(context).size;
+
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop){
@@ -44,7 +47,8 @@ class _SingerPageState extends State<SingerPage> {
         }
       },
       child: Scaffold(
-        body: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
+        body: widget.orientation == Orientation.portrait
+            ? BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
 
           var singerAllAlbum = state.singerAllAlbum;
 
@@ -207,8 +211,65 @@ class _SingerPageState extends State<SingerPage> {
           }
           return Container();
         })
-
-      ),
+            : Container(
+          margin: EdgeInsets.all(15),
+          child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state){
+            var singerAllAlbum = state.singerAllAlbum;
+            return GridView.builder(
+              itemCount: singerAllAlbum.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                crossAxisSpacing: 30,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.8,
+                  mainAxisExtent: size.width / 3
+                ),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Flexible(
+                        flex: 5,
+                        child: CachedNetworkImage(
+                          imageUrl: singerAllAlbum[index]
+                              .imageSource!,
+                          imageBuilder: (context, imageProvider) =>
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                height: MediaQuery.of(context).size.width * 0.6,
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.purple.withOpacity(0.5),
+                                        blurRadius: 20,
+                                      ),
+                                    ],
+                                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          singerAllAlbum[index]
+                                              .imageSource!),
+                                      fit: BoxFit.fill,
+                                    )
+                                ),
+                              ),
+                          placeholder: (context, url) =>
+                              SingerPageShimmerContainer(),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.02,
+                      ),
+                      Flexible(
+                          flex: 1,
+                          child: Text(singerAllAlbum[index].name!))
+                    ],
+                  );
+              });
+          })
+        )
+      )
     );
   }
 }
