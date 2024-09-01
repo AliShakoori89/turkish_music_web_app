@@ -1,14 +1,25 @@
 part of 'current_selected_song_bloc.dart';
 
-@immutable
-class CurrentSelectedSongState {}
+abstract class CurrentSelectedSongState {}
 
-class CurrentSelectedSongInitial extends CurrentSelectedSongState {}
+class CurrentSelectedSongInitialState extends CurrentSelectedSongState {}
 
-class SelectedSongFetched extends CurrentSelectedSongState {
+class LoadingNewSongState extends CurrentSelectedSongState {}
+
+class SelectedSongFetchedState extends CurrentSelectedSongState {
   final SongDataModel songModel;
 
-  SelectedSongFetched({required this.songModel});
+  SelectedSongFetchedState({required this.songModel});
 }
 
-class LoadingNewSong extends CurrentSelectedSongState {}
+class SelectedSongCompletedState extends CurrentSelectedSongState {
+  final SongDataModel songModel;
+
+  SelectedSongCompletedState({required this.songModel});
+}
+
+class CurrentSelectedSongErrorState extends CurrentSelectedSongState {
+  final String errorMessage;
+
+  CurrentSelectedSongErrorState(this.errorMessage);
+}

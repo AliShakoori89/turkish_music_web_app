@@ -86,7 +86,7 @@ class _NewSongState extends State<NewSong>{
                           context,
                           MaterialPageRoute(
                               builder: (context) => BlocProvider(
-                                create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
                                     songModel: songDataModel
                                 )),
                                 child: PlaySongPage(

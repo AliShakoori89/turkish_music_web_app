@@ -133,7 +133,7 @@ class _SingerPageState extends State<SingerPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
                                           songModel: songDataModel
                                       )),
                                       child: PlaySongPage(

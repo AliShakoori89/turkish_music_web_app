@@ -18,7 +18,7 @@ class NextButton extends StatelessWidget {
         onPressed: () {
           context
               .read<CurrentSelectedSongBloc>()
-              .add(PlayNextSong(songs: categoryAllSongs));
+              .add(PlayNextSongEvent(songs: categoryAllSongs));
         },
         icon: Container(
             padding: const EdgeInsets.symmetric(

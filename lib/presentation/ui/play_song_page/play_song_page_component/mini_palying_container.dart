@@ -109,7 +109,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                         builder: (context) => BlocProvider(
                                           create: (context) =>
                                           CurrentSelectedSongBloc()
-                                            ..add(SelectSong(
+                                            ..add(SelectSongEvent(
                                                 songModel:
                                                 songDataModel)),
                                           child: PlaySongPage(

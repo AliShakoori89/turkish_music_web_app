@@ -14,3 +14,15 @@ class AudioRepeatState extends AudioControlState {}
 class AudioCompleteState extends AudioControlState {}
 
 class AudioNextPlayState extends AudioControlState {}
+
+class AudioRepeatStoppedState extends AudioControlState {}
+
+class AudioPositionChangedState extends AudioControlState {
+  final Duration position;
+  AudioPositionChangedState({required this.position});
+}
+
+class AudioControlErrorState extends AudioControlState {
+  final String errorMessage;
+  AudioControlErrorState(this.errorMessage);
+}

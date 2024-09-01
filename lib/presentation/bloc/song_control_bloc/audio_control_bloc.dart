@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/data/model/new-song_model.dart';
-
 import '../../../data/model/album_model.dart';
 import '../../../data/model/song_model.dart';
 import '../../../domain/repositories/new_song_repository.dart';
@@ -14,6 +12,10 @@ part 'audio_control_state.dart';
 enum SongControlStatus { play, pause }
 
 class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
+
+  List<AlbumDataMusicModel>? _currentAlbum;
+
+  double currentSongIndex = 0;
 
   NewSongRepository newSongRepository = NewSongRepository();
 
@@ -31,10 +33,11 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   AudioControlBloc() : super(AudioControlInitial()) {
 
-    // _audioStream = _audioPlayer.onPlayerComplete.listen((event) async{
-    //   print("*********************************************************************");
-    //   // _audioPlayer.resume();
-    // });
+    _audioStream = _audioPlayer.onPlayerComplete.listen((_) async{
+      print("*********************************************************************");
+      // _audioPlayer.resume();
+      add(SongCompletedEvent());
+    });
 
     // on<SongCompleted>((event, emit) async {
     //   int i = getCurrentSongIndex(event.songs);
@@ -44,16 +47,9 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     // });
 
     on<PlaySong>((event, emit) async {
-      final Source source = UrlSource(event.currentSong.fileSource ?? "");
-      await _audioPlayer.play(source);
-      emit(AudioPlayedState());
-    });
-
-    on<PlayNexttSong>((event, emit) async {
-      int i = getCurrentSongIndex(event.currentAlbum, event.currentSong);
-      print("iiiiiiiiiiiiiiiii            "+i.toString());
-      final Source source = UrlSource(event.currentAlbum[i+1].fileSource ?? "");
-      await _audioPlayer.play(source);
+      _currentSelectedSong = event.currentSong;
+      _currentAlbum = event.currentAlbum;
+      _playCurrentSong(emit);
       emit(AudioPlayedState());
     });
 
@@ -80,6 +76,60 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     on<initialSong>((event, emit) async {
       emit(AudioControlInitial());
     });
+
+    on<SongCompletedEvent>((event, emit) async {
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        await _playNextSong(emit);
+    });
+
+    on<PlayNextSong>((event, emit) async {
+      _currentAlbum = event.currentAlbum;
+      await _playCurrentSong(emit);
+      emit(AudioPlayedState());
+    });
+
+  }
+
+  Future<void> _playNextSong(Emitter<AudioControlState> emit) async {
+    if (_currentAlbum != null && _currentSelectedSong != null) {
+      final int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
+      print("currentIndex                 "+currentIndex.toString());
+      if (currentIndex != null) {
+        final int nextIndex = (currentIndex + 1) % _currentAlbum!.length;
+        print("nextIndex                 "+nextIndex.toString());
+        final nextSong = _currentAlbum![nextIndex];
+        print("nextSong                 "+nextSong.name.toString());
+        _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
+        await _playCurrentSong(emit);
+      }
+    }
+  }
+
+  Future<void> _playCurrentSong(Emitter<AudioControlState> emit) async {
+    if (_currentSelectedSong != null) {
+      print('source              '+_currentSelectedSong!.fileSource.toString());
+      final Source source = UrlSource(_currentSelectedSong!.fileSource ?? "");
+
+      await _audioPlayer.play(source);
+      emit(AudioPlayedState());
+    }
+  }
+
+  SongDataModel _mapAlbumDataMusicModelToSongDataModel(AlbumDataMusicModel song) {
+    return SongDataModel(
+      id: song.id,
+      name: song.name,
+      imageSource: song.imageSource,
+      fileSource: song.fileSource!.replaceFirst('http', 'https'),
+      singerName: song.singerName,
+      minute: song.minute,
+      second: song.second,
+      albumId: song.albumId,
+    );
+  }
+
+  int? _getCurrentSongIndex(List<AlbumDataMusicModel> songs, SongDataModel song) {
+    return songs.indexWhere((s) => s.id == song.id);
   }
 
   stopAudio() async {

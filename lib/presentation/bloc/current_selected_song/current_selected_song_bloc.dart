@@ -12,105 +12,92 @@ class CurrentSelectedSongBloc extends Bloc<CurrentSelectedSongEvent, CurrentSele
 
   SongDataModel? get currentSelectedSong => _currentSelectedSong;
 
-  CurrentSelectedSongBloc() : super(CurrentSelectedSongInitial()) {
-
-
-    on<SelectSong>((event, emit) {
-      emit(LoadingNewSong());
-      _currentSelectedSong = event.songModel;
-      emit(SelectedSongFetched(songModel: event.songModel));
-    });
-
-    on<PlayNextSong>((event, emit) async{
-      SongDataModel songDataModel;
-      emit(LoadingNewSong());
-      final AlbumDataMusicModel nextSong;
-      final index = getCurrentSongIndex(event.songs);
-      print("index           "+index.toString());
-      if (index == event.songs.length - 1) {
-        nextSong = event.songs.elementAt(0);
-        songDataModel = SongDataModel(
-          id : nextSong.id,
-          name: nextSong.name,
-          imageSource: nextSong.imageSource,
-          fileSource: nextSong.fileSource!.substring(0, 4)
-              + "s"
-              + nextSong.fileSource!.substring(4, nextSong.fileSource!.length),
-          singerName: nextSong.singerName,
-          minute: nextSong.minute,
-          second: nextSong.second,
-          albumId: nextSong.albumId,
-        );
-      } else {
-        nextSong = event.songs.elementAt(index + 1);
-        songDataModel = SongDataModel(
-          id : nextSong.id,
-          name: nextSong.name,
-          imageSource: nextSong.imageSource,
-          fileSource: nextSong.fileSource!.substring(0, 4)
-              + "s"
-              + nextSong.fileSource!.substring(4, nextSong.fileSource!.length),
-          singerName: nextSong.singerName,
-          minute: nextSong.minute,
-          second: nextSong.second,
-          albumId: nextSong.albumId,
-        );
-      }
-
-      _currentSelectedSong = songDataModel;
-      await writeMiniPlayingRequirement(songDataModel.id!, songDataModel.albumId!);
-      emit(SelectedSongFetched(songModel: songDataModel));
-    });
-
-    on<PlayPreviousSong>((event, emit) async{
-      SongDataModel songDataModel;
-      emit(LoadingNewSong());
-      final AlbumDataMusicModel previousSong;
-      final index = getCurrentSongIndex(event.songs);
-      if (index == 0) {
-        previousSong = event.songs.last;
-        songDataModel = SongDataModel(
-          id : previousSong.id,
-          name: previousSong.name,
-          imageSource: previousSong.imageSource,
-          fileSource: previousSong.fileSource!.substring(0, 4)
-              + "s"
-              + previousSong.fileSource!.substring(4, previousSong.fileSource!.length),
-          singerName: previousSong.singerName,
-          minute: previousSong.minute,
-          second: previousSong.second,
-          albumId: previousSong.albumId,
-        );
-      } else {
-        previousSong = event.songs.elementAt(index - 1);
-        songDataModel = SongDataModel(
-          id : previousSong.id,
-          name: previousSong.name,
-          imageSource: previousSong.imageSource,
-          fileSource: previousSong.fileSource!.substring(0, 4)
-              + "s"
-              + previousSong.fileSource!.substring(4, previousSong.fileSource!.length),
-          singerName: previousSong.singerName,
-          minute: previousSong.minute,
-          second: previousSong.second,
-          albumId: previousSong.albumId,
-        );
-      }
-      _currentSelectedSong = songDataModel;
-      await writeMiniPlayingRequirement(songDataModel.id!, songDataModel.albumId!);
-      emit(SelectedSongFetched(songModel: songDataModel));
-
-    });
+  CurrentSelectedSongBloc() : super(CurrentSelectedSongInitialState()) {
+    // Event Handlers
+    on<SelectSongEvent>(_onSelectSong);
+    on<PlayNextSongEvent>(_onPlayNextSong);
+    on<PlayPreviousSongEvent>(_onPlayPreviousSong);
+    on<SelectedSongCompleteEvent>(_onSelectedSongCompleteState);
+    on<CurrentSelectedSongErrorEvent>(_onCurrentSelectedSongErrorEvent);
   }
 
-  getCurrentSongIndex(List<AlbumDataMusicModel> songs) {
-    final currentSongIndex = songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
-    return currentSongIndex;
+  // Handlers for each event
+  Future<void> _onSelectSong(SelectSongEvent event, Emitter<CurrentSelectedSongState> emit) async {
+    emit(LoadingNewSongState());
+    _currentSelectedSong = event.songModel;
+    emit(SelectedSongFetchedState(songModel: event.songModel));
   }
 
-  writeMiniPlayingRequirement(int songID, int albumID) async{
+  Future<void> _onPlayNextSong(PlayNextSongEvent event, Emitter<CurrentSelectedSongState> emit) async {
+    emit(LoadingNewSongState());
+
+    try {
+      final nextSong = _getNextSong(event.songs);
+      _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
+
+      await _saveCurrentSongData(_currentSelectedSong!);
+      emit(SelectedSongFetchedState(songModel: _currentSelectedSong!));
+    } catch (e) {
+      // Handle error if necessary
+      emit(CurrentSelectedSongErrorState("Failed to load the next song."));
+    }
+  }
+
+  Future<void> _onPlayPreviousSong(PlayPreviousSongEvent event, Emitter<CurrentSelectedSongState> emit) async {
+    emit(LoadingNewSongState());
+
+    try {
+      final previousSong = _getPreviousSong(event.songs);
+      _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(previousSong);
+
+      await _saveCurrentSongData(_currentSelectedSong!);
+      emit(SelectedSongFetchedState(songModel: _currentSelectedSong!));
+    } catch (e) {
+      // Handle error if necessary
+      emit(CurrentSelectedSongErrorState("Failed to load the previous song."));
+    }
+  }
+
+  Future<void> _onSelectedSongCompleteState(SelectedSongCompleteEvent event, Emitter<CurrentSelectedSongState> emit) async {
+    emit(SelectedSongCompletedState(songModel: event.songModel));
+  }
+
+  Future<void> _onCurrentSelectedSongErrorEvent(CurrentSelectedSongErrorEvent event, Emitter<CurrentSelectedSongState> emit) async {
+    emit(CurrentSelectedSongErrorState(event.errorMessage));
+  }
+
+  // Helper Methods
+
+  AlbumDataMusicModel _getNextSong(List<AlbumDataMusicModel> songs) {
+    final index = _getCurrentSongIndex(songs);
+    return (index == songs.length - 1) ? songs.first : songs[index + 1];
+  }
+
+  AlbumDataMusicModel _getPreviousSong(List<AlbumDataMusicModel> songs) {
+    final index = _getCurrentSongIndex(songs);
+    return (index == 0) ? songs.last : songs[index - 1];
+  }
+
+  int _getCurrentSongIndex(List<AlbumDataMusicModel> songs) {
+    return songs.indexWhere((element) => element.id == _currentSelectedSong?.id);
+  }
+
+  SongDataModel _mapAlbumDataMusicModelToSongDataModel(AlbumDataMusicModel song) {
+    return SongDataModel(
+      id: song.id,
+      name: song.name,
+      imageSource: song.imageSource,
+      fileSource: song.fileSource!.replaceFirst('http', 'https'),
+      singerName: song.singerName,
+      minute: song.minute,
+      second: song.second,
+      albumId: song.albumId,
+    );
+  }
+
+  Future<void> _saveCurrentSongData(SongDataModel songDataModel) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('songID', songID);
-    await prefs.setInt('albumID', albumID);
+    await prefs.setInt('songID', songDataModel.id!);
+    await prefs.setInt('albumID', songDataModel.albumId!);
   }
 }

@@ -9,6 +9,12 @@ class PlaySong extends AudioControlEvent {
   PlaySong({required this.currentSong, required this.currentAlbum});
 }
 
+class PlayNextSong extends AudioControlEvent {
+  final List<AlbumDataMusicModel> currentAlbum;
+
+  PlayNextSong({required this.currentAlbum});
+}
+
 class PauseSong extends AudioControlEvent {}
 
 class initialSong extends AudioControlEvent {}
@@ -19,10 +25,9 @@ class StopRepeating extends AudioControlEvent {}
 
 class RepeatSong extends AudioControlEvent {}
 
-class CompleteSong extends AudioControlEvent {}
+class SongCompletedEvent extends AudioControlEvent {}
 
-class PlayNexttSong extends AudioControlEvent {
-  final SongDataModel currentSong;
-  final List<AlbumDataMusicModel> currentAlbum;
-  PlayNexttSong({required this.currentSong, required this.currentAlbum});
+class AudioPositionChangedEvent extends AudioControlEvent {
+  final Duration position;
+  AudioPositionChangedEvent({required this.position});
 }
