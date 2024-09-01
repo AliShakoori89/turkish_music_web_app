@@ -17,7 +17,7 @@ class PreviousButton extends StatelessWidget {
         onPressed: () {
             context
                 .read<CurrentSelectedSongBloc>()
-                .add(PlayPreviousSong(songs: albumSongs));
+                .add(PlayPreviousSongEvent(songs: albumSongs));
         },
         icon: Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

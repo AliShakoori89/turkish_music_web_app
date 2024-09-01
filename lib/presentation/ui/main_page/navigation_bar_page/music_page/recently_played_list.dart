@@ -149,7 +149,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSong(
+                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
                                           songModel: songDataModel
                                       )),
                                       child: PlaySongPage(
