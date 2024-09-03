@@ -170,6 +170,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
           // );}
         )
     )
-        : CircularProgressIndicator();
+        : Container();
   }
 }
