@@ -13,51 +13,48 @@ class CustomCircularSeekBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 10,
-      child: CircularSeekBar(
-        width: double.infinity,
-        height: 350,
-        progress: 100,
-        barWidth: 8,
-        startAngle: 45,
-        sweepAngle: 270,
-        strokeCap: StrokeCap.butt,
-        progressGradientColors: const [
-          Colors.blue,
-          Colors.indigo,
-          Colors.purple
-        ],
-        dashWidth: 1,
-        dashGap: 2,
-        animation: true,
-        animDurationMillis: 10000,
+    return CircularSeekBar(
+      width: double.infinity,
+      height: 350,
+      progress: 100,
+      barWidth: 8,
+      startAngle: 45,
+      sweepAngle: 270,
+      strokeCap: StrokeCap.butt,
+      progressGradientColors: const [
+        Colors.blue,
+        Colors.indigo,
+        Colors.purple
+      ],
+      dashWidth: 1,
+      dashGap: 2,
+      animation: true,
+      animDurationMillis: 10000,
 
-        child: Container(
+      child: Container(
         margin: EdgeInsets.all(20),
-          child: CachedNetworkImage(
-            imageUrl: songImage,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.contain),
-              ),
+        child: CachedNetworkImage(
+          imageUrl: songImage,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.contain),
             ),
-            placeholder: (context, url) => Shimmer.fromColors(
-              baseColor: Colors.black12,
-              highlightColor: Colors.grey[400]!,
-              child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.black12,
-                      shape: BoxShape.circle),
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  height: MediaQuery.of(context).size.width * 0.2
-              ),
-            ),
-            errorWidget: (context, url, error) => NoImage(),
           ),
+          placeholder: (context, url) => Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.grey[400]!,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.black12,
+                    shape: BoxShape.circle),
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.width * 0.2
+            ),
+          ),
+          errorWidget: (context, url, error) => NoImage(),
         ),
       ),
     );

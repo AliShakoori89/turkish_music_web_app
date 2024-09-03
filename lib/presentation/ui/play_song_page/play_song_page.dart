@@ -163,7 +163,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 1,
+                                    flex: 2,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,

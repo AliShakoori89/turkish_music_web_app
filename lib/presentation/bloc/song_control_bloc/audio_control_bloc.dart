@@ -111,7 +111,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       final Source source = UrlSource(_currentSelectedSong!.fileSource ?? "");
 
       await _audioPlayer.play(source);
-      emit(AudioPlayedState());
     }
   }
 
