@@ -99,35 +99,29 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                               );
 
                               Navigator.push(
-                                  context,
-                                  PageTransition(
+                                context,
+                                PageTransition(
                                     duration: Duration(milliseconds: 500),
                                     curve: Curves.easeOut,
                                     type: PageTransitionType.bottomToTop,
                                     reverseDuration: Duration(milliseconds: 500),
                                     child: Builder(
-                                        builder: (context) => BlocProvider(
-                                          create: (context) =>
-                                          CurrentSelectedSongBloc()
-                                            ..add(SelectSongEvent(
-                                                songModel:
-                                                songDataModel)),
-                                          child: PlaySongPage(
-                                            songName: songDataModel.name!,
-                                            songFile:
-                                            songDataModel.fileSource!,
-                                            songID: songDataModel.id!,
-                                            singerName:
-                                            songDataModel.singerName!,
-                                            songImage:
-                                            songDataModel.imageSource!,
-                                            albumID: songDataModel.albumId!,
-                                            albumSongList: album,
-                                            pageName: "",
-                                            orientation: widget.orientation,
-                                          ),
-                                        )),
-                                  ));
+                                      builder: (context) =>PlaySongPage(
+                                        songName: songDataModel.name!,
+                                        songFile: songDataModel.fileSource!,
+                                        songID: songDataModel.id!,
+                                        singerName: songDataModel.singerName!,
+                                        songImage: songDataModel.imageSource!,
+                                        albumID: songDataModel.albumId!,
+                                        albumSongList: album,
+                                        pageName: "",
+                                        orientation: widget.orientation,
+                                        songDataModel: songDataModel,
+                                      ),
+                                    )
+                                ),
+                              );
+
                             },
                             child: const TopArrow(),
                           ),

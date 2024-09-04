@@ -91,7 +91,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(UserRepository())),
-        BlocProvider(create: (context) => SongBloc(SongRepository())),
+        BlocProvider(
+            create: (context) =>
+                SongBloc(SongRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 NewSongBloc(NewSongRepository())),

@@ -5,13 +5,21 @@ class AudioControlState {}
 
 class AudioControlInitial extends AudioControlState {}
 
-class AudioPlayedState extends AudioControlState {}
+class AudioPlayedState extends AudioControlState {
+  final SongDataModel songModel;
+
+  AudioPlayedState({required this.songModel});
+}
 
 class AudioPausedState extends AudioControlState {}
 
 class AudioRepeatState extends AudioControlState {}
 
-class AudioCompleteState extends AudioControlState {}
+class AudioCompleteState extends AudioControlState {
+  final SongDataModel songModel;
+
+  AudioCompleteState({required this.songModel});
+}
 
 class AudioNextPlayState extends AudioControlState {}
 

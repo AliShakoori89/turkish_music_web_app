@@ -145,26 +145,22 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                               albumId: state.allRecentlySongs[index].albumId,
                             );
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                                          songModel: songDataModel
-                                      )),
-                                      child: PlaySongPage(
-                                        songName: state.allRecentlySongs[index].name!,
-                                        songFile: state.allRecentlySongs[index].fileSource!,
-                                        songID: state.allRecentlySongs[index].id!,
-                                        singerName: '',
-                                        songImage: state.allRecentlySongs[index].imageSource!,
-                                        pageName: "searchPage",
-                                        albumID: 0,
-                                        albumSongList: state.allRecentlySongs,
-                                        orientation: widget.orientation,
-                                      ),
-
-                                    )));
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => PlaySongPage(
+                                    songName: state.allRecentlySongs[index].name!,
+                                    songFile: state.allRecentlySongs[index].fileSource!,
+                                    songID: state.allRecentlySongs[index].id!,
+                                    singerName: '',
+                                    songImage: state.allRecentlySongs[index].imageSource!,
+                                    pageName: "searchPage",
+                                    albumID: 0,
+                                    albumSongList: state.allRecentlySongs,
+                                    orientation: widget.orientation,
+                                    songDataModel: songDataModel,
+                                  )
+                              ),
+                            );
                           })),
                 ),
               )

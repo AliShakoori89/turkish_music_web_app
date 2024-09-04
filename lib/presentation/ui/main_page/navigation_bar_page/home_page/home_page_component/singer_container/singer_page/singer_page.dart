@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
-import '../custom_clipper/custom_clipper.dart';
 
 class SingerPage extends StatefulWidget {
   SingerPage({super.key, required this.artistDetail, required this.orientation});
@@ -126,29 +126,47 @@ class _SingerPageState extends State<SingerPage> {
                                 singerName: widget.artistDetail.name,
                                 album: null,
                                 albumId: state.singerAllAlbum[index].id,
-                                categories: null
+                                categories: null,
                             );
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                                          songModel: songDataModel
-                                      )),
-                                      child: PlaySongPage(
-                                        songName: state.singerAllAlbum[index].name!,
-                                        songFile: newPath,
-                                        songID: songDataModel.id!,
-                                        singerName: widget.artistDetail.name,
-                                        songImage: state.singerAllAlbum[index].imageSource!,
-                                        albumID: songDataModel.albumId!,
-                                        pageName: "SingerPage",
-                                        albumSongList: state.singerAllAlbum[index].musics!,
-                                        orientation: widget.orientation,
-                                      ),
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => PlaySongPage(
+                                  songName: state.singerAllAlbum[index].name!,
+                                  songFile: newPath,
+                                  songID: songDataModel.id!,
+                                  singerName: widget.artistDetail.name,
+                                  songImage: state.singerAllAlbum[index].imageSource!,
+                                  albumID: songDataModel.albumId!,
+                                  pageName: "SingerPage",
+                                  albumSongList: state.singerAllAlbum[index].musics!,
+                                  orientation: widget.orientation,
+                                  songDataModel: songDataModel,
+                                )
+                              ),
+                            );
 
-                                    )));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => BlocProvider(
+                            //           create: (context) => AudioControlBloc()..add(PlaySongEvent(
+                            //             currentSong: songDataModel,
+                            //             currentAlbum: state.singerAllAlbum[index].musics!
+                            //           )),
+                            //           child: PlaySongPage(
+                            //             songName: state.singerAllAlbum[index].name!,
+                            //             songFile: newPath,
+                            //             songID: songDataModel.id!,
+                            //             singerName: widget.artistDetail.name,
+                            //             songImage: state.singerAllAlbum[index].imageSource!,
+                            //             albumID: songDataModel.albumId!,
+                            //             pageName: "SingerPage",
+                            //             albumSongList: state.singerAllAlbum[index].musics!,
+                            //             orientation: widget.orientation,
+                            //           ),
+                            //
+                            //         )));
                           },
                           child: Padding(
                             padding: EdgeInsets.only(

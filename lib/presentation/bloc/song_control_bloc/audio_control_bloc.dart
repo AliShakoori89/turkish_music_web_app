@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/model/album_model.dart';
 import '../../../data/model/song_model.dart';
 import '../../../domain/repositories/new_song_repository.dart';
@@ -34,68 +35,83 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   AudioControlBloc() : super(AudioControlInitial()) {
 
     _audioStream = _audioPlayer.onPlayerComplete.listen((_) async{
-      print("*********************************************************************");
-      // _audioPlayer.resume();
       add(SongCompletedEvent());
     });
 
-    // on<SongCompleted>((event, emit) async {
-    //   int i = getCurrentSongIndex(event.songs);
-    //   print("iiiiiiiiiiiiiiiii            "+i.toString());
-    //   final Source source = UrlSource(event.songs[i].fileSource ?? "");
-    //   await _audioPlayer.play(source);
-    // });
-
-    on<PlaySong>((event, emit) async {
+    on<PlaySongEvent>((event, emit) async {
       _currentSelectedSong = event.currentSong;
       _currentAlbum = event.currentAlbum;
       _playCurrentSong(emit);
-      emit(AudioPlayedState());
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
-    on<PauseSong>((event, emit) async {
+    on<PauseSongEvent>((event, emit) async {
       await _audioPlayer.pause();
-      emit(AudioPausedState());
     });
 
-    on<RepeatSong>((event, emit) async {
+    on<RepeatSongEvent>((event, emit) async {
       await _audioPlayer.setReleaseMode(ReleaseMode.loop);
-      emit(AudioRepeatState());
     });
 
-    on<ResumeSong>((event, emit) async {
+    on<ResumeSongEvent>((event, emit) async {
       await _audioPlayer.resume();
-      emit(AudioPlayedState());
     });
 
-    on<StopRepeating>((event, emit) async {
+    on<StopRepeatingEvent>((event, emit) async {
       await _audioPlayer.setReleaseMode(ReleaseMode.stop);
-      emit(AudioRepeatState());
     });
 
-    on<initialSong>((event, emit) async {
+    on<initialSongEvent>((event, emit) async {
       emit(AudioControlInitial());
     });
 
     on<SongCompletedEvent>((event, emit) async {
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        await _playNextSong(emit);
+
+      await _playNextSong(emit);
+      await _saveCurrentSongData(_currentSelectedSong!);
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
-    on<PlayNextSong>((event, emit) async {
+    on<PlayNextSongEvent>((event, emit) async {
       _currentAlbum = event.currentAlbum;
-      await _playCurrentSong(emit);
-      emit(AudioPlayedState());
+      await _saveCurrentSongData(_currentSelectedSong!);
+      await _playNextSong(emit);
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
+    on<PlayPreviousSongEvent>((event, emit) async {
+      _currentAlbum = event.currentAlbum;
+      await _saveCurrentSongData(_currentSelectedSong!);
+      await _playPreviousSong(emit);
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
+    });
+
+  }
+
+  Future<void> _saveCurrentSongData(SongDataModel songDataModel) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('songID', songDataModel.id!);
+    await prefs.setInt('albumID', songDataModel.albumId!);
   }
 
   Future<void> _playNextSong(Emitter<AudioControlState> emit) async {
     if (_currentAlbum != null && _currentSelectedSong != null) {
       final int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
-      print("currentIndex                 "+currentIndex.toString());
       if (currentIndex != null) {
         final int nextIndex = (currentIndex + 1) % _currentAlbum!.length;
+        final nextSong = _currentAlbum![nextIndex];
+        _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
+        await _playCurrentSong(emit);
+      }
+    }
+  }
+
+  Future<void> _playPreviousSong(Emitter<AudioControlState> emit) async {
+    if (_currentAlbum != null && _currentSelectedSong != null) {
+      final int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
+      print("currentIndex                 "+currentIndex.toString());
+      if (currentIndex != null) {
+        final int nextIndex = (currentIndex - 1) % _currentAlbum!.length;
         print("nextIndex                 "+nextIndex.toString());
         final nextSong = _currentAlbum![nextIndex];
         print("nextSong                 "+nextSong.name.toString());

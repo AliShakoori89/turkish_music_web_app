@@ -87,26 +87,26 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                 categories: null
                             );
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                                          songModel: songDataModel
-                                      )),
-                                      child: PlaySongPage(
-                                        songName: state.singerAllAlbum[index].name!,
-                                        songFile: newPath,
-                                        songID: songDataModel.id!,
-                                        singerName: songDataModel.singerName!,
-                                        songImage: state.singerAllAlbum[index].imageSource!,
-                                        albumID: songDataModel.albumId!,
-                                        pageName: "SingerPage",
-                                        albumSongList: state.singerAllAlbum[index].musics!,
-                                        orientation: widget.orientation,
-                                      ),
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => BlocProvider(
+                            //           create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
+                            //               songModel: songDataModel
+                            //           )),
+                            //           child: PlaySongPage(
+                            //             songName: state.singerAllAlbum[index].name!,
+                            //             songFile: newPath,
+                            //             songID: songDataModel.id!,
+                            //             singerName: songDataModel.singerName!,
+                            //             songImage: state.singerAllAlbum[index].imageSource!,
+                            //             albumID: songDataModel.albumId!,
+                            //             pageName: "SingerPage",
+                            //             albumSongList: state.singerAllAlbum[index].musics!,
+                            //             orientation: widget.orientation,
+                            //           ),
 
-                                    )));
+                                    // )));
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,27 +177,23 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                 categories: null
                             );
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BlocProvider(
-                                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                                          songModel: songDataModel
-                                      )),
-                                      child: PlaySongPage(
-                                        songName: state.singerAllAlbum[index].name!,
-                                        songFile: newPath,
-                                        songID: songDataModel.id!,
-                                        singerName: songDataModel.singerName!,
-                                        songImage: state.singerAllAlbum[index].imageSource!,
-                                        albumID: songDataModel.albumId!,
-                                        pageName: "SingerPage",
-                                        albumSongList: state.singerAllAlbum[index].musics!,
-                                        orientation: widget.orientation,
-                                      ),
-
-                                    )));
-                          },
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => PlaySongPage(
+                                    songName: state.singerAllAlbum[index].name!,
+                                    songFile: newPath,
+                                    songID: songDataModel.id!,
+                                    singerName: songDataModel.singerName!,
+                                    songImage: state.singerAllAlbum[index].imageSource!,
+                                    albumID: songDataModel.albumId!,
+                                    pageName: "SingerPage",
+                                    albumSongList: state.singerAllAlbum[index].musics!,
+                                    orientation: widget.orientation,
+                                    songDataModel: songDataModel,
+                                  )
+                              ),
+                            );
+                            },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

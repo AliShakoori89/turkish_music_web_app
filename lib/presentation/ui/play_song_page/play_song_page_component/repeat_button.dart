@@ -24,9 +24,9 @@ class _repeatButtonState extends State<repeatButton> {
           repeat = !repeat;
         });
         if (repeat) {
-          BlocProvider.of<AudioControlBloc>(context).add(RepeatSong());
+          BlocProvider.of<AudioControlBloc>(context).add(RepeatSongEvent());
         }else{
-          BlocProvider.of<AudioControlBloc>(context).add(StopRepeating());
+          BlocProvider.of<AudioControlBloc>(context).add(StopRepeatingEvent());
         }
       },
       icon: repeat

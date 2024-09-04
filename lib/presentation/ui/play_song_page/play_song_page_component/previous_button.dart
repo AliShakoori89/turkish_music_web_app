@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../../data/model/album_model.dart';
-import '../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 
 class PreviousButton extends StatelessWidget {
-  PreviousButton({key, required this.pageName, required this.albumSongs, required this.songID, required this.albumID});
+  PreviousButton({key, required this.pageName, required this.albumSongs,
+    required this.songID, required this.albumID, required this.album});
 
   final String pageName;
   final List<AlbumDataMusicModel> albumSongs;
   final int songID;
   final int albumID;
+  final List<AlbumDataMusicModel> album;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () {
             context
-                .read<CurrentSelectedSongBloc>()
-                .add(PlayPreviousSongEvent(songs: albumSongs));
+                .read<AudioControlBloc>()
+                .add(PlayPreviousSongEvent(currentAlbum: albumSongs));
         },
         icon: Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

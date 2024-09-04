@@ -54,29 +54,24 @@ class ContainerAllSongsList extends StatelessWidget {
               albumId: categoryAllSongs[index].albumId,
             );
 
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                      create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                          songModel: songDataModel
-                      )),
-                      child: PlaySongPage(
-                        songName: categoryAllSongs[index].name!,
-                        songFile: newPath,
-                        albumID: songDataModel.albumId!,
-                        albumSongList: categoryAllSongs,
-                        songID: categoryAllSongs[index].id!,
-                        songImage: categoryAllSongs[index].imageSource!,
-                        singerName: singerName,
-                        pageName: "ContainerAllSongsList",
-                        orientation: orientation,
-                      ),
-
-                    )),
-                ModalRoute.withName("/")
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => PlaySongPage(
+                    songName: categoryAllSongs[index].name!,
+                    songFile: newPath,
+                    albumID: songDataModel.albumId!,
+                    albumSongList: categoryAllSongs,
+                    songID: categoryAllSongs[index].id!,
+                    songImage: categoryAllSongs[index].imageSource!,
+                    singerName: singerName,
+                    pageName: "ContainerAllSongsList",
+                    orientation: orientation,
+                    songDataModel: songDataModel,
+                  )
+              ),
             );
-          },
+
+            },
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white30.withOpacity(0.1),
@@ -163,10 +158,16 @@ class ContainerAllSongsList extends StatelessWidget {
                         )
                             : Expanded(
                           flex: 2,
-                          child: OverflowTextAnimated(
-                            text: categoryAllSongs[index].name!,
-                            style: TextStyle(
-                                fontSize: 14, color: Colors.white),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: 15,
+                              bottom: 15
+                            ),
+                            child: OverflowTextAnimated(
+                              text: categoryAllSongs[index].name!,
+                              style: TextStyle(
+                                  fontSize: 14, color: Colors.white),
+                            ),
                           ),
                         )
                       ],

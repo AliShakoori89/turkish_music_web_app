@@ -90,27 +90,23 @@ class _searchPageState extends State<searchPage> {
                                           albumId: musicItem.albumId,
                                         );
 
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => BlocProvider(
-                                                  create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                                                      songModel: songDataModel
-                                                  )),
-                                                  child: PlaySongPage(
-                                                    songName: musicItem.name!,
-                                                    songFile: musicItem.fileSource!,
-                                                    songID: musicItem.id!,
-                                                    singerName: musicItem.singerName!,
-                                                    songImage: musicItem.album!.imageSource!,
-                                                    pageName: "searchPage",
-                                                    albumID: 0,
-                                                    albumSongList: [],
-                                                    orientation: widget.orientation,
-                                                  ),
-
-                                                )));
-                                      },
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => PlaySongPage(
+                                                songName: musicItem.name!,
+                                                songFile: musicItem.fileSource!,
+                                                songID: musicItem.id!,
+                                                singerName: musicItem.singerName!,
+                                                songImage: musicItem.album!.imageSource!,
+                                                pageName: "searchPage",
+                                                albumID: 0,
+                                                albumSongList: [],
+                                                orientation: widget.orientation,
+                                                songDataModel: songDataModel,
+                                              )
+                                          ),
+                                        );
+                                        },
                                       child: ListTile(
                                         title: Text(musicItem.name!),
                                       ),
