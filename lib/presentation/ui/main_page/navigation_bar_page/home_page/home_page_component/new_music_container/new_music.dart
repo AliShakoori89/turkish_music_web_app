@@ -2,10 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../../../../data/model/album_model.dart';
 import '../../../../../../../data/model/song_model.dart';
-import '../../../../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../../../../bloc/new_song_bloc/bloc.dart';
 import '../../../../../../bloc/new_song_bloc/event.dart';
 import '../../../../../../bloc/new_song_bloc/state.dart';

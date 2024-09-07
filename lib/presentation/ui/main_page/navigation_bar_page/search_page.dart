@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import '../../../../data/model/song_model.dart';
-import '../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_bloc/state.dart';

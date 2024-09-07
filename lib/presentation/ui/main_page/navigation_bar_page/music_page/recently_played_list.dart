@@ -6,7 +6,6 @@ import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../data/model/song_model.dart';
-import '../../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../../bloc/recently_play_song_bloc/bloc.dart';
 import '../../../../bloc/recently_play_song_bloc/event.dart';
 import '../../../../bloc/recently_play_song_bloc/state.dart';

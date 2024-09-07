@@ -10,9 +10,7 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_button.dart';
-
 import '../../../../data/model/song_model.dart';
-import '../../../bloc/current_selected_song/current_selected_song_bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../helpers/widgets/singer_name_trackName_image.dart';
