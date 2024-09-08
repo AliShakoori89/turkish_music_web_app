@@ -103,23 +103,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
       },
       child: Scaffold(
           body: BlocBuilder<AudioControlBloc, AudioControlState>(
-              // listener: (context, state) {
-                // if(state is CurrentSelectedSongInitialState){
-
-                // context
-                //     .read<AudioControlBloc>()
-                //     .add(PlaySongEvent(
-                //     currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
-                //     currentAlbum: widget.albumSongList));
-                // }
-                // if(state is SelectedSongCompletedState){
-                //   context
-                //       .read<AudioControlBloc>()
-                //       .add(SongCompletedEvent(
-                //       currentSong: context.read<CurrentSelectedSongBloc>().currentSelectedSong!,
-                //       currentAlbum: widget.albumSongList));
-                // }
-              // },
               builder: (context, state) {
 
                 if (state is AudioPlayedState) {
@@ -203,20 +186,14 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 6,
-                                    child: CustomCircularSeekBar(
-                                      songImage: state.songModel.imageSource!,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 6,
+                                    flex: 15,
                                     child: Container(
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Flexible(
-                                            flex: 2,
+                                            flex: 1,
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
@@ -229,7 +206,14 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                             ),
                                           ),
                                           Flexible(
-                                            flex: 3,
+                                            flex: 9,
+                                            child: Progressbar(
+                                                minute: state.songModel.minute!,
+                                                second: state.songModel.second!,
+                                            songImage: state.songModel.imageSource!,),
+                                          ),
+                                          Flexible(
+                                            flex: 2,
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
@@ -241,20 +225,14 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                     album : widget.albumSongList),
                                                 PlayButton(),
                                                 NextButton(
-                                                  pageName: widget.pageName,
-                                                  categoryAllSongs: widget.albumSongList,
-                                                  songID: state.songModel.id!,
-                                                  albumID: widget.albumID,
-                                                  album : widget.albumSongList
+                                                    pageName: widget.pageName,
+                                                    categoryAllSongs: widget.albumSongList,
+                                                    songID: state.songModel.id!,
+                                                    albumID: widget.albumID,
+                                                    album : widget.albumSongList
                                                 )
                                               ],
                                             ),
-                                          ),
-                                          Flexible(
-                                            flex: 3,
-                                            child: Progressbar(
-                                                minute: state.songModel.minute!,
-                                                second: state.songModel.second!),
                                           ),
                                           Flexible(
                                             flex: 2,
@@ -276,7 +254,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     ),
                                   ),
                                   Flexible(
-                                      flex: 3,
+                                      flex: 4,
                                       child: ContainerAllSongsList(
                                         singerName: widget.singerName,
                                         categoryAllSongs: widget.albumSongList,

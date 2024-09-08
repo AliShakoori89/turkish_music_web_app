@@ -19,7 +19,7 @@ class PlayButtonState extends Equatable{
 
   static PlayButtonState initial() => const PlayButtonState(
       status: PlayButtonStatus.initial,
-      playButtonState: false,
+      playButtonState: true,
   );
 
   final PlayButtonStatus status;
