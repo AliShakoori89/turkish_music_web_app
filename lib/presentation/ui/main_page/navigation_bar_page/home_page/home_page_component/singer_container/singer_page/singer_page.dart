@@ -6,10 +6,10 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
+import '../../../../../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
 
 class SingerPage extends StatefulWidget {
   SingerPage({super.key, required this.artistDetail});

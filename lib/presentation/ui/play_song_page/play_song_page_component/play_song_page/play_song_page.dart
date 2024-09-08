@@ -21,12 +21,13 @@ import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/previous_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/progressbar.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/repeat_button.dart';
-import '../../../data/model/album_model.dart';
-import '../../bloc/play_box_bloc/bloc.dart';
-import '../../bloc/play_box_bloc/event.dart';
-import '../../bloc/song_bloc/bloc.dart';
-import '../../bloc/song_bloc/event.dart';
-import '../../bloc/song_control_bloc/audio_control_bloc.dart';
+
+import '../../../../../data/model/album_model.dart';
+import '../../../../bloc/play_box_bloc/bloc.dart';
+import '../../../../bloc/play_box_bloc/event.dart';
+import '../../../../bloc/song_bloc/bloc.dart';
+import '../../../../bloc/song_bloc/event.dart';
+import '../../../../bloc/song_control_bloc/audio_control_bloc.dart';
 
 class PlaySongPage extends StatefulWidget {
 

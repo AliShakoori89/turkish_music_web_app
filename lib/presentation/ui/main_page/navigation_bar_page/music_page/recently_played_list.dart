@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../bloc/recently_play_song_bloc/bloc.dart';
 import '../../../../bloc/recently_play_song_bloc/event.dart';
@@ -13,6 +12,7 @@ import '../../../../const/custom_divider.dart';
 import '../../../../const/no_music_widget.dart';
 import '../../../../helpers/widgets/singer_name_trackName_image.dart';
 import '../../../../helpers/widgets/song_detail_list.dart';
+import '../../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
 
 class RecentlyPlaylist extends StatefulWidget {
 

@@ -8,11 +8,9 @@ import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_bloc/state.dart';
 import '../../../const/searching_error.dart';
-import '../../play_song_page/play_song_page.dart';
+import '../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
 
 class searchPage extends StatefulWidget {
-
-  static String routeName = "/searchPage";
 
   @override
   State<searchPage> createState() => _searchPageState();

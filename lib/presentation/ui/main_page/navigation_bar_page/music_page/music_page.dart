@@ -4,6 +4,8 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 
 class MusicPage extends StatelessWidget {
 
+  static String routeName = "/musicPage";
+
   List customIcon = [
     Icons.playlist_play_outlined,
     Icons.download,

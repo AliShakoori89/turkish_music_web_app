@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:turkish_music_app/presentation/const/no_image.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
-import '../play_song_page.dart';
 
 class ContainerAllSongsList extends StatelessWidget {
 
