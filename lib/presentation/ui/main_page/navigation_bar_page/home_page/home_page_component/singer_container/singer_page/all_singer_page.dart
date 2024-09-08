@@ -5,11 +5,10 @@ import '../../../../../../../../data/model/singer_model.dart';
 import 'singer_page.dart';
 
 class AllSingerPage extends StatefulWidget {
-  const AllSingerPage({super.key, required this.allSinger, required this.allSingerName, required this.orientation});
+  const AllSingerPage({super.key, required this.allSinger, required this.allSingerName});
 
   final List<SingerDataModel> allSinger;
   final List<String> allSingerName;
-  final Orientation orientation;
 
 
   @override
@@ -60,9 +59,7 @@ class _AllSingerPageState extends State<AllSingerPage>{
                         MaterialPageRoute(
                             builder: (context) =>
                                 SingerPage(
-                                  artistDetail: widget.allSinger[index],
-                                  orientation: widget.orientation,
-                                ))
+                                  artistDetail: widget.allSinger[index],))
                     );
                   },
                   child: Padding(

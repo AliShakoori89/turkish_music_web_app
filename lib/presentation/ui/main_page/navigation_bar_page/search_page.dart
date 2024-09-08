@@ -11,8 +11,8 @@ import '../../../const/searching_error.dart';
 import '../../play_song_page/play_song_page.dart';
 
 class searchPage extends StatefulWidget {
-  const searchPage({super.key, required this.orientation});
-  final Orientation orientation;
+
+  static String routeName = "/searchPage";
 
   @override
   State<searchPage> createState() => _searchPageState();
@@ -31,6 +31,8 @@ class _searchPageState extends State<searchPage> {
     return BlocBuilder<SongBloc, SongState>(builder: (context, state) {
 
       List<SongDataModel> music = state.allSongList;
+      Orientation orientation = MediaQuery.of(context).orientation;
+
 
       if(state.status.isLoading){
         return CustomIndicator();
@@ -54,7 +56,7 @@ class _searchPageState extends State<searchPage> {
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: EdgeInsets.only(
-                              right: widget.orientation == Orientation.portrait
+                              right: orientation == Orientation.portrait
                                   ?  0
                                   : 50
                             ),
@@ -100,7 +102,6 @@ class _searchPageState extends State<searchPage> {
                                                 pageName: "searchPage",
                                                 albumID: 0,
                                                 albumSongList: [],
-                                                orientation: widget.orientation,
                                                 songDataModel: songDataModel,
                                               )
                                           ),

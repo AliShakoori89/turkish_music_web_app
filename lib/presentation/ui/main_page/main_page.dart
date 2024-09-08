@@ -19,8 +19,7 @@ import '../../const/error_internet_connection_page.dart';
 
 class MainPage extends StatefulWidget {
 
-  const MainPage({super.key, required this.orientation});
-  final Orientation orientation;
+  static String routeName = "/";
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -29,7 +28,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   int currentRoute = 0;
-
   Connectivity connectivity = Connectivity();
   IconData? icon;
   String connectionType = "No internet connection";
@@ -110,6 +108,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
 
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     void navigateRoutes(int selectedIndex) {
       setState(() {
         currentRoute = selectedIndex;
@@ -127,7 +127,7 @@ class _MainPageState extends State<MainPage> {
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.07,
             ),
-            child: HomePage(orientation: widget.orientation),
+            child: HomePage(),
           )
         ),
       ),
@@ -146,9 +146,7 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: MusicPage(
-            orientation: widget.orientation,
-          ),
+          child: MusicPage(),
         ),
       ),
       Padding(
@@ -157,9 +155,7 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: searchPage(
-            orientation: widget.orientation,
-          ),
+          child: searchPage(),
         ),
       ),
     ];
@@ -179,10 +175,10 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   VerticalNavBar(
                     selectedIndex: currentRoute,
-                    height: widget.orientation == Orientation.portrait
+                    height: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height * 0.3
                         : MediaQuery.of(context).size.height * 0.3,
-                    width: widget.orientation == Orientation.portrait
+                    width: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.width * 0.12
                         : MediaQuery.of(context).size.width * 0.04,
                     backgroundColor: Colors.purple.withOpacity(0.7),
@@ -223,7 +219,6 @@ class _MainPageState extends State<MainPage> {
                           visibility: visibility,
                           songID: songID,
                           albumID: albumID,
-                          orientation: widget.orientation,
                         );
                       }
                   ),

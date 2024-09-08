@@ -4,10 +4,6 @@ import 'new_music.dart';
 
 class NewMusicContainer extends StatelessWidget {
 
-  final Orientation orientation;
-
-  const NewMusicContainer({super.key, required this.orientation});
-
   @override
   Widget build(BuildContext context) {
 
@@ -17,7 +13,7 @@ class NewMusicContainer extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
           ),
-          NewSong(orientation: orientation,),
+          NewSong(),
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.055,
           ),

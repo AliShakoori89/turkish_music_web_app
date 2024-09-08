@@ -6,15 +6,17 @@ class TitleText extends StatelessWidget {
 
   final String title;
   final bool haveSeeAll;
-  final Orientation orientation;
   List<SingerDataModel>? allSinger;
   List<String>? allSingerName;
 
   TitleText({super.key, required this.title, required this.haveSeeAll,
-    this.allSinger, this.allSingerName, required this.orientation});
+    this.allSinger, this.allSingerName});
 
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -28,8 +30,7 @@ class TitleText extends StatelessWidget {
 
             if(title == "Singer"){
               Navigator.of(context).push(MaterialPageRoute(builder: (context) =>
-                  AllSingerPage(allSinger: allSinger!, allSingerName: allSingerName!,
-                  orientation: orientation,)));
+                  AllSingerPage(allSinger: allSinger!, allSingerName: allSingerName!)));
             }
           },
           child: Padding(

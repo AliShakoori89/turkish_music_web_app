@@ -12,10 +12,9 @@ import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
 
 class SingerPage extends StatefulWidget {
-  SingerPage({super.key, required this.artistDetail, required this.orientation});
+  SingerPage({super.key, required this.artistDetail});
 
   final SingerDataModel artistDetail;
-  final Orientation orientation;
 
   @override
   State<SingerPage> createState() => _SingerPageState(artistDetail);
@@ -36,6 +35,7 @@ class _SingerPageState extends State<SingerPage> {
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     return PopScope(
       canPop: false,
@@ -45,7 +45,7 @@ class _SingerPageState extends State<SingerPage> {
         }
       },
       child: Scaffold(
-        body: widget.orientation == Orientation.portrait
+        body: orientation == Orientation.portrait
             ? BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
 
           var singerAllAlbum = state.singerAllAlbum;
@@ -60,7 +60,7 @@ class _SingerPageState extends State<SingerPage> {
                   SliverAppBar(
                     title: Text(widget.artistDetail.name),
                     backgroundColor: Colors.black,
-                    expandedHeight: widget.orientation == Orientation.portrait
+                    expandedHeight: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height / 4.2
                         : MediaQuery.of(context).size.height / 1.5,
                     stretch: true,
@@ -138,7 +138,6 @@ class _SingerPageState extends State<SingerPage> {
                                   albumID: songDataModel.albumId!,
                                   pageName: "SingerPage",
                                   albumSongList: state.singerAllAlbum[index].musics!,
-                                  orientation: widget.orientation,
                                   songDataModel: songDataModel,
                                 )
                               ),

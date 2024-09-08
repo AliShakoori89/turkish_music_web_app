@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:search_page/search_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
@@ -38,6 +40,7 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_cont
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 
 
 FutureOr<void> main() async{
@@ -136,7 +139,7 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),
       ],
-      child: GetMaterialApp(
+      child: GetMaterialApp.router(
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
@@ -144,16 +147,20 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        initialRoute: '/',
-          routes: <String, WidgetBuilder>{
-            '/home': (BuildContext context) => MainPage(orientation: MediaQuery.of(context).orientation),
-          },
-        home:
-        // result.isNotEmpty && result[0].rawAddress.isNotEmpty ?
-        isLoggedIn
-            ? MainPage(orientation: MediaQuery.of(context).orientation,)
-            : AuthenticatePage(orientation: MediaQuery.of(context).orientation)
-            // : const ErrorInternetConnectionPage()
+        getPages: [
+          GetPage(
+              name: MainPage.routeName,
+              page: (){
+                return isLoggedIn
+                    ? MainPage()
+                    : AuthenticatePage();
+              }),
+          GetPage(
+              name: searchPage.routeName,
+              page: (){
+                return searchPage();
+              })
+        ],
       ),
     );
   }

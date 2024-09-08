@@ -7,12 +7,10 @@ import 'home_page_component/singer_container/singer_container.dart';
 
 class HomePage extends StatelessWidget {
 
-  final Orientation orientation;
-
-  const HomePage({super.key, required this.orientation});
-
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return SafeArea(
       child: Scaffold(
           body: Container(
@@ -27,10 +25,10 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppHeader(),
-                  NewMusicContainer(orientation: orientation,),
-                  SingerContainer(orientation: orientation),
-                  NewAlbumContainer(orientation: orientation),
-                  CategoryItemContainer(orientation: orientation),
+                  NewMusicContainer(),
+                  SingerContainer(),
+                  NewAlbumContainer(),
+                  CategoryItemContainer(),
                   SizedBox(
                     height: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height * 0.05

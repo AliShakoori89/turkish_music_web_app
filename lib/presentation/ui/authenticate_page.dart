@@ -18,9 +18,6 @@ import '../const/error_internet_connection_page.dart';
 import 'main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
-  const AuthenticatePage({super.key, required this.orientation});
-
-  final Orientation orientation;
 
   @override
   State<AuthenticatePage> createState() => _AuthenticatePageState();
@@ -462,7 +459,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                         backgroundColor: const Color(
                                             0xFF00B01E).withOpacity(0.2)
                                     );
-                                    Get.to(MainPage(orientation: MediaQuery.of(context).orientation));
+                                    Get.to(MainPage());
                                   } else {
                                     Get.snackbar("Check Verification Code","Verification code is not true",
                                         backgroundColor: const Color(

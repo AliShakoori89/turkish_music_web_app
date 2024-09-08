@@ -19,12 +19,11 @@ import '../../../helpers/widgets/top_arrow_icon.dart';
 class MiniPlayingContainer extends StatefulWidget {
 
   MiniPlayingContainer({super.key,
-  required this.visibility, required this.songID, required this.albumID, required this.orientation});
+  required this.visibility, required this.songID, required this.albumID});
 
   final bool visibility;
   final int songID ;
   final int albumID ;
-  final Orientation orientation;
 
   @override
   State<MiniPlayingContainer> createState() => _MiniPlayingContainerState();
@@ -48,11 +47,11 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
     return widget.visibility == true
         ? Container(
         width: double.infinity,
-        height: widget.orientation == Orientation.portrait
-            ? MediaQuery.of(context).size.height * 0.13
-            : width < 700
-            ? MediaQuery.of(context).size.height / 5.07
-            : MediaQuery.of(context).size.height / 6.5,
+        // height: widget.orientation == Orientation.portrait
+        //     ? MediaQuery.of(context).size.height * 0.1
+        //     : width < 700
+        //     ? MediaQuery.of(context).size.height / 5.07
+        //     : MediaQuery.of(context).size.height / 6.5,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Colors.black, Colors.purple, ],
@@ -113,7 +112,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                         albumID: songDataModel.albumId!,
                                         albumSongList: album,
                                         pageName: "",
-                                        orientation: widget.orientation,
                                         songDataModel: songDataModel,
                                       ),
                                     )
@@ -136,7 +134,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                     songName: state.song.name!,
                                     imagePath: state.song.imageSource!,
                                     align: MainAxisAlignment.start,
-                                    orientation: widget.orientation,
                                   ),
                                 ),
                                 Expanded(

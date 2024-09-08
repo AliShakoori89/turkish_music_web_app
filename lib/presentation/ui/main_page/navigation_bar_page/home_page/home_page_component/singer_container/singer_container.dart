@@ -13,12 +13,10 @@ import '../../../../../../const/title.dart';
 
 class SingerContainer extends StatelessWidget {
 
-  const SingerContainer({super.key, required this.orientation});
-
-  final Orientation orientation;
-
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
     BlocProvider.of<SingerBloc>(context).add(GetAllSingerNameEvent());
@@ -40,7 +38,6 @@ class SingerContainer extends StatelessWidget {
             haveSeeAll: true,
             allSinger: allSinger,
             allSingerName: allSingerName,
-            orientation: orientation,
           ),
           Container(
             padding: EdgeInsets.symmetric(
@@ -66,7 +63,6 @@ class SingerContainer extends StatelessWidget {
                             builder: (context) =>
                                 SingerPage(
                                   artistDetail: artistList[index],
-                                  orientation: orientation,
                                 ))
                     );
                   },

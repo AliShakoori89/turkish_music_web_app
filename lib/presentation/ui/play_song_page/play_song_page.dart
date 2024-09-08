@@ -11,7 +11,6 @@ import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/event.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/circular_seekbar.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/container_all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/download_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/favorite.dart';
@@ -38,7 +37,6 @@ class PlaySongPage extends StatefulWidget {
   final String songImage;
   final String pageName;
   final int albumID;
-  final Orientation orientation;
   final SongDataModel songDataModel;
 
   final List<AlbumDataMusicModel> albumSongList;
@@ -47,7 +45,7 @@ class PlaySongPage extends StatefulWidget {
     required this.songFile, required this.songID,
     required this.albumSongList, required this.singerName,
     required this.songImage, required this.pageName,
-    required this.albumID, required this.orientation, required this.songDataModel});
+    required this.albumID, required this.songDataModel});
 
 
   @override
@@ -258,9 +256,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                       child: ContainerAllSongsList(
                                         singerName: widget.singerName,
                                         categoryAllSongs: widget.albumSongList,
-                                        songName: state.songModel.name!,
-                                        orientation: widget.orientation,
-                                      )
+                                        songName: state.songModel.name!,)
                                   )
                                 ],
                               ),

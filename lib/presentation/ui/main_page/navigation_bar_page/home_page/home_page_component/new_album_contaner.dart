@@ -12,9 +12,6 @@ import '../../../../../const/shimmer_container/new_music_shimmer_container.dart'
 import '../../../../play_song_page/play_song_page.dart';
 
 class NewAlbumContainer extends StatefulWidget {
-  const NewAlbumContainer({super.key, required this.orientation});
-
-  final Orientation orientation;
 
   @override
   State<NewAlbumContainer> createState() => _NewAlbumContainerState();
@@ -32,12 +29,13 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
   Widget build(BuildContext context) {
 
     var height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: MediaQuery.of(context).size.height / 20),
-        TitleText(title: "New Album", haveSeeAll: false, orientation: widget.orientation,),
+        TitleText(title: "New Album", haveSeeAll: false),
         Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.02,
@@ -50,12 +48,12 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
             var newAlbum = state.newAlbum;
 
             return SizedBox(
-              height: widget.orientation == Orientation.portrait
+              height: orientation == Orientation.portrait
                   ? height < 650
                   ? MediaQuery.of(context).size.height * 0.6
                   : MediaQuery.of(context).size.height * 0.55
                   : MediaQuery.of(context).size.height / 5,
-              child: widget.orientation == Orientation.portrait
+              child: orientation == Orientation.portrait
                   ? AnimatedGridView(
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
@@ -187,7 +185,6 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                     albumID: songDataModel.albumId!,
                                     pageName: "SingerPage",
                                     albumSongList: state.singerAllAlbum[index].musics!,
-                                    orientation: widget.orientation,
                                     songDataModel: songDataModel,
                                   )
                               ),

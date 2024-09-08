@@ -8,17 +8,18 @@ class SingerNameTrackNameImage extends StatelessWidget {
   final String singerName;
   final String imagePath;
   final MainAxisAlignment align;
-  final Orientation orientation;
 
   const SingerNameTrackNameImage({super.key,
     required this.songName,
     required this.singerName,
     required this.imagePath,
-    required this.align,
-    required this.orientation});
+    required this.align});
 
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: align,

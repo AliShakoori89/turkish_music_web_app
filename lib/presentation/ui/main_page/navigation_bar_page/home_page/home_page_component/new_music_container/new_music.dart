@@ -11,8 +11,6 @@ import '../../../../../../const/shimmer_container/new_music_shimmer_container.da
 import '../../../../../play_song_page/play_song_page.dart';
 
 class NewSong extends StatefulWidget {
-  const NewSong({super.key, required this.orientation});
-  final Orientation orientation;
 
   @override
   State<NewSong> createState() => _NewSongState();
@@ -30,6 +28,7 @@ class _NewSongState extends State<NewSong>{
   Widget build(BuildContext context) {
 
     double width = MediaQuery.of(context).size.width;
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
@@ -39,12 +38,12 @@ class _NewSongState extends State<NewSong>{
           padding: const EdgeInsets.only(top: 10),
           child: CarouselSlider(
               options: CarouselOptions(
-                height: widget.orientation == Orientation.portrait
+                height: orientation == Orientation.portrait
                     ? MediaQuery.of(context).size.height / 5
                     : width < 700
                     ? MediaQuery.of(context).size.height / 2
                     : MediaQuery.of(context).size.height / 3 ,
-                viewportFraction: widget.orientation == Orientation.portrait
+                viewportFraction: orientation == Orientation.portrait
                     ? 0.7
                     : 0.5,
                 autoPlay: true,
@@ -94,7 +93,6 @@ class _NewSongState extends State<NewSong>{
                               albumSongList: newSong,
                               albumID: 0,
                               pageName: "NewSong",
-                              orientation: widget.orientation,
                               songDataModel: songDataModel,
                             )
                         ),
@@ -103,7 +101,7 @@ class _NewSongState extends State<NewSong>{
                     child: CachedNetworkImage(
                       imageUrl: newSong[index].imageSource!,
                       imageBuilder: (context, imageProvider) => Container(
-                        width: widget.orientation == Orientation.portrait
+                        width: orientation == Orientation.portrait
                             ? null
                             : MediaQuery.of(context).size.width / 2,
                           decoration: BoxDecoration(

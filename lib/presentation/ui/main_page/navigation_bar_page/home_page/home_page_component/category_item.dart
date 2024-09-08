@@ -9,9 +9,6 @@ import 'package:turkish_music_app/presentation/const/shimmer_container/category_
 import '../../../../../const/title.dart';
 
 class CategoryItemContainer extends StatefulWidget {
-  CategoryItemContainer({super.key, required this.orientation});
-
-  final Orientation orientation;
 
   @override
   State<CategoryItemContainer> createState() => _CategoryItemContainerState();
@@ -26,15 +23,18 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
 
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
       return Column(
         children: [
-          TitleText(title: "Category", haveSeeAll: false, orientation: widget.orientation,),
+          TitleText(title: "Category", haveSeeAll: false),
           Container(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.0052,
                 vertical: MediaQuery.of(context).size.height * 0.03),
-            height: widget.orientation == Orientation.portrait
+            height: orientation == Orientation.portrait
                 ? MediaQuery.of(context).size.height * 0.2
                 : MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,

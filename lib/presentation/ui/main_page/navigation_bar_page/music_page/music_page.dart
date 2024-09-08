@@ -4,10 +4,6 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 
 class MusicPage extends StatelessWidget {
 
-  final Orientation orientation;
-
-  MusicPage({super.key, required this.orientation});
-
   List customIcon = [
     Icons.playlist_play_outlined,
     Icons.download,
@@ -19,6 +15,9 @@ class MusicPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
         body: SafeArea(
           child: Container(
@@ -37,8 +36,7 @@ class MusicPage extends StatelessWidget {
                       title: title,
                       customIcon: customIcon,
                       rowNumber: title.length,
-                      customColor: Colors.white,
-                      orientation: orientation,)
+                      customColor: Colors.white)
                 ),
                 Expanded(
                   flex: 7,
@@ -60,9 +58,7 @@ class MusicPage extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 8,
-                        child: RecentlyPlaylist(
-                          orientation: orientation,
-                        ),
+                        child: RecentlyPlaylist(),
                       )
                     ],
                   ),

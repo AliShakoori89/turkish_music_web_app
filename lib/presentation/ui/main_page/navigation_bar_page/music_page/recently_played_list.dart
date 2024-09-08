@@ -16,10 +16,6 @@ import '../../../../helpers/widgets/song_detail_list.dart';
 
 class RecentlyPlaylist extends StatefulWidget {
 
-  final Orientation orientation;
-
-  const RecentlyPlaylist({super.key, required this.orientation});
-
   @override
   State<RecentlyPlaylist> createState() => _RecentlyPlaylistState();
 }
@@ -34,6 +30,9 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
 
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return Container(
         margin: EdgeInsets.only(
           left: 10,
@@ -62,20 +61,20 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                 flex: 10,
                                 child: SizedBox(
                                   width: double.infinity,
-                                  height: widget.orientation == Orientation.portrait
+                                  height: orientation == Orientation.portrait
                                       ? MediaQuery.of(context).size.height * 0.08
                                       : MediaQuery.of(context).size.height / 6,
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        flex: widget.orientation == Orientation.portrait
+                                        flex: orientation == Orientation.portrait
                                             ? 2
                                             : 1,
                                         child: CachedNetworkImage(
                                           imageUrl: state.allRecentlySongs[index].imageSource!,
                                           imageBuilder: (context, imageProvider) =>                                               Container(
                                             width: MediaQuery.of(context).size.width * 0.12,
-                                            height: widget.orientation == Orientation.portrait
+                                            height: orientation == Orientation.portrait
                                                 ? MediaQuery.of(context).size.height * 0.065
                                                 : MediaQuery.of(context).size.height / 3,
                                             decoration: BoxDecoration(
@@ -91,7 +90,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                         width: MediaQuery.of(context).size.width * 0.03,
                                       ),
                                       Expanded(
-                                        flex: widget.orientation == Orientation.portrait
+                                        flex: orientation == Orientation.portrait
                                             ? 8
                                             : 10,
                                         child: Column(
@@ -122,7 +121,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                         songImage: state.allRecentlySongs[index].imageSource!,
                                         singerName: state.allRecentlySongs[index].name!,
                                         songName: state.allRecentlySongs[index].singerName!,
-                                        orientation: widget.orientation
+                                        orientation: orientation
                                     ).showBottomDialog(context),
                                     icon: const Icon(Icons.more_vert, size: 20,
                                     )),
@@ -155,7 +154,6 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                     pageName: "searchPage",
                                     albumID: 0,
                                     albumSongList: state.allRecentlySongs,
-                                    orientation: widget.orientation,
                                     songDataModel: songDataModel,
                                   )
                               ),
@@ -215,7 +213,6 @@ class BottomDialog {
                     singerName: singerName,
                     imagePath: "assets/images/tarkan.png",
                     align: MainAxisAlignment.center,
-                    orientation: orientation,
                   ),
                   const SizedBox(height: 20,),
                   const SongDetailList(
