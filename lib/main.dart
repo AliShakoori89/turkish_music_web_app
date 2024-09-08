@@ -12,6 +12,7 @@ import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
+import 'package:turkish_music_app/domain/repositories/play_button_state_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_list_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_box_repository.dart';
@@ -27,6 +28,7 @@ import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
@@ -130,6 +132,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 RecentlyPlaySongBloc(RecentlyPlaySongRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                PlayButtonStateBloc(PlayButtonStateRepository())),
       ],
       child: GetMaterialApp(
         useInheritedMediaQuery: true,
