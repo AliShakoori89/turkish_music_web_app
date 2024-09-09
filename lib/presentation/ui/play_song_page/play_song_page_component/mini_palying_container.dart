@@ -5,6 +5,7 @@ import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
@@ -13,6 +14,7 @@ import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/event.dart';
+import '../../../bloc/play_button_state_bloc/event.dart';
 import '../../../helpers/widgets/singer_name_trackName_image.dart';
 import '../../../helpers/widgets/top_arrow_icon.dart';
 
@@ -37,6 +39,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
     BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
     BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
+    BlocProvider.of<PlayButtonStateBloc>(context).add(GetPlayButtonStateEvent());
     super.initState();
   }
   @override

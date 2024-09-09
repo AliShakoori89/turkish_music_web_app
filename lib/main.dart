@@ -38,6 +38,7 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_cont
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/music_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
@@ -139,7 +140,7 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),
       ],
-      child: GetMaterialApp.router(
+      child: GetMaterialApp(
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
@@ -147,18 +148,11 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        getPages: [
-          GetPage(
-              name: MainPage.routeName,
-              page: (){
-                return isLoggedIn
-                    ? MainPage()
-                    : AuthenticatePage();
-              }),
-        ],
+        initialRoute: "/",
+        home: isLoggedIn
+            ? MainPage()
+            : AuthenticatePage()
       ),
     );
   }
-
-
 }

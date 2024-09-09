@@ -12,6 +12,7 @@ import '../../../../../../../const/shimmer_container/singer_page_shimmer_contain
 import '../../../../../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
 
 class SingerPage extends StatefulWidget {
+
   SingerPage({super.key, required this.artistDetail});
 
   final SingerDataModel artistDetail;

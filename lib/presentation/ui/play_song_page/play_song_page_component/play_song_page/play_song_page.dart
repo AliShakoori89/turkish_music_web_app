@@ -25,6 +25,8 @@ import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_
 import '../../../../../data/model/album_model.dart';
 import '../../../../bloc/play_box_bloc/bloc.dart';
 import '../../../../bloc/play_box_bloc/event.dart';
+import '../../../../bloc/play_button_state_bloc/bloc.dart';
+import '../../../../bloc/play_button_state_bloc/event.dart';
 import '../../../../bloc/song_bloc/bloc.dart';
 import '../../../../bloc/song_bloc/event.dart';
 import '../../../../bloc/song_control_bloc/audio_control_bloc.dart';
@@ -88,16 +90,23 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
             currentAlbum: widget.albumSongList)
     );
 
+    BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
+
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop){
+    return WillPopScope(
+      onWillPop: () async {
+        // Custom logic when back button is pressed
         if (kDebugMode) {
-          Navigator.of(context).pushNamed('/home');
+          // In debug mode, allow the page to be popped
+          return true;
+        } else {
+          // Prevent popping in other cases
+          print('Back navigation is disabled');
+          return false;
         }
       },
       child: Scaffold(
