@@ -85,7 +85,7 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                             image: imageProvider,
-                                            fit: BoxFit.contain),
+                                            fit: BoxFit.fill),
                                       ),
                                     ),
                                     placeholder: (context, url) => Shimmer.fromColors(

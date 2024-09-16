@@ -6,6 +6,7 @@ class AudioControlEvent {}
 class PlaySongEvent extends AudioControlEvent {
   final SongDataModel currentSong;
   final List<AlbumDataMusicModel> currentAlbum;
+  late List<FileSystemEntity> localSongs;
   PlaySongEvent({required this.currentSong, required this.currentAlbum});
 }
 
@@ -15,10 +16,22 @@ class PlayNextSongEvent extends AudioControlEvent {
   PlayNextSongEvent({required this.currentAlbum});
 }
 
+class PlayNextLocalSongEvent extends AudioControlEvent {
+  final List<FileSystemEntity> currentAlbum;
+
+  PlayNextLocalSongEvent({required this.currentAlbum});
+}
+
 class PlayPreviousSongEvent extends AudioControlEvent {
   final List<AlbumDataMusicModel> currentAlbum;
 
   PlayPreviousSongEvent({required this.currentAlbum});
+}
+
+class PlayPreviousLocalSongEvent extends AudioControlEvent {
+  final List<FileSystemEntity> localSongs;
+
+  PlayPreviousLocalSongEvent({required this.localSongs});
 }
 
 class PauseSongEvent extends AudioControlEvent {}

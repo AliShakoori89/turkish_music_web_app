@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/recently_played_song_Id_model.dart';
+import '../model/save_song_model.dart';
 
 class DatabaseHelper{
 
@@ -15,7 +14,14 @@ class DatabaseHelper{
   static const _databaseVersion = 1;
 
   static const recentlyPlaylistTable = 'RecentlyPlaylistTable';
-  static const columnSongId = 'SongId';
+  static const columnRecentlyPlayedSongId = 'songId';
+  static const columnRecentlyPlayedSongName = 'songName';
+  static const columnRecentlyPlayedSingerName = 'singerName';
+  static const columnRecentlyPlayedImagePath = 'imageFilePath';
+  static const columnRecentlyPlayedAudioFilePath = 'audioFilePath';
+  static const columnRecentlyPlayedAudioFileMin = 'audioFileMin';
+  static const columnRecentlyPlayedAudioFileSec = 'audioFileSec';
+  static const columnRecentlyPlayedAudioFileAlbumId = 'audioFileAlbumId';
 
   DatabaseHelper._privateConstructor();
 
@@ -35,27 +41,33 @@ class DatabaseHelper{
 
   FutureOr _onCreate(Database db, int version) async {
     await db.execute('CREATE TABLE $recentlyPlaylistTable ('
-        '$columnSongId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL'
+        '$columnRecentlyPlayedSongId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'
+        '$columnRecentlyPlayedSongName TEXT,'
+        '$columnRecentlyPlayedSingerName TEXT,'
+        '$columnRecentlyPlayedImagePath TEXT,'
+        '$columnRecentlyPlayedAudioFilePath TEXT,'
+        '$columnRecentlyPlayedAudioFileMin TEXT,'
+        '$columnRecentlyPlayedAudioFileSec TEXT,'
+        '$columnRecentlyPlayedAudioFileAlbumId INTEGER'
         ')'
     );
   }
 
-  Future<bool> saveRecentlyPlayedSongId(RecentlyPlayedSongIdModel recentlyPlayedSongIdModel) async {
+  Future<bool> saveRecentlyPlayedSong(SaveSongModel recentlyPlayedSongIdModel) async {
     var dbExpense = await database;
-    print("data base                 "+"${recentlyPlayedSongIdModel.toJson()}");
+    print("111111111111111111111            "+recentlyPlayedSongIdModel.imageFilePath.toString());
     await dbExpense.insert(recentlyPlaylistTable, recentlyPlayedSongIdModel.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-
     return true;
   }
 
-  Future<List<RecentlyPlayedSongIdModel>> getAllRecentlyPlayedSongId() async {
+  Future<List<SaveSongModel>> getAllRecentlyPlayedSong() async {
     var dbExpense = await database;
     var listMap = await dbExpense.rawQuery('SELECT * FROM $recentlyPlaylistTable');
-    var listRecentlyPlayedSongId = <RecentlyPlayedSongIdModel>[];
+    var listRecentlyPlayedSong = <SaveSongModel>[];
     for (Map<String, dynamic> m in listMap) {
-      listRecentlyPlayedSongId.add(RecentlyPlayedSongIdModel.fromJson(m));
+      listRecentlyPlayedSong.add(SaveSongModel.fromJson(m));
     }
-    return listRecentlyPlayedSongId;
+    return listRecentlyPlayedSong;
   }
 }

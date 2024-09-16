@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,9 +80,19 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
+    on<PlayNextLocalSongEvent>((event, emit) async {
+      await _playNextSong(emit);
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
+    });
+
     on<PlayPreviousSongEvent>((event, emit) async {
       _currentAlbum = event.currentAlbum;
       await _saveCurrentSongData(_currentSelectedSong!);
+      await _playPreviousSong(emit);
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
+    });
+
+    on<PlayPreviousLocalSongEvent>((event, emit) async {
       await _playPreviousSong(emit);
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });

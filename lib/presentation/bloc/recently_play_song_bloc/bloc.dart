@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/data/model/recently_played_song_Id_model.dart';
+import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/domain/repositories/recently_play_song_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/state.dart';
 import '../../../data/model/album_model.dart';
@@ -21,7 +21,7 @@ class RecentlyPlaySongBloc extends Bloc<RecentlyPlaySongEvent, RecentlyPlaySongS
     try {
       emit(state.copyWith(status: RecentlyPlaySongStatus.loading));
 
-      List<AlbumDataMusicModel> allRecentlySongs = await recentlyPlaySongRepository.getAllSongsIDRepo();
+      List<AlbumDataMusicModel> allRecentlySongs = await recentlyPlaySongRepository.getAllSongsRepo();
 
       emit(
         state.copyWith(
@@ -39,7 +39,7 @@ class RecentlyPlaySongBloc extends Bloc<RecentlyPlaySongEvent, RecentlyPlaySongS
     try {
       emit(state.copyWith(status: RecentlyPlaySongStatus.loading));
 
-      await recentlyPlaySongRepository.addPlayedSongID(event.recentlyPlayedSongIdModel);
+      await recentlyPlaySongRepository.saveRecentlyPlayedSong(event.recentlyPlayedSongIdModel);
 
       emit(
         state.copyWith(

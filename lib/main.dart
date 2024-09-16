@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
+import 'package:turkish_music_app/domain/repositories/download_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_button_state_repository.dart';
@@ -24,6 +25,7 @@ import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/download_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
@@ -136,6 +138,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 RecentlyPlaySongBloc(RecentlyPlaySongRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                DownloadSongBloc(DownloadSongRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),

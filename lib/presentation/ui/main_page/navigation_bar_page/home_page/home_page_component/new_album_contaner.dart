@@ -29,6 +29,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
   Widget build(BuildContext context) {
 
     var height = MediaQuery.of(context).size.height;
+    print(height);
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Column(
@@ -49,9 +50,9 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
 
             return SizedBox(
               height: orientation == Orientation.portrait
-                  ? height < 650
-                  ? MediaQuery.of(context).size.height * 0.6
-                  : MediaQuery.of(context).size.height * 0.55
+                  ? height < 670
+                  ? MediaQuery.of(context).size.height * 0.63
+                  : MediaQuery.of(context).size.height * 0.51
                   : MediaQuery.of(context).size.height / 5,
               child: orientation == Orientation.portrait
                   ? AnimatedGridView(

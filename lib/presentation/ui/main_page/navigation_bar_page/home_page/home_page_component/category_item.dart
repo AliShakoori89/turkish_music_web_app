@@ -71,7 +71,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                                   fit: BoxFit.fill
                               )
                           ),
-                          width: MediaQuery.of(context).size.width * 0.15,
+                          width: MediaQuery.of(context).size.width * 0.3,
                         ),
                         placeholder: (context, url) => CategoryShimmerContainer(shimmerLength: 6,),
                         errorWidget: (context, url, error) => Icon(Icons.error),

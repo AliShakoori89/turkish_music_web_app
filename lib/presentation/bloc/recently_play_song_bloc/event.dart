@@ -1,4 +1,4 @@
-import 'package:turkish_music_app/data/model/recently_played_song_Id_model.dart';
+import 'package:turkish_music_app/data/model/save_song_model.dart';
 
 abstract class RecentlyPlaySongEvent {
   List<Object> get props => [];
@@ -7,7 +7,7 @@ abstract class RecentlyPlaySongEvent {
 class GetAllPlayedSongsEvent extends RecentlyPlaySongEvent{}
 
 class SavePlayedSongIDToRecentlyPlayedEvent extends RecentlyPlaySongEvent{
-  final RecentlyPlayedSongIdModel recentlyPlayedSongIdModel;
+  final SaveSongModel recentlyPlayedSongIdModel;
 
   SavePlayedSongIDToRecentlyPlayedEvent({required this.recentlyPlayedSongIdModel});
 

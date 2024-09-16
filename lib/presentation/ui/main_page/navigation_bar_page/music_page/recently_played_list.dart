@@ -44,7 +44,9 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
 
             if(state.status.isLoading){
               return CustomIndicator();
-            }else if(state.status.isSuccess){
+            }
+            else if(state.status.isSuccess){
+
               return state.allRecentlySongs.isNotEmpty
                   ? GestureDetector(
                 child: AnimatedListView(
@@ -72,7 +74,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                             : 1,
                                         child: CachedNetworkImage(
                                           imageUrl: state.allRecentlySongs[index].imageSource!,
-                                          imageBuilder: (context, imageProvider) =>                                               Container(
+                                          imageBuilder: (context, imageProvider) => Container(
                                             width: MediaQuery.of(context).size.width * 0.12,
                                             height: orientation == Orientation.portrait
                                                 ? MediaQuery.of(context).size.height * 0.065
@@ -133,10 +135,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                               id : state.allRecentlySongs[index].id,
                               name: state.allRecentlySongs[index].name,
                               imageSource: state.allRecentlySongs[index].imageSource,
-                              fileSource: state.allRecentlySongs[index].fileSource!.substring(0, 4)
-                                  + "s"
-                                  + state.allRecentlySongs[index].fileSource!.substring(4,
-                                      state.allRecentlySongs[index].fileSource!.length),
+                              fileSource: state.allRecentlySongs[index].fileSource,
                               singerName: "",
                               minute: state.allRecentlySongs[index].minute,
                               second: state.allRecentlySongs[index].second,
@@ -153,7 +152,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                     songImage: state.allRecentlySongs[index].imageSource!,
                                     pageName: "searchPage",
                                     albumID: 0,
-                                    albumSongList: state.allRecentlySongs,
+                                    albumSongList: state.allRecentlySongs.length < 2 ? [] : state.allRecentlySongs ,
                                     songDataModel: songDataModel,
                                   )
                               ),

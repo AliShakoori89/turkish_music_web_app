@@ -46,12 +46,15 @@ class DownloadRepository{
     }
   }
 
+  ///sdcard/Music/"${songName}.mp3"
+
   Future<String?> _findLocalPath(TargetPlatform platform) async {
     if (platform == TargetPlatform.android) {
-      return "/sdcard/download/";
+      return "/sdcard/Music/";
     } else {
       var directory = await getApplicationDocumentsDirectory();
       return directory.path + Platform.pathSeparator + 'Download';
     }
   }
+
 }

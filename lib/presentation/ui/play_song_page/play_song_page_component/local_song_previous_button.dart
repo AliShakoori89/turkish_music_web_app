@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../../data/model/album_model.dart';
 
+class LocalSongPreviousButton extends StatelessWidget {
+  LocalSongPreviousButton({key,
+    required this.albumSongs});
 
-class NextButton extends StatelessWidget {
-  NextButton({super.key, required this.albumSongs});
-
-  final List<AlbumDataMusicModel> albumSongs;
+  final List<FileSystemEntity> albumSongs;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +17,11 @@ class NextButton extends StatelessWidget {
         onPressed: () {
           context
               .read<AudioControlBloc>()
-              .add(PlayNextSongEvent(
-              currentAlbum: albumSongs));
+              .add(PlayPreviousLocalSongEvent(localSongs: albumSongs));
         },
         icon: Container(
-            padding: const EdgeInsets.symmetric(
-                vertical: 10, horizontal: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16), boxShadow: [
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 offset: Offset(
@@ -32,12 +31,11 @@ class NextButton extends StatelessWidget {
                 blurRadius: 10.0,
                 spreadRadius: 7.0,
               ),
-              BoxShadow(color: Colors.white.withOpacity(0.2),
-                  spreadRadius: 0),
+              BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
             ]),
             child: Icon(
               size: MediaQuery.of(context).size.height / 40,
-              Icons.skip_next_rounded,
+              Icons.skip_previous_rounded,
               color: Colors.white,)));
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_pixels/image_pixels.dart';
-import 'package:turkish_music_app/data/model/recently_played_song_Id_model.dart';
+import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
@@ -77,13 +77,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     BlocProvider.of<SongBloc>(context).add(FetchNewSongsEvent());
     BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
 
-    RecentlyPlayedSongIdModel recentlyPlayedSongIdModel = RecentlyPlayedSongIdModel(
-      id: widget.songID
-    );
-
-    BlocProvider.of<RecentlyPlaySongBloc>(context).add(
-        SavePlayedSongIDToRecentlyPlayedEvent(recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
-
     BlocProvider.of<AudioControlBloc>(context).add(
         PlaySongEvent(
             currentSong: widget.songDataModel,
@@ -116,6 +109,21 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                 if (state is AudioPlayedState) {
 
                   var songID = state.songModel.id;
+
+                  SaveSongModel recentlyPlayedSongIdModel = SaveSongModel(
+                      id: widget.songID,
+                      singerName: widget.singerName,
+                      audioFileAlbumId: widget.albumID,
+                      audioFileSec: state.songModel.second,
+                      audioFileMin: state.songModel.minute,
+                      audioFilePath: widget.songFile,
+                      imageFilePath: widget.songImage,
+                      songName: widget.songName
+                  );
+
+                  BlocProvider.of<RecentlyPlaySongBloc>(context).add(
+                      SavePlayedSongIDToRecentlyPlayedEvent(
+                          recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
 
                   return ImagePixels(
                       imageProvider: NetworkImage(state.songModel.imageSource!),
@@ -206,8 +214,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 DownloadButton(
-                                                    songFilePath: state.songModel.fileSource!,
-                                                    songName: state.songModel.name!
+                                                  songFilePath: state.songModel.fileSource!,
+                                                  songName: state.songModel.name!,
+                                                  songModel : recentlyPlayedSongIdModel
                                                 ),
                                                 repeatButton()
                                               ],
@@ -226,18 +235,10 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 PreviousButton(
-                                                    pageName: widget.pageName,
-                                                    albumSongs: widget.albumSongList,
-                                                    songID: state.songModel.id!,
-                                                    albumID: widget.albumID,
-                                                    album : widget.albumSongList),
+                                                    albumSongs: widget.albumSongList),
                                                 PlayButton(),
                                                 NextButton(
-                                                    pageName: widget.pageName,
-                                                    categoryAllSongs: widget.albumSongList,
-                                                    songID: state.songModel.id!,
-                                                    albumID: widget.albumID,
-                                                    album : widget.albumSongList
+                                                    albumSongs : widget.albumSongList
                                                 )
                                               ],
                                             ),

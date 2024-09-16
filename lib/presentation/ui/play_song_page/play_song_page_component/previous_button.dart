@@ -4,14 +4,10 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_cont
 import '../../../../data/model/album_model.dart';
 
 class PreviousButton extends StatelessWidget {
-  PreviousButton({key, required this.pageName, required this.albumSongs,
-    required this.songID, required this.albumID, required this.album});
+  PreviousButton({key,
+    required this.albumSongs});
 
-  final String pageName;
   final List<AlbumDataMusicModel> albumSongs;
-  final int songID;
-  final int albumID;
-  final List<AlbumDataMusicModel> album;
 
   @override
   Widget build(BuildContext context) {

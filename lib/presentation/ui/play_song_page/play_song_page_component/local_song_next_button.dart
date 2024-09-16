@@ -1,13 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../../data/model/album_model.dart';
 
 
-class NextButton extends StatelessWidget {
-  NextButton({super.key, required this.albumSongs});
+class LocalSongNextButton extends StatelessWidget {
+  LocalSongNextButton({super.key, required this.albumSongs});
 
-  final List<AlbumDataMusicModel> albumSongs;
+  final List<FileSystemEntity> albumSongs;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class NextButton extends StatelessWidget {
         onPressed: () {
           context
               .read<AudioControlBloc>()
-              .add(PlayNextSongEvent(
+              .add(PlayNextLocalSongEvent(
               currentAlbum: albumSongs));
         },
         icon: Container(

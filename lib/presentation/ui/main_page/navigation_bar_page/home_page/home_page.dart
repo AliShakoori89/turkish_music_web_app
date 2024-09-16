@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
                   CategoryItemContainer(),
                   SizedBox(
                     height: orientation == Orientation.portrait
-                        ? MediaQuery.of(context).size.height * 0.05
+                        ? MediaQuery.of(context).size.height * 0.02
                         : MediaQuery.of(context).size.height * 0.1,
                   )
                 ],

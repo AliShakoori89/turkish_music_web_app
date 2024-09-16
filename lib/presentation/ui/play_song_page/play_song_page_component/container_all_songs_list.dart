@@ -26,6 +26,8 @@ class ContainerAllSongsList extends StatelessWidget {
       cacheExtent: 1000,
       itemBuilder: (BuildContext context, int index) {
 
+        print(categoryAllSongs.first.imageSource);
+
         return InkWell(
           onTap: (){
 
@@ -85,7 +87,8 @@ class ContainerAllSongsList extends StatelessWidget {
                     flex: 2,
                     child: Row(
                       children: [
-                        categoryAllSongs[0].singerName != categoryAllSongs[1].singerName
+                        categoryAllSongs.first.imageSource != categoryAllSongs[1].imageSource &&
+                            categoryAllSongs.first.imageSource != categoryAllSongs.last.imageSource
                             ? Expanded(
                           flex: 1,
                           child: Container(
@@ -127,7 +130,7 @@ class ContainerAllSongsList extends StatelessWidget {
                           ),
                         )
                             : Expanded(
-                            flex: 0,
+                            flex: 1,
                             child: Container()),
                         const SizedBox(width: 5,),
                         categoryAllSongs.isEmpty
@@ -169,12 +172,12 @@ class ContainerAllSongsList extends StatelessWidget {
                   ),
                   categoryAllSongs[index].name == songName
                       ? Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: SizedBox(
                           height: 50,
                           child: Icon(Icons.play_arrow)))
                       : Expanded(
-                      flex: 0,
+                      flex: 2,
                       child: Container())
                 ],
               ),

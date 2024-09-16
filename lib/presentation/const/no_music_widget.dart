@@ -6,6 +6,7 @@ class NoMusicWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(
             child: Image.asset("assets/custom_icons/no-music.png",

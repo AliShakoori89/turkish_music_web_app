@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:turkish_music_app/data/model/recently_played_song_Id_model.dart';
+import 'package:turkish_music_app/data/model/save_song_model.dart';
 
 import '../../../data/model/album_model.dart';
 import '../../../data/model/song_model.dart';
