@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
@@ -18,15 +17,15 @@ class UserRepository {
     final response = await api.post("/api/User/registerPublic",body);
     if (response.statusCode == 200) {
 
-      Get.snackbar("Registration", "Registration was successful",
-          backgroundColor: const Color(
-              0xFF00B01E).withOpacity(0.2));
+      // Get.snackbar("Registration", "Registration was successful",
+      //     backgroundColor: const Color(
+      //         0xFF00B01E).withOpacity(0.2));
       return 'sent';
     }
     else {
-      Get.snackbar("Registration", "The desired user exists !!!",
-          backgroundColor: const Color(
-              0xFFC20808).withOpacity(0.2));
+      // Get.snackbar("Registration", "The desired user exists !!!",
+      //     backgroundColor: const Color(
+      //         0xFFC20808).withOpacity(0.2));
 
       var parsedJson = json.decode(response.body);
       var message = parsedJson['message'];
@@ -47,21 +46,21 @@ class UserRepository {
     final response = await api.post("/api/User/FirstStepLogin", body);
 
     if (response.statusCode == 200) {
-      Get.snackbar("Verification Code","Send verification code successfully .",
-          backgroundColor: const Color(
-              0xFF00B01E).withOpacity(0.2));
+      // Get.snackbar("Verification Code","Send verification code successfully .",
+      //     backgroundColor: const Color(
+      //         0xFF00B01E).withOpacity(0.2));
       return true;
     }
     else if (response.statusCode == 401){
-      Get.snackbar("Verification Code","OnAuthorize !!",
-          backgroundColor: const Color(
-              0xFFC20808).withOpacity(0.2));
+      // Get.snackbar("Verification Code","OnAuthorize !!",
+      //     backgroundColor: const Color(
+      //         0xFFC20808).withOpacity(0.2));
       return false;
     }
     else if (response.statusCode == 404){
-      Get.snackbar("Verification Code","User Not Exist !!",
-          backgroundColor: const Color(
-              0xFFC20808).withOpacity(0.2));
+      // Get.snackbar("Verification Code","User Not Exist !!",
+      //     backgroundColor: const Color(
+      //         0xFFC20808).withOpacity(0.2));
       return false;
     }
   }

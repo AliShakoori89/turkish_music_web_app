@@ -4,13 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
-import 'package:turkish_music_app/domain/repositories/download_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
 import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_button_state_repository.dart';
@@ -25,7 +23,6 @@ import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/download_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
@@ -40,10 +37,6 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_cont
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/music_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
 
 
 FutureOr<void> main() async{
@@ -140,13 +133,9 @@ class MyApp extends StatelessWidget {
                 RecentlyPlaySongBloc(RecentlyPlaySongRepository())),
         BlocProvider(
             create: (BuildContext context) =>
-                DownloadSongBloc(DownloadSongRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),
       ],
-      child: GetMaterialApp(
-        useInheritedMediaQuery: true,
+      child: MaterialApp(
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,

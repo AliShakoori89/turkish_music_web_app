@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/playListSongModel.dart';
 import '../../data/network/api_base_helper.dart';
@@ -27,13 +26,13 @@ class PlayListRepository {
     final response = await api.post('/api/PlayList/AddToPlayList', body, accessToken: accessToken);
 
     if (response.statusCode == 200) {
-      Get.showSnackbar(
-        GetSnackBar(
-          message: 'Add to playlist ...',
-          showProgressIndicator: true,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      // Get.showSnackbar(
+      //   GetSnackBar(
+      //     message: 'Add to playlist ...',
+      //     showProgressIndicator: true,
+      //     duration: const Duration(seconds: 2),
+      //   ),
+      // );
       return true;
     }
     else {
@@ -58,13 +57,13 @@ class PlayListRepository {
     final response = await api.post('/api/PlayList/RemoveFromPlayList', body, accessToken: accessToken);
 
     if (response.statusCode == 200) {
-      Get.showSnackbar(
-        GetSnackBar(
-          message: 'Remove from playlist ...',
-          showProgressIndicator: true,
-          duration: const Duration(seconds: 2),
-        ),
-      );
+      // Get.showSnackbar(
+      //   GetSnackBar(
+      //     message: 'Remove from playlist ...',
+      //     showProgressIndicator: true,
+      //     duration: const Duration(seconds: 2),
+      //   ),
+      // );
       return true;
     }
     else {

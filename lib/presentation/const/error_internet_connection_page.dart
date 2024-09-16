@@ -1,8 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:restart_app/restart_app.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import '../helpers/widgets/header.dart';
 
 class ErrorInternetConnectionPage extends StatefulWidget {

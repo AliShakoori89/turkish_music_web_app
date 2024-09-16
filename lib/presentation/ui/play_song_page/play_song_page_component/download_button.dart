@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/download_song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/download_song_bloc/event.dart';
 import '../../../../data/model/save_song_model.dart';
 import '../../../bloc/download_bloc/state.dart';
 
@@ -45,37 +44,64 @@ class _DownloadButtonState extends State<DownloadButton> {
               DownloadFileEvent(songFilePath: widget.songFilePath,
                   songName: widget.songName, platform: platform));
         },
-        icon: BlocBuilder<DownloadBloc, DownloadState>(builder: (context, state) {
-          if(state.status.isInitial ){
-            return Icon(Icons.download_sharp,
-              size: MediaQuery.of(context).size.height / 40,
-              color: Colors.grey,);
-          }
-          else if(state.status.isLoading ){
-            return SizedBox(
-              width: MediaQuery.of(context).size.height / 40,
-              height: MediaQuery.of(context).size.height / 40,
-              child: CircularProgressIndicator(
-                color: Colors.purple,
-              ),
-            );
-          }
-          else if(state.status.isSuccess){
-            return Icon(Icons.download_sharp,
-                size: MediaQuery.of(context).size.height / 40,
-              color: Colors.grey);
-          }
-          else if(state.status.isError){
-            return Icon(Icons.download_sharp,
-                size: MediaQuery.of(context).size.height / 40,
-              color: Colors.grey);
-          }
-          return Container(
-            width: MediaQuery.of(context).size.height / 40,
-            height: MediaQuery.of(context).size.height / 40,
-            color: Colors.black,);
-    })
-        //
+        icon: BlocConsumer<DownloadBloc, DownloadState>(
+
+            listener: (context, state){
+              if(state.status.isSuccess){
+                Fluttertoast.showToast(
+                    msg: "Download Successfully .",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.TOP,
+                    timeInSecForIosWeb: 3,
+                    backgroundColor: const Color(
+                        0xFF00B01E).withOpacity(0.2),
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              }else if(state.status.isError){
+                Fluttertoast.showToast(
+                    msg: "Download Failed .",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.TOP,
+                    timeInSecForIosWeb: 3,
+                    backgroundColor: const Color(
+                        0xFFC20808).withOpacity(0.2),
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              }
+            },
+            builder: (context, state) {
+              if (state.status.isInitial) {
+                return Icon(
+                  Icons.download_sharp,
+                  size: MediaQuery.of(context).size.height / 40,
+                  color: Colors.grey,
+                );
+              } else if (state.status.isLoading) {
+                return SizedBox(
+                  width: MediaQuery.of(context).size.height / 40,
+                  height: MediaQuery.of(context).size.height / 40,
+                  child: CircularProgressIndicator(
+                    color: Colors.purple,
+                  ),
+                );
+              } else if (state.status.isSuccess) {
+                return Icon(Icons.download_sharp,
+                    size: MediaQuery.of(context).size.height / 40,
+                    color: Colors.grey);
+              } else if (state.status.isError) {
+                return Icon(Icons.download_sharp,
+                    size: MediaQuery.of(context).size.height / 40,
+                    color: Colors.grey);
+              }
+              return Container(
+                width: MediaQuery.of(context).size.height / 40,
+                height: MediaQuery.of(context).size.height / 40,
+                color: Colors.black,
+              );
+            })
+      //
     );
   }
 

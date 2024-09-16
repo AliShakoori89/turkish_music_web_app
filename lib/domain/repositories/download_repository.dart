@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DownloadRepository{
@@ -15,23 +14,9 @@ class DownloadRepository{
       await Dio().download(songFile,
           _localPath + "/" + "${songName}.mp3");
 
-      Get.showSnackbar(
-        GetSnackBar(
-          messageText: Text("Download Successfully."),
-          icon: Icon(Icons.done),
-          duration: Duration(seconds: 3),
-          snackPosition: SnackPosition.BOTTOM,
-        ),
-      );
+
     } catch (e) {
-      Get.showSnackbar(
-        GetSnackBar(
-          messageText: Text("Download Failed."),
-          icon: Icon(Icons.close),
-          duration: Duration(seconds: 3),
-          snackPosition: SnackPosition.BOTTOM,
-        ),
-      );
+
     }
   }
 

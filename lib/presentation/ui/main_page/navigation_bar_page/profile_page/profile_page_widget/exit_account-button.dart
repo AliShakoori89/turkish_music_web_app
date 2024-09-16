@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/event.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 
@@ -30,7 +31,7 @@ class ExitAccountButton extends StatelessWidget {
                   BlocProvider.of<UserBloc>(context).add(ExitAccountEvent());
                   Navigator.pushNamedAndRemoveUntil(
                       context, "/", (route) => false);
-                },
+                  },
                 child: Text("Yes")),
             ElevatedButton(
                 onPressed: () {
