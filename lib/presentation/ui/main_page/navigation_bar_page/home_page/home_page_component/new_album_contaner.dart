@@ -177,17 +177,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
 
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => PlaySongPage(
-                                    songName: state.singerAllAlbum[index].name!,
-                                    songFile: newPath,
-                                    songID: songDataModel.id!,
-                                    singerName: songDataModel.singerName!,
-                                    songImage: state.singerAllAlbum[index].imageSource!,
-                                    albumID: songDataModel.albumId!,
-                                    pageName: "SingerPage",
-                                    albumSongList: state.singerAllAlbum[index].musics!,
-                                    songDataModel: songDataModel,
-                                  )
+                                  builder: (context) => PlaySongPage()
                               ),
                             );
                             },

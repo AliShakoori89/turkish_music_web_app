@@ -106,17 +106,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                     type: PageTransitionType.bottomToTop,
                                     reverseDuration: Duration(milliseconds: 500),
                                     child: Builder(
-                                      builder: (context) =>PlaySongPage(
-                                        songName: songDataModel.name!,
-                                        songFile: songDataModel.fileSource!,
-                                        songID: songDataModel.id!,
-                                        singerName: songDataModel.singerName!,
-                                        songImage: songDataModel.imageSource!,
-                                        albumID: songDataModel.albumId!,
-                                        albumSongList: album,
-                                        pageName: "",
-                                        songDataModel: songDataModel,
-                                      ),
+                                      builder: (context) =>PlaySongPage(),
                                     )
                                 ),
                               );

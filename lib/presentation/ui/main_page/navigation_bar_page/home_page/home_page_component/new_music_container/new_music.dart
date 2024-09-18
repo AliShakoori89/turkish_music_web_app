@@ -81,20 +81,7 @@ class _NewSongState extends State<NewSong>{
 
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => PlaySongPage(
-                              songName: state.newSong[index].name!,
-                              songFile:
-                              state.newSong[index].fileSource!.substring(0, 4)
-                                  + "s"
-                                  + state.newSong[index].fileSource!.substring(4, state.newSong[index].fileSource!.length),
-                              songID: state.newSong[index].id!,
-                              songImage: state.newSong[index].imageSource!,
-                              singerName: state.newSong[index].singerName!,
-                              albumSongList: newSong,
-                              albumID: 0,
-                              pageName: "NewSong",
-                              songDataModel: songDataModel,
-                            )
+                            builder: (context) => PlaySongPage()
                         ),
                       );
                       },

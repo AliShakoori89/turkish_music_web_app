@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:turkish_music_app/main.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
@@ -15,34 +17,26 @@ import '../../../../../../play_song_page/play_song_page_component/play_song_page
 
 class SingerPage extends StatefulWidget {
 
-  SingerPage({super.key, required this.artistDetail});
-
-  final SingerDataModel artistDetail;
+  static String routeName = "SingerPage";
 
   @override
-  State<SingerPage> createState() => _SingerPageState(artistDetail);
+  State<SingerPage> createState() => _SingerPageState();
 }
 
 class _SingerPageState extends State<SingerPage> {
 
-  final SingerDataModel artistDetail;
-  _SingerPageState(this.artistDetail);
-
-  @override
-  void initState() {
-    BlocProvider.of<AlbumBloc>(context).add(GetSingerAllAlbumEvent(id: widget.artistDetail.id));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+
+    var artistDetail = GoRouterState.of(context).extra! as SingerDataModel;
+    BlocProvider.of<AlbumBloc>(context).add(GetSingerAllAlbumEvent(id: artistDetail.id));
 
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return WillPopScope(
       onWillPop: () async {
-        BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+        context.pop();
         return true;
       },
       child: Scaffold(
@@ -59,7 +53,7 @@ class _SingerPageState extends State<SingerPage> {
                 child: CustomScrollView(
                   slivers: [
                     SliverAppBar(
-                      title: Text(widget.artistDetail.name),
+                      title: Text(artistDetail.name),
                       backgroundColor: Colors.black,
                       expandedHeight: orientation == Orientation.portrait
                           ? MediaQuery.of(context).size.height / 4.2
@@ -75,13 +69,13 @@ class _SingerPageState extends State<SingerPage> {
                       flexibleSpace: FlexibleSpaceBar(
                           collapseMode: CollapseMode.parallax,
                           background: CachedNetworkImage(
-                            imageUrl: widget.artistDetail.imageSource,
+                            imageUrl: artistDetail.imageSource,
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                        widget.artistDetail.imageSource,
+                                        artistDetail.imageSource,
                                       ),
                                       fit: BoxFit.cover
                                   )
@@ -122,27 +116,42 @@ class _SingerPageState extends State<SingerPage> {
                                 fileSource: newPath,
                                 minute: state.singerAllAlbum[index].musics![0].minute,
                                 second: state.singerAllAlbum[index].musics![0].second,
-                                singerName: widget.artistDetail.name,
+                                singerName: artistDetail.name,
                                 album: null,
                                 albumId: state.singerAllAlbum[index].id,
                                 categories: null,
                               );
 
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => PlaySongPage(
-                                      songName: state.singerAllAlbum[index].name!,
-                                      songFile: newPath,
-                                      songID: songDataModel.id!,
-                                      singerName: widget.artistDetail.name,
-                                      songImage: state.singerAllAlbum[index].imageSource!,
-                                      albumID: songDataModel.albumId!,
-                                      pageName: "SingerPage",
-                                      albumSongList: state.singerAllAlbum[index].musics!,
-                                      songDataModel: songDataModel,
-                                    )
-                                ),
+                              context.push(
+                                '/'+PlaySongPage.routeName,
+                                extra: {
+                                  'songName': songDataModel.name,
+                                  'songFile': newPath,
+                                  'songID': songDataModel.id!,
+                                  'singerName': artistDetail.name,
+                                  'songImage': state.singerAllAlbum[index].imageSource!,
+                                  'albumID': songDataModel.albumId!,
+                                  'pageName': "SingerPage",
+                                  'albumSongList': state.singerAllAlbum[index].musics!,
+                                  'songDataModel': songDataModel,
+                                },
                               );
+
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //       builder: (context) => PlaySongPage(
+                              //         songName: state.singerAllAlbum[index].name!,
+                              //         songFile: newPath,
+                              //         songID: songDataModel.id!,
+                              //         singerName: widget.artistDetail.name,
+                              //         songImage: state.singerAllAlbum[index].imageSource!,
+                              //         albumID: songDataModel.albumId!,
+                              //         pageName: "SingerPage",
+                              //         albumSongList: state.singerAllAlbum[index].musics!,
+                              //         songDataModel: songDataModel,
+                              //       )
+                              //   ),
+                              // );
 
                               // Navigator.push(
                               //     context,

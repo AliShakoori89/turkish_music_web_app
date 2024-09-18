@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
@@ -37,6 +38,13 @@ import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_cont
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import 'data/model/album_model.dart';
+import 'data/model/singer_model.dart';
+import 'data/model/song_model.dart';
 
 
 FutureOr<void> main() async{
@@ -54,9 +62,12 @@ FutureOr<void> main() async{
       : true;
 
   runApp(
-      DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => MyApp(isLoggedIn: isLoggedIn))); // Wrap your app
+      // DevicePreview(
+      //   enabled: !kReleaseMode,
+      //   builder: (context) =>
+            MyApp(isLoggedIn: isLoggedIn)
+  // )
+  ); // Wrap your app
 }
 
 
@@ -135,17 +146,46 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
-        initialRoute: "/",
-        home: isLoggedIn
-            ? MainPage()
-            : AuthenticatePage()
+        routerConfig: GoRouter(
+          routes: [
+            GoRoute(
+              path: "/",
+              builder: (context, state){
+                return isLoggedIn
+                    ? MainPage()
+                    : AuthenticatePage();
+              },
+              routes: [
+                GoRoute(
+                    path: SingerPage.routeName,
+                    builder: (context, state){
+                      return SingerPage();
+                      },
+                ),
+                GoRoute(
+                  path: AllSingerPage.routeName,
+                  builder: (context, state){
+                    return AllSingerPage();
+                  }
+                ),
+                GoRoute(
+                  path: PlaySongPage.routeName,
+                  builder: (context, state){
+                    return PlaySongPage();
+                  },
+                )
+              ]
+            ),
+
+          ]
+        ),
       ),
     );
   }

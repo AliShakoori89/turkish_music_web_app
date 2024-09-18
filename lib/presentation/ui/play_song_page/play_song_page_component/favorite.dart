@@ -17,53 +17,11 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-
-  bool isFavorite = false;
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PlaylistBloc, PlaylistState>(
-        listener: (context, state){
-          if(state.status.isSuccess){
-            if(isFavorite){
-              Fluttertoast.showToast(
-                  msg: "Add to playlist ...",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.TOP,
-                  timeInSecForIosWeb: 3,
-                  backgroundColor: const Color(
-                      0xFF00B01E).withOpacity(0.2),
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
-            }else{
-              Fluttertoast.showToast(
-                  msg: "Remove from playlist ...",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.TOP,
-                  timeInSecForIosWeb: 3,
-                  backgroundColor: const Color(
-                      0xFF00B01E).withOpacity(0.2),
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
-            }
-
-          }else if(state.status.isError){
-            Fluttertoast.showToast(
-                msg: "Something with wrong ...",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.TOP,
-                timeInSecForIosWeb: 3,
-                backgroundColor: const Color(
-                    0xFFC20808).withOpacity(0.2),
-                textColor: Colors.white,
-                fontSize: 16.0
-            );
-          }
-        },
+    return BlocBuilder<PlaylistBloc, PlaylistState>(
         builder: (context, state) {
-          isFavorite = state.isFavorite;
+          bool isFavorite = state.isFavorite;
           return Expanded(
               flex: 1,
               child: GestureDetector(
@@ -90,7 +48,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                         CurvedAnimation(parent: widget.controller, curve: Curves.easeOut)),
                     child: isFavorite
                         ? Icon(
-                      Icons.bookmark_border,
+                      Icons.bookmark,
                       size: MediaQuery.of(context).size.height / 30,
                       color: Colors.red,
                     )

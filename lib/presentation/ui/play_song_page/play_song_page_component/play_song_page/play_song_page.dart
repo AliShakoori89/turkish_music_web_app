@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_pixels/image_pixels.dart';
 import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
@@ -32,23 +33,7 @@ import '../../../../bloc/song_control_bloc/audio_control_bloc.dart';
 
 class PlaySongPage extends StatefulWidget {
 
-  final String songName;
-  final String songFile;
-  final int songID;
-  final String singerName;
-  final String songImage;
-  final String pageName;
-  final int albumID;
-  final SongDataModel songDataModel;
-
-  final List<AlbumDataMusicModel> albumSongList;
-
-  PlaySongPage({super.key, required this.songName,
-    required this.songFile, required this.songID,
-    required this.albumSongList, required this.singerName,
-    required this.songImage, required this.pageName,
-    required this.albumID, required this.songDataModel});
-
+  static String routeName = "PlaySongPage";
 
   @override
   State<PlaySongPage> createState() => PlaySongPageState();
@@ -64,30 +49,64 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: widget.songName));
-    BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: widget.songID));
 
+    // Deferring the Bloc event call until after the widget is fully built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final Map<String, dynamic> data = GoRouterState.of(context).extra as Map<String, dynamic>;
+      SongDataModel songDataModel = data['songDataModel'] as SongDataModel;
+      List<AlbumDataMusicModel> albumSongList = data['albumSongList'] as List<AlbumDataMusicModel>;
 
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
-      songID: widget.songID,
-      albumID: widget.albumID));
+      // Adding the event after the first frame is rendered
+      BlocProvider.of<AudioControlBloc>(context).add(
+          PlaySongEvent(
+            currentSong: songDataModel,
+            currentAlbum: albumSongList,
+          )
+      );
 
-    BlocProvider.of<SongBloc>(context).add(FetchNewSongsEvent());
-    BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
+      int songID = data['songID'] as int;
+      int albumID = data['albumID'] as int;
 
-    BlocProvider.of<AudioControlBloc>(context).add(
-        PlaySongEvent(
-            currentSong: widget.songDataModel,
-            currentAlbum: widget.albumSongList)
-    );
+      BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
+      BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
+          songID: songID,
+          albumID: albumID));
 
-    BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
+      BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
+      BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: songID));
+    });
+  }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final Map<String, dynamic> data = GoRouterState.of(context).extra as Map<String, dynamic>;
+
+    String songName = data['songName'] as String;
+    int songID = data['songID'] as int;
+    int albumID = data['albumID'] as int;
+    SongDataModel songDataModel = data['songDataModel'] as SongDataModel;
+    List<AlbumDataMusicModel> albumSongList = data['albumSongList'] as List<AlbumDataMusicModel>;
+    String singerName = data['singerName'] as String;
+    String songFile = data['songFile'] as String;
+    String songImage = data['songImage'] as String;
+
+    // BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: songName));
+
+
+
+
+    // BlocProvider.of<SongBloc>(context).add(FetchNewSongsEvent());
+    // BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
+
+
 
     return Scaffold(
         body: BlocBuilder<AudioControlBloc, AudioControlState>(
@@ -98,14 +117,14 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                 var songID = state.songModel.id;
 
                 SaveSongModel recentlyPlayedSongIdModel = SaveSongModel(
-                    id: widget.songID,
-                    singerName: widget.singerName,
-                    audioFileAlbumId: widget.albumID,
+                    id: songID,
+                    singerName: singerName,
+                    audioFileAlbumId: albumID,
                     audioFileSec: state.songModel.second,
                     audioFileMin: state.songModel.minute,
-                    audioFilePath: widget.songFile,
-                    imageFilePath: widget.songImage,
-                    songName: widget.songName
+                    audioFilePath: songFile,
+                    imageFilePath: songImage,
+                    songName: songName
                 );
 
                 BlocProvider.of<RecentlyPlaySongBloc>(context).add(
@@ -173,7 +192,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                 color: Colors.white),
                                           ),
                                           Text(
-                                            widget.singerName,
+                                            singerName,
                                             style: TextStyle(
                                                 fontSize: MediaQuery.of(context).size.height / 70,
                                                 color: Colors.white60),
@@ -222,10 +241,10 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               PreviousButton(
-                                                  albumSongs: widget.albumSongList),
+                                                  albumSongs: albumSongList),
                                               PlayButton(),
                                               NextButton(
-                                                  albumSongs : widget.albumSongList
+                                                  albumSongs : albumSongList
                                               )
                                             ],
                                           ),
@@ -252,8 +271,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                 Flexible(
                                     flex: 4,
                                     child: ContainerAllSongsList(
-                                      singerName: widget.singerName,
-                                      categoryAllSongs: widget.albumSongList,
+                                      singerName: singerName,
+                                      categoryAllSongs: albumSongList,
                                       songName: state.songModel.name!,)
                                 )
                               ],

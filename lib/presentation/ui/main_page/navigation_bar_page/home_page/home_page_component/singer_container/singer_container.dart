@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/data/model/singer_model.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
@@ -57,13 +58,9 @@ class SingerContainer extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SingerPage(
-                                  artistDetail: artistList[index],
-                                ))
+                    context.push(
+                      "/"+SingerPage.routeName, // The path defined in GoRouter
+                      extra: artistList[index], // Pass the artistDetail via extra
                     );
                   },
                   child: SizedBox(

@@ -489,7 +489,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                     Fluttertoast.showToast(
                                         msg: "Authentication Success...  WellCome .",
                                         toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.TOP,
+                                        gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 3,
                                         backgroundColor: const Color(
                                             0xFF00B01E).withOpacity(0.2),

@@ -91,17 +91,7 @@ class _searchPageState extends State<searchPage> {
 
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (context) => PlaySongPage(
-                                                songName: musicItem.name!,
-                                                songFile: musicItem.fileSource!,
-                                                songID: musicItem.id!,
-                                                singerName: musicItem.singerName!,
-                                                songImage: musicItem.album!.imageSource!,
-                                                pageName: "searchPage",
-                                                albumID: 0,
-                                                albumSongList: [],
-                                                songDataModel: songDataModel,
-                                              )
+                                              builder: (context) => PlaySongPage()
                                           ),
                                         );
                                         },

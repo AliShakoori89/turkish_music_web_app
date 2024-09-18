@@ -1,15 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import 'singer_page.dart';
 
 class AllSingerPage extends StatefulWidget {
-  const AllSingerPage({super.key, required this.allSinger, required this.allSingerName});
 
-  final List<SingerDataModel> allSinger;
-  final List<String> allSingerName;
-
+  static String routeName = "AllSingerPage";
 
   @override
   State<AllSingerPage> createState() => _AllSingerPageState();
@@ -24,20 +22,32 @@ class _AllSingerPageState extends State<AllSingerPage>{
 
   void setSearchIndex(String searchLetter) {
     setState(() {
-      _searchIndex = widget.allSingerName.indexWhere((element) => element[0] == searchLetter);
+      final Map<String, dynamic> data = GoRouterState.of(context).extra as Map<String, dynamic>;
+      List<SingerDataModel> allSinger = data['allSinger'] as List<SingerDataModel>;
+      _searchIndex = allSinger.indexWhere((element) => element.name[0] == searchLetter);
       if (_searchIndex > 0) _itemScrollController.jumpTo(index: _searchIndex);
     });
   }
 
   @override
   void initState() {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final Map<String, dynamic> data = GoRouterState.of(context).extra as Map<String, dynamic>;
+      List<String> allSingerName = data['allSingerName'] as List<String>;
+      allSingerName.sort((a, b) => a.toUpperCase().compareTo(b.toUpperCase()));
+    });
     // TODO: implement initState
     super.initState();
-    widget.allSingerName.sort((a, b) => a.toUpperCase().compareTo(b.toUpperCase()));
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final Map<String, dynamic> data = GoRouterState.of(context).extra as Map<String, dynamic>;
+    List<SingerDataModel> allSinger = data['allSinger'] as List<SingerDataModel>;
+
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('All Singer'),
@@ -50,17 +60,12 @@ class _AllSingerPageState extends State<AllSingerPage>{
             child: ScrollablePositionedList.builder(
                 itemScrollController: _itemScrollController,
                 itemPositionsListener: _itemPositionsListener,
-                itemCount: widget.allSinger.length,
+                itemCount: allSinger.length,
                 minCacheExtent: 2000,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SingerPage(
-                                  artistDetail: widget.allSinger[index],))
-                    );
+                    context.push("/"+SingerPage.routeName, // The path defined in GoRouter
+                        extra: allSinger[index]);
                   },
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -73,14 +78,14 @@ class _AllSingerPageState extends State<AllSingerPage>{
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CachedNetworkImage(
-                              imageUrl: widget.allSinger[index].imageSource,
+                              imageUrl: allSinger[index].imageSource,
                               imageBuilder: (context, imageProvider) => Container(
                                 height: MediaQuery.of(context).size.width / 8,
                                 width: MediaQuery.of(context).size.width / 8,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                        image: NetworkImage(widget.allSinger[index].imageSource),
+                                        image: NetworkImage(allSinger[index].imageSource),
                                         fit: BoxFit.fill
                                     )
                                 ),
@@ -91,7 +96,7 @@ class _AllSingerPageState extends State<AllSingerPage>{
                               width: 15,
                             ),
                             Text(
-                              widget.allSinger[index].name,
+                              allSinger[index].name,
                               style: const TextStyle(
                                   fontSize: 15,
                                   color: Colors.white),

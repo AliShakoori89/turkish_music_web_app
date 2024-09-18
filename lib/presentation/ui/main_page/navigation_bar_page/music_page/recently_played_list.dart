@@ -144,17 +144,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
 
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => PlaySongPage(
-                                    songName: state.allRecentlySongs[index].name!,
-                                    songFile: state.allRecentlySongs[index].fileSource!,
-                                    songID: state.allRecentlySongs[index].id!,
-                                    singerName: '',
-                                    songImage: state.allRecentlySongs[index].imageSource!,
-                                    pageName: "searchPage",
-                                    albumID: 0,
-                                    albumSongList: state.allRecentlySongs.length < 2 ? [] : state.allRecentlySongs ,
-                                    songDataModel: songDataModel,
-                                  )
+                                  builder: (context) => PlaySongPage()
                               ),
                             );
                           })),

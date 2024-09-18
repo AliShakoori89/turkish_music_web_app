@@ -53,17 +53,7 @@ class ContainerAllSongsList extends StatelessWidget {
 
             Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) => PlaySongPage(
-                    songName: categoryAllSongs[index].name!,
-                    songFile: newPath,
-                    albumID: songDataModel.albumId!,
-                    albumSongList: categoryAllSongs,
-                    songID: categoryAllSongs[index].id!,
-                    songImage: categoryAllSongs[index].imageSource!,
-                    singerName: singerName,
-                    pageName: "ContainerAllSongsList",
-                    songDataModel: songDataModel,
-                  )
+                  builder: (context) => PlaySongPage()
               ),
             );
 
