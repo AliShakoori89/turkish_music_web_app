@@ -21,15 +21,10 @@ import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/previous_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/progressbar.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/repeat_button.dart';
-
-import '../../../../../data/model/album_model.dart';
-import '../../../../bloc/play_box_bloc/bloc.dart';
-import '../../../../bloc/play_box_bloc/event.dart';
-import '../../../../bloc/play_button_state_bloc/bloc.dart';
-import '../../../../bloc/play_button_state_bloc/event.dart';
-import '../../../../bloc/song_bloc/bloc.dart';
-import '../../../../bloc/song_bloc/event.dart';
-import '../../../../bloc/song_control_bloc/audio_control_bloc.dart';
+import '../../../data/model/album_model.dart';
+import '../../bloc/play_button_state_bloc/bloc.dart';
+import '../../bloc/play_button_state_bloc/event.dart';
+import '../../bloc/song_control_bloc/audio_control_bloc.dart';
 
 class PlaySongPage extends StatefulWidget {
 
@@ -68,9 +63,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
       int albumID = data['albumID'] as int;
 
       BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
-      BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
-          songID: songID,
-          albumID: albumID));
+
 
       BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
       BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: songID));
@@ -80,6 +73,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
   @override
   void dispose() {
     _controller.dispose();
+    // BlocProvider.of<AudioControlBloc>(context).add(AudioPlayDisposeEvent());
     // TODO: implement dispose
     super.dispose();
   }
@@ -97,10 +91,13 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     String singerName = data['singerName'] as String;
     String songFile = data['songFile'] as String;
     String songImage = data['songImage'] as String;
+    String pageName = data["pageName"] as String;
 
     // BlocProvider.of<PlayBoxBloc>(context).add(PlayBoxListEvent(songName: songName));
 
-
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(WriteSongIDForMiniPlayingSongContainerEvent(
+        songID: songID,
+        albumID: albumID));
 
 
     // BlocProvider.of<SongBloc>(context).add(FetchNewSongsEvent());
