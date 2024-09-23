@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
@@ -10,7 +11,7 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/event.dart';
@@ -85,30 +86,36 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                           InkWell(
                             onTap: () {
 
+                              var path = state.song.fileSource!.substring(0, 4)
+                                  + "s"
+                                  + state.song.fileSource!.substring(4, state.song.fileSource?.length);
+
                               SongDataModel songDataModel = SongDataModel(
-                                  id : state.song.id!,
-                                  name: state.song.name!,
-                                  imageSource: state.song.imageSource!,
-                                  fileSource: state.song.fileSource!,
-                                  minute: state.song.minute,
-                                  second: state.song.second,
-                                  singerName: state.song.singerName!,
-                                  album: null,
-                                  albumId: state.song.albumId,
-                                  categories: null
+                                id : state.song.id,
+                                name: state.song.name,
+                                imageSource: state.song.imageSource,
+                                fileSource: path,
+                                minute: state.song.minute,
+                                second: state.song.second,
+                                singerName: state.song.singerName,
+                                album: null,
+                                albumId: state.song.albumId,
+                                categories: null,
                               );
 
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.easeOut,
-                                    type: PageTransitionType.bottomToTop,
-                                    reverseDuration: Duration(milliseconds: 500),
-                                    child: Builder(
-                                      builder: (context) =>PlaySongPage(),
-                                    )
-                                ),
+                              context.push(
+                                '/'+PlaySongPage.routeName,
+                                extra: {
+                                  'songName': songDataModel.name,
+                                  'songFile': path,
+                                  'songID': songDataModel.id!,
+                                  'singerName': songDataModel.singerName,
+                                  'songImage': songDataModel.imageSource!,
+                                  'albumID': songDataModel.albumId!,
+                                  'pageName': "SingerPage",
+                                  'albumSongList': album,
+                                  'songDataModel': songDataModel,
+                                },
                               );
 
                             },

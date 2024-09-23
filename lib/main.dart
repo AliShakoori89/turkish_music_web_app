@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +28,7 @@ import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
@@ -36,12 +39,13 @@ import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/ui/authenticate_page.dart';
+import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
+import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'data/model/album_model.dart';
 import 'data/model/singer_model.dart';
 import 'data/model/song_model.dart';
@@ -89,11 +93,59 @@ Future<void> requestStoragePermission() async {
 }
 
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
   final bool isLoggedIn;
 
   MyApp({key, required this.isLoggedIn});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late ConnectivityResult _connectionStatus;
+
+  final Connectivity _connectivity = Connectivity();
+
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  late bool isOffline = false;
+
+  @override
+  void initState() {
+    _connectionStatus = ConnectivityResult.none;
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    checkInternetConnectionWithErrorHandling();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
+  checkInternetConnectionWithErrorHandling() async {
+    ConnectivityResult result;
+    try {
+      result = await Connectivity().checkConnectivity();
+    } on PlatformException catch (e) {
+      return false;  // Default to false on error
+    }
+
+    if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi || result == ConnectivityResult.vpn) {
+      isOffline = true;
+    } else {
+      isOffline = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -154,37 +206,39 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(brightness: Brightness.dark),
         themeMode: ThemeMode.dark,
         routerConfig: GoRouter(
-          routes: [
-            GoRoute(
-              path: "/",
-              builder: (context, state){
-                return isLoggedIn
-                    ? MainPage()
-                    : AuthenticatePage();
-              },
-              routes: [
-                GoRoute(
-                    path: SingerPage.routeName,
-                    builder: (context, state){
-                      return SingerPage();
-                      },
-                ),
-                GoRoute(
-                  path: AllSingerPage.routeName,
+            routes: [
+              GoRoute(
+                  path: "/",
                   builder: (context, state){
-                    return AllSingerPage();
-                  }
-                ),
-                GoRoute(
-                  path: PlaySongPage.routeName,
-                  builder: (context, state){
-                    return PlaySongPage();
+                    return isOffline ?
+                    widget.isLoggedIn
+                        ? MainPage()
+                        : AuthenticatePage()
+                        : const ErrorInternetConnectionPage();
                   },
-                )
-              ]
-            ),
+                  routes: [
+                    GoRoute(
+                      path: SingerPage.routeName,
+                      builder: (context, state){
+                        return SingerPage();
+                      },
+                    ),
+                    GoRoute(
+                        path: AllSingerPage.routeName,
+                        builder: (context, state){
+                          return AllSingerPage();
+                        }
+                    ),
+                    GoRoute(
+                      path: PlaySongPage.routeName,
+                      builder: (context, state){
+                        return PlaySongPage();
+                      },
+                    )
+                  ]
+              ),
 
-          ]
+            ]
         ),
       ),
     );

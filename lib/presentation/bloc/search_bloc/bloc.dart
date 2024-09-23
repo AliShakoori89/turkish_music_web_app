@@ -24,8 +24,8 @@ class SearchWordBloc extends Bloc<SearchWordEvent, SearchWordState> {
 
       emit(
         state.copyWith(
-          status: SearchWordStatus.success,
-          especialWord: especialWord
+            status: SearchWordStatus.success,
+            especialWord: especialWord
         ),
       );
     } catch (error) {

@@ -46,6 +46,8 @@ class RepeatSongEvent extends AudioControlEvent {}
 
 class SongCompletedEvent extends AudioControlEvent {}
 
+class AudioPlayDisposeEvent extends AudioControlEvent {}
+
 class AudioPositionChangedEvent extends AudioControlEvent {
   final Duration position;
   AudioPositionChangedEvent({required this.position});

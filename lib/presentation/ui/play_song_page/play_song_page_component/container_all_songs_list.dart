@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:turkish_music_app/presentation/const/no_image.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
 
@@ -31,8 +32,7 @@ class ContainerAllSongsList extends StatelessWidget {
         return InkWell(
           onTap: (){
 
-            var path = categoryAllSongs[index].fileSource!
-                .substring(0, 4)
+            var path = categoryAllSongs[index].fileSource!.substring(0, 4)
                 + "s"
                 + categoryAllSongs[index].fileSource!.substring(4, categoryAllSongs[index].fileSource!.length);
 
@@ -42,19 +42,28 @@ class ContainerAllSongsList extends StatelessWidget {
               id : categoryAllSongs[index].id,
               name: categoryAllSongs[index].name,
               imageSource: categoryAllSongs[index].imageSource,
-              fileSource: categoryAllSongs[index].fileSource!.substring(0, 4)
-                  + "s"
-                  + categoryAllSongs[index].fileSource!.substring(4, categoryAllSongs[index].fileSource!.length),
-              singerName: singerName,
+              fileSource: newPath,
               minute: categoryAllSongs[index].minute,
               second: categoryAllSongs[index].second,
+              singerName: singerName,
+              album: null,
               albumId: categoryAllSongs[index].albumId,
+              categories: null,
             );
 
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => PlaySongPage()
-              ),
+            context.push(
+              '/'+PlaySongPage.routeName,
+              extra: {
+                'songName': songDataModel.name,
+                'songFile': newPath,
+                'songID': songDataModel.id!,
+                'singerName': singerName,
+                'songImage': songDataModel.imageSource,
+                'albumID': songDataModel.albumId!,
+                'pageName': "PlaySongPage",
+                'albumSongList': categoryAllSongs,
+                'songDataModel': songDataModel,
+              },
             );
 
             },

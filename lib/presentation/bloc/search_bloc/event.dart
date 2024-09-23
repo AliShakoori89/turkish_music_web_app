@@ -11,4 +11,3 @@ class SearchEspecialWordEvent extends SearchWordEvent{
   List<Object> get props => [especialWord];
 }
 
-

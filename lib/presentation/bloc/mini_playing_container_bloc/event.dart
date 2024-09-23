@@ -19,9 +19,7 @@ class WriteSongIDForMiniPlayingSongContainerEvent extends MiniPlayingContainerEv
   List<Object> get props => [songID, albumID];
 }
 
-class ReadSongIDForMiniPlayingSongContainerEvent extends MiniPlayingContainerEvent{
-
-}
+class ReadSongIDForMiniPlayingSongContainerEvent extends MiniPlayingContainerEvent{}
 
 
 // class GetSingerAllAlbumEvent extends AlbumEvent{

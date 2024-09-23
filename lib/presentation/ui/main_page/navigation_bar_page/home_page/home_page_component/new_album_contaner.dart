@@ -9,7 +9,7 @@ import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singa
 import '../../../../../../data/model/song_model.dart';
 import '../../../../../bloc/album_bloc/event.dart';
 import '../../../../../const/shimmer_container/new_music_shimmer_container.dart';
-import '../../../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import '../../../../play_song_page/play_song_page.dart';
 
 class NewAlbumContainer extends StatefulWidget {
 

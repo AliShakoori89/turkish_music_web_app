@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
@@ -12,7 +13,7 @@ import '../../../../const/custom_divider.dart';
 import '../../../../const/no_music_widget.dart';
 import '../../../../helpers/widgets/singer_name_trackName_image.dart';
 import '../../../../helpers/widgets/song_detail_list.dart';
-import '../../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import '../../../play_song_page/play_song_page.dart';
 
 class RecentlyPlaylist extends StatefulWidget {
 
@@ -136,16 +137,27 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                               name: state.allRecentlySongs[index].name,
                               imageSource: state.allRecentlySongs[index].imageSource,
                               fileSource: state.allRecentlySongs[index].fileSource,
-                              singerName: "",
                               minute: state.allRecentlySongs[index].minute,
                               second: state.allRecentlySongs[index].second,
+                              singerName: state.allRecentlySongs[index].singerName,
+                              album: null,
                               albumId: state.allRecentlySongs[index].albumId,
+                              categories: null,
                             );
 
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => PlaySongPage()
-                              ),
+                            context.push(
+                              '/'+PlaySongPage.routeName,
+                              extra: {
+                                'songName': songDataModel.name,
+                                'songFile': songDataModel.fileSource,
+                                'songID': songDataModel.id!,
+                                'singerName': songDataModel.singerName,
+                                'songImage': songDataModel.imageSource!,
+                                'albumID': songDataModel.albumId!,
+                                'pageName': "RecentlyPlaylist",
+                                'albumSongList': state.allRecentlySongs,
+                                'songDataModel': songDataModel,
+                              },
                             );
                           })),
                 ),

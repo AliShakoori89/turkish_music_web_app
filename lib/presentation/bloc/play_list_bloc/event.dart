@@ -53,3 +53,6 @@ class SearchSongIDEvent extends PlayListEvent{
   @override
   List<Object> get props => [songID];
 }
+
+class AudioPlayerDisposeEvent extends PlayListEvent{}
+

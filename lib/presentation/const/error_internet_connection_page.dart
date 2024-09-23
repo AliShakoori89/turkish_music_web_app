@@ -11,9 +11,6 @@ class ErrorInternetConnectionPage extends StatefulWidget {
 }
 
 var refreshKey = GlobalKey<RefreshIndicatorState>();
-Random random = Random();
-int limit = random.nextInt(10);
-
 class _ErrorInternetConnectionPageState extends State<ErrorInternetConnectionPage> {
 
   Future<void> refreshList() async {
@@ -31,36 +28,38 @@ class _ErrorInternetConnectionPageState extends State<ErrorInternetConnectionPag
         appBar: const PreferredSize(
           preferredSize: Size.fromHeight(100),
             child: AppHeader()),
-        body: RefreshIndicator(
-          key: refreshKey,
-          onRefresh: refreshList,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Flexible(
-                child: ListView(
-                )
-              ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/gif/error_connection.gif"))
-                  ),
-                ),
-              ),
-              const Flexible(
-                  flex: 1,
-                  child: Text("No Internet Connection")),
-              const Flexible(
-                  flex: 1,
-                  child: Text("please Check Your Connection !!!"))
-            ],
-          ),
-        )
-
-      ),
-    );
+        body: LayoutBuilder(builder: (context, constraints) {
+          return RefreshIndicator(
+            onRefresh: refreshList,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Center(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 120,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/gif/error_connection.gif"))),
+                        ),
+                        Text(
+                          "No Internet Connection",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        Text("please Check Your Connection !!!",
+                            textAlign: TextAlign.center)
+                      ],
+                    ),
+                  )),
+            ),
+          );
+        })
+    ));
   }
 }

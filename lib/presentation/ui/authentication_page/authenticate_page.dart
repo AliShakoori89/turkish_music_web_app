@@ -12,11 +12,11 @@ import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../bloc/user_bloc/bloc.dart';
-import '../bloc/user_bloc/event.dart';
-import '../const/custom_icon/music_icons.dart';
-import '../const/error_internet_connection_page.dart';
-import 'main_page/main_page.dart';
+import '../../bloc/user_bloc/bloc.dart';
+import '../../bloc/user_bloc/event.dart';
+import '../../const/custom_icon/music_icons.dart';
+import '../../const/error_internet_connection_page.dart';
+import '../main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
 
@@ -44,73 +44,11 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
   int _state = 0;
 
-  Connectivity connectivity = Connectivity();
   IconData? icon;
-  String connectionType = "No internet connection";
-  bool isOffline = true;
-  late StreamSubscription<ConnectivityResult> connectionSubscription;
-
-  Future<void> getConnectivity() async {
-    late ConnectivityResult result;
-    try {
-      result = await connectivity.checkConnectivity();
-      getConnectionType(result);
-
-    } on PlatformException catch (e) {
-      developer.log('Couldn\'t check connectivity status', error: e);
-      icon = Icons.signal_wifi_connected_no_internet_4;
-      return;
-    }
-
-    if (!mounted) {
-      return Future.value(null);
-    }
-
-    return updateConnectionStatus(result);
-  }
-
-  Future<void> updateConnectionStatus(ConnectivityResult result) async {
-    getConnectionType(result);
-
-    if(result == ConnectivityResult.none){
-      setState(() {
-        isOffline = true;
-      });
-    }
-    else{
-      setState(() {
-        isOffline = false;
-      });
-    }
-  }
-
-  void getConnectionType(result) {
-    if(result == ConnectivityResult.mobile) {
-      connectionType = "Internet connection is from Mobile data";
-      icon = Icons.network_cell;
-    }else if(result == ConnectivityResult.wifi) {
-      connectionType = "Internet connection is from wifi";
-      icon = Icons.network_wifi_sharp;
-    }else if(result == ConnectivityResult.ethernet){
-      connectionType = "Internet connection is from wired cable";
-      icon = Icons.settings_ethernet;
-    }else if(result == ConnectivityResult.bluetooth){
-      connectionType = "Internet connection is from Bluetooth tethering";
-      icon = Icons.network_wifi_sharp;
-    }else if(result == ConnectivityResult.none){
-      connectionType = "No internet connection";
-      icon = Icons.signal_wifi_connected_no_internet_4;
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-
-    getConnectivity();
-
-    connectionSubscription =
-        connectivity.onConnectivityChanged.listen(updateConnectionStatus);
 
     const quick = Duration(milliseconds: 500);
     final scaleTween = Tween(begin: 0.0, end: 1.0);
@@ -194,8 +132,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     controller1.dispose();
     controller2.dispose();
     _heartController.dispose();
-    connectionSubscription.cancel();
-
     super.dispose();
   }
 
@@ -204,10 +140,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
     Size size = MediaQuery.of(context).size;
 
-
-
-    return !isOffline
-        ? Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xff192028),
         body: BlocListener<UserBloc, UserState>(
           listener: (context, state){
@@ -342,8 +275,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             ),
           ),
         )
-    )
-        : const ErrorInternetConnectionPage();
+    );
   }
 
   Widget component1(
@@ -591,9 +523,11 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     });
 
     Timer(const Duration(milliseconds: 3300), () {
-      setState(() {
-        _state = 0;
-      });
+      if (mounted) { // Check if the widget is still mounted before updating the state
+        setState(() {
+          _state = 0;
+        });
+      }
     });
   }
 }

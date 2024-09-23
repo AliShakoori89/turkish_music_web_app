@@ -40,6 +40,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     });
 
     on<PlaySongEvent>((event, emit) async {
+
       _currentSelectedSong = event.currentSong;
       _currentAlbum = event.currentAlbum;
       _playCurrentSong(emit);
@@ -97,6 +98,11 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
+    on<AudioPlayDisposeEvent>((event, emit) async {
+      await _audioPlayer.dispose();
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
+    });
+
   }
 
   Future<void> _saveCurrentSongData(SongDataModel songDataModel) async {
@@ -120,12 +126,9 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   Future<void> _playPreviousSong(Emitter<AudioControlState> emit) async {
     if (_currentAlbum != null && _currentSelectedSong != null) {
       final int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
-      print("currentIndex                 "+currentIndex.toString());
       if (currentIndex != null) {
         final int nextIndex = (currentIndex - 1) % _currentAlbum!.length;
-        print("nextIndex                 "+nextIndex.toString());
         final nextSong = _currentAlbum![nextIndex];
-        print("nextSong                 "+nextSong.name.toString());
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
         await _playCurrentSong(emit);
       }
@@ -134,9 +137,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   Future<void> _playCurrentSong(Emitter<AudioControlState> emit) async {
     if (_currentSelectedSong != null) {
-      print('source              '+_currentSelectedSong!.fileSource.toString());
-      final Source source = UrlSource(_currentSelectedSong!.fileSource ?? "");
-
+      final String modifiedUrl = _currentSelectedSong!.fileSource!.replaceAll("%20", " ");
+      final Source source = UrlSource(modifiedUrl ?? "");
       await _audioPlayer.play(source);
     }
   }

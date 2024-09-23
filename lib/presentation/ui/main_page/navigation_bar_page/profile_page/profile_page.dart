@@ -21,13 +21,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>{
 
   @override
-  void initState() {
-    BlocProvider.of<UserBloc>(context).add(GetCurrentUserEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+
+    BlocProvider.of<UserBloc>(context).add(GetCurrentUserEvent());
+
     return Scaffold(
       body: SafeArea(
           child: Container(

@@ -13,7 +13,7 @@ import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
-import '../../../../../../play_song_page/play_song_page_component/play_song_page/play_song_page.dart';
+import '../../../../../../play_song_page/play_song_page.dart';
 
 class SingerPage extends StatefulWidget {
 
