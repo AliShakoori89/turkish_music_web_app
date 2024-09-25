@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../../data/model/album_model.dart';
+import '../../../../data/model/save_song_model.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../bloc/play_button_state_bloc/bloc.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
+import '../../../bloc/recently_play_song_bloc/bloc.dart';
+import '../../../bloc/recently_play_song_bloc/event.dart';
 
 
-class NextButton extends StatefulWidget {
-  NextButton({super.key, required this.albumSongs, required this.songID, required this.albumID});
+class NextButton extends StatelessWidget {
+  NextButton({super.key, required this.albumSongs, required this.songID, required this.albumID, required this.singerName,
+    required this.audioFileSec, required this.audioFileMin, required this.audioFilePath, required this.imageFilePath, required this.songName});
 
   final List<AlbumDataMusicModel> albumSongs;
   final int songID;
   final int albumID;
-
-  @override
-  State<NextButton> createState() => _NextButtonState();
-}
-
-class _NextButtonState extends State<NextButton> {
+  final String singerName;
+  final String audioFileSec;
+  final String audioFileMin;
+  final String audioFilePath;
+  final String imageFilePath;
+  final String songName;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class _NextButtonState extends State<NextButton> {
           context
               .read<AudioControlBloc>()
               .add(PlayNextSongEvent(
-              currentAlbum: widget.albumSongs));
+              currentAlbum: albumSongs));
 
           context
               .read<PlayButtonStateBloc>()
@@ -39,8 +43,24 @@ class _NextButtonState extends State<NextButton> {
           context
               .read<MiniPlayingContainerBloc>()
               .add(WriteSongIDForMiniPlayingSongContainerEvent(
-              songID: widget.songID,
-              albumID: widget.albumID));
+              songID: songID,
+              albumID: albumID));
+
+          SaveSongModel recentlyPlayedSongIdModel = SaveSongModel(
+              id: songID,
+              singerName: singerName,
+              audioFileAlbumId: albumID,
+              audioFileSec: audioFileSec,
+              audioFileMin: audioFileMin,
+              audioFilePath: audioFilePath,
+              imageFilePath: imageFilePath,
+              songName: songName
+          );
+
+          context
+              .read<RecentlyPlaySongBloc>()
+              .add(SavePlayedSongIDToRecentlyPlayedEvent(
+              recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
           },
         icon: Container(
             padding: const EdgeInsets.symmetric(

@@ -252,12 +252,24 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                 PreviousButton(
                                                   albumSongs: albumSongList,
                                                   songID: songID,
-                                                  albumID: albumID),
+                                                  albumID: albumID,
+                                                  singerName: singerName,
+                                                  audioFileSec: state.songModel.second!,
+                                                  audioFileMin: state.songModel.minute!,
+                                                  audioFilePath: path,
+                                                  imageFilePath: songImage,
+                                                  songName: songName),
                                                 PlayButton(),
                                                 NextButton(
                                                   albumSongs : albumSongList,
                                                   songID: songID,
-                                                  albumID: albumID
+                                                  albumID: albumID,
+                                                  singerName: singerName,
+                                                  audioFileSec: state.songModel.second!,
+                                                  audioFileMin: state.songModel.minute!,
+                                                  audioFilePath: path,
+                                                  imageFilePath: songImage,
+                                                  songName: songName
                                                 )
                                               ],
                                             ),
