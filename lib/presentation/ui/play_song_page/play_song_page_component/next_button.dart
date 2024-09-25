@@ -2,22 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../../data/model/album_model.dart';
+import '../../../bloc/mini_playing_container_bloc/bloc.dart';
+import '../../../bloc/mini_playing_container_bloc/event.dart';
+import '../../../bloc/play_button_state_bloc/bloc.dart';
+import '../../../bloc/play_button_state_bloc/event.dart';
 
 
-class NextButton extends StatelessWidget {
-  NextButton({super.key, required this.albumSongs});
+class NextButton extends StatefulWidget {
+  NextButton({super.key, required this.albumSongs, required this.songID, required this.albumID});
 
   final List<AlbumDataMusicModel> albumSongs;
+  final int songID;
+  final int albumID;
+
+  @override
+  State<NextButton> createState() => _NextButtonState();
+}
+
+class _NextButtonState extends State<NextButton> {
 
   @override
   Widget build(BuildContext context) {
+
     return IconButton(
         onPressed: () {
+
           context
               .read<AudioControlBloc>()
               .add(PlayNextSongEvent(
-              currentAlbum: albumSongs));
-        },
+              currentAlbum: widget.albumSongs));
+
+          context
+              .read<PlayButtonStateBloc>()
+              .add(SetPlayButtonStateEvent(playButtonState: true));
+
+          context
+              .read<MiniPlayingContainerBloc>()
+              .add(WriteSongIDForMiniPlayingSongContainerEvent(
+              songID: widget.songID,
+              albumID: widget.albumID));
+          },
         icon: Container(
             padding: const EdgeInsets.symmetric(
                 vertical: 10, horizontal: 10),

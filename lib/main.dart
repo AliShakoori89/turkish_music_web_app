@@ -42,6 +42,7 @@ import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
 import 'package:go_router/go_router.dart';
@@ -150,6 +151,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
+    print("widget.isLoggedIn           "+widget.isLoggedIn.toString());
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -218,6 +221,11 @@ class _MyAppState extends State<MyApp> {
                   },
                   routes: [
                     GoRoute(
+                      path: HomePage.routeName,
+                      builder: (context, state){
+                        return HomePage();
+                      },),
+                    GoRoute(
                       path: SingerPage.routeName,
                       builder: (context, state){
                         return SingerPage();
@@ -230,14 +238,31 @@ class _MyAppState extends State<MyApp> {
                         }
                     ),
                     GoRoute(
-                      path: PlaySongPage.routeName,
-                      builder: (context, state){
-                        return PlaySongPage();
+                      path: 'PlaySongPage',
+                      name: PlaySongPage.routeName,
+                      pageBuilder: (context, state) {
+                        final extra = state.extra as Map<String, dynamic>?;
+
+                        return CustomTransitionPage(
+                          transitionDuration: Duration(seconds: 2),
+                          child: PlaySongPage(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0.0, 1.0);  // Bottom to top transition
+                            const end = Offset.zero;
+                            const curve = Curves.easeOut;
+
+                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        );
                       },
-                    )
+                    ),
+
                   ]
               ),
-
             ]
         ),
       ),

@@ -113,25 +113,35 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   Future<void> _playNextSong(Emitter<AudioControlState> emit) async {
     if (_currentAlbum != null && _currentSelectedSong != null) {
-      final int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
-      if (currentIndex != null) {
-        final int nextIndex = (currentIndex + 1) % _currentAlbum!.length;
-        final nextSong = _currentAlbum![nextIndex];
+      late int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
+      if(currentIndex! < _currentAlbum!.length-1){
+        final nextSong = _currentAlbum![currentIndex+1];
+        _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
+        await _playCurrentSong(emit);
+      }else{
+        currentIndex = 0;
+        final nextSong = _currentAlbum![currentIndex];
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
         await _playCurrentSong(emit);
       }
+      // }
     }
   }
 
   Future<void> _playPreviousSong(Emitter<AudioControlState> emit) async {
     if (_currentAlbum != null && _currentSelectedSong != null) {
-      final int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
-      if (currentIndex != null) {
-        final int nextIndex = (currentIndex - 1) % _currentAlbum!.length;
-        final nextSong = _currentAlbum![nextIndex];
+      late int? currentIndex = _getCurrentSongIndex(_currentAlbum!, _currentSelectedSong!);
+      if(currentIndex! > 0){
+        final nextSong = _currentAlbum![currentIndex-1];
+        _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
+        await _playCurrentSong(emit);
+      }else{
+        currentIndex = _currentAlbum!.length-1;
+        final nextSong = _currentAlbum![currentIndex];
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
         await _playCurrentSong(emit);
       }
+      // }
     }
   }
 
@@ -157,7 +167,12 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   }
 
   int? _getCurrentSongIndex(List<AlbumDataMusicModel> songs, SongDataModel song) {
-    return songs.indexWhere((s) => s.id == song.id);
+    for(int i = 0; i < songs.length; i++){
+      if(songs[i].name == song.name){
+        return i;
+      }
+    }
+    // return songs.indexWhere((s) => s.id == song.id);
   }
 
   stopAudio() async {

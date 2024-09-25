@@ -14,8 +14,6 @@ import '../play_song_page/play_song_page_component/mini_palying_container.dart';
 
 class MainPage extends StatefulWidget {
 
-  static String routeName = "/";
-
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -26,11 +24,16 @@ class _MainPageState extends State<MainPage> {
   IconData? icon;
 
   @override
+  void initState() {
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-
     Orientation orientation = MediaQuery.of(context).orientation;
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     void navigateRoutes(int selectedIndex) {
       setState(() {
@@ -131,7 +134,7 @@ class _MainPageState extends State<MainPage> {
                   BlocBuilder<MiniPlayingContainerBloc,
                       MiniPlayingContainerState>(
                       builder: (context , state) {
-
+print("***************************************************************");
                         bool visibility = state.visibility;
                         int songID = state.songID;
                         int albumID = state.albumID;

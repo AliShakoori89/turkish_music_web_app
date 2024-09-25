@@ -21,6 +21,7 @@ class MiniPlayingContainerRepository {
 
   FutureOr<dynamic> writeMiniPlayingRequirement(int songID, int albumID) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("writeMiniPlayingRequirement      "+songID.toString());
     await prefs.setInt('songID', songID);
     await prefs.setInt('albumID', albumID);
   }

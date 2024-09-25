@@ -21,6 +21,8 @@ class WriteSongIDForMiniPlayingSongContainerEvent extends MiniPlayingContainerEv
 
 class ReadSongIDForMiniPlayingSongContainerEvent extends MiniPlayingContainerEvent{}
 
+class RefreshMiniPlayerEvent extends MiniPlayingContainerEvent{}
+
 
 // class GetSingerAllAlbumEvent extends AlbumEvent{
 //   final int id;

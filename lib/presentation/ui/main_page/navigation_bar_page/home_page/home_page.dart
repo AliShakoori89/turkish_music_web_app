@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
+import '../../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../../helpers/widgets/header.dart';
 import 'home_page_component/category_item.dart';
 import 'home_page_component/new_album_contaner.dart';
@@ -7,9 +10,14 @@ import 'home_page_component/singer_container/singer_container.dart';
 
 class HomePage extends StatelessWidget {
 
+  static String routeName = "HomePage";
+
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
+    context
+        .read<MiniPlayingContainerBloc>()
+        .add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     return SafeArea(
       child: Scaffold(

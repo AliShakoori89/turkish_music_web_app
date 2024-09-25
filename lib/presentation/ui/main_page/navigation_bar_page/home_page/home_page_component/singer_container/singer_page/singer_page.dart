@@ -9,6 +9,8 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../bloc/mini_playing_container_bloc/bloc.dart';
@@ -37,7 +39,7 @@ class _SingerPageState extends State<SingerPage> {
     return WillPopScope(
       onWillPop: () async {
         context.pop();
-        return true;
+        return false;
       },
       child: Scaffold(
           body: orientation == Orientation.portrait

@@ -37,25 +37,21 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   @override
   void initState() {
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
-    BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-    BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
+
     BlocProvider.of<PlayButtonStateBloc>(context).add(GetPlayButtonStateEvent());
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
 
-    double width = MediaQuery.of(context).size.width;
+    print("77777777777777               "+widget.songID.toString());
+    BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
+    BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
 
     return widget.visibility == true
         ? Container(
         width: double.infinity,
-        // height: widget.orientation == Orientation.portrait
-        //     ? MediaQuery.of(context).size.height * 0.1
-        //     : width < 700
-        //     ? MediaQuery.of(context).size.height / 5.07
-        //     : MediaQuery.of(context).size.height / 6.5,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Colors.black, Colors.purple, ],
@@ -91,7 +87,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                   + state.song.fileSource!.substring(4, state.song.fileSource?.length);
 
                               SongDataModel songDataModel = SongDataModel(
-                                id : state.song.id,
+                                id : widget.songID,
                                 name: state.song.name,
                                 imageSource: state.song.imageSource,
                                 fileSource: path,
@@ -99,7 +95,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                 second: state.song.second,
                                 singerName: state.song.singerName,
                                 album: null,
-                                albumId: state.song.albumId,
+                                albumId: widget.albumID,
                                 categories: null,
                               );
 
