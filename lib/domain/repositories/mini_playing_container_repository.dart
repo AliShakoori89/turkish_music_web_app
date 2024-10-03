@@ -28,8 +28,10 @@ class MiniPlayingContainerRepository {
 
   FutureOr<List> readMiniPlayingRequirement() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     final int songID = prefs.getInt('songID')!;
     final int albumID = prefs.getInt('albumID')!;
+    print("readMiniPlayingRequirement      "+songID.toString());
     List requirement = [songID, albumID];
     return requirement;
   }

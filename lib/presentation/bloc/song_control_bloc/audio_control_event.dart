@@ -36,6 +36,13 @@ class PlayPreviousLocalSongEvent extends AudioControlEvent {
 
 class PauseSongEvent extends AudioControlEvent {}
 
+class PlaySelectedSongEvent extends AudioControlEvent {
+  final SongDataModel currentSong;
+  final List<AlbumDataMusicModel> currentAlbum;
+
+  PlaySelectedSongEvent({required this.currentSong, required this.currentAlbum});
+}
+
 class initialSongEvent extends AudioControlEvent {}
 
 class ResumeSongEvent extends AudioControlEvent {}

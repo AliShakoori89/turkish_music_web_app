@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shimmer/shimmer.dart';
@@ -7,6 +8,9 @@ import 'package:turkish_music_app/presentation/const/no_image.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
+import '../../../bloc/play_button_state_bloc/bloc.dart';
+import '../../../bloc/play_button_state_bloc/event.dart';
+import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
 
 class ContainerAllSongsList extends StatelessWidget {
 
@@ -51,20 +55,31 @@ class ContainerAllSongsList extends StatelessWidget {
               categories: null,
             );
 
-            context.push(
-              '/'+PlaySongPage.routeName,
-              extra: {
-                'songName': songDataModel.name,
-                'songFile': newPath,
-                'songID': songDataModel.id!,
-                'singerName': singerName,
-                'songImage': songDataModel.imageSource,
-                'albumID': songDataModel.albumId!,
-                'pageName': "PlaySongPage",
-                'albumSongList': categoryAllSongs,
-                'songDataModel': songDataModel,
-              },
-            );
+            context
+                .read<AudioControlBloc>()
+                .add(PlaySelectedSongEvent(
+                currentSong: songDataModel,
+                currentAlbum: categoryAllSongs
+            ));
+
+            context
+                .read<PlayButtonStateBloc>()
+                .add(SetPlayButtonStateEvent(playButtonState: true));
+
+            // context.push(
+            //   '/'+PlaySongPage.routeName,
+            //   extra: {
+            //     'songName': songDataModel.name,
+            //     'songFile': newPath,
+            //     'songID': songDataModel.id!,
+            //     'singerName': singerName,
+            //     'songImage': songDataModel.imageSource,
+            //     'albumID': songDataModel.albumId!,
+            //     'pageName': "PlaySongPage",
+            //     'albumSongList': categoryAllSongs,
+            //     'songDataModel': songDataModel,
+            //   },
+            // );
 
             },
           child: Container(

@@ -69,6 +69,7 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
     try {
       emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       List requirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
+      print("requirement[0]           "+requirement[0].toString());
       emit(
         state.copyWith(
           status: MiniPlayingContainerStatus.success,

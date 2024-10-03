@@ -400,7 +400,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                     left: 2
                                 ),
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+                                  FilteringTextInputFormatter.digitsOnly, // This allows only digits
                                 ],
                                 focusedBorderColor: const Color(0xffb188ef),
                                 keyboardType: TextInputType.number,

@@ -132,11 +132,19 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                             ],
                           ),
                           onTap: (){
+
+                            var path = state.allRecentlySongs[index].fileSource!.substring(0, 4)
+                                + "s"
+                                + state.allRecentlySongs[index].fileSource!
+                                    .substring(4, state.allRecentlySongs[index].fileSource!.length);
+
+                            var newPath = path.replaceAll(" ", "%20");
+
                             SongDataModel songDataModel = SongDataModel(
                               id : state.allRecentlySongs[index].id,
                               name: state.allRecentlySongs[index].name,
                               imageSource: state.allRecentlySongs[index].imageSource,
-                              fileSource: state.allRecentlySongs[index].fileSource,
+                              fileSource: newPath,
                               minute: state.allRecentlySongs[index].minute,
                               second: state.allRecentlySongs[index].second,
                               singerName: state.allRecentlySongs[index].singerName,

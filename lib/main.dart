@@ -151,8 +151,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-    print("widget.isLoggedIn           "+widget.isLoggedIn.toString());
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(

@@ -134,7 +134,6 @@ class _MainPageState extends State<MainPage> {
                   BlocBuilder<MiniPlayingContainerBloc,
                       MiniPlayingContainerState>(
                       builder: (context , state) {
-print("***************************************************************");
                         bool visibility = state.visibility;
                         int songID = state.songID;
                         int albumID = state.albumID;

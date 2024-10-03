@@ -47,6 +47,13 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
+    on<PlaySelectedSongEvent>((event, emit) async {
+      _currentSelectedSong = event.currentSong;
+      _currentAlbum = event.currentAlbum;
+      _playCurrentSong(emit);
+      emit(AudioPlayedState(songModel: _currentSelectedSong!));
+    });
+
     on<PauseSongEvent>((event, emit) async {
       await _audioPlayer.pause();
     });

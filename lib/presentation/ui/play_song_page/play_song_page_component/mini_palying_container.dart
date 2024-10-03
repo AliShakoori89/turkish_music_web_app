@@ -39,15 +39,15 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
 
     BlocProvider.of<PlayButtonStateBloc>(context).add(GetPlayButtonStateEvent());
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
 
-    print("77777777777777               "+widget.songID.toString());
     BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
     BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     return widget.visibility == true
         ? Container(
