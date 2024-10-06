@@ -7,7 +7,7 @@ import 'http_exception.dart';
 class ApiBaseHelper {
 
   final String baseUrl = 'api.turkishmusicapi.ir';
-
+  // final String baseUrl = '194.5.195.145';
 
   FutureOr<dynamic> get(String url,
       {String accessToken = "", String query = "", String page = "", String count = "", String searchChar = ""}) async {
@@ -34,8 +34,10 @@ class ApiBaseHelper {
           host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
 
       final response = await http.get(address, headers: headers);
+      print("response 2                "+response.statusCode.toString());
       return response;
     } on SocketException {
+      print("4444444444444444444444");
       throw FetchDataException('No Internet connection');
     }
   }
@@ -49,7 +51,7 @@ class ApiBaseHelper {
 
       final Uri address =
       Uri(host: baseUrl, scheme: "https", query: query, path: url);
-
+      //https://api.turkishmusicapi.ir/api/User/FirstStepLogin
       Map<String, String> headers;
 
       headers = {

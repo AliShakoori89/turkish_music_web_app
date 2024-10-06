@@ -63,11 +63,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
 
       int songID = data['songID'] as int;
       int albumID = data['albumID'] as int;
-
-      BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
-
-
-      BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
       BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: songID));
 
       context
@@ -75,6 +70,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
           .add(WriteSongIDForMiniPlayingSongContainerEvent(songID: songID,
           albumID: albumID));
     });
+
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
+    BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
   }
 
   @override

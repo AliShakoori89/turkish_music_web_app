@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/music_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page.dart';
@@ -14,6 +15,8 @@ import '../play_song_page/play_song_page_component/mini_palying_container.dart';
 
 class MainPage extends StatefulWidget {
 
+  static String routeName = "MainPage";
+
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -25,7 +28,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
     super.initState();
   }
 
@@ -33,7 +36,6 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
 
     Orientation orientation = MediaQuery.of(context).orientation;
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     void navigateRoutes(int selectedIndex) {
       setState(() {
@@ -137,7 +139,7 @@ class _MainPageState extends State<MainPage> {
                         bool visibility = state.visibility;
                         int songID = state.songID;
                         int albumID = state.albumID;
-
+                        // return Container();
                         return MiniPlayingContainer(
                           visibility: visibility,
                           songID: songID,

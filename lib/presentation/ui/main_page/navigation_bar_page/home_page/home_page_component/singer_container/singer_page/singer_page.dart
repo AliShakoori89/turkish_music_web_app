@@ -39,7 +39,7 @@ class _SingerPageState extends State<SingerPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        context.pop();
+        context.pop(MainPage.routeName);
         return false;
       },
       child: Scaffold(

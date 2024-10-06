@@ -219,6 +219,11 @@ class _MyAppState extends State<MyApp> {
                   },
                   routes: [
                     GoRoute(
+                      path: MainPage.routeName,
+                      builder: (context, state){
+                        return MainPage();
+                      },),
+                    GoRoute(
                       path: HomePage.routeName,
                       builder: (context, state){
                         return HomePage();

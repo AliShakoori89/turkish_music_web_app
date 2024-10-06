@@ -20,9 +20,11 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
     try {
       emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       await miniPlayingContainerRepository.firstShowMiniPlayingContainer();
+      bool visibility = await miniPlayingContainerRepository.isItTheFirstTimeTtIsShown();
       emit(
         state.copyWith(
-            status: MiniPlayingContainerStatus.success,
+          status: MiniPlayingContainerStatus.success,
+          visibility: visibility,
         ),
       );
     } catch (error) {
@@ -69,7 +71,6 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
     try {
       emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       List requirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
-      print("requirement[0]           "+requirement[0].toString());
       emit(
         state.copyWith(
           status: MiniPlayingContainerStatus.success,

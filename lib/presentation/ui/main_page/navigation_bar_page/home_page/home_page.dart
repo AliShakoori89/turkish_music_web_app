@@ -8,16 +8,28 @@ import 'home_page_component/new_album_contaner.dart';
 import 'home_page_component/new_music_container/new_music_container.dart';
 import 'home_page_component/singer_container/singer_container.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
 
   static String routeName = "HomePage";
 
   @override
-  Widget build(BuildContext context) {
-    Orientation orientation = MediaQuery.of(context).orientation;
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
     context
         .read<MiniPlayingContainerBloc>()
         .add(ReadSongIDForMiniPlayingSongContainerEvent());
+    print("5555555555555555555555555555555555555555555555555555555555555555555555555555555");
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     return SafeArea(
       child: Scaffold(

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MiniPlayingContainerRepository {
 
   FutureOr<dynamic> firstShowMiniPlayingContainer() async{
+    print("#################################################################################################");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('firstShowMiniPlayingContainer', true);
   }
@@ -21,7 +22,6 @@ class MiniPlayingContainerRepository {
 
   FutureOr<dynamic> writeMiniPlayingRequirement(int songID, int albumID) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("writeMiniPlayingRequirement      "+songID.toString());
     await prefs.setInt('songID', songID);
     await prefs.setInt('albumID', albumID);
   }
@@ -31,7 +31,6 @@ class MiniPlayingContainerRepository {
 
     final int songID = prefs.getInt('songID')!;
     final int albumID = prefs.getInt('albumID')!;
-    print("readMiniPlayingRequirement      "+songID.toString());
     List requirement = [songID, albumID];
     return requirement;
   }
