@@ -84,7 +84,9 @@ class ContainerAllSongsList extends StatelessWidget {
             },
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white30.withOpacity(0.1),
+                color: categoryAllSongs[index].name == songName
+                    ? Colors.white30.withOpacity(0.5)
+                    : Colors.white30.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15)
             ),
             margin: const EdgeInsets.only(
@@ -93,6 +95,7 @@ class ContainerAllSongsList extends StatelessWidget {
             child: Container(
               margin: const EdgeInsets.only(
                 right: 20,
+                left: 10
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

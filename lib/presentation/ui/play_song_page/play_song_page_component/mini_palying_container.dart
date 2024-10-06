@@ -83,11 +83,13 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                                   + "s"
                                   + state.song.fileSource!.substring(4, state.song.fileSource?.length);
 
+                              var newPath = path.replaceAll(" ", "%20");
+
                               SongDataModel songDataModel = SongDataModel(
                                 id : widget.songID,
                                 name: state.song.name,
                                 imageSource: state.song.imageSource,
-                                fileSource: path,
+                                fileSource: newPath,
                                 minute: state.song.minute,
                                 second: state.song.second,
                                 singerName: state.song.singerName,

@@ -247,7 +247,7 @@ class _MyAppState extends State<MyApp> {
                         final extra = state.extra as Map<String, dynamic>?;
 
                         return CustomTransitionPage(
-                          transitionDuration: Duration(seconds: 2),
+                          transitionDuration: Duration(seconds: 1),
                           child: PlaySongPage(),
                           transitionsBuilder: (context, animation, secondaryAnimation, child) {
                             const begin = Offset(0.0, 1.0);  // Bottom to top transition
