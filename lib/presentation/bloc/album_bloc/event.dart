@@ -13,6 +13,8 @@ class GetSingerAllAlbumEvent extends AlbumEvent{
   List<Object> get props => [id];
 }
 
+class ResetAlbumStateEvent extends AlbumEvent {}
+
 class GetAlbumLengthEvent extends AlbumEvent{
   final int id;
 

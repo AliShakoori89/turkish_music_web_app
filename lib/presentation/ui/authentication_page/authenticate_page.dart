@@ -132,6 +132,8 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     controller1.dispose();
     controller2.dispose();
     _heartController.dispose();
+    // Dispose of UserBloc
+    BlocProvider.of<UserBloc>(context).close();
     super.dispose();
   }
 

@@ -29,10 +29,27 @@ class SingerPage extends StatefulWidget {
 class _SingerPageState extends State<SingerPage> {
 
   @override
+  void initState() {
+    super.initState();
+
+    // Accessing context in initState using a post-frame callback
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var artistDetail = GoRouterState.of(context).extra! as SingerDataModel;
+      BlocProvider.of<AlbumBloc>(context).add(ResetAlbumStateEvent()); // Reset state on navigation.
+      BlocProvider.of<AlbumBloc>(context).add(GetSingerAllAlbumEvent(id: artistDetail.id));
+    });
+  }
+
+  @override
+  void dispose() {
+    BlocProvider.of<AlbumBloc>(context).close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     var artistDetail = GoRouterState.of(context).extra! as SingerDataModel;
-    BlocProvider.of<AlbumBloc>(context).add(GetSingerAllAlbumEvent(id: artistDetail.id));
 
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -101,138 +118,105 @@ class _SingerPageState extends State<SingerPage> {
                         crossAxisSpacing: 0.0,
                         childAspectRatio: 1.0,
                         mainAxisExtent: MediaQuery.of(context).size.width / 2),
-                    delegate: SliverChildBuilderDelegate((context, index) =>
-                        DelayedWidget(
-                            delayDuration: Duration(milliseconds: 800), // Not required
-                            animationDuration: Duration(seconds: 1), // Not required
-                            animation: DelayedAnimations.SLIDE_FROM_BOTTOM, // Not required
-                            child: GestureDetector(
-                              onTap: (){
+                    delegate: SliverChildBuilderDelegate((context, index) {
 
-                                var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
-                                    + "s"
-                                    + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
+                      if(state.status.isLoading){
+                        return SingerPageShimmerContainer();
+                      }else if(state.status.isSuccess){
+                        return GestureDetector(
+                          onTap: (){
 
-                                var newPath = path.replaceAll(" ", "%20");
+                            var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
+                                + "s"
+                                + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
 
-                                SongDataModel songDataModel = SongDataModel(
-                                  id : state.singerAllAlbum[index].musics![0].id,
-                                  name: state.singerAllAlbum[index].musics![0].name,
-                                  imageSource: state.singerAllAlbum[index].musics![0].imageSource,
-                                  fileSource: newPath,
-                                  minute: state.singerAllAlbum[index].musics![0].minute,
-                                  second: state.singerAllAlbum[index].musics![0].second,
-                                  singerName: artistDetail.name,
-                                  album: null,
-                                  albumId: state.singerAllAlbum[index].id,
-                                  categories: null,
-                                );
+                            var newPath = path.replaceAll(" ", "%20");
 
-                                context.push(
-                                  '/'+PlaySongPage.routeName,
-                                  extra: {
-                                    'songName': songDataModel.name,
-                                    'songFile': newPath,
-                                    'songID': songDataModel.id!,
-                                    'singerName': artistDetail.name,
-                                    'songImage': state.singerAllAlbum[index].imageSource!,
-                                    'albumID': songDataModel.albumId!,
-                                    'pageName': "SingerPage",
-                                    'albumSongList': state.singerAllAlbum[index].musics!,
-                                    'songDataModel': songDataModel,
-                                  },
-                                );
+                            SongDataModel songDataModel = SongDataModel(
+                              id : state.singerAllAlbum[index].musics![0].id,
+                              name: state.singerAllAlbum[index].musics![0].name,
+                              imageSource: state.singerAllAlbum[index].musics![0].imageSource,
+                              fileSource: newPath,
+                              minute: state.singerAllAlbum[index].musics![0].minute,
+                              second: state.singerAllAlbum[index].musics![0].second,
+                              singerName: artistDetail.name,
+                              album: null,
+                              albumId: state.singerAllAlbum[index].id,
+                              categories: null,
+                            );
 
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //       builder: (context) => PlaySongPage(
-                                //         songName: state.singerAllAlbum[index].name!,
-                                //         songFile: newPath,
-                                //         songID: songDataModel.id!,
-                                //         singerName: widget.artistDetail.name,
-                                //         songImage: state.singerAllAlbum[index].imageSource!,
-                                //         albumID: songDataModel.albumId!,
-                                //         pageName: "SingerPage",
-                                //         albumSongList: state.singerAllAlbum[index].musics!,
-                                //         songDataModel: songDataModel,
-                                //       )
-                                //   ),
-                                // );
-
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => BlocProvider(
-                                //           create: (context) => AudioControlBloc()..add(PlaySongEvent(
-                                //             currentSong: songDataModel,
-                                //             currentAlbum: state.singerAllAlbum[index].musics!
-                                //           )),
-                                //           child: PlaySongPage(
-                                //             songName: state.singerAllAlbum[index].name!,
-                                //             songFile: newPath,
-                                //             songID: songDataModel.id!,
-                                //             singerName: widget.artistDetail.name,
-                                //             songImage: state.singerAllAlbum[index].imageSource!,
-                                //             albumID: songDataModel.albumId!,
-                                //             pageName: "SingerPage",
-                                //             albumSongList: state.singerAllAlbum[index].musics!,
-                                //             orientation: widget.orientation,
-                                //           ),
-                                //
-                                //         )));
+                            context.push(
+                              '/'+PlaySongPage.routeName,
+                              extra: {
+                                'songName': songDataModel.name,
+                                'songFile': newPath,
+                                'songID': songDataModel.id!,
+                                'singerName': artistDetail.name,
+                                'songImage': state.singerAllAlbum[index].imageSource!,
+                                'albumID': songDataModel.albumId!,
+                                'pageName': "SingerPage",
+                                'albumSongList': state.singerAllAlbum[index].musics!,
+                                'songDataModel': songDataModel,
                               },
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  // bottom: MediaQuery.of(context).size.height * 0.02,
-                                  top: MediaQuery.of(context).size.height * 0.02,
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              // bottom: MediaQuery.of(context).size.height * 0.02,
+                              top: MediaQuery.of(context).size.height * 0.02,
+                            ),
+                            child: Column(
+                              children: [
+                                Flexible(
+                                  flex: 5,
+                                  child: CachedNetworkImage(
+                                    useOldImageOnUrlChange: false,
+                                    imageUrl: singerAllAlbum[index]
+                                        .imageSource!,
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                          width: MediaQuery.of(context).size.width * 0.3,
+                                          height: MediaQuery.of(context).size.width * 0.6,
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.purple.withOpacity(0.5),
+                                                  blurRadius: 20,
+                                                ),
+                                              ],
+                                              borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                    singerAllAlbum[index]
+                                                        .imageSource!),
+                                                fit: BoxFit.fill,
+                                              )
+                                          ),
+                                        ),
+                                    placeholder: (context, url) =>
+                                        SingerPageShimmerContainer(),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  ),
                                 ),
-                                child: Column(
-                                  children: [
-                                    Flexible(
-                                      flex: 5,
-                                      child: CachedNetworkImage(
-                                        useOldImageOnUrlChange: false,
-                                        imageUrl: singerAllAlbum[index]
-                                            .imageSource!,
-                                        imageBuilder: (context, imageProvider) =>
-                                            Container(
-                                              width: MediaQuery.of(context).size.width * 0.3,
-                                              height: MediaQuery.of(context).size.width * 0.6,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.purple.withOpacity(0.5),
-                                                      blurRadius: 20,
-                                                    ),
-                                                  ],
-                                                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                                  image: DecorationImage(
-                                                    image: NetworkImage(
-                                                        singerAllAlbum[index]
-                                                            .imageSource!),
-                                                    fit: BoxFit.fill,
-                                                  )
-                                              ),
-                                            ),
-                                        placeholder: (context, url) =>
-                                            SingerPageShimmerContainer(),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: MediaQuery.of(context).size.width * 0.02,
-                                    ),
-                                    Flexible(
-                                        flex: 1,
-                                        child: Text(singerAllAlbum[index].name!,
-                                          maxLines: 1,))
-                                  ],
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.width * 0.02,
                                 ),
-                              ),
-                            ),),
-
+                                Flexible(
+                                    flex: 1,
+                                    child: Text(singerAllAlbum[index].name!,
+                                      maxLines: 1,))
+                              ],
+                            ),
+                          ),
+                        );
+                      }else if(state.status.isError){
+                        return Center(child: Text("error"),);
+                      }
+                      return Container();
+                    },
                         childCount: singerAllAlbum.length
+
                     ),
 
                   )

@@ -15,6 +15,12 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
     on<GetNewAlbumEvent>(_mapGetNewAlbumEventToState);
     on<GetSingerAllAlbumEvent>(_mapGetSingerAllAlbumEventToState);
     on<GetAlbumAllSongsEvent>(_mapGetAlbumAllSongsEventToState);
+    on<ResetAlbumStateEvent>(_mapResetAlbumStateEventToState);
+  }
+
+  void _mapResetAlbumStateEventToState(
+      ResetAlbumStateEvent event, Emitter<AlbumState> emit) {
+    emit(AlbumState.initial());  // Reset the state to the initial empty state
   }
 
   void _mapGetNewAlbumEventToState(
