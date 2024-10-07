@@ -18,9 +18,7 @@ class SongRepository {
       if (response.statusCode == 200) {
         List<SongDataModel> allSongs = [];
         final data = jsonDecode(response.body);
-        print(data);
         final List<dynamic> allSongList = data['data'];
-        print(allSongList.length);
         for(int i = 0 ; i < allSongList.length ; i++){
           allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) +
               "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
@@ -62,9 +60,7 @@ class SongRepository {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? accessToken = prefs.getString('accessToken');
       final response = await api.get('/api/Music/GetOneMusic/$id', accessToken: accessToken!);
-      print("666666666666666666666666");
       if (response.statusCode == 200) {
-        print("333333333333333333");
         final data = jsonDecode(response.body);
         final song = data['data'];
 

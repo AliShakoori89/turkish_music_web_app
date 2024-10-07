@@ -20,23 +20,45 @@ class RecentlyPlaySongRepository {
     var recentlyPlayedSong = await helper.getAllRecentlyPlayedSong();
 
     List<AlbumDataMusicModel> allSong = [];
-    for(int i = 0 ; i < recentlyPlayedSong.length ; i++){
+    print(recentlyPlayedSong.length);
 
-      AlbumDataMusicModel albumDataMusicModel = AlbumDataMusicModel(
-          id: recentlyPlayedSong[i].id,
-          name: recentlyPlayedSong[i].songName,
-          singerName: recentlyPlayedSong[i].singerName,
-          minute: recentlyPlayedSong[i].audioFileMin,
-          second: recentlyPlayedSong[i].audioFileSec,
-          albumId: recentlyPlayedSong[i].audioFileAlbumId,
-          album: '',
-          fileSource: recentlyPlayedSong[i].audioFilePath,
-          imageSource: recentlyPlayedSong[i].imageFilePath,
-          categories: []
-      );
+    if(recentlyPlayedSong.length < 30){
+      for(int i = 0 ; i < recentlyPlayedSong.length ; i++){
 
-      allSong.add(albumDataMusicModel);
+        AlbumDataMusicModel albumDataMusicModel = AlbumDataMusicModel(
+            id: recentlyPlayedSong[i].id,
+            name: recentlyPlayedSong[i].songName,
+            singerName: recentlyPlayedSong[i].singerName,
+            minute: recentlyPlayedSong[i].audioFileMin,
+            second: recentlyPlayedSong[i].audioFileSec,
+            albumId: recentlyPlayedSong[i].audioFileAlbumId,
+            album: '',
+            fileSource: recentlyPlayedSong[i].audioFilePath,
+            imageSource: recentlyPlayedSong[i].imageFilePath,
+            categories: []
+        );
+        allSong.add(albumDataMusicModel);
+      }
+    }else{
+      for(int i = 0 ; i < 30 ; i++){
+
+        AlbumDataMusicModel albumDataMusicModel = AlbumDataMusicModel(
+            id: recentlyPlayedSong[i].id,
+            name: recentlyPlayedSong[i].songName,
+            singerName: recentlyPlayedSong[i].singerName,
+            minute: recentlyPlayedSong[i].audioFileMin,
+            second: recentlyPlayedSong[i].audioFileSec,
+            albumId: recentlyPlayedSong[i].audioFileAlbumId,
+            album: '',
+            fileSource: recentlyPlayedSong[i].audioFilePath,
+            imageSource: recentlyPlayedSong[i].imageFilePath,
+            categories: []
+        );
+        allSong.add(albumDataMusicModel);
+      }
     }
+
+
     return allSong;
   }
 

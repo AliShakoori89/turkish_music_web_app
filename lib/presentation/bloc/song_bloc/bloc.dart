@@ -59,9 +59,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     try {
       emit(state.copyWith(status: SongStatus.loading));
 
-      print("song      :   "+event.songID.toString());
       AlbumDataMusicModel song = await songRepo.getSongByID(event.songID);
-      print("song      :   "+song.singerName.toString());
 
       emit(
         state.copyWith(

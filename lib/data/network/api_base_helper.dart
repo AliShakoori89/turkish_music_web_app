@@ -34,10 +34,8 @@ class ApiBaseHelper {
           host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
 
       final response = await http.get(address, headers: headers);
-      print("response 2                "+response.statusCode.toString());
       return response;
     } on SocketException {
-      print("4444444444444444444444");
       throw FetchDataException('No Internet connection');
     }
   }

@@ -146,30 +146,31 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
         backgroundColor: const Color(0xff192028),
         body: BlocListener<UserBloc, UserState>(
           listener: (context, state){
-            if(state.status.isSuccess){
-              Fluttertoast.showToast(
-                  msg: "Get verification code successfully .",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.TOP,
-                  timeInSecForIosWeb: 3,
-                  backgroundColor: const Color(
-                      0xFF00B01E).withOpacity(0.2),
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
-            }else if(state.status.isError){
-              Fluttertoast.showToast(
-                  msg: "Get verification code Field .",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.TOP,
-                  timeInSecForIosWeb: 3,
-                  backgroundColor: const Color(
-                      0xFFC20808).withOpacity(0.2),
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
+            if(mounted){
+              if(state.status.isSuccess){
+                Fluttertoast.showToast(
+                    msg: "Get verification code successfully .",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.TOP,
+                    timeInSecForIosWeb: 3,
+                    backgroundColor: const Color(
+                        0xFF00B01E).withOpacity(0.2),
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              }else if(state.status.isError){
+                Fluttertoast.showToast(
+                    msg: "Get verification code Field .",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.TOP,
+                    timeInSecForIosWeb: 3,
+                    backgroundColor: const Color(
+                        0xFFC20808).withOpacity(0.2),
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              }
             }
-
           },
           child: SingleChildScrollView(
             child: SizedBox(

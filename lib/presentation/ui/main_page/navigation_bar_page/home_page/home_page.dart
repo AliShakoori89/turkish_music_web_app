@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     context
         .read<MiniPlayingContainerBloc>()
         .add(ReadSongIDForMiniPlayingSongContainerEvent());
-    print("5555555555555555555555555555555555555555555555555555555555555555555555555555555");
     super.initState();
   }
 
