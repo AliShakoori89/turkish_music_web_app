@@ -46,6 +46,8 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/download_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'data/model/album_model.dart';
 import 'data/model/singer_model.dart';
@@ -241,11 +243,21 @@ class _MyAppState extends State<MyApp> {
                         }
                     ),
                     GoRoute(
+                        path: DownloadPage.routeName,
+                        builder: (context, state){
+                          return DownloadPage();
+                        }
+                    ),
+                    GoRoute(
+                        path: PlaylistPage.routeName,
+                        builder: (context, state){
+                          return PlaylistPage();
+                        }
+                    ),
+                    GoRoute(
                       path: 'PlaySongPage',
                       name: PlaySongPage.routeName,
                       pageBuilder: (context, state) {
-                        final extra = state.extra as Map<String, dynamic>?;
-
                         return CustomTransitionPage(
                           transitionDuration: Duration(seconds: 1),
                           child: PlaySongPage(),

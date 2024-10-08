@@ -33,12 +33,13 @@ class PreviousButton extends StatelessWidget {
 
           context
               .read<AudioControlBloc>()
-              .add(PlayPreviousSongEvent(currentAlbum: albumSongs));
+              .add(PlayPreviousSongEvent(
+              currentAlbum: albumSongs,
+              singerName: singerName));
 
           context
               .read<PlayButtonStateBloc>()
               .add(SetPlayButtonStateEvent(playButtonState: true));
-
 
           context
               .read<MiniPlayingContainerBloc>()
@@ -46,21 +47,6 @@ class PreviousButton extends StatelessWidget {
               songID: songID,
               albumID: albumID));
 
-          SaveSongModel recentlyPlayedSongIdModel = SaveSongModel(
-              id: songID,
-              singerName: singerName,
-              audioFileAlbumId: albumID,
-              audioFileSec: audioFileSec,
-              audioFileMin: audioFileMin,
-              audioFilePath: audioFilePath,
-              imageFilePath: imageFilePath,
-              songName: songName
-          );
-
-          context
-              .read<RecentlyPlaySongBloc>()
-              .add(SavePlayedSongIDToRecentlyPlayedEvent(
-              recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
         },
         icon: Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

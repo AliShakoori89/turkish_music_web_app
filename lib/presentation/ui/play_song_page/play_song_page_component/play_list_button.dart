@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../main_page/navigation_bar_page/music_page/playlist_page.dart';
 
 class PlayListButton extends StatelessWidget {
   const PlayListButton({super.key});
@@ -7,7 +10,8 @@ class PlayListButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-
+        context.push(
+            '/'+PlaylistPage.routeName);
       },
       child: Icon(
         size: MediaQuery.of(context).size.height / 40,

@@ -5,6 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../const/no_image.dart';
+import '../../../const/shimmer_container/playing_page_image_shimmer.dart';
 
 class Progressbar extends StatefulWidget {
   const Progressbar({super.key, required this.minute, required this.second, required this.songImage});
@@ -88,17 +89,7 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                                             fit: BoxFit.fill),
                                       ),
                                     ),
-                                    placeholder: (context, url) => Shimmer.fromColors(
-                                      baseColor: Colors.black12,
-                                      highlightColor: Colors.grey[400]!,
-                                      child: Container(
-                                          decoration: const BoxDecoration(
-                                              color: Colors.black12,
-                                              shape: BoxShape.circle),
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.width * 0.2
-                                      ),
-                                    ),
+                                    placeholder: (context, url) => PlayingPageImageShimmer(),
                                     errorWidget: (context, url, error) => NoImage(),
                                   ),
                                 );

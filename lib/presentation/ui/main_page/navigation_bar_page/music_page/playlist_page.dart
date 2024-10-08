@@ -10,6 +10,9 @@ import '../../../play_song_page/play_song_page.dart';
 
 
 class PlaylistPage extends StatelessWidget {
+
+  static String routeName = "PlaylistPage";
+
   const PlaylistPage({super.key});
 
   @override

@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class DownloadPage extends StatefulWidget {
+
+  static String routeName = "DownloadPage";
+
   const DownloadPage({Key? key}) : super(key: key);
 
   @override

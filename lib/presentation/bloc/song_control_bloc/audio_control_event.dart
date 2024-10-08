@@ -12,8 +12,9 @@ class PlaySongEvent extends AudioControlEvent {
 
 class PlayNextSongEvent extends AudioControlEvent {
   final List<AlbumDataMusicModel> currentAlbum;
+  final String singerName;
 
-  PlayNextSongEvent({required this.currentAlbum});
+  PlayNextSongEvent({required this.currentAlbum, required this.singerName});
 }
 
 class PlayNextLocalSongEvent extends AudioControlEvent {
@@ -24,8 +25,9 @@ class PlayNextLocalSongEvent extends AudioControlEvent {
 
 class PlayPreviousSongEvent extends AudioControlEvent {
   final List<AlbumDataMusicModel> currentAlbum;
+  final String singerName;
 
-  PlayPreviousSongEvent({required this.currentAlbum});
+  PlayPreviousSongEvent({required this.currentAlbum, required this.singerName});
 }
 
 class PlayPreviousLocalSongEvent extends AudioControlEvent {
@@ -40,7 +42,8 @@ class PlaySelectedSongEvent extends AudioControlEvent {
   final SongDataModel currentSong;
   final List<AlbumDataMusicModel> currentAlbum;
 
-  PlaySelectedSongEvent({required this.currentSong, required this.currentAlbum});
+  PlaySelectedSongEvent({required this.currentSong
+    , required this.currentAlbum});
 }
 
 class initialSongEvent extends AudioControlEvent {}

@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MiniPlayingContainerRepository {
 
   FutureOr<dynamic> firstShowMiniPlayingContainer() async{
-    print("#################################################################################################");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('firstShowMiniPlayingContainer', true);
   }

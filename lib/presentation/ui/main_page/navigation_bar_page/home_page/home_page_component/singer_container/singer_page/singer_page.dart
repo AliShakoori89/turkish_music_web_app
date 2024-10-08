@@ -41,12 +41,6 @@ class _SingerPageState extends State<SingerPage> {
   }
 
   @override
-  void dispose() {
-    BlocProvider.of<AlbumBloc>(context).close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     var artistDetail = GoRouterState.of(context).extra! as SingerDataModel;
@@ -162,7 +156,6 @@ class _SingerPageState extends State<SingerPage> {
                           },
                           child: Padding(
                             padding: EdgeInsets.only(
-                              // bottom: MediaQuery.of(context).size.height * 0.02,
                               top: MediaQuery.of(context).size.height * 0.02,
                             ),
                             child: Column(

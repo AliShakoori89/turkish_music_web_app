@@ -20,12 +20,35 @@ class AlbumRepository {
 
   FutureOr<dynamic> getSingerAllAlbum(int singerID) async {
     ApiBaseHelper api = ApiBaseHelper();
+    List<String> list = [];
+    List<AlbumDataModel> list1 = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? accessToken = prefs.getString('accessToken');
     final response = await api.get('/api/Album/GetAlbumsBySingerId/$singerID', accessToken: accessToken!);
     final productJson = json.decode(response.body);
     var singerAllAlbum = AlbumModel.fromJson(productJson);
-    return singerAllAlbum.data;
+    for(int i = 0 ; i < singerAllAlbum.data!.length ; i++){
+      list.add(singerAllAlbum.data![i].name!);
+    }
+
+    print(list);
+    list.sort((a, b) {
+      var yearA = extractYearOrAlbum(a);
+      var yearB = extractYearOrAlbum(b);
+      if (int.tryParse(yearB) != null && int.tryParse(yearA) != null) {
+        return int.parse(yearB).compareTo(int.parse(yearA));
+      }
+      return yearA.compareTo(yearA);
+    });
+
+    for(int i = 0 ; i < singerAllAlbum.data!.length ; i++){
+      for(int j = 0 ; j < singerAllAlbum.data!.length ; j++){
+        if(list[i] == singerAllAlbum.data![j].name!){
+          list1.add(singerAllAlbum.data![j]);
+        }
+      }
+    }
+    return list1;
   }
 
   FutureOr<dynamic> getAlbumAllSongsByID(int albumID) async {
@@ -36,5 +59,16 @@ class AlbumRepository {
     final productJson = json.decode(response.body);
     var albumSongs = AlbumDataModel.fromJson(productJson['data']);
     return albumSongs.musics;
+  }
+
+  String extractYearOrAlbum(String album) {
+    RegExp regExp = RegExp(r'\((\d{4})\)'); // Regular expression to match year (4 digits inside parentheses)
+    Match? match = regExp.firstMatch(album);
+
+    if (match != null) {
+      return match.group(1)!; // Return the year as a string if found
+    }
+
+    return album; // Return the original album name if no year is found
   }
 }

@@ -11,6 +11,7 @@ import '../../../../../data/model/song_model.dart';
 import '../../../bloc/play_button_state_bloc/bloc.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
 import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
+import '../../../const/shimmer_container/playing_page_album_song_list_shimmer.dart';
 
 class ContainerAllSongsList extends StatelessWidget {
 
@@ -59,27 +60,12 @@ class ContainerAllSongsList extends StatelessWidget {
                 .read<AudioControlBloc>()
                 .add(PlaySelectedSongEvent(
                 currentSong: songDataModel,
-                currentAlbum: categoryAllSongs
+                currentAlbum: categoryAllSongs,
             ));
 
             context
                 .read<PlayButtonStateBloc>()
                 .add(SetPlayButtonStateEvent(playButtonState: true));
-
-            // context.push(
-            //   '/'+PlaySongPage.routeName,
-            //   extra: {
-            //     'songName': songDataModel.name,
-            //     'songFile': newPath,
-            //     'songID': songDataModel.id!,
-            //     'singerName': singerName,
-            //     'songImage': songDataModel.imageSource,
-            //     'albumID': songDataModel.albumId!,
-            //     'pageName': "PlaySongPage",
-            //     'albumSongList': categoryAllSongs,
-            //     'songDataModel': songDataModel,
-            //   },
-            // );
 
             },
           child: Container(
@@ -126,16 +112,7 @@ class ContainerAllSongsList extends StatelessWidget {
                                       ),
                                     ),
                                 placeholder: (context, url) =>
-                                    Shimmer.fromColors(
-                                      baseColor: Colors.black12,
-                                      highlightColor: Colors.grey[400]!,
-                                      child: Container(
-                                          decoration: const BoxDecoration(
-                                              color: Colors.black12,
-                                              shape: BoxShape.circle),
-                                          width: MediaQuery.of(context).size.width * 0.2,
-                                          height: MediaQuery.of(context).size.width * 0.2),
-                                    ),
+                                PlayingPageAlbumSongListShimmer(),
                                 errorWidget: (context, url, error) => NoImage()),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),

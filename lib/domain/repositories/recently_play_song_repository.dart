@@ -20,7 +20,6 @@ class RecentlyPlaySongRepository {
     var recentlyPlayedSong = await helper.getAllRecentlyPlayedSong();
 
     List<AlbumDataMusicModel> allSong = [];
-    print(recentlyPlayedSong.length);
 
     if(recentlyPlayedSong.length < 30){
       for(int i = 0 ; i < recentlyPlayedSong.length ; i++){
