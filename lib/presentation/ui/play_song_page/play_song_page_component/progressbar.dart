@@ -52,6 +52,9 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return StreamBuilder(
         stream: BlocProvider.of<AudioControlBloc>(context).positionStream,
         builder: ((context, snapshot) {
@@ -101,9 +104,13 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.width / 10
-                      ),
+                      padding: orientation == Orientation.portrait
+                          ? EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.width / 10,)
+                          : EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.width / 20,
+                          right: MediaQuery.of(context).size.width / 14,
+                          left: MediaQuery.of(context).size.width / 14,),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [Row(

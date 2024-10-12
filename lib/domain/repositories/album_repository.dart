@@ -11,11 +11,16 @@ class AlbumRepository {
   final String? apiKey = dotenv.env['map.apikey'];
 
   FutureOr<dynamic> getNewAlbum() async {
+    List<NewAlbumDataModel> list = [];
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Album/GetNewAlbums');
     final productJson = json.decode(response.body);
-    var newDongData = NewAlbumModel.fromJson(productJson);
-    return newDongData;
+    var newAlbumData = NewAlbumModel.fromJson(productJson);
+    for(int i = newAlbumData.data!.length-4; i < newAlbumData.data!.length; i++){
+      list.add(newAlbumData.data![i]);
+    }
+    print(list);
+    return list;
   }
 
   FutureOr<dynamic> getSingerAllAlbum(int singerID) async {

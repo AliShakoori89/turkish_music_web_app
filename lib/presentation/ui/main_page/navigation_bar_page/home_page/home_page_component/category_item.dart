@@ -36,7 +36,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                 vertical: MediaQuery.of(context).size.height * 0.03),
             height: orientation == Orientation.portrait
                 ? MediaQuery.of(context).size.height * 0.2
-                : MediaQuery.of(context).size.height * 0.5,
+                : MediaQuery.of(context).size.height * 0.35,
             width: double.infinity,
             child: AnimatedListView(
               duration: 100,
@@ -58,6 +58,9 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                       child: CachedNetworkImage(
                         imageUrl: state.category[index].imageSource,
                         imageBuilder: (context, imageProvider) => Container(
+                          width: orientation == Orientation.portrait
+                              ? MediaQuery.of(context).size.width * 0.3
+                              : MediaQuery.of(context).size.width * 0.15,
                           decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
@@ -71,7 +74,6 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                                   fit: BoxFit.fill
                               )
                           ),
-                          width: MediaQuery.of(context).size.width * 0.3,
                         ),
                         placeholder: (context, url) => CategoryShimmerContainer(shimmerLength: 6,),
                         errorWidget: (context, url, error) => Icon(Icons.error),

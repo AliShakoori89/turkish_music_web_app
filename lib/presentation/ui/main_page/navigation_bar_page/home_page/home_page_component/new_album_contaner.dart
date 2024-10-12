@@ -29,7 +29,6 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
   Widget build(BuildContext context) {
 
     var height = MediaQuery.of(context).size.height;
-    print(height);
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Column(
@@ -53,7 +52,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                   ? height < 670
                   ? MediaQuery.of(context).size.height * 0.63
                   : MediaQuery.of(context).size.height * 0.51
-                  : MediaQuery.of(context).size.height / 5,
+                  : MediaQuery.of(context).size.height / 2,
               child: orientation == Orientation.portrait
                   ? AnimatedGridView(
                   physics: const NeverScrollableScrollPhysics(),
@@ -62,89 +61,86 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                   crossAxisSpacing: 50,
                   cacheExtent: 1000,
                   children: List.generate(
-                      newAlbum.data!.length,
-                          (index) {
-                        return GestureDetector(
-                          onTap: (){
-                            var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
-                                + "s"
-                                + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
+                      newAlbum.length, (index) {
+                    return GestureDetector(
+                      onTap: (){
+                        var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
+                            + "s"
+                            + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
 
-                            var newPath = path.replaceAll(" ", "%20");
+                        var newPath = path.replaceAll(" ", "%20");
 
-                            SongDataModel songDataModel = SongDataModel(
-                                id : state.singerAllAlbum[index].musics![0].id,
-                                name: state.singerAllAlbum[index].musics![0].name,
-                                imageSource: state.singerAllAlbum[index].musics![0].imageSource,
-                                fileSource: newPath,
-                                minute: state.singerAllAlbum[index].musics![0].minute,
-                                second: state.singerAllAlbum[index].musics![0].second,
-                                singerName: newAlbum.data![index].singer!.name!,
-                                album: null,
-                                albumId: state.singerAllAlbum[index].id,
-                                categories: null
-                            );
-
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => BlocProvider(
-                            //           create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                            //               songModel: songDataModel
-                            //           )),
-                            //           child: PlaySongPage(
-                            //             songName: state.singerAllAlbum[index].name!,
-                            //             songFile: newPath,
-                            //             songID: songDataModel.id!,
-                            //             singerName: songDataModel.singerName!,
-                            //             songImage: state.singerAllAlbum[index].imageSource!,
-                            //             albumID: songDataModel.albumId!,
-                            //             pageName: "SingerPage",
-                            //             albumSongList: state.singerAllAlbum[index].musics!,
-                            //             orientation: widget.orientation,
-                            //           ),
-
-                                    // )));
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: CachedNetworkImage(
-                                    imageUrl: newAlbum.data![index].imageSource!,
-                                    imageBuilder: (context, imageProvider) => Container(
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                              Colors.purple.withOpacity(0.5),
-                                              blurRadius: 10.0,
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                              image: NetworkImage(newAlbum
-                                                  .data![index].imageSource!),
-                                              fit: BoxFit.fill)),
-                                      width: double.infinity,
-                                    ),
-                                    placeholder: (context, url) => NewSongShimmerContainer(),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                  )),
-                              Expanded(
-                                flex: 2,
-                                child: UnderImageSingerAndSongName(
-                                    singerName: newAlbum.data![index].singer?.name,
-                                    albumName: newAlbum.data![index].name,
-                                    isArtist: true),
-                              ),
-                            ],
-                          ),
+                        SongDataModel songDataModel = SongDataModel(
+                            id : state.singerAllAlbum[index].musics![0].id,
+                            name: state.singerAllAlbum[index].musics![0].name,
+                            imageSource: state.singerAllAlbum[index].musics![0].imageSource,
+                            fileSource: newPath,
+                            minute: state.singerAllAlbum[index].musics![0].minute,
+                            second: state.singerAllAlbum[index].musics![0].second,
+                            singerName: newAlbum[index].singer!.name,
+                            album: null,
+                            albumId: state.singerAllAlbum[index].id,
+                            categories: null
                         );
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => BlocProvider(
+                        //           create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
+                        //               songModel: songDataModel
+                        //           )),
+                        //           child: PlaySongPage(
+                        //             songName: state.singerAllAlbum[index].name!,
+                        //             songFile: newPath,
+                        //             songID: songDataModel.id!,
+                        //             singerName: songDataModel.singerName!,
+                        //             songImage: state.singerAllAlbum[index].imageSource!,
+                        //             albumID: songDataModel.albumId!,
+                        //             pageName: "SingerPage",
+                        //             albumSongList: state.singerAllAlbum[index].musics!,
+                        //             orientation: widget.orientation,
+                        //           ),
+
+                        // )));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                              flex: 4,
+                              child: CachedNetworkImage(
+                                imageUrl: newAlbum[index].imageSource!,
+                                imageBuilder: (context, imageProvider) => Container(
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color:
+                                          Colors.purple.withOpacity(0.5),
+                                          blurRadius: 10.0,
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(15),
+                                      image: DecorationImage(
+                                          image: NetworkImage(newAlbum[index].imageSource!),
+                                          fit: BoxFit.fill)),
+                                  width: double.infinity,
+                                ),
+                                placeholder: (context, url) => NewSongShimmerContainer(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              )),
+                          Expanded(
+                            flex: 2,
+                            child: UnderImageSingerAndSongName(
+                                singerName: newAlbum[index].singer?.name,
+                                albumName: newAlbum[index].name,
+                                isArtist: true),
+                          ),
+                        ],
+                      ),
+                    );
                       }
-                  )
-              )
+                  ))
                   : AnimatedGridView(
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 4,
@@ -152,7 +148,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                   crossAxisSpacing: 50,
                   cacheExtent: 1000,
                   children: List.generate(
-                      newAlbum.data!.length,
+                      newAlbum.length,
                           (index) {
                         return GestureDetector(
                           onTap: (){
@@ -169,7 +165,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                 fileSource: newPath,
                                 minute: state.singerAllAlbum[index].musics![0].minute,
                                 second: state.singerAllAlbum[index].musics![0].second,
-                                singerName: newAlbum.data![index].singer!.name!,
+                                singerName: newAlbum[index].singer!.name!,
                                 album: null,
                                 albumId: state.singerAllAlbum[index].id,
                                 categories: null
@@ -187,7 +183,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                               Expanded(
                                   flex: 4,
                                   child: CachedNetworkImage(
-                                    imageUrl: newAlbum.data![index].imageSource!,
+                                    imageUrl: newAlbum[index].imageSource!,
                                     imageBuilder: (context, imageProvider) => Container(
                                       decoration: BoxDecoration(
                                           boxShadow: [
@@ -199,8 +195,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                           ],
                                           borderRadius: BorderRadius.circular(15),
                                           image: DecorationImage(
-                                              image: NetworkImage(newAlbum
-                                                  .data![index].imageSource!),
+                                              image: NetworkImage(newAlbum[index].imageSource!),
                                               fit: BoxFit.fill)),
                                       width: double.infinity,
                                     ),
@@ -210,8 +205,8 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                               Expanded(
                                 flex: 2,
                                 child: UnderImageSingerAndSongName(
-                                    singerName: newAlbum.data![index].singer?.name,
-                                    albumName: newAlbum.data![index].name,
+                                    singerName: newAlbum[index].singer?.name,
+                                    albumName: newAlbum[index].name,
                                     isArtist: true),
                               ),
                             ],

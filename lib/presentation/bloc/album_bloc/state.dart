@@ -25,19 +25,14 @@ class AlbumState extends Equatable{
 
   static AlbumState initial() => AlbumState(
     status: AlbumStatus.initial,
-    newAlbum: NewAlbumModel(
-      message: "",
-      data: [],
-      lastPage: 0,
-      success: false
-    ),
+    newAlbum: <NewAlbumDataModel> [],
     singerAllAlbum: <AlbumDataModel>[],
     albumAllSongs: <AlbumDataMusicModel>[],
     albumLength: 0
   );
 
   final AlbumStatus status;
-  final NewAlbumModel newAlbum;
+  final List<NewAlbumDataModel> newAlbum;
   final List<AlbumDataModel> singerAllAlbum;
   final List<AlbumDataMusicModel> albumAllSongs;
   final int albumLength;
@@ -48,7 +43,7 @@ class AlbumState extends Equatable{
 
   AlbumState copyWith({
     AlbumStatus? status,
-    NewAlbumModel? newAlbum,
+    List<NewAlbumDataModel>? newAlbum,
     List<AlbumDataModel>? singerAllAlbum,
     List<AlbumDataMusicModel>? albumAllSongs,
     int? albumLength

@@ -103,7 +103,7 @@ class _MainPageState extends State<MainPage> {
                     selectedIndex: currentRoute,
                     height: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height * 0.3
-                        : MediaQuery.of(context).size.height * 0.3,
+                        : MediaQuery.of(context).size.height * 0.4,
                     width: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.width * 0.12
                         : MediaQuery.of(context).size.width * 0.04,
