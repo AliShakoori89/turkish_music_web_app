@@ -4,12 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:search_page/search_page.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
-import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_bloc/state.dart';
-import '../../../const/searching_error.dart';
 import '../../play_song_page/play_song_page.dart';
 
 class searchPage extends StatefulWidget {
@@ -19,6 +17,12 @@ class searchPage extends StatefulWidget {
 }
 
 class _searchPageState extends State<searchPage> {
+
+  @override
+  void initState() {
+    BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +61,9 @@ class _searchPageState extends State<searchPage> {
                                 delegate: SearchPage(
                                   onQueryUpdate: print,
                                   items: music,
-                                  searchLabel: 'Search Singer or Track name ',
+                                  searchLabel: 'Search Track Name ',
                                   suggestion: const Center(
-                                    child: Text('Filter track by track name or singer'),
+                                    child: Text('Filter track by track name'),
                                   ),
                                   failure: const Center(
                                     child: Text('Not found :('),
