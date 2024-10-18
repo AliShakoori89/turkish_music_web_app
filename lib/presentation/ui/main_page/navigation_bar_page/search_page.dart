@@ -3,25 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:search_page/search_page.dart';
+import 'package:searchfield/searchfield.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_bloc/state.dart';
+import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../play_song_page/play_song_page.dart';
 
-class searchPage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
+
+  static String routeName = "SearchPage";
 
   @override
-  State<searchPage> createState() => _searchPageState();
+  State<SearchPage> createState() => _searchPageState();
 }
 
-class _searchPageState extends State<searchPage> {
+class _searchPageState extends State<SearchPage> with SingleTickerProviderStateMixin{
+
+  final charController = TextEditingController();
+  late TabController _tabController;
 
   @override
   void initState() {
-    BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent());
+    BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent(char: ""));
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
   }
 
   @override
@@ -32,116 +46,237 @@ class _searchPageState extends State<searchPage> {
       List<SongDataModel> music = state.allSongList;
       Orientation orientation = MediaQuery.of(context).orientation;
 
-
       return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Search Page',
+            style: TextStyle(
+              fontSize: 20,
+            ),),
+        ),
         body: SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: Text('Search Page',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  // give the tab bar a height [can change hheight to preferred height]
+                  Container(
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(
+                        25.0,
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
+                    ),
+                    child: TabBar(
+                      controller: _tabController,
+                      // give the indicator a decoration (color and border radius)
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          25.0,
+                        ),
+                        color: Colors.purple,
+                      ),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.black,
+                      tabs: [
+                        // first tab [you can add an icon using the icon property]
+                        Tab(
+                          text: 'Song',
+                        ),
+
+                        // second tab [you can add an icon using the icon property]
+                        Tab(
+                          text: 'Album',
+                        ),
+                      ],
+                    ),
+                  ),
+                  // tab bar view here
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        Padding(
                           padding: EdgeInsets.only(
-                              right: orientation == Orientation.portrait
-                                  ?  0
-                                  : 50
+                            left: 10,
+                            right: 10,
+                            top: 20
                           ),
-                          child: IconButton(
-                              onPressed: () => showSearch(
-                                context: context,
-                                delegate: SearchPage(
-                                  onQueryUpdate: print,
-                                  items: music,
-                                  searchLabel: 'Search Track Name ',
-                                  suggestion: const Center(
-                                    child: Text('Filter track by track name'),
-                                  ),
-                                  failure: const Center(
-                                    child: Text('Not found :('),
-                                  ),
-                                  filter: (musicItem) => [
-                                    musicItem.name],
-                                  // sort: (a, b) => a.compareTo(b),
-                                  builder: (musicItem) => GestureDetector(
-                                    onTap: (){
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: SearchField(
+                              controller: charController,
+                              hint: "Enter album and music name",
+                              itemHeight: 70,
+                              suggestions: music
+                                  .map(
+                                    (e) => SearchFieldListItem(
+                                  e.name!,
+                                  item: e,
+                                  // Use child to show Custom Widgets in the suggestions
+                                  // defaults to Text widget
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: InkWell(
+                                        onTap: (){
+                                          var path = e.fileSource!.substring(0, 4)
+                                              + "s"
+                                              + e.fileSource!.substring(4, e.fileSource!.length);
 
-                                      SongDataModel songDataModel = SongDataModel(
-                                        id : musicItem.id,
-                                        name: musicItem.name,
-                                        imageSource: musicItem.imageSource,
-                                        fileSource: musicItem.fileSource!.substring(0, 4)
-                                            + musicItem.fileSource!.substring(4, musicItem.fileSource!.length),
-                                        singerName: musicItem.singerName,
-                                        minute: musicItem.minute,
-                                        second: musicItem.second,
-                                        albumId: musicItem.albumId,
-                                      );
+                                          var newPath = path.replaceAll(" ", "%20");
 
-                                      context.push(
-                                        '/'+PlaySongPage.routeName,
-                                        extra: {
-                                          'songName': songDataModel.name,
-                                          'songFile': songDataModel.fileSource,
-                                          'songID': songDataModel.id!,
-                                          'singerName': songDataModel.singerName,
-                                          'songImage': songDataModel.imageSource!,
-                                          'albumID': songDataModel.albumId!,
-                                          'pageName': "SearchPage",
-                                          'albumSongList': <AlbumDataMusicModel>[],
-                                          'songDataModel': songDataModel,
+                                          SongDataModel songDataModel = SongDataModel(
+                                            id : e.id,
+                                            name: e.name,
+                                            imageSource: e.imageSource,
+                                            fileSource: newPath,
+                                            minute: e.minute,
+                                            second: e.second,
+                                            singerName: e.singerName,
+                                            album: null,
+                                            albumId: e.albumId,
+                                            categories: null,
+                                          );
+
+                                          context.push(
+                                            '/'+PlaySongPage.routeName,
+                                            extra: {
+                                              'songName': songDataModel.name,
+                                              'songFile': newPath,
+                                              'songID': songDataModel.id!,
+                                              'singerName': songDataModel.singerName,
+                                              'songImage': songDataModel.imageSource!,
+                                              'albumID': songDataModel.albumId!,
+                                              'pageName': "SearchPage",
+                                              'albumSongList': <AlbumDataMusicModel>[],
+                                              'songDataModel': songDataModel,
+                                            },
+                                          );
                                         },
-                                      );
-                                    },
-                                    child: ListTile(
-                                      title: Text(musicItem.name!),
-                                    ),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundImage: NetworkImage(e.imageSource!),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Text(e.name!)),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Text(e.singerName!,
+                                                      style: TextStyle(
+                                                          color: Colors.grey
+                                                      ),))
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
                                   ),
                                 ),
-                              ),
-                              icon: Icon(Icons.search)),
+                              ).toList(),
+                            )
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: DelayedWidget(// Not required
-                      animation: DelayedAnimations.SLIDE_FROM_BOTTOM,// Not required
-                      child: ListView.builder(
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: GestureDetector(
-                              onTap: (){
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 10,
+                              right: 10
+                          ),
+                          child: SearchField(
+                            controller: charController,
+                            hint: "Enter album and music name",
+                            itemHeight: 70,
+                            suggestions: music
+                                .map(
+                                  (e) => SearchFieldListItem(
+                                e.name!,
+                                item: e,
+                                // Use child to show Custom Widgets in the suggestions
+                                // defaults to Text widget
+                                child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: (){
+                                        var path = e.fileSource!.substring(0, 4)
+                                            + "s"
+                                            + e.fileSource!.substring(4, e.fileSource!.length);
 
-                              },
-                              child: music.isNotEmpty
-                                  ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(music[index].name!),
-                                  Text(music[index].singerName!,
-                                    style: TextStyle(
-                                        color: Colors.white.withOpacity(0.5)
-                                    ),),
-                                ],
-                              )
-                                  :Container(),
-                            ),
-                          );
-                        },
-                      )),
-                )],
+                                        var newPath = path.replaceAll(" ", "%20");
+
+                                        SongDataModel songDataModel = SongDataModel(
+                                          id : e.id,
+                                          name: e.name,
+                                          imageSource: e.imageSource,
+                                          fileSource: newPath,
+                                          minute: e.minute,
+                                          second: e.second,
+                                          singerName: e.singerName,
+                                          album: null,
+                                          albumId: e.albumId,
+                                          categories: null,
+                                        );
+
+                                        context.push(
+                                          '/'+PlaySongPage.routeName,
+                                          extra: {
+                                            'songName': songDataModel.name,
+                                            'songFile': newPath,
+                                            'songID': songDataModel.id!,
+                                            'singerName': songDataModel.singerName,
+                                            'songImage': songDataModel.imageSource!,
+                                            'albumID': songDataModel.albumId!,
+                                            'pageName': "SearchPage",
+                                            'albumSongList': <AlbumDataMusicModel>[],
+                                            'songDataModel': songDataModel,
+                                          },
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: NetworkImage(e.imageSource!),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text(e.name!)),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Text(e.singerName!,
+                                                    style: TextStyle(
+                                                        color: Colors.grey
+                                                    ),))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ).toList(),
+                          )
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             )
         ),
       );

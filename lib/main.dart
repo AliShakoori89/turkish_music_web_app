@@ -48,6 +48,7 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/download_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/playlist_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'data/model/album_model.dart';
 import 'data/model/singer_model.dart';
@@ -215,7 +216,7 @@ class _MyAppState extends State<MyApp> {
                   builder: (context, state){
                     return isOffline ?
                     widget.isLoggedIn
-                        ? MainPage()
+                        ? SearchPage()
                         : AuthenticatePage()
                         : const ErrorInternetConnectionPage();
                   },
@@ -234,6 +235,12 @@ class _MyAppState extends State<MyApp> {
                       path: SingerPage.routeName,
                       builder: (context, state){
                         return SingerPage();
+                      },
+                    ),
+                    GoRoute(
+                      path: SearchPage.routeName,
+                      builder: (context, state){
+                        return SearchPage();
                       },
                     ),
                     GoRoute(

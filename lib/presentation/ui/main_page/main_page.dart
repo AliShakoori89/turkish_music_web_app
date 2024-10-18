@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: searchPage(),
+          child: SearchPage(),
         ),
       ),
     ];

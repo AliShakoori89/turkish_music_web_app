@@ -40,7 +40,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
     try {
       emit(state.copyWith(status: SongStatus.loading));
       final List<SongDataModel> allSongs = [];
-      final List<SongDataModel> songsList = await songRepo.getAllSongs();
+      final List<SongDataModel> songsList = await songRepo.getAllSongs(event.char);
       allSongs.addAll(songsList);
 
       emit(

@@ -10,19 +10,23 @@ class SongRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  FutureOr<dynamic> getAllSongs() async {
+  FutureOr<dynamic> getAllSongs(String char) async {
     ApiBaseHelper api = ApiBaseHelper();
 
     try {
-      final response = await api.get('/api/Music/GetAll', page: "1", count: "111");
+      final response = await api.get('/api/Music/GetAll', page: "1", count: "2000", searchChar: char);
+      print(char);
       if (response.statusCode == 200) {
         List<SongDataModel> allSongs = [];
         final data = jsonDecode(response.body);
         final List<dynamic> allSongList = data['data'];
-        for(int i = 0 ; i < allSongList.length ; i++){
-          allSongList[i]['fileSource'] = allSongList[i]['fileSource'].substring(0, 4) +
-              "s" +allSongList[i]['fileSource'].substring(4, allSongList[i]['fileSource'].length);
-        }
+        print("111111111111111111111111111111111111111111111111111111");
+        print(allSongList);
+        // print("111111111111111111111111111111111111111111111111111111");
+        // for(int i = 0 ; i < allSongList.length-1 ; i++){
+        //   print("22222222222222222222222222222222222222222222222");
+        //
+        // }
         allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
         return allSongs;
       }
