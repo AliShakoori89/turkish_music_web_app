@@ -105,7 +105,9 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700
                                               ),),
-                                            Text(state.allRecentlySongs[index].singerName!,
+                                            Text(state.allRecentlySongs[index].singerName != null
+                                                ? state.allRecentlySongs[index].singerName!
+                                                : "",
                                               style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 14

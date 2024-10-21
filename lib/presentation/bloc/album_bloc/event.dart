@@ -4,6 +4,15 @@ abstract class AlbumEvent {
 
 class GetNewAlbumEvent extends AlbumEvent{}
 
+class GetAllAlbumEvent extends AlbumEvent{
+  final String char;
+
+  GetAllAlbumEvent({required this.char});
+
+  @override
+  List<Object> get props => [char];
+}
+
 class GetSingerAllAlbumEvent extends AlbumEvent{
   final int id;
 

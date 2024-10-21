@@ -27,12 +27,10 @@ class ContainerAllSongsList extends StatelessWidget {
 
     return ListView.builder(
       itemCount: categoryAllSongs.length,
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
       cacheExtent: 1000,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-
-        print(categoryAllSongs.first.imageSource);
 
         return InkWell(
           onTap: (){
@@ -87,16 +85,16 @@ class ContainerAllSongsList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 5,
                     child: Row(
                       children: [
-                        categoryAllSongs.first.imageSource != categoryAllSongs[1].imageSource &&
-                            categoryAllSongs.first.imageSource != categoryAllSongs.last.imageSource
+                        categoryAllSongs.first.singerName != categoryAllSongs[1].singerName &&
+                            categoryAllSongs.first.singerName != categoryAllSongs.last.singerName
                             ? Expanded(
                           flex: 1,
                           child: Container(
-                            height: MediaQuery.of(context).size.width / 13,
-                            width: MediaQuery.of(context).size.width / 12,
+                            height: 50,
+                            width: 40,
                             margin: const EdgeInsets.only(right: 5),
                             child: CachedNetworkImage(
                                 fit: BoxFit.cover,
@@ -123,9 +121,7 @@ class ContainerAllSongsList extends StatelessWidget {
                                     fit: BoxFit.cover)),
                           ),
                         )
-                            : Expanded(
-                            flex: 1,
-                            child: Container()),
+                            : Container(),
                         const SizedBox(width: 5,),
                         categoryAllSongs.isEmpty
                             ? Expanded(
@@ -166,12 +162,12 @@ class ContainerAllSongsList extends StatelessWidget {
                   ),
                   categoryAllSongs[index].name == songName
                       ? Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: SizedBox(
                           height: 50,
                           child: Icon(Icons.play_arrow)))
                       : Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Container())
                 ],
               ),

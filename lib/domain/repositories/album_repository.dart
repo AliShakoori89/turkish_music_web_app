@@ -10,6 +10,23 @@ class AlbumRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
+  FutureOr<dynamic> getAllAlbum(String char) async {
+    ApiBaseHelper api = ApiBaseHelper();
+
+    try {
+      final response = await api.get('/api/Album/GetAll', page: "", count: "", searchChar: char);
+      if (response.statusCode == 200) {
+        List<AlbumDataModel> allAlbum = [];
+        final data = jsonDecode(response.body);
+        final List<dynamic> allSongList = data['data'];
+        allAlbum = allSongList.map((e) => AlbumDataModel.fromJson(e)).toList();
+        return allAlbum;
+      }
+    }catch (e) {
+      throw e.toString();
+    }
+  }
+
   FutureOr<dynamic> getNewAlbum() async {
     List<NewAlbumDataModel> list = [];
     ApiBaseHelper api = ApiBaseHelper();

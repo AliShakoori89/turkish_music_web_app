@@ -17,6 +17,7 @@ class _AllSingerPageState extends State<AllSingerPage>{
 
   final alphabets = List.generate(26, (index) => String.fromCharCode(index + 65));
   int _searchIndex = 0;
+  String selectedAlphabet = '';
   final ItemScrollController _itemScrollController = ItemScrollController();
   final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
 
@@ -26,6 +27,7 @@ class _AllSingerPageState extends State<AllSingerPage>{
       List<SingerDataModel> allSinger = data['allSinger'] as List<SingerDataModel>;
       _searchIndex = allSinger.indexWhere((element) => element.name[0] == searchLetter);
       if (_searchIndex > 0) _itemScrollController.jumpTo(index: _searchIndex);
+      selectedAlphabet = searchLetter;
     });
   }
 
@@ -129,11 +131,14 @@ class _AllSingerPageState extends State<AllSingerPage>{
                 children: alphabets
                     .map((alphabet) => InkWell(
                   onTap: () {
+                    print(alphabet);
                     setSearchIndex(alphabet);
                   },
                   child: Text(
                     alphabet,
-                    style: const TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: selectedAlphabet  == alphabet ? 30 : 20,
+                      color: selectedAlphabet  == alphabet ? Colors.purple : Colors.white,),
                   ),
                 ))
                     .toList(),

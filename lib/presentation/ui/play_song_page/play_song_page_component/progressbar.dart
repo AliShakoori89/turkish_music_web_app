@@ -64,8 +64,8 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
             return Stack(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                    width: double.infinity,
+                    height: 450,
                     child: SleekCircularSlider(
                       appearance: CircularSliderAppearance(
                           customWidths: CustomSliderWidths(progressBarWidth: 10)),
@@ -103,47 +103,63 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: orientation == Orientation.portrait
-                          ? EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.width / 10,)
-                          : EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.width / 20,
-                          right: MediaQuery.of(context).size.width / 14,
-                          left: MediaQuery.of(context).size.width / 14,),
+                    // top: 300,
+                    child: Container(
+                      width: double.infinity,
+                      height: 30,
+                      margin: EdgeInsets.only(
+                        left: 10,
+                        right: 10
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Row(
-                          children: [
-                            Text(currentDurationMinute,
-                              style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.height / 60
-                              ),),
-                            Text(":",
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+                              Text(currentDurationMinute,
                                 style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.height / 60
-                                )),
-                            Text((currentDurationSecond % 60).toString().padLeft(2 , "0"),
-                                style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.height / 60
-                                )),
-                          ],
-                        ), Row(
-                          children: [
-                            Text("${widget.minute}".padLeft(2 , "0"),
-                                style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.height / 60
-                                )),
-                            Text(":",
-                                style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.height / 60
-                                )),
-                            Text("${widget.second}".padLeft(2 , "0"),
-                                style: TextStyle(
-                                    fontSize: MediaQuery.of(context).size.height / 60
-                                )),
-                          ],
-                        )],
+                                    fontSize: orientation == Orientation.portrait
+                                        ? MediaQuery.of(context).size.height / 60
+                                        : MediaQuery.of(context).size.height / 30
+                                ),),
+                              Text(":",
+                                  style: TextStyle(
+                                      fontSize: orientation == Orientation.portrait
+                                          ? MediaQuery.of(context).size.height / 60
+                                          : MediaQuery.of(context).size.height / 30
+                                  )),
+                              Text((currentDurationSecond % 60).toString().padLeft(2 , "0"),
+                                  style: TextStyle(
+                                      fontSize: orientation == Orientation.portrait
+                                          ? MediaQuery.of(context).size.height / 60
+                                          : MediaQuery.of(context).size.height / 30
+                                  )),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("${widget.minute}".padLeft(2 , "0"),
+                                  style: TextStyle(
+                                      fontSize: orientation == Orientation.portrait
+                                          ? MediaQuery.of(context).size.height / 60
+                                          : MediaQuery.of(context).size.height / 30
+                                  )),
+                              Text(":",
+                                  style: TextStyle(
+                                      fontSize: orientation == Orientation.portrait
+                                          ? MediaQuery.of(context).size.height / 60
+                                          : MediaQuery.of(context).size.height / 30
+                                  )),
+                              Text("${widget.second}".padLeft(2 , "0"),
+                                  style: TextStyle(
+                                      fontSize: orientation == Orientation.portrait
+                                          ? MediaQuery.of(context).size.height / 60
+                                          : MediaQuery.of(context).size.height / 30
+                                  )),
+                            ],
+                          )
+                        ],
                       ),
                     ),
                   ),

@@ -216,7 +216,7 @@ class _MyAppState extends State<MyApp> {
                   builder: (context, state){
                     return isOffline ?
                     widget.isLoggedIn
-                        ? SearchPage()
+                        ? MainPage()
                         : AuthenticatePage()
                         : const ErrorInternetConnectionPage();
                   },
