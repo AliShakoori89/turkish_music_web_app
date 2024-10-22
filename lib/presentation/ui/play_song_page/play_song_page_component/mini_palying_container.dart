@@ -68,9 +68,10 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
               return BlocBuilder<SongBloc, SongState>(
                   builder: (context, state) {
-                    if(state.status.isLoading){
-                      return LinearProgressIndicator();
-                    }else if(state.status.isSuccess){
+                    // if(state.status.isLoading){
+                    //   return LinearProgressIndicator();
+                    // }else
+                      if(state.status.isSuccess){
                       return Column(
                         children: [
                           const TopArrow(),

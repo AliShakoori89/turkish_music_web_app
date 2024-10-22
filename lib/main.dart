@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
@@ -28,7 +29,6 @@ import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
@@ -45,15 +45,26 @@ import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
-import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/download_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
-import 'data/model/album_model.dart';
-import 'data/model/singer_model.dart';
-import 'data/model/song_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' show json;
 
+/// The scopes required by this application.
+// #docregion Initialize
+const List<String> scopes = <String>[
+  'email',
+  'https://www.googleapis.com/auth/contacts.readonly',
+];
+
+GoogleSignIn googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: 'your-client_id.apps.googleusercontent.com',
+  scopes: scopes,
+);
+// #enddocregion Initialize
 
 FutureOr<void> main() async{
 
@@ -108,6 +119,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  GoogleSignInAccount? _currentUser;
+  bool _isAuthorized = false; // has granted permissions?
+  String _contactText = '';
+
   late ConnectivityResult _connectionStatus;
 
   final Connectivity _connectivity = Connectivity();
@@ -121,8 +137,103 @@ class _MyAppState extends State<MyApp> {
     _connectionStatus = ConnectivityResult.none;
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     checkInternetConnectionWithErrorHandling();
+
+    googleSignIn.onCurrentUserChanged
+        .listen((GoogleSignInAccount? account) async {
+// #docregion CanAccessScopes
+      // In mobile, being authenticated means being authorized...
+      bool isAuthorized = account != null;
+      // However, on web...
+      if (kIsWeb && account != null) {
+        isAuthorized = await googleSignIn.canAccessScopes(scopes);
+      }
+// #enddocregion CanAccessScopes
+
+      setState(() {
+        _currentUser = account;
+        _isAuthorized = isAuthorized;
+      });
+
+      // Now that we know that the user can access the required scopes, the app
+      // can call the REST API.
+      if (isAuthorized) {
+        unawaited(_handleGetContact(account!));
+      }
+    });
+
+    // In the web, _googleSignIn.signInSilently() triggers the One Tap UX.
+    //
+    // It is recommended by Google Identity Services to render both the One Tap UX
+    // and the Google Sign In button together to "reduce friction and improve
+    // sign-in rates" ([docs](https://developers.google.com/identity/gsi/web/guides/display-button#html)).
+    googleSignIn.signInSilently();
     super.initState();
   }
+
+  // Calls the People API REST endpoint for the signed-in user to retrieve information.
+  Future<void> _handleGetContact(GoogleSignInAccount user) async {
+    setState(() {
+      _contactText = 'Loading contact info...';
+    });
+    final http.Response response = await http.get(
+      Uri.parse('https://people.googleapis.com/v1/people/me/connections'
+          '?requestMask.includeField=person.names'),
+      headers: await user.authHeaders,
+    );
+    if (response.statusCode != 200) {
+      setState(() {
+        _contactText = 'People API gave a ${response.statusCode} '
+            'response. Check logs for details.';
+      });
+      print('People API ${response.statusCode} response: ${response.body}');
+      return;
+    }
+    final Map<String, dynamic> data =
+    json.decode(response.body) as Map<String, dynamic>;
+    final String? namedContact = _pickFirstNamedContact(data);
+    setState(() {
+      if (namedContact != null) {
+        _contactText = 'I see you know $namedContact!';
+      } else {
+        _contactText = 'No contacts to display.';
+      }
+    });
+  }
+
+  String? _pickFirstNamedContact(Map<String, dynamic> data) {
+    final List<dynamic>? connections = data['connections'] as List<dynamic>?;
+    final Map<String, dynamic>? contact = connections?.firstWhere(
+          (dynamic contact) => (contact as Map<Object?, dynamic>)['names'] != null,
+      orElse: () => null,
+    ) as Map<String, dynamic>?;
+    if (contact != null) {
+      final List<dynamic> names = contact['names'] as List<dynamic>;
+      final Map<String, dynamic>? name = names.firstWhere(
+            (dynamic name) =>
+        (name as Map<Object?, dynamic>)['displayName'] != null,
+        orElse: () => null,
+      ) as Map<String, dynamic>?;
+      if (name != null) {
+        return name['displayName'] as String?;
+      }
+    }
+    return null;
+  }
+
+  Future<void> _handleAuthorizeScopes() async {
+    final bool isAuthorized = await googleSignIn.requestScopes(scopes);
+    // #enddocregion RequestScopes
+    setState(() {
+      _isAuthorized = isAuthorized;
+    });
+    // #docregion RequestScopes
+    if (isAuthorized) {
+      unawaited(_handleGetContact(_currentUser!));
+    }
+    // #enddocregion RequestScopes
+  }
+
+  Future<void> _handleSignOut() => googleSignIn.disconnect();
 
   @override
   void dispose() {
@@ -153,6 +264,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    final GoogleSignInAccount? user = _currentUser;
 
     return MultiBlocProvider(
       providers: [
@@ -215,9 +328,9 @@ class _MyAppState extends State<MyApp> {
                   path: "/",
                   builder: (context, state){
                     return isOffline ?
-                    widget.isLoggedIn
+                    widget.isLoggedIn || user != null
                         ? MainPage()
-                        : AuthenticatePage()
+                        : AuthenticatePage(googleSignIn: googleSignIn)
                         : const ErrorInternetConnectionPage();
                   },
                   routes: [

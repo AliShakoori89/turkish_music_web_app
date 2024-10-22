@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
@@ -19,6 +20,10 @@ import '../../const/error_internet_connection_page.dart';
 import '../main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
+
+  late GoogleSignIn googleSignIn;
+
+  AuthenticatePage({super.key,required this.googleSignIn});
 
   @override
   State<AuthenticatePage> createState() => _AuthenticatePageState();
@@ -127,13 +132,20 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     controller2.forward();
   }
 
+  Future<void> _handleSignIn() async {
+    try {
+      await widget.googleSignIn.signIn();
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   void dispose() {
     controller1.dispose();
     controller2.dispose();
     _heartController.dispose();
     // Dispose of UserBloc
-    BlocProvider.of<UserBloc>(context).close();
     super.dispose();
   }
 
@@ -141,6 +153,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
         backgroundColor: const Color(0xff192028),
@@ -204,70 +217,80 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                     ),
                     child: Column(
                       children: [
-                        Expanded(
-                          flex: 9,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: size.height * .1),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(.7),
-                                fontSize: 50,
-                                fontFamily: "Salsa",
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1,
-                                wordSpacing: 4,
-                              ),
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * .1),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(.7),
+                              fontSize: 50,
+                              fontFamily: "Salsa",
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              wordSpacing: 4,
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 4,
-                          child: Column(
-                            children: [
-                              component1(
-                                  Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
-                              const SizedBox(height: 10,),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                      flex: 4,
-                                      child: component2(
-                                          'LOG IN',
-                                          2.58,
-                                          emailFormKey
-                                      )
-                                  ),
-                                  Spacer(
-                                    flex: 1,
-                                  ),
-                                  Expanded(
-                                    flex: 4,
-                                    child: component2(
-                                      'SIGN UP',
-                                      2.58,
-                                      emailFormKey,
-                                    ),
-                                  )
-
-                                ],
-                              ),
-                            ],
-                          ),
+                        SizedBox(
+                          height: orientation == Orientation.portrait
+                              ? size.height / 4
+                              : size.height / 8,
                         ),
-                        Expanded(
-                          flex: 6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              component2(
-                                'Login with google Account',
-                                2,
-                                emailFormKey,
+                        Column(
+                          children: [
+                            component1(
+                                Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
+                            const SizedBox(height: 10,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                component2(
+                                    'LOG IN',
+                                    2.58,
+                                    emailFormKey
+                                ),
+                                Spacer(
+                                  flex: 1,
+                                ),
+                                component2(
+                                  'SIGN UP',
+                                  2.58,
+                                  emailFormKey,
+                                ),
+
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: orientation == Orientation.portrait
+                              ? size.height / 4
+                              : size.height / 8,
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
+                            child: InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: _handleSignIn,
+                              child: Container(
+                                height: orientation == Orientation.portrait
+                                    ? size.height / 18
+                                    : size.height / 8,
+                                width: size.width / 3,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(.05),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  "Login with google Account",
+                                  style: TextStyle(color: Colors.white.withOpacity(.8)),
+                                ),
                               ),
-                              SizedBox(height: size.height * .05),
-                            ],
+                            ),
                           ),
                         ),
                       ],
@@ -334,6 +357,8 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
   Widget component2(String string, double width, GlobalKey<FormState> emailFormKey) {
     Size size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: BackdropFilter(
@@ -472,8 +497,10 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
           },
           child: Container(
-            height: size.width / 8,
-            width: size.width / width,
+            height: orientation == Orientation.portrait
+                ? size.height / 18
+                : size.height / 8,
+            width: size.width / 3,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(.05),
