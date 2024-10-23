@@ -146,6 +146,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     controller2.dispose();
     _heartController.dispose();
     // Dispose of UserBloc
+    // BlocProvider.of<UserBloc>(context).close();
     super.dispose();
   }
 
@@ -236,37 +237,21 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                               ? size.height / 4
                               : size.height / 8,
                         ),
-                        Column(
-                          children: [
-                            component1(
-                                Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
-                            const SizedBox(height: 10,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                component2(
-                                    'LOG IN',
-                                    2.58,
-                                    emailFormKey
-                                ),
-                                Spacer(
-                                  flex: 1,
-                                ),
-                                component2(
-                                  'SIGN UP',
-                                  2.58,
-                                  emailFormKey,
-                                ),
-
-                              ],
-                            ),
-                          ],
+                        component1(
+                            Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
+                        const SizedBox(height: 10,),
+                        component2(
+                            'LOG IN',
+                            2.58,
+                            emailFormKey
                         ),
-                        SizedBox(
-                          height: orientation == Orientation.portrait
-                              ? size.height / 4
-                              : size.height / 8,
+                        const SizedBox(height: 10,),
+                        component2(
+                          'SIGN UP',
+                          2.58,
+                          emailFormKey,
                         ),
+                        const SizedBox(height: 10,),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: BackdropFilter(
@@ -279,7 +264,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                 height: orientation == Orientation.portrait
                                     ? size.height / 18
                                     : size.height / 8,
-                                width: size.width / 3,
+                                width: size.width,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(.05),
@@ -500,7 +485,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             height: orientation == Orientation.portrait
                 ? size.height / 18
                 : size.height / 8,
-            width: size.width / 3,
+            width: size.width,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(.05),
