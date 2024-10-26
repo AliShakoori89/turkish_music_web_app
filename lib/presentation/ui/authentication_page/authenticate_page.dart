@@ -22,6 +22,7 @@ import '../main_page/main_page.dart';
 class AuthenticatePage extends StatefulWidget {
 
   late GoogleSignIn googleSignIn;
+  final String pageName = "AuthenticatePage";
 
   AuthenticatePage({super.key,required this.googleSignIn});
 
@@ -160,10 +161,10 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
         backgroundColor: const Color(0xff192028),
         body: BlocListener<UserBloc, UserState>(
           listener: (context, state){
-            if(mounted){
+            if (state.secondRegisterStatus == 'FirstLoginEvent' && state.status.isSuccess) {
               if(state.status.isSuccess){
                 Fluttertoast.showToast(
-                    msg: "Get verification code successfully .",
+                    msg: "Code sent to your email successfully .",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.TOP,
                     timeInSecForIosWeb: 3,
@@ -174,7 +175,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 );
               }else if(state.status.isError){
                 Fluttertoast.showToast(
-                    msg: "Get verification code Field .",
+                    msg: "Code sent to your email Field .",
                     toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.TOP,
                     timeInSecForIosWeb: 3,
@@ -185,6 +186,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 );
               }
             }
+
           },
           child: SingleChildScrollView(
             child: SizedBox(
@@ -218,25 +220,19 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                     ),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: size.height * .1),
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(.7),
-                              fontSize: 50,
-                              fontFamily: "Salsa",
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                              wordSpacing: 4,
-                            ),
+                        const SizedBox(height: 150,),
+                        Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(.7),
+                            fontSize: 50,
+                            fontFamily: "Salsa",
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                            wordSpacing: 4,
                           ),
                         ),
-                        SizedBox(
-                          height: orientation == Orientation.portrait
-                              ? size.height / 4
-                              : size.height / 8,
-                        ),
+                        Spacer(),
                         component1(
                             Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
                         const SizedBox(height: 10,),
@@ -278,6 +274,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             ),
                           ),
                         ),
+                        const SizedBox(height: 150,),
                       ],
                     ),
                   ),
