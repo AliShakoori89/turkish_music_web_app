@@ -26,16 +26,17 @@ class _MainPageState extends State<MainPage> {
   int currentRoute = 0;
   IconData? icon;
 
-  @override
-  void initState() {
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
 
     Orientation orientation = MediaQuery.of(context).orientation;
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     void navigateRoutes(int selectedIndex) {
       setState(() {

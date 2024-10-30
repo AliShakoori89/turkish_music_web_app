@@ -18,17 +18,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  @override
-  void initState() {
-    context
-        .read<MiniPlayingContainerBloc>()
-        .add(ReadSongIDForMiniPlayingSongContainerEvent());
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   context
+  //       .read<MiniPlayingContainerBloc>()
+  //       .add(ReadSongIDForMiniPlayingSongContainerEvent());
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
+
+    context
+        .read<MiniPlayingContainerBloc>()
+        .add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     return SafeArea(
       child: Scaffold(

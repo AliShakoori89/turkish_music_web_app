@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
-
 import '../../../../../helpers/widgets/custom_card.dart';
 
 class ShareButton extends StatelessWidget {
@@ -16,7 +14,7 @@ class ShareButton extends StatelessWidget {
         const String message = 'Check out my new app: $appLink';
 
         // Share the app link and message using the share dialog
-        await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
+        // await FlutterShare.share(title: 'Share App', text: message, linkUrl: appLink);
       },
       child: const CustomCard(
           title: "Share",
