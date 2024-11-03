@@ -27,6 +27,7 @@ import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
@@ -51,6 +52,8 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show json;
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 
 /// The scopes required by this application.
 // #docregion Initialize
@@ -69,6 +72,7 @@ GoogleSignIn googleSignIn = GoogleSignIn(
 FutureOr<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+  // await DefaultCacheManager().emptyCache();
   await requestStoragePermission();
 
   await dotenv.load(fileName: ".env");
@@ -272,6 +276,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
             create: (BuildContext context) =>
                 UserBloc(UserRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                FetchUserBloc(UserRepository())),
         BlocProvider(
             create: (context) =>
                 SongBloc(SongRepository())),

@@ -30,9 +30,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Orientation orientation = MediaQuery.of(context).orientation;
 
-    context
-        .read<MiniPlayingContainerBloc>()
-        .add(ReadSongIDForMiniPlayingSongContainerEvent());
+    // context
+    //     .read<MiniPlayingContainerBloc>()
+    //     .add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     return SafeArea(
       child: Scaffold(

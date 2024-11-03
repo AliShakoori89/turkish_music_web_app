@@ -26,23 +26,16 @@ class _MainPageState extends State<MainPage> {
   int currentRoute = 0;
   IconData? icon;
 
-  // @override
-  // void initState() {
-  //   BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     Orientation orientation = MediaQuery.of(context).orientation;
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-
-    void navigateRoutes(int selectedIndex) {
-      setState(() {
-        currentRoute = selectedIndex;
-      });
-    }
 
     List myRoutes = [
       Padding(
@@ -112,25 +105,29 @@ class _MainPageState extends State<MainPage> {
                     borderRadius: 15,
                     onItemSelected: (value) {
                       setState(() {
-                        navigateRoutes(value);
+                        currentRoute = value;
                       });
                     },
                     items: const [
                       VerticalNavBarItem(
-                          customIcon: Icons.home,
-                          iconSize: 25
+                        title: "Home",
+                          // customIcon: Icons.home,
+                          // iconSize: 25,
                       ),
                       VerticalNavBarItem(
-                          customIcon: Icons.person,
-                          iconSize: 25
+                          title: "profile",
+                          // customIcon: Icons.person,
+                          // iconSize: 25
                       ),
                       VerticalNavBarItem(
-                          customIcon: MusicIcon.music,
-                          iconSize: 20
+                          title: "music",
+                          // customIcon: MusicIcon.music,
+                          // iconSize: 20
                       ),
                       VerticalNavBarItem(
-                          customIcon: Icons.search,
-                          iconSize: 25
+                          title: "search",
+                          // customIcon: Icons.search,
+                          // iconSize: 25
                       ),
                     ],
                   ),

@@ -36,7 +36,3 @@ class SecondLoginEvent extends UserEvent{
   @override
   List<Object> get props => [email, verificationToken];
 }
-
-class GetCurrentUserEvent extends UserEvent{}
-
-class ExitAccountEvent extends UserEvent{}

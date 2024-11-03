@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
-import 'package:go_router/go_router.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/event.dart';
-import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
-
+import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import '../../../../../../main.dart';
-import '../../../../../bloc/user_bloc/bloc.dart';
+import '../../../../../bloc/fetch_user_bloc/event.dart';
 import '../../../../../helpers/widgets/custom_card.dart';
-import '../../home_page/home_page.dart';
 
 class ExitAccountButton extends StatelessWidget {
   const ExitAccountButton({super.key});
@@ -33,7 +27,7 @@ class ExitAccountButton extends StatelessWidget {
           actions: [
             ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<UserBloc>(context).add(ExitAccountEvent());
+                  BlocProvider.of<FetchUserBloc>(context).add(ExitAccountEvent());
                   _handleSignOut();
                   FlutterExitApp.exitApp();
                   },

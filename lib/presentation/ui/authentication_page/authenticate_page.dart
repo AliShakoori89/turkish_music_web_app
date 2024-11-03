@@ -161,30 +161,28 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
         backgroundColor: const Color(0xff192028),
         body: BlocListener<UserBloc, UserState>(
           listener: (context, state){
-            if (state.secondRegisterStatus == 'FirstLoginEvent' && state.status.isSuccess) {
-              if(state.status.isSuccess){
-                Fluttertoast.showToast(
-                    msg: "Code sent to your email successfully .",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.TOP,
-                    timeInSecForIosWeb: 3,
-                    backgroundColor: const Color(
-                        0xFF00B01E).withOpacity(0.2),
-                    textColor: Colors.white,
-                    fontSize: 16.0
-                );
-              }else if(state.status.isError){
-                Fluttertoast.showToast(
-                    msg: "Code sent to your email Field .",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.TOP,
-                    timeInSecForIosWeb: 3,
-                    backgroundColor: const Color(
-                        0xFFC20808).withOpacity(0.2),
-                    textColor: Colors.white,
-                    fontSize: 16.0
-                );
-              }
+            if(state.status.isSuccess){
+              Fluttertoast.showToast(
+                  msg: "Code sent to your email successfully .",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP,
+                  timeInSecForIosWeb: 3,
+                  backgroundColor: const Color(
+                      0xFF00B01E).withOpacity(0.2),
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+            }else if(state.status.isError){
+              Fluttertoast.showToast(
+                  msg: "Code sent to your email Field .",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.TOP,
+                  timeInSecForIosWeb: 3,
+                  backgroundColor: const Color(
+                      0xFFC20808).withOpacity(0.2),
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
             }
 
           },

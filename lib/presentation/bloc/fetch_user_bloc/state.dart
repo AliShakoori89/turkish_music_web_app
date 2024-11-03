@@ -1,0 +1,56 @@
+import 'package:equatable/equatable.dart';
+import 'package:turkish_music_app/data/model/user_model.dart';
+
+enum FetchUserStatus { initial, success, error, loading }
+
+extension FetchUserStatusX on FetchUserStatus {
+  bool get isInitial => this == FetchUserStatus.initial;
+  bool get isSuccess => this == FetchUserStatus.success;
+  bool get isError => this == FetchUserStatus.error;
+  bool get isLoading => this == FetchUserStatus.loading;
+}
+
+class FetchUserState extends Equatable{
+
+  const FetchUserState({
+    required this.status,
+    required this.user,
+    required this.isExit
+  });
+
+  static FetchUserState initial() => FetchUserState(
+    status: FetchUserStatus.initial,
+    user: UserModel(
+      success: false,
+      lastPage: 0,
+      data: Data(
+        id: 0,
+        email: "",
+        creationDate: "",
+        isAdmin: false
+      ),
+      message: ""
+    ),
+    isExit: false
+  );
+
+  final FetchUserStatus status;
+  final UserModel user;
+  final bool isExit;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [status, user, isExit];
+
+  FetchUserState copyWith({
+    FetchUserStatus? status,
+    UserModel? user,
+    bool? isExit
+  }) {
+    return FetchUserState(
+      status: status ?? this.status,
+      user: user ?? this.user,
+      isExit: isExit ?? this.isExit
+    );
+  }
+}

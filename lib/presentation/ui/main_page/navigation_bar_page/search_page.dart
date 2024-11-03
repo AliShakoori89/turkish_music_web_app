@@ -28,20 +28,17 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
 
   final songCharController = TextEditingController();
   final albumCharController = TextEditingController();
-  late TabController _tabController;
 
   @override
   void initState() {
     BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent(char: ""));
     BlocProvider.of<AlbumBloc>(context).add(GetAllAlbumEvent(char: ""));
-    _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _tabController.dispose();
   }
 
   @override

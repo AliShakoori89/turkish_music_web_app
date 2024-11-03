@@ -18,7 +18,7 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
   void _mapFirstLoginEventToState(
       FirstPlayingSongEvent event, Emitter<MiniPlayingContainerState> emit) async {
     try {
-      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      // emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       await miniPlayingContainerRepository.firstShowMiniPlayingContainer();
       bool visibility = await miniPlayingContainerRepository.isItTheFirstTimeTtIsShown();
       emit(
@@ -35,7 +35,7 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
   void _mapCheckLoginEventToState(
       CheckPlayingSongEvent event, Emitter<MiniPlayingContainerState> emit) async {
     try {
-      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      // emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       bool visibility = await miniPlayingContainerRepository.isItTheFirstTimeTtIsShown();
       emit(
         state.copyWith(
@@ -51,7 +51,7 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
   void _mapWriteRequirementForMiniPlayingSongContainerEventToState(
       WriteSongIDForMiniPlayingSongContainerEvent event, Emitter<MiniPlayingContainerState> emit) async {
     try {
-      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      // emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       await miniPlayingContainerRepository.writeMiniPlayingRequirement(event.songID, event.albumID);
       List requirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
       emit(
@@ -69,7 +69,7 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
   void _mapReadRequirementForMiniPlayingSongContainerEventToState(
       ReadSongIDForMiniPlayingSongContainerEvent event, Emitter<MiniPlayingContainerState> emit) async {
     try {
-      emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+      // emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
       List requirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
       emit(
         state.copyWith(
