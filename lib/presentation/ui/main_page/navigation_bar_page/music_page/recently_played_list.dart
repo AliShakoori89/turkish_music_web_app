@@ -55,83 +55,97 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                   children: List.generate(
                       state.allRecentlySongs.length,
                           (index) => GestureDetector(
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                flex: 10,
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  height: orientation == Orientation.portrait
-                                      ? MediaQuery.of(context).size.height * 0.08
-                                      : MediaQuery.of(context).size.height / 6,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: orientation == Orientation.portrait
-                                            ? 2
-                                            : 1,
-                                        child: CachedNetworkImage(
-                                          imageUrl: state.allRecentlySongs[index].imageSource!,
-                                          imageBuilder: (context, imageProvider) => Container(
-                                            width: MediaQuery.of(context).size.width * 0.12,
-                                            height: orientation == Orientation.portrait
-                                                ? MediaQuery.of(context).size.height * 0.065
-                                                : MediaQuery.of(context).size.height / 3,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(15),
-                                                image: DecorationImage(
-                                                    image: NetworkImage(state.allRecentlySongs[index].imageSource!),
-                                                    fit: BoxFit.fill)),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                color: Colors.black87,
+                                boxShadow: [
+                                  BoxShadow(
+                                      spreadRadius: 2,
+                                      blurRadius: 1,
+                                      offset: Offset(0, 2),
+                                      color: Colors.purple.withOpacity(0.5)
+                                  )
+                                ]
+                            ),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  flex: 10,
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    height: orientation == Orientation.portrait
+                                        ? MediaQuery.of(context).size.height * 0.08
+                                        : MediaQuery.of(context).size.height / 6,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: orientation == Orientation.portrait
+                                              ? 2
+                                              : 1,
+                                          child: CachedNetworkImage(
+                                            imageUrl: state.allRecentlySongs[index].imageSource!,
+                                            imageBuilder: (context, imageProvider) => Container(
+                                              width: MediaQuery.of(context).size.width * 0.12,
+                                              height: orientation == Orientation.portrait
+                                                  ? MediaQuery.of(context).size.height * 0.065
+                                                  : MediaQuery.of(context).size.height / 3,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(15),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(state.allRecentlySongs[index].imageSource!),
+                                                      fit: BoxFit.fill)),
+                                            ),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
                                           ),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width * 0.03,
-                                      ),
-                                      Expanded(
-                                        flex: orientation == Orientation.portrait
-                                            ? 8
-                                            : 10,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            OverflowTextAnimated(
-                                              text: state.allRecentlySongs[index].name!,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w700
-                                              ),),
-                                            Text(state.allRecentlySongs[index].singerName != null
-                                                ? state.allRecentlySongs[index].singerName!
-                                                : "",
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 14
-                                              ),)
-                                          ],
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.03,
                                         ),
-                                      )
-                                    ],
+                                        Expanded(
+                                          flex: orientation == Orientation.portrait
+                                              ? 8
+                                              : 10,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              OverflowTextAnimated(
+                                                text: state.allRecentlySongs[index].name!,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w700
+                                                ),),
+                                              Text(state.allRecentlySongs[index].singerName != null
+                                                  ? state.allRecentlySongs[index].singerName!
+                                                  : "",
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14
+                                                ),)
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: IconButton(
-                                    onPressed: () => BottomDialog(
-                                        songImage: state.allRecentlySongs[index].imageSource!,
-                                        singerName: state.allRecentlySongs[index].name!,
-                                        songName: state.allRecentlySongs[index].singerName!,
-                                        orientation: orientation
-                                    ).showBottomDialog(context),
-                                    icon: const Icon(Icons.more_vert, size: 20,
-                                    )),
-                              )
-                            ],
+                                Flexible(
+                                  flex: 1,
+                                  child: IconButton(
+                                      onPressed: () => BottomDialog(
+                                          songImage: state.allRecentlySongs[index].imageSource!,
+                                          singerName: state.allRecentlySongs[index].name!,
+                                          songName: state.allRecentlySongs[index].singerName!,
+                                          orientation: orientation
+                                      ).showBottomDialog(context),
+                                      icon: const Icon(Icons.more_vert, size: 20,
+                                      )),
+                                )
+                              ],
+                            ),
                           ),
                           onTap: (){
 

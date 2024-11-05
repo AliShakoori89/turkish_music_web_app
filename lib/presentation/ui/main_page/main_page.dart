@@ -101,7 +101,7 @@ class _MainPageState extends State<MainPage> {
                     width: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.width * 0.12
                         : MediaQuery.of(context).size.width * 0.04,
-                    backgroundColor: Colors.purple.withOpacity(0.7),
+                    backgroundColor: Colors.purple.withOpacity(0.3),
                     borderRadius: 15,
                     onItemSelected: (value) {
                       setState(() {

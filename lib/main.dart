@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
@@ -71,6 +72,13 @@ GoogleSignIn googleSignIn = GoogleSignIn(
 
 FutureOr<void> main() async{
 
+  // runZonedGuarded(() async {
+  //   await SentryFlutter.init(
+  //         (options) {
+  //       options.dsn = 'https://example@sentry.io/https://f1cdf7541efb2cab8d645bdbcfa21b5c@o4508205725253632.ingest.us.sentry.io/4508205732265984';
+  //     },
+  //   );
+
   WidgetsFlutterBinding.ensureInitialized();
   // await DefaultCacheManager().emptyCache();
   await requestStoragePermission();
@@ -84,6 +92,8 @@ FutureOr<void> main() async{
       ? false
       : true;
 
+
+
   runApp(
       // DevicePreview(
       //   enabled: !kReleaseMode,
@@ -91,6 +101,9 @@ FutureOr<void> main() async{
             MyApp(isLoggedIn: isLoggedIn)
   // )
   ); // Wrap your app
+  // }, (exception, stackTrace) async {
+  //   await Sentry.captureException(exception, stackTrace: stackTrace);
+  // });
 }
 
 

@@ -14,8 +14,9 @@ class ReportButton extends StatelessWidget {
     TextEditingController categoryController = TextEditingController();
 
     return InkWell(
-      onTap: (){
+      onTap: () async{
         showAlertDialog(context, categoryController);
+        throw Exception('throw first error');
       },
       child: const CustomCard(
           title: "report",
