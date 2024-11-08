@@ -28,28 +28,6 @@ class SongRepository {
     }
   }
 
-  FutureOr<dynamic> getAllNewSongs() async {
-    ApiBaseHelper api = ApiBaseHelper();
-    try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final String? accessToken = prefs.getString('accessToken');
-      final response = await api.get('/api/NewMusic/GetAll', accessToken: accessToken!);
-      if (response.statusCode == 200) {
-        List<SongDataModel> songs = [];
-        final data = jsonDecode(response.body);
-        final List<dynamic> songList = data['data'];
-        for(int i = 0 ; i < songList.length ; i++){
-          songList[i]['fileSource'] = songList[i]['fileSource'].substring(0, 4) + "s"
-              +songList[i]['fileSource'].substring(4, songList[i]['fileSource'].length);
-        }
-        songs = songList.map((e) => SongDataModel.fromJson(e)).toList();
-        return songs.reversed;
-      }
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
   FutureOr<dynamic> getSongByID(int id) async {
     ApiBaseHelper api = ApiBaseHelper();
     try {

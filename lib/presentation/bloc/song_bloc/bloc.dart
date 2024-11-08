@@ -11,28 +11,8 @@ class SongBloc extends Bloc<SongEvent, SongState> {
 
   SongBloc(this.songRepo) : super(
       SongState.initial()){
-    on<FetchNewSongsEvent>(_mapFetchNewSongsEventToState);
     on<FetchAllSongsEvent>(_mapFetchAllSongsEventToState);
     on<FetchSongEvent>(_mapFetchSongEventToState);
-  }
-
-  void _mapFetchNewSongsEventToState(
-      FetchNewSongsEvent event, Emitter<SongState> emit) async {
-    try {
-      emit(state.copyWith(status: SongStatus.loading));
-      final List<SongDataModel> newSongs = [];
-      final songsList = await songRepo.getAllNewSongs();
-      newSongs.addAll(songsList);
-
-      emit(
-        state.copyWith(
-            status: SongStatus.success,
-            newSongList: newSongs
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: SongStatus.error));
-    }
   }
 
   void _mapFetchAllSongsEventToState(
