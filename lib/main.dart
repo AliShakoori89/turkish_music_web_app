@@ -45,6 +45,7 @@ import 'package:turkish_music_app/presentation/const/error_internet_connection_p
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/top_songs_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/download_page.dart';
@@ -392,6 +393,13 @@ class _MyAppState extends State<MyApp> {
                         path: PlaylistPage.routeName,
                         builder: (context, state){
                           return PlaylistPage();
+                        }
+                    ),
+                    GoRoute(
+                        path: TopSongPage.routeName,
+                        builder: (context, state){
+                          final imageSource = state.extra as String;
+                          return TopSongPage(imageSource: imageSource);
                         }
                     ),
                     GoRoute(

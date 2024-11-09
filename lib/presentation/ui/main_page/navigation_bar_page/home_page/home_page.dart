@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
-import '../../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../../helpers/widgets/header.dart';
-import 'home_page_component/category_item.dart';
+import 'home_page_component/categories/category_item.dart';
 import 'home_page_component/new_album_contaner.dart';
 import 'home_page_component/new_music_container/new_music_container.dart';
 import 'home_page_component/singer_container/singer_container.dart';
@@ -48,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppHeader(),
-                  NewMusicContainer(),
+                  // NewMusicContainer(),
                   SingerContainer(),
                   NewAlbumContainer(),
                   CategoryItemContainer(),

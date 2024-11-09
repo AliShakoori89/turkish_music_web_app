@@ -9,12 +9,16 @@ class CategoryRepository {
 
   final String? apiKey = dotenv.env['map.apikey'];
 
-  FutureOr<dynamic> getAllCategory() async {
+  FutureOr<List<CategoryDataModel>> getAllCategory() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Category/GetAll');
-
-    final productJson = json.decode(response.body);
-    var allCategory = CategoryModel.fromJson(productJson);
-    return allCategory.data;
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final categoryModel = CategoryModel.fromJson(jsonResponse);
+      print(categoryModel.data);
+      return categoryModel.data;
+    } else {
+      throw Exception('Failed to load categories');
+    }
   }
 }
