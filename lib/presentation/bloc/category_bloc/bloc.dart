@@ -17,7 +17,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       GetCategoryEvent event, Emitter<CategoryState> emit) async {
     try {
       emit(state.copyWith(status: CategoryStatus.loading));
-print("22222222222222222222");
+
       List<CategoryDataModel> categoryData = await categoryRepository.getAllCategory();
 
       emit(
