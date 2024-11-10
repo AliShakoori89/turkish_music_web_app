@@ -31,8 +31,6 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
 
     return BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
 
-      print("1111111111111111111111111111111111");
-
       return Column(
         children: [
           TitleText(title: "Category", haveSeeAll: false),
@@ -51,8 +49,6 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
               children: List.generate(
                   state.category.length,
                       (index){
-                        print("1111111111111111111111111111111111");
-                        print(state.category.length.toString());
                     return Padding(
                       padding: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.030,

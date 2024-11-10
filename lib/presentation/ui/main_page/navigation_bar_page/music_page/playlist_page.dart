@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
+import 'package:turkish_music_app/presentation/helpers/widgets/song_card.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../../bloc/play_list_bloc/bloc.dart';
@@ -103,42 +104,10 @@ class PlaylistPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              margin: const EdgeInsets.only(right: 5),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  image: DecorationImage(
-                                      image: NetworkImage(state
-                                          .playlistSongs[index].imageSource
-                                          .toString()),
-                                      fit: BoxFit.cover)),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  state.playlistSongs[index].name!,
-                                  style: const TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  state.playlistSongs[index].singerName!,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white54
-                                    )
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+                        SongCard(
+                            songName: state.playlistSongs[index].name!,
+                            imgPath: state.playlistSongs[index].imageSource!,
+                            singerName: state.playlistSongs[index].singerName!,),
                         IconButton(
                             onPressed: (){
                               BlocProvider.of<PlaylistBloc>(context).add(

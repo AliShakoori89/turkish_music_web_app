@@ -27,7 +27,7 @@ class CategoryDataModel {
   final int id;
   final String imageSource;
   final String title;
-  final List<MusicModel> musics;
+  final List<CategoryMusicModel> musics;
   final String creationDate;
 
   CategoryDataModel({
@@ -44,14 +44,24 @@ class CategoryDataModel {
       imageSource: json['imageSource'],
       title: json['title'],
       musics: (json['musics'] as List)
-          .map((item) => MusicModel.fromJson(item))
+          .map((item) => CategoryMusicModel.fromJson(item))
           .toList(),
       creationDate: json['creationDate'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'imageSource': imageSource,
+      'title': title,
+      'musics': musics.map((item) => item.toJson()).toList(),
+      'creationDate': creationDate,
+    };
+  }
 }
 
-class MusicModel {
+class CategoryMusicModel {
   final int id;
   final String name;
   final int playCount;
@@ -60,12 +70,12 @@ class MusicModel {
   final String minute;
   final String second;
   final String? singerName;
-  final List<CategoryInfo> categories;
+  final List<CategoryInfoModel> categories;
   final int albumId;
   final String? album;
   final String creationDate;
 
-  MusicModel({
+  CategoryMusicModel({
     required this.id,
     required this.name,
     required this.playCount,
@@ -80,8 +90,8 @@ class MusicModel {
     required this.creationDate,
   });
 
-  factory MusicModel.fromJson(Map<String, dynamic> json) {
-    return MusicModel(
+  factory CategoryMusicModel.fromJson(Map<String, dynamic> json) {
+    return CategoryMusicModel(
       id: json['id'],
       name: json['name'],
       playCount: json['playCount'],
@@ -91,34 +101,60 @@ class MusicModel {
       second: json['second'],
       singerName: json['singerName'],
       categories: (json['categories'] as List)
-          .map((item) => CategoryInfo.fromJson(item))
+          .map((item) => CategoryInfoModel.fromJson(item))
           .toList(),
       albumId: json['albumId'],
       album: json['album'],
       creationDate: json['creationDate'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'playCount': playCount,
+      'imageSource': imageSource,
+      'fileSource': fileSource,
+      'minute': minute,
+      'second': second,
+      'singerName': singerName,
+      'categories': categories.map((item) => item.toJson()).toList(),
+      'albumId': albumId,
+      'album': album,
+      'creationDate': creationDate,
+    };
+  }
 }
 
-class CategoryInfo {
+class CategoryInfoModel {
   final int id;
   final String imageSource;
   final String title;
   final String creationDate;
 
-  CategoryInfo({
+  CategoryInfoModel({
     required this.id,
     required this.imageSource,
     required this.title,
     required this.creationDate,
   });
 
-  factory CategoryInfo.fromJson(Map<String, dynamic> json) {
-    return CategoryInfo(
+  factory CategoryInfoModel.fromJson(Map<String, dynamic> json) {
+    return CategoryInfoModel(
       id: json['id'],
       imageSource: json['imageSource'],
       title: json['title'],
       creationDate: json['creationDate'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'imageSource': imageSource,
+      'title': title,
+      'creationDate': creationDate,
+    };
   }
 }

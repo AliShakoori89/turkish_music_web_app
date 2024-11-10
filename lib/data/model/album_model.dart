@@ -1,3 +1,5 @@
+import 'category_model.dart';
+
 class AlbumModel {
   List<AlbumDataModel>? data;
   bool? success;
@@ -163,6 +165,19 @@ class AlbumDataMusicModel {
     data['albumId'] = this.albumId;
     data['album'] = this.album;
     return data;
+  }
+
+  factory AlbumDataMusicModel.fromCategoryMusicModel(CategoryMusicModel model) {
+    return AlbumDataMusicModel(
+      id: model.id,
+      name: model.name,
+      imageSource: model.imageSource,
+      fileSource: model.fileSource,
+      minute: model.minute,
+      second: model.second,
+      singerName: model.singerName,
+      albumId: model.albumId,
+    );
   }
 }
 
