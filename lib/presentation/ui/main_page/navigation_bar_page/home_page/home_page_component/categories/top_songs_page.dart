@@ -98,24 +98,43 @@ class _TopSongPageState extends State<TopSongPage> {
                               },
                             );
                           },
-                          child: SizedBox(
-                            height: height / 10,
-                            child: Column(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              bottom: 15
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            state.category[0].musics[index].imageSource),
-                                    fit: BoxFit.fill)
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Expanded(
+                                      flex: 1,
+                                      child: Text((index+1).toString())),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  flex: 15,
+                                  child: Container(
+                                    width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                spreadRadius: 2,
+                                                blurRadius: 1,
+                                                offset: Offset(0, 2),
+                                                color: Colors.purple.withOpacity(0.5)
+                                            )
+                                          ]
+                                      ),
+                                    child: SongCard(
+                                        songName: state.category[0].musics[index].name,
+                                        imgPath: state.category[0].musics[index].imageSource,
+                                        singerName: "")
                                   ),
                                 ),
-                                SongCard(
-                                    songName: state.category[0].musics[index].name,
-                                    imgPath: state.category[0].musics[index].imageSource,
-                                    singerName: ""),
                               ],
                             ),
                           ),

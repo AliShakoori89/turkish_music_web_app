@@ -26,7 +26,7 @@ class SongCard extends StatelessWidget {
           width: 5,
         ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               songName,
