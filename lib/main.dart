@@ -19,7 +19,6 @@ import 'package:turkish_music_app/domain/repositories/mini_playing_container_rep
 import 'package:turkish_music_app/domain/repositories/play_button_state_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_list_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
-import 'package:turkish_music_app/domain/repositories/play_box_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/recently_play_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
@@ -32,7 +31,6 @@ import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/play_box_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/bloc.dart';
@@ -46,10 +44,11 @@ import 'package:turkish_music_app/presentation/ui/authentication_page/authentica
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/top_songs_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/new_song_container/new_song_page/new_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/download_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/music_page/playlist_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/download_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:http/http.dart' as http;
@@ -316,9 +315,6 @@ class _MyAppState extends State<MyApp> {
                 AudioControlBloc()),
         BlocProvider(
             create: (BuildContext context) =>
-                PlayBoxBloc(PlayBoxRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
                 CategoryBloc(CategoryRepository())),
         BlocProvider(
             create: (BuildContext context) =>
@@ -381,6 +377,12 @@ class _MyAppState extends State<MyApp> {
                         path: AllSingerPage.routeName,
                         builder: (context, state){
                           return AllSingerPage();
+                        }
+                    ),
+                    GoRoute(
+                        path: NewSongPage.routeName,
+                        builder: (context, state){
+                          return NewSongPage();
                         }
                     ),
                     GoRoute(

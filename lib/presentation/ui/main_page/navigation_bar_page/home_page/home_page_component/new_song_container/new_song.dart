@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../data/model/album_model.dart';
+import '../../../../../../../data/model/new-song_model.dart';
 import '../../../../../../../data/model/song_model.dart';
 import '../../../../../../bloc/new_song_bloc/bloc.dart';
 import '../../../../../../bloc/new_song_bloc/event.dart';
@@ -32,7 +33,8 @@ class _NewSongState extends State<NewSong>{
 
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
-      List<AlbumDataMusicModel> newSong = state.newSong;
+      List<SongDataModel> newSong = state.newSong;
+      print(newSong.length);
 
       return Padding(
           padding: const EdgeInsets.only(top: 10),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_card.dart';
 
-import '../../ui/main_page/navigation_bar_page/music_page/download_page.dart';
-import '../../ui/main_page/navigation_bar_page/music_page/playlist_page.dart';
+import '../../ui/main_page/navigation_bar_page/song_page/download_page.dart';
+import '../../ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 
 class CustomPageWithCards extends StatelessWidget {
 

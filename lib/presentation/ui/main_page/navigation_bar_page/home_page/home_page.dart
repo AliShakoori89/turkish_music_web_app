@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../helpers/widgets/header.dart';
 import 'home_page_component/categories/category_item.dart';
 import 'home_page_component/new_album_contaner.dart';
-import 'home_page_component/new_music_container/new_music_container.dart';
+import 'home_page_component/new_song_container/new_song_container.dart';
 import 'home_page_component/singer_container/singer_container.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppHeader(),
-                  // NewMusicContainer(),
+                  NewMusicContainer(),
                   SingerContainer(),
                   NewAlbumContainer(),
                   CategoryItemContainer(),

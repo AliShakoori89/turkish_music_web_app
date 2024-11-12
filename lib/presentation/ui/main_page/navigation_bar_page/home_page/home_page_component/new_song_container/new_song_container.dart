@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'new_music.dart';
+import '../../../../../../const/title.dart';
+import 'new_song.dart';
 
 class NewMusicContainer extends StatelessWidget {
 
@@ -12,6 +13,10 @@ class NewMusicContainer extends StatelessWidget {
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.width * 0.011,
+          ),
+          TitleText(
+            title: "New Songs",
+            haveSeeAll: true,
           ),
           NewSong(),
           SizedBox(

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 
 import '../../../data/model/album_model.dart';
+import '../../../data/model/song_model.dart';
 
 enum NewSongStatus { initial, success, error, loading }
 
@@ -21,11 +22,11 @@ class NewSongState extends Equatable{
 
   static NewSongState initial() => const NewSongState(
       status: NewSongStatus.initial,
-      newSong: <AlbumDataMusicModel>[],
+      newSong: <SongDataModel>[],
   );
 
   final NewSongStatus status;
-  final List<AlbumDataMusicModel> newSong;
+  final List<SongDataModel> newSong;
 
   @override
   // TODO: implement props
@@ -33,7 +34,7 @@ class NewSongState extends Equatable{
 
   NewSongState copyWith({
     NewSongStatus? status,
-    List<AlbumDataMusicModel>? newMusic,
+    List<SongDataModel>? newMusic,
   }) {
     return NewSongState(
         status: status ?? this.status,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../main_page/navigation_bar_page/music_page/playlist_page.dart';
+import '../../main_page/navigation_bar_page/song_page/playlist_page.dart';
 
 class PlayListButton extends StatelessWidget {
   const PlayListButton({super.key});
