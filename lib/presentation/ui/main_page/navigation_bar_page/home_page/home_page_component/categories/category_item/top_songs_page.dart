@@ -57,28 +57,28 @@ class _TopSongPageState extends State<TopSongPage> {
                     return ListView.builder(
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
-                      itemCount: state.category[0].musics.length,
+                      itemCount: state.category[0].musics!.length,
                       itemBuilder: (context, index){
                         return InkWell(
                           onTap: (){
 
-                            var path = state.category[0].musics[index].fileSource.substring(0, 4)
+                            var path = state.category[0].musics![index].fileSource!.substring(0, 4)
                                 + "s"
-                                + state.category[0].musics[index].fileSource
-                                    .substring(4, state.category[0].musics[index].fileSource.length);
+                                + state.category[0].musics![index].fileSource!
+                                    .substring(4, state.category[0].musics![index].fileSource!.length);
 
                             var newPath = path.replaceAll(" ", "%20");
 
                             SongDataModel songDataModel = SongDataModel(
-                              id : state.category[0].musics[index].id,
-                              name: state.category[0].musics[index].name,
-                              imageSource: state.category[0].musics[index].imageSource,
+                              id : state.category[0].musics![index].id,
+                              name: state.category[0].musics![index].name,
+                              imageSource: state.category[0].musics![index].imageSource,
                               fileSource: newPath,
-                              minute: state.category[0].musics[index].minute,
-                              second: state.category[0].musics[index].second,
+                              minute: state.category[0].musics![index].minute,
+                              second: state.category[0].musics![index].second,
                               singerName: "",
                               album: null,
-                              albumId: state.category[0].musics[index].albumId,
+                              albumId: state.category[0].musics![index].albumId,
                               categories: null,
                             );
 
@@ -92,7 +92,7 @@ class _TopSongPageState extends State<TopSongPage> {
                                 'songImage': "http://194.5.195.145/TurkishMusicFiles/MusicPhotos/2024-10-02-08-33-30-Sibel-Can-Bu-Devirde-1997.jpg",
                                 'albumID': songDataModel.albumId!,
                                 'pageName': "RecentlyPlaylist",
-                                'albumSongList': state.category[0].musics.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
+                                'albumSongList': state.category[0].musics!.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
                                     .toList(),
                                 'songDataModel': songDataModel,
                               },
@@ -105,11 +105,12 @@ class _TopSongPageState extends State<TopSongPage> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Expanded(
-                                      flex: 1,
-                                      child: Text((index+1).toString())),
+                                Expanded(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 10),
+                                    child: Text((index+1).toString())
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 10,
@@ -130,9 +131,9 @@ class _TopSongPageState extends State<TopSongPage> {
                                           ]
                                       ),
                                     child: SongCard(
-                                        songName: state.category[0].musics[index].name,
-                                        imgPath: state.category[0].musics[index].imageSource,
-                                        singerName: "")
+                                        songName: state.category[0].musics![index].name!,
+                                        imgPath: state.category[0].musics![index].imageSource!,
+                                        singerName: state.category[0].musics![index].singerName!)
                                   ),
                                 ),
                               ],

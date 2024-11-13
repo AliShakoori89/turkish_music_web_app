@@ -64,7 +64,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                           );
                         },
                         child: CachedNetworkImage(
-                          imageUrl: state.category[index].imageSource,
+                          imageUrl: state.category[index].imageSource!,
                           imageBuilder: (context, imageProvider) => Container(
                             width: orientation == Orientation.portrait
                                 ? MediaQuery.of(context).size.width * 0.3
@@ -78,7 +78,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                                 ],
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
-                                    image: NetworkImage(state.category[index].imageSource),
+                                    image: NetworkImage(state.category[index].imageSource!),
                                     fit: BoxFit.fill
                                 )
                             ),
