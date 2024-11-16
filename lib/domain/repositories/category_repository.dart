@@ -15,7 +15,7 @@ class CategoryRepository {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final categoryModel = CategoryModel.fromJson(jsonResponse);
-      return categoryModel.data;
+      return categoryModel.data!;
     } else {
       throw Exception('Failed to load categories');
     }

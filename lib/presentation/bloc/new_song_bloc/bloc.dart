@@ -13,6 +13,7 @@ class NewSongBloc extends Bloc<NewSongEvent, NewSongState> {
   NewSongBloc(this.newSongRepository) : super(
       NewSongState.initial()){
     on<GetNewSongEvent>(_mapGetNewMusicEventToState);
+    on<GetAllNewSongEvent>(_mapGetAllNewMusicEventToState);
   }
 
   void _mapGetNewMusicEventToState(
@@ -20,12 +21,30 @@ class NewSongBloc extends Bloc<NewSongEvent, NewSongState> {
     try {
       emit(state.copyWith(status: NewSongStatus.loading));
 
-      List<SongDataModel> newMusic = await newSongRepository.getNewMusic();
+      List<NewSongDataModel> newMusic = await newSongRepository.getNewMusic();
 
       emit(
         state.copyWith(
           status: NewSongStatus.success,
           newMusic: newMusic
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: NewSongStatus.error));
+    }
+  }
+
+  void _mapGetAllNewMusicEventToState(
+      GetAllNewSongEvent event, Emitter<NewSongState> emit) async {
+    try {
+      emit(state.copyWith(status: NewSongStatus.loading));
+
+      List<NewSongDataModel> allNewMusic = await newSongRepository.getAllNewMusic();
+
+      emit(
+        state.copyWith(
+            status: NewSongStatus.success,
+            allNewSong: allNewMusic
         ),
       );
     } catch (error) {

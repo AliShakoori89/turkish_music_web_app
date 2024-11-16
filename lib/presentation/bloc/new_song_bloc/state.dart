@@ -18,27 +18,32 @@ class NewSongState extends Equatable{
   const NewSongState({
     required this.status,
     required this.newSong,
+    required this.allNewSong,
   });
 
   static NewSongState initial() => const NewSongState(
-      status: NewSongStatus.initial,
-      newSong: <SongDataModel>[],
+    status: NewSongStatus.initial,
+    newSong: <NewSongDataModel>[],
+    allNewSong: <NewSongDataModel>[],
   );
 
   final NewSongStatus status;
-  final List<SongDataModel> newSong;
+  final List<NewSongDataModel> newSong;
+  final List<NewSongDataModel> allNewSong;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, newSong];
+  List<Object?> get props => [status, newSong, allNewSong];
 
   NewSongState copyWith({
     NewSongStatus? status,
-    List<SongDataModel>? newMusic,
+    List<NewSongDataModel>? newMusic,
+    List<NewSongDataModel>? allNewSong,
   }) {
     return NewSongState(
-        status: status ?? this.status,
-        newSong: newMusic ?? this.newSong,
+      status: status ?? this.status,
+      newSong: newMusic ?? this.newSong,
+      allNewSong: allNewSong ?? this.allNewSong,
     );
   }
 }

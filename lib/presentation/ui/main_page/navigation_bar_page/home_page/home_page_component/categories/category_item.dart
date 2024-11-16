@@ -7,7 +7,7 @@ import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/shimmer_container/category_shimmer_container.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/top_songs_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/category_item/top_songs_page.dart';
 import '../../../../../../const/title.dart';
 
 class CategoryItemContainer extends StatefulWidget {

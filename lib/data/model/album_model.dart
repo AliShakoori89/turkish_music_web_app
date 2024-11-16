@@ -167,7 +167,7 @@ class AlbumDataMusicModel {
     return data;
   }
 
-  factory AlbumDataMusicModel.fromCategoryMusicModel(CategoryMusicModel model) {
+  factory AlbumDataMusicModel.fromCategoryMusicModel(CategoryMusicsModel model) {
     return AlbumDataMusicModel(
       id: model.id,
       name: model.name,

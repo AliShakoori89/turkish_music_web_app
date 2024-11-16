@@ -5,9 +5,9 @@ import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/song_card.dart';
 
-import '../../../../../../../data/model/album_model.dart';
-import '../../../../../../../data/model/song_model.dart';
-import '../../../../../play_song_page/play_song_page.dart';
+import '../../../../../../../../data/model/album_model.dart';
+import '../../../../../../../../data/model/song_model.dart';
+import '../../../../../../play_song_page/play_song_page.dart';
 
 class TopSongPage extends StatefulWidget {
 

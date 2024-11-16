@@ -33,7 +33,7 @@ class _NewSongState extends State<NewSong>{
 
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
-      List<SongDataModel> newSong = state.newSong;
+      List<NewSongDataModel> newSong = state.newSong;
       print(newSong.length);
 
       return Padding(

@@ -3,6 +3,7 @@ abstract class NewSongEvent {
 }
 
 class GetNewSongEvent extends NewSongEvent{}
+class GetAllNewSongEvent extends NewSongEvent{}
 
 
 

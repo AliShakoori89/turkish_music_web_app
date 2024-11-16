@@ -2,17 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/new_song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../helpers/widgets/song_card.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
-class NewSongPage extends StatelessWidget {
+class NewSongPage extends StatefulWidget {
 
   static String routeName = "NewSongPage";
 
   const NewSongPage({super.key});
+
+  @override
+  State<NewSongPage> createState() => _NewSongPageState();
+}
+
+class _NewSongPageState extends State<NewSongPage> {
+
+  @override
+  void initState() {
+    BlocProvider.of<NewSongBloc>(context).add(GetAllNewSongEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +37,11 @@ class NewSongPage extends StatelessWidget {
       body: BlocBuilder<NewSongBloc, NewSongState>(
 
           builder: (context, state) {
+
             return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: state.newSong.length,
+                itemCount: state.allNewSong.length,
                 itemBuilder: (context, index){
                   return InkWell(
                     onTap: (){
@@ -74,12 +88,15 @@ class NewSongPage extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Expanded(
-                                flex: 1,
-                                child: Text((index+1).toString())),
-                          ),
+                          Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  top: 15,
+                                  left: 15
+                                ),
+                                child: Text((index+1).toString()),
+                              )),
                           SizedBox(
                             width: 10,
                           ),
@@ -99,9 +116,9 @@ class NewSongPage extends StatelessWidget {
                                     ]
                                 ),
                                 child: SongCard(
-                                    songName: state.newSong[index].name!,
-                                    imgPath: state.newSong[index].imageSource!,
-                                    singerName: state.newSong[index].singerName!)
+                                    songName: state.allNewSong[index].name!,
+                                    imgPath: state.allNewSong[index].imageSource!,
+                                    singerName: state.allNewSong[index].singerName!)
                             ),
                           ),
                         ],

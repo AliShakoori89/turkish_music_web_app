@@ -1,160 +1,230 @@
 class CategoryModel {
-  final List<CategoryDataModel> data;
-  final bool success;
-  final String message;
-  final int lastPage;
+  List<CategoryDataModel>? data;
+  bool? success;
+  String? message;
+  int? lastPage;
 
-  CategoryModel({
-    required this.data,
-    required this.success,
-    required this.message,
-    required this.lastPage,
-  });
+  CategoryModel({this.data, this.success, this.message, this.lastPage});
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
-      data: (json['data'] as List)
-          .map((item) => CategoryDataModel.fromJson(item))
-          .toList(),
-      success: json['success'],
-      message: json['message'],
-      lastPage: json['lastPage'],
-    );
+  CategoryModel.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = <CategoryDataModel>[];
+      json['data'].forEach((v) {
+        data!.add(new CategoryDataModel.fromJson(v));
+      });
+    }
+    success = json['success'];
+    message = json['message'];
+    lastPage = json['lastPage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data['success'] = this.success;
+    data['message'] = this.message;
+    data['lastPage'] = this.lastPage;
+    return data;
   }
 }
 
 class CategoryDataModel {
-  final int id;
-  final String imageSource;
-  final String title;
-  final List<CategoryMusicModel> musics;
-  final String creationDate;
+  int? id;
+  String? imageSource;
+  String? title;
+  List<CategoryMusicsModel>? musics;
+  String? creationDate;
 
-  CategoryDataModel({
-    required this.id,
-    required this.imageSource,
-    required this.title,
-    required this.musics,
-    required this.creationDate,
-  });
+  CategoryDataModel({this.id, this.imageSource, this.title, this.musics, this.creationDate});
 
-  factory CategoryDataModel.fromJson(Map<String, dynamic> json) {
-    return CategoryDataModel(
-      id: json['id'],
-      imageSource: json['imageSource'],
-      title: json['title'],
-      musics: (json['musics'] as List)
-          .map((item) => CategoryMusicModel.fromJson(item))
-          .toList(),
-      creationDate: json['creationDate'],
-    );
+  CategoryDataModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    imageSource = json['imageSource'];
+    title = json['title'];
+    if (json['musics'] != null) {
+      musics = <CategoryMusicsModel>[];
+      json['musics'].forEach((v) {
+        musics!.add(new CategoryMusicsModel.fromJson(v));
+      });
+    }
+    creationDate = json['creationDate'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'imageSource': imageSource,
-      'title': title,
-      'musics': musics.map((item) => item.toJson()).toList(),
-      'creationDate': creationDate,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['imageSource'] = this.imageSource;
+    data['title'] = this.title;
+    if (this.musics != null) {
+      data['musics'] = this.musics!.map((v) => v.toJson()).toList();
+    }
+    data['creationDate'] = this.creationDate;
+    return data;
   }
 }
 
-class CategoryMusicModel {
-  final int id;
-  final String name;
-  final int playCount;
-  final String imageSource;
-  final String fileSource;
-  final String minute;
-  final String second;
-  final String? singerName;
-  final List<CategoryInfoModel> categories;
-  final int albumId;
-  final String? album;
-  final String creationDate;
+class CategoryMusicsModel {
+  int? id;
+  String? name;
+  bool? isNew;
+  int? playCount;
+  String? imageSource;
+  String? fileSource;
+  String? minute;
+  String? second;
+  String? singerName;
+  List<CategoryCategoriesModel>? categories;
+  int? albumId;
+  CategoryAlbumModel? album;
+  String? creationDate;
 
-  CategoryMusicModel({
-    required this.id,
-    required this.name,
-    required this.playCount,
-    required this.imageSource,
-    required this.fileSource,
-    required this.minute,
-    required this.second,
-    this.singerName,
-    required this.categories,
-    required this.albumId,
-    this.album,
-    required this.creationDate,
-  });
+  CategoryMusicsModel(
+      {this.id,
+        this.name,
+        this.isNew,
+        this.playCount,
+        this.imageSource,
+        this.fileSource,
+        this.minute,
+        this.second,
+        this.singerName,
+        this.categories,
+        this.albumId,
+        this.album,
+        this.creationDate});
 
-  factory CategoryMusicModel.fromJson(Map<String, dynamic> json) {
-    return CategoryMusicModel(
-      id: json['id'],
-      name: json['name'],
-      playCount: json['playCount'],
-      imageSource: json['imageSource'],
-      fileSource: json['fileSource'],
-      minute: json['minute'],
-      second: json['second'],
-      singerName: json['singerName'],
-      categories: (json['categories'] as List)
-          .map((item) => CategoryInfoModel.fromJson(item))
-          .toList(),
-      albumId: json['albumId'],
-      album: json['album'],
-      creationDate: json['creationDate'],
-    );
+  CategoryMusicsModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    isNew = json['isNew'];
+    playCount = json['playCount'];
+    imageSource = json['imageSource'];
+    fileSource = json['fileSource'];
+    minute = json['minute'];
+    second = json['second'];
+    singerName = json['singerName'];
+    if (json['categories'] != null) {
+      categories = <CategoryCategoriesModel>[];
+      json['categories'].forEach((v) {
+        categories!.add(new CategoryCategoriesModel.fromJson(v));
+      });
+    }
+    albumId = json['albumId'];
+    album = json['album'] != null ? new CategoryAlbumModel.fromJson(json['album']) : null;
+    creationDate = json['creationDate'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'playCount': playCount,
-      'imageSource': imageSource,
-      'fileSource': fileSource,
-      'minute': minute,
-      'second': second,
-      'singerName': singerName,
-      'categories': categories.map((item) => item.toJson()).toList(),
-      'albumId': albumId,
-      'album': album,
-      'creationDate': creationDate,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['isNew'] = this.isNew;
+    data['playCount'] = this.playCount;
+    data['imageSource'] = this.imageSource;
+    data['fileSource'] = this.fileSource;
+    data['minute'] = this.minute;
+    data['second'] = this.second;
+    data['singerName'] = this.singerName;
+    if (this.categories != null) {
+      data['categories'] = this.categories!.map((v) => v.toJson()).toList();
+    }
+    data['albumId'] = this.albumId;
+    if (this.album != null) {
+      data['album'] = this.album!.toJson();
+    }
+    data['creationDate'] = this.creationDate;
+    return data;
   }
 }
 
-class CategoryInfoModel {
-  final int id;
-  final String imageSource;
-  final String title;
-  final String creationDate;
+class CategoryCategoriesModel {
+  int? id;
+  String? imageSource;
+  String? title;
+  String? creationDate;
 
-  CategoryInfoModel({
-    required this.id,
-    required this.imageSource,
-    required this.title,
-    required this.creationDate,
-  });
+  CategoryCategoriesModel({this.id, this.imageSource, this.title, this.creationDate});
 
-  factory CategoryInfoModel.fromJson(Map<String, dynamic> json) {
-    return CategoryInfoModel(
-      id: json['id'],
-      imageSource: json['imageSource'],
-      title: json['title'],
-      creationDate: json['creationDate'],
-    );
+  CategoryCategoriesModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    imageSource = json['imageSource'];
+    title = json['title'];
+    creationDate = json['creationDate'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'imageSource': imageSource,
-      'title': title,
-      'creationDate': creationDate,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['imageSource'] = this.imageSource;
+    data['title'] = this.title;
+    data['creationDate'] = this.creationDate;
+    return data;
+  }
+}
+
+class CategoryAlbumModel {
+  int? id;
+  String? name;
+  String? imageSource;
+  int? singerId;
+  bool? isNew;
+  CategorySingerModel? singer;
+
+  CategoryAlbumModel(
+      {this.id,
+        this.name,
+        this.imageSource,
+        this.singerId,
+        this.isNew,
+        this.singer});
+
+  CategoryAlbumModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    imageSource = json['imageSource'];
+    singerId = json['singerId'];
+    isNew = json['isNew'];
+    singer =
+    json['singer'] != null ? new CategorySingerModel.fromJson(json['singer']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['imageSource'] = this.imageSource;
+    data['singerId'] = this.singerId;
+    data['isNew'] = this.isNew;
+    if (this.singer != null) {
+      data['singer'] = this.singer!.toJson();
+    }
+    return data;
+  }
+}
+
+class CategorySingerModel {
+  int? id;
+  String? name;
+  String? imageSource;
+  bool? isBest;
+
+  CategorySingerModel({this.id, this.name, this.imageSource, this.isBest});
+
+  CategorySingerModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    imageSource = json['imageSource'];
+    isBest = json['isBest'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['imageSource'] = this.imageSource;
+    data['isBest'] = this.isBest;
+    return data;
   }
 }
