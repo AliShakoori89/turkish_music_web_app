@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../../data/model/album_model.dart';
 import '../../../../../../../data/model/new-song_model.dart';
 import '../../../../../../../data/model/song_model.dart';
@@ -66,25 +67,39 @@ class _NewSongState extends State<NewSong>{
                   child: InkWell(
                     onTap: (){
 
+                      var path = state.newSong[index].fileSource!.substring(0, 4)
+                          + "s"
+                          + state.newSong[index].fileSource!.substring(4, state.newSong[index].fileSource!.length);
+
+                      var newPath = path.replaceAll(" ", "%20");
+
                       SongDataModel songDataModel = SongDataModel(
-                          id : newSong[index].id,
-                          name: newSong[index].name,
-                          imageSource: newSong[index].imageSource,
-                          fileSource: newSong[index].fileSource!.substring(0, 4)
-                              + "s"
-                              + newSong[index].fileSource!.substring(4, newSong[index].fileSource!.length),
-                          minute: newSong[index].minute,
-                          second: newSong[index].second,
-                          singerName: newSong[index].singerName,
-                          album: null,
-                          albumId: null,
-                          categories: null
+                        id : state.newSong[index].id,
+                        name: state.newSong[index].name,
+                        imageSource: state.newSong[index].imageSource,
+                        fileSource: newPath,
+                        minute: state.newSong[index].minute,
+                        second: state.newSong[index].second,
+                        singerName: state.newSong[index].singerName,
+                        album: null,
+                        albumId: state.newSong[index].albumId,
+                        categories: null,
                       );
 
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => PlaySongPage()
-                        ),
+                      context.push(
+                        '/'+PlaySongPage.routeName,
+                        extra: {
+                          'songName': songDataModel.name,
+                          'songFile': newPath,
+                          'songID': songDataModel.id!,
+                          'singerName': songDataModel.singerName,
+                          'songImage': songDataModel.imageSource,
+                          'albumID': songDataModel.albumId!,
+                          'pageName': "SingerPage",
+                          'albumSongList': state.newSong.map((categoryMusic) => AlbumDataMusicModel.fromNewSongDataModel(categoryMusic))
+                              .toList(),
+                          'songDataModel': songDataModel,
+                        },
                       );
                       },
                     child: CachedNetworkImage(

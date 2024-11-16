@@ -25,12 +25,10 @@ class NewSongRepository {
 
   FutureOr<List<NewSongDataModel>> getAllNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
-    // List<NewSongDataModel> list = [];
     final response = await api.get('/api/Music/GetNewMusics');
     final productJson = json.decode(response.body);
     var newSongModel = NewSongModel.fromJson(productJson);
-    print(newSongModel.data!.length);
-    return newSongModel.data!;
+    return newSongModel.data!.reversed.toList();
   }
 
 }

@@ -88,16 +88,17 @@ class ContainerAllSongsList extends StatelessWidget {
                     flex: 5,
                     child: Row(
                       children: [
-                        categoryAllSongs.first.singerName != categoryAllSongs[1].singerName &&
-                            categoryAllSongs.first.singerName != categoryAllSongs.last.singerName
-                            ? Expanded(
+                        categoryAllSongs.first.singerName == categoryAllSongs[1].singerName &&
+                            categoryAllSongs.first.singerName == categoryAllSongs.last.singerName
+                            ? Container()
+                            : Expanded(
                           flex: 1,
                           child: Container(
                             height: 50,
                             width: 40,
                             margin: const EdgeInsets.only(right: 5),
                             child: CachedNetworkImage(
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                                 imageUrl: categoryAllSongs[index].imageSource!,
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
@@ -106,11 +107,11 @@ class ContainerAllSongsList extends StatelessWidget {
                                         BorderRadius.circular(15),
                                         image: DecorationImage(
                                             image: imageProvider,
-                                            fit: BoxFit.cover),
+                                            fit: BoxFit.fill),
                                       ),
                                     ),
                                 placeholder: (context, url) =>
-                                PlayingPageAlbumSongListShimmer(),
+                                    PlayingPageAlbumSongListShimmer(),
                                 errorWidget: (context, url, error) => NoImage()),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
@@ -120,12 +121,11 @@ class ContainerAllSongsList extends StatelessWidget {
                                             .imageSource!),
                                     fit: BoxFit.cover)),
                           ),
-                        )
-                            : Container(),
+                        ),
                         const SizedBox(width: 5,),
                         categoryAllSongs.isEmpty
                             ? Expanded(
-                          flex: 2,
+                          flex: 4,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -144,7 +144,7 @@ class ContainerAllSongsList extends StatelessWidget {
                           ),
                         )
                             : Expanded(
-                          flex: 2,
+                          flex: 4,
                           child: Padding(
                             padding: EdgeInsets.only(
                               top: 15,

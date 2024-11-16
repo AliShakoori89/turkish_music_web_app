@@ -23,6 +23,7 @@ import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/progressbar.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/repeat_button.dart';
 import '../../../data/model/album_model.dart';
+import '../../../data/model/new-song_model.dart';
 import '../../bloc/play_button_state_bloc/bloc.dart';
 import '../../bloc/play_button_state_bloc/event.dart';
 import '../../bloc/song_control_bloc/audio_control_bloc.dart';

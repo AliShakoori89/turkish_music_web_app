@@ -5,6 +5,7 @@ import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 
+import '../../../../../../../../data/model/album_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../helpers/widgets/song_card.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
@@ -46,23 +47,22 @@ class _NewSongPageState extends State<NewSongPage> {
                   return InkWell(
                     onTap: (){
 
-                      var path = state.newSong[index].fileSource!.substring(0, 4)
+                      var path = state.allNewSong[index].fileSource!.substring(0, 4)
                           + "s"
-                          + state.newSong[index].fileSource!
-                              .substring(4, state.newSong[index].fileSource!.length);
+                          + state.allNewSong[index].fileSource!.substring(4, state.allNewSong[index].fileSource!.length);
 
                       var newPath = path.replaceAll(" ", "%20");
 
                       SongDataModel songDataModel = SongDataModel(
-                        id : state.newSong[index].id,
-                        name: state.newSong[index].name,
-                        imageSource: state.newSong[index].imageSource,
+                        id : state.allNewSong[index].id,
+                        name: state.allNewSong[index].name,
+                        imageSource: state.allNewSong[index].imageSource,
                         fileSource: newPath,
-                        minute: state.newSong[index].minute,
-                        second: state.newSong[index].second,
-                        singerName: "",
+                        minute: state.allNewSong[index].minute,
+                        second: state.allNewSong[index].second,
+                        singerName: state.allNewSong[index].singerName,
                         album: null,
-                        albumId: state.newSong[index].albumId,
+                        albumId: state.allNewSong[index].albumId,
                         categories: null,
                       );
 
@@ -70,13 +70,14 @@ class _NewSongPageState extends State<NewSongPage> {
                         '/'+PlaySongPage.routeName,
                         extra: {
                           'songName': songDataModel.name,
-                          'songFile': songDataModel.fileSource,
+                          'songFile': newPath,
                           'songID': songDataModel.id!,
-                          'singerName': "",
-                          'songImage': "http://194.5.195.145/TurkishMusicFiles/MusicPhotos/2024-10-02-08-33-30-Sibel-Can-Bu-Devirde-1997.jpg",
+                          'singerName': songDataModel.singerName,
+                          'songImage': songDataModel.imageSource,
                           'albumID': songDataModel.albumId!,
-                          'pageName': "RecentlyPlaylist",
-                          'albumSongList': state.newSong[index],
+                          'pageName': "SingerPage",
+                          'albumSongList': state.allNewSong.map((categoryMusic) => AlbumDataMusicModel.fromNewSongDataModel(categoryMusic))
+                              .toList(),
                           'songDataModel': songDataModel,
                         },
                       );
