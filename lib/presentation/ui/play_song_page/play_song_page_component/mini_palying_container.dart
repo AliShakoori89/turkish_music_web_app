@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
-import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../data/model/song_model.dart';
@@ -22,11 +15,11 @@ import '../../../helpers/widgets/top_arrow_icon.dart';
 class MiniPlayingContainer extends StatefulWidget {
 
   MiniPlayingContainer({super.key,
-  required this.visibility, required this.songID, required this.albumID});
+  required this.visibility, required this.song, required this.album});
 
   final bool visibility;
-  final int songID ;
-  final int albumID ;
+  final AlbumDataMusicModel song;
+  final List<AlbumDataMusicModel> album ;
 
   @override
   State<MiniPlayingContainer> createState() => _MiniPlayingContainerState();
@@ -38,17 +31,11 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   void initState() {
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(CheckPlayingSongEvent());
     BlocProvider.of<PlayButtonStateBloc>(context).add(GetPlayButtonStateEvent());
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-    // BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    BlocProvider.of<SongBloc>(context).add(FetchSongEvent(songID: widget.songID));
-    BlocProvider.of<AlbumBloc>(context).add(GetAlbumAllSongsEvent(albumId: widget.albumID));
 
     return widget.visibility == true
         ? Container(
@@ -61,94 +48,73 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
           ),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: BlocBuilder<AlbumBloc, AlbumState>(
-            builder: (context, state) {
+        child: Column(
+          children: [
+            const TopArrow(),
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: InkWell(
+                      onTap: () {
 
-              List<AlbumDataMusicModel> album = state.albumAllSongs;
+                        var path = widget.song.fileSource!.substring(0, 4)
+                            + ""
+                            + widget.song.fileSource!.substring(4, widget.song.fileSource?.length);
 
-              return BlocBuilder<SongBloc, SongState>(
-                  builder: (context, state) {
-                    // if(state.status.isLoading){
-                    //   return LinearProgressIndicator();
-                    // }else
-                      if(state.status.isSuccess){
-                      return Column(
-                        children: [
-                          const TopArrow(),
-                          Container(
-                            margin: EdgeInsets.only(left: 20, right: 20),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                    flex: 3,
-                                    child: InkWell(
-                                      onTap: () {
+                        var newPath = path.replaceAll(" ", "%20");
 
-                                        var path = state.song.fileSource!.substring(0, 4)
-                                            + ""
-                                            + state.song.fileSource!.substring(4, state.song.fileSource?.length);
+                        SongDataModel songDataModel = SongDataModel(
+                          id : widget.song.id,
+                          name: widget.song.name,
+                          imageSource: widget.song.imageSource,
+                          fileSource: newPath,
+                          minute: widget.song.minute,
+                          second: widget.song.second,
+                          singerName: widget.song.singerName,
+                          album: null,
+                          albumId: widget.song.albumId,
+                          categories: null,
+                        );
 
-                                        var newPath = path.replaceAll(" ", "%20");
+                        context.push(
+                          '/'+PlaySongPage.routeName,
+                          extra: {
+                            'songName': songDataModel.name,
+                            'songFile': newPath,
+                            'songID': songDataModel.id!,
+                            'singerName': songDataModel.singerName,
+                            'songImage': songDataModel.imageSource!,
+                            'albumID': songDataModel.albumId!,
+                            'pageName': "SingerPage",
+                            'albumSongList': widget.album,
+                            'songDataModel': songDataModel,
+                          },
+                        );
 
-                                        SongDataModel songDataModel = SongDataModel(
-                                          id : widget.songID,
-                                          name: state.song.name,
-                                          imageSource: state.song.imageSource,
-                                          fileSource: newPath,
-                                          minute: state.song.minute,
-                                          second: state.song.second,
-                                          singerName: state.song.singerName,
-                                          album: null,
-                                          albumId: widget.albumID,
-                                          categories: null,
-                                        );
-
-                                        context.push(
-                                          '/'+PlaySongPage.routeName,
-                                          extra: {
-                                            'songName': songDataModel.name,
-                                            'songFile': newPath,
-                                            'songID': songDataModel.id!,
-                                            'singerName': songDataModel.singerName,
-                                            'songImage': songDataModel.imageSource!,
-                                            'albumID': songDataModel.albumId!,
-                                            'pageName': "SingerPage",
-                                            'albumSongList': album,
-                                            'songDataModel': songDataModel,
-                                          },
-                                        );
-
-                                      },
-                                      child: SingerNameTrackNameImage(
-                                        singerName: state.song.singerName!,
-                                        songName: state.song.name!,
-                                        imagePath: state.song.imageSource!,
-                                        align: MainAxisAlignment.start,
-                                      ),
-                                    ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: PlayButton(),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      );
-                    }else if(state.status.isError){
-                      return Center(
-                        child: Text("Error"),
-                      );
-                    }
-                    return Container();
-                  }
-              );
-            }
-          // );}
+                      },
+                      child: SingerNameTrackNameImage(
+                        singerName: widget.song.singerName!,
+                        songName: widget.song.name!,
+                        imagePath: widget.song.imageSource!,
+                        align: MainAxisAlignment.start,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: PlayButton(),
+                  ),
+                ],
+              ),
+            )
+          ],
         )
+
     )
         : Container();
   }
