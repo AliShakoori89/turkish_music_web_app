@@ -40,6 +40,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
     return widget.visibility == true
         ? Container(
         width: double.infinity,
+        height: 100,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Colors.black, Colors.purple, ],

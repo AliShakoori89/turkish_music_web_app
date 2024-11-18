@@ -14,13 +14,16 @@ class SongRepository {
     ApiBaseHelper api = ApiBaseHelper();
 
     try {
-      final response = await api.get('/api/Music/GetAll', page: "", count: "", searchChar: char);
-      print(char);
+      final response = await api.get('/api/Music/GetAll', page: "1", count: "5", searchChar: char);
       if (response.statusCode == 200) {
         List<SongDataModel> allSongs = [];
         final data = jsonDecode(response.body);
         final List<dynamic> allSongList = data['data'];
-        allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
+        try {
+          allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
+        } catch (e) {
+          print('Error while parsing songs: $e');
+        }
         return allSongs;
       }
     }catch (e) {

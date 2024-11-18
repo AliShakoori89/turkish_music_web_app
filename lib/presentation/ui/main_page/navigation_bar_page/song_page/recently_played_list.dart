@@ -61,9 +61,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                 color: Colors.black87,
                                 boxShadow: [
                                   BoxShadow(
-                                      spreadRadius: 2,
-                                      blurRadius: 1,
-                                      offset: Offset(0, 2),
+                                      offset: Offset(0, 0.5),
                                       color: Colors.purple.withOpacity(0.5)
                                   )
                                 ]

@@ -94,72 +94,73 @@ class _MainPageState extends State<MainPage> {
           body: Stack(
         children: [
           myRoutes[currentRoute],
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              VerticalNavBar(
-                selectedIndex: currentRoute,
-                height: orientation == Orientation.portrait
-                    ? MediaQuery.of(context).size.height * 0.3
-                    : MediaQuery.of(context).size.height * 0.4,
-                width: orientation == Orientation.portrait
-                    ? MediaQuery.of(context).size.width * 0.12
-                    : MediaQuery.of(context).size.width * 0.04,
-                backgroundColor: Colors.purple.withOpacity(0.3),
-                borderRadius: 15,
-                onItemSelected: (value) {
-                  setState(() {
-                    currentRoute = value;
-                  });
-                },
-                items: const [
-                  VerticalNavBarItem(
-                    title: "Home",
-                  ),
-                  VerticalNavBarItem(
-                    title: "profile",
-                  ),
-                  VerticalNavBarItem(
-                    title: "music",
-                  ),
-                  VerticalNavBarItem(
-                    title: "search",
-                  ),
-                ],
-              ),
-              BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
-                  builder: (context, state) {
-                bool visibility = state.visibility;
-                int songID = state.songID;
-                int albumID = state.albumID;
-
-                BlocProvider.of<SongBloc>(context)
-                    .add(FetchSongEvent(songID: songID));
-                BlocProvider.of<AlbumBloc>(context)
-                    .add(GetAlbumAllSongsEvent(albumId: albumID));
-                // return Container();
-                return BlocBuilder<AlbumBloc, AlbumState>(
-                    builder: (context, state) {
-                  List<AlbumDataMusicModel> album = state.albumAllSongs;
-                  return BlocBuilder<SongBloc, SongState>(
-                      builder: (context, state) {
-                    if(state.status.isLoading){
-                      return LinearProgressIndicator();
-                    }else if( state.status.isSuccess){
-                      return MiniPlayingContainer(
-                        visibility: visibility,
-                        song: state.song,
-                        album: album,
-                      );
-                    }else if(state.status.isError){
-                      return Text("Error");
-                    }
-                    return Card();
-                  });
+          Positioned(
+            bottom: 100,
+            right: 0,
+            child: VerticalNavBar(
+              selectedIndex: currentRoute,
+              height: orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.height * 0.3
+                  : MediaQuery.of(context).size.height * 0.4,
+              width: orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.width * 0.12
+                  : MediaQuery.of(context).size.width * 0.04,
+              backgroundColor: Colors.purple.withOpacity(0.3),
+              borderRadius: 15,
+              onItemSelected: (value) {
+                setState(() {
+                  currentRoute = value;
                 });
-              }),
-            ],
+              },
+              items: const [
+                VerticalNavBarItem(
+                  title: "Home",
+                ),
+                VerticalNavBarItem(
+                  title: "profile",
+                ),
+                VerticalNavBarItem(
+                  title: "music",
+                ),
+                VerticalNavBarItem(
+                  title: "search",
+                ),
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
+                builder: (context, state) {
+                  bool visibility = state.visibility;
+                  int songID = state.songID;
+                  int albumID = state.albumID;
+
+                  BlocProvider.of<SongBloc>(context)
+                      .add(FetchSongEvent(songID: songID));
+                  BlocProvider.of<AlbumBloc>(context)
+                      .add(GetAlbumAllSongsEvent(albumId: albumID));
+                  // return Container();
+                  return BlocBuilder<AlbumBloc, AlbumState>(
+                      builder: (context, state) {
+                        List<AlbumDataMusicModel> album = state.albumAllSongs;
+                        return BlocBuilder<SongBloc, SongState>(
+                            builder: (context, state) {
+                              if (state.status.isLoading) {
+                                return LinearProgressIndicator();
+                              } else if (state.status.isSuccess) {
+                                return MiniPlayingContainer(
+                                  visibility: visibility,
+                                  song: state.song,
+                                  album: album,
+                                );
+                              } else if (state.status.isError) {
+                                return Text("Error");
+                              }
+                              return Card();
+                            });
+                      });
+                }),
           )
         ],
       )),
