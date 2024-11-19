@@ -54,84 +54,90 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                 List<AlbumDataModel> allAlbum = state.allAlbum;
 
                 List<SearchFieldListItem<dynamic>> combinedList = [
-                  // ...allAlbum.map((album) => SearchFieldListItem<dynamic>(
-                  //   album.name!,
-                  //   item: album,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child: InkWell(
-                  //       onTap: () {
-                  //
-                  //         var path = album.musics![0].fileSource!.substring(0, 4)
-                  //             + "s"
-                  //             + album.musics![0].fileSource!.substring(4, album.musics![0].fileSource?.length);
-                  //
-                  //         var newPath = path.replaceAll(" ", "%20");
-                  //
-                  //         SongDataModel songDataModel = SongDataModel(
-                  //           id : album.musics![0].id,
-                  //           name: album.musics![0].name,
-                  //           imageSource: album.imageSource,
-                  //           fileSource: newPath,
-                  //           minute: album.musics![0].minute,
-                  //           second: album.musics![0].second,
-                  //           singerName: album.singer!.name,
-                  //           album: null,
-                  //           albumId: album.id,
-                  //           categories: null,
-                  //         );
-                  //
-                  //         context.push(
-                  //           '/'+PlaySongPage.routeName,
-                  //           extra: {
-                  //             'songName': songDataModel.name,
-                  //             'songFile': newPath,
-                  //             'songID': songDataModel.id!,
-                  //             'singerName': songDataModel.singerName,
-                  //             'songImage': album.imageSource,
-                  //             'albumID': songDataModel.albumId!,
-                  //             'pageName': "SingerPage",
-                  //             'albumSongList': album.musics!,
-                  //             'songDataModel': songDataModel,
-                  //           },
-                  //         );
-                  //       },
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //         children: [
-                  //           Row(
-                  //             children: [
-                  //               album.imageSource != null
-                  //                   ? CircleAvatar(backgroundImage: NetworkImage(album.imageSource!))
-                  //                   : Image.asset("assets/images/no-image.png"),
-                  //               SizedBox(width: 10),
-                  //               Column(
-                  //                 mainAxisAlignment: MainAxisAlignment.center,
-                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  //                 children: [
-                  //                   Expanded(flex: 1, child: Text(album.name!)),
-                  //                   Expanded(
-                  //                     flex: 1,
-                  //                     child: Text(album.singer!.name!, style: TextStyle(color: Colors.grey)),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ],
-                  //           ),
-                  //           Text("Album",
-                  //           style: TextStyle(
-                  //             color: Colors.grey
-                  //           ),)
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // )).toList(),
+                  ...allAlbum.map((album) => SearchFieldListItem<dynamic>(
+                    album.name!,
+                    item: album,
+                    child: Padding(
+                      padding:  EdgeInsets.only(
+                        right: 8,
+                        left: 8
+                      ),
+                      child: InkWell(
+                        onTap: () {
+
+                          var path = album.musics![0].fileSource!.substring(0, 4)
+                              + "s"
+                              + album.musics![0].fileSource!.substring(4, album.musics![0].fileSource?.length);
+
+                          var newPath = path.replaceAll(" ", "%20");
+
+                          SongDataModel songDataModel = SongDataModel(
+                            id : album.musics![0].id,
+                            name: album.musics![0].name,
+                            imageSource: album.imageSource,
+                            fileSource: newPath,
+                            minute: album.musics![0].minute,
+                            second: album.musics![0].second,
+                            singerName: album.singer!.name,
+                            album: null,
+                            albumId: album.id,
+                            categories: null,
+                          );
+
+                          context.push(
+                            '/'+PlaySongPage.routeName,
+                            extra: {
+                              'songName': songDataModel.name,
+                              'songFile': newPath,
+                              'songID': songDataModel.id!,
+                              'singerName': songDataModel.singerName,
+                              'songImage': album.imageSource,
+                              'albumID': songDataModel.albumId!,
+                              'pageName': "SingerPage",
+                              'albumSongList': album.musics!,
+                              'songDataModel': songDataModel,
+                            },
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                album.imageSource != null
+                                    ? CircleAvatar(backgroundImage: NetworkImage(album.imageSource!))
+                                    : Image.asset("assets/images/no-image.png"),
+                                SizedBox(width: 10),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(flex: 1, child: Text(album.name!)),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(album.singer!.name!, style: TextStyle(color: Colors.grey)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Text("Album",
+                            style: TextStyle(
+                              color: Colors.grey
+                            ),)
+                          ],
+                        ),
+                      ),
+                    ),
+                  )).toList(),
                   ...allSong.map((song) => SearchFieldListItem<dynamic>(
                     song.name!,
                     item: song,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(
+                          right: 8,
+                          left: 8
+                      ),
                       child: InkWell(
                         onTap: () {
                           var path = song.fileSource!.substring(0, 4)
@@ -205,24 +211,34 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                       ),),
                   ),
                   body: SafeArea(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            top: 20
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          top: 20
                         ),
-                        child: Align(
-                            alignment: Alignment.topCenter,
-                            child: SearchField(
-                              controller: songCharController,
-                              hint: "Enter song or album name",
-                              itemHeight: 70,
-                              scrollbarDecoration: ScrollbarDecoration(
-                                thumbColor: Colors.purple
-                              ),
-                              suggestions: combinedList,
-                            )
-                        ),
+                        child: SearchField(
+                          controller: songCharController,
+                          hint: "Enter song or album name",
+                          offset: Offset(0, 50),
+                          scrollbarDecoration: ScrollbarDecoration(
+                              thumbColor: Colors.purple
+                          ),
+                          onSubmit: (value) {
+                            print(value);
+                            BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent(char: value));
+                            BlocProvider.of<AlbumBloc>(context).add(GetAllAlbumEvent(char: value));
+                          },
+                          suggestionsDecoration: SuggestionDecoration(
+                            color: Colors.black.withOpacity(0.1),
+                            border: Border.all(color: Colors.purple.shade500),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          suggestionAction: SuggestionAction.unfocus,
+                          suggestions: combinedList,
+                          textInputAction: TextInputAction.search,
+
+                        )
                       )
                   ),
                 );
@@ -230,5 +246,10 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
           );
 
         });
+  }
+
+  String _generateNewPath(String? fileSource) {
+    if (fileSource == null || fileSource.isEmpty) return "";
+    return fileSource.substring(0, 4) + "s" + fileSource.substring(4).replaceAll(" ", "%20");
   }
 }

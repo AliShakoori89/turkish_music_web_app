@@ -128,7 +128,8 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
-          Align(
+          currentRoute != 3
+              ? Align(
             alignment: Alignment.bottomCenter,
             child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
                 builder: (context, state) {
@@ -157,11 +158,12 @@ class _MainPageState extends State<MainPage> {
                               } else if (state.status.isError) {
                                 return Text("Error");
                               }
-                              return Card();
+                              return Container();
                             });
                       });
                 }),
           )
+              : Container()
         ],
       )),
     )

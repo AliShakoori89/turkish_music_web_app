@@ -14,7 +14,7 @@ class AlbumRepository {
     ApiBaseHelper api = ApiBaseHelper();
 
     try {
-      final response = await api.get('/api/Album/GetAll', page: "1", count: "10", searchChar: char);
+      final response = await api.get('/api/Album/GetAll', page: "1", count: "4000", searchChar: char);
       if (response.statusCode == 200) {
         List<AlbumDataModel> allAlbum = [];
         final data = jsonDecode(response.body);

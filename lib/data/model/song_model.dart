@@ -62,12 +62,9 @@ class SongDataModel {
     minute = json['minute'];
     second = json['second'];
     singerName = json['singerName'];
-    if (json['categories'] != null) {
-      categories = <SongDataCategoriesModel>[];
-      json['categories'].forEach((v) {
-        categories!.add(new SongDataCategoriesModel.fromJson(v));
-      });
-    }
+    categories = json['categories'] != null
+        ? json['categories'].map<SongDataCategoriesModel>((v) => SongDataCategoriesModel.fromJson(v)).toList()
+        : [];
     albumId = json['albumId'];
     album = json['album'] != null ? new SongDataAlbumModel.fromJson(json['album']) : null;
   }
@@ -106,7 +103,7 @@ class SongDataCategoriesModel {
     id = json['id'];
     imageSource = json['imageSource'];
     title = json['title'];
-    musics = json['musics'].cast<String>();
+    musics = (json['musics'] != null) ? List<String>.from(json['musics']) : [];
     creationDate = json['creationDate'];
   }
 
@@ -145,9 +142,8 @@ class SongDataAlbumModel {
     imageSource = json['imageSource'];
     singerId = json['singerId'];
     isNew = json['isNew'];
-    singer =
-    json['singer'] != null ? new SongDataSingerModel.fromJson(json['singer']) : null;
-    musics = json['musics'].cast<String>();
+    musics = (json['musics'] != null) ? List<String>.from(json['musics']) : [];
+    singer = json['singer'] != null ? SongDataSingerModel.fromJson(json['singer']) : null;
   }
 
   Map<String, dynamic> toJson() {
