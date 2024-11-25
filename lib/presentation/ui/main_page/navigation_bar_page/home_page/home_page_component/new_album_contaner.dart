@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
+import '../../../../../../data/model/album_model.dart';
+import '../../../../../../data/model/new_album_model.dart';
 import '../../../../../../data/model/song_model.dart';
 import '../../../../../bloc/album_bloc/event.dart';
 import '../../../../../const/shimmer_container/new_music_shimmer_container.dart';
@@ -64,45 +67,45 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                       newAlbum.length, (index) {
                     return GestureDetector(
                       onTap: (){
-                        var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
+                        print("index                  "+index.toString());
+                        print("state.newAlbum[index].musics                  "+state.newAlbum[index].musics.toString());
+
+                        var path = state.newAlbum[index].musics![0].fileSource!.substring(0, 4)
                             + "s"
-                            + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
+                            + state.newAlbum[index].musics![0].fileSource!.substring(4, state.newAlbum[index].musics![0].fileSource!.length);
 
                         var newPath = path.replaceAll(" ", "%20");
 
                         SongDataModel songDataModel = SongDataModel(
-                            id : state.singerAllAlbum[index].musics![0].id,
-                            name: state.singerAllAlbum[index].musics![0].name,
-                            imageSource: state.singerAllAlbum[index].musics![0].imageSource,
-                            fileSource: newPath,
-                            minute: state.singerAllAlbum[index].musics![0].minute,
-                            second: state.singerAllAlbum[index].musics![0].second,
-                            singerName: newAlbum[index].singer!.name,
-                            album: null,
-                            albumId: state.singerAllAlbum[index].id,
-                            categories: null
+                          id : state.newAlbum[index].musics![0].id,
+                          name: state.newAlbum[index].musics![0].name,
+                          imageSource: state.newAlbum[index].musics![0].imageSource,
+                          fileSource: newPath,
+                          minute: state.newAlbum[index].musics![0].minute,
+                          second: state.newAlbum[index].musics![0].second,
+                          singerName: state.newAlbum[index].musics![0].name,
+                          album: null,
+                          albumId: state.newAlbum[index].musics![0].id,
+                          categories: null,
                         );
 
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => BlocProvider(
-                        //           create: (context) => CurrentSelectedSongBloc()..add(SelectSongEvent(
-                        //               songModel: songDataModel
-                        //           )),
-                        //           child: PlaySongPage(
-                        //             songName: state.singerAllAlbum[index].name!,
-                        //             songFile: newPath,
-                        //             songID: songDataModel.id!,
-                        //             singerName: songDataModel.singerName!,
-                        //             songImage: state.singerAllAlbum[index].imageSource!,
-                        //             albumID: songDataModel.albumId!,
-                        //             pageName: "SingerPage",
-                        //             albumSongList: state.singerAllAlbum[index].musics!,
-                        //             orientation: widget.orientation,
-                        //           ),
-
-                        // )));
+                        context.push(
+                          '/'+PlaySongPage.routeName,
+                          extra: {
+                            'songName': songDataModel.name,
+                            'songFile': newPath,
+                            'songID': songDataModel.id!,
+                            'singerName': songDataModel.singerName,
+                            'songImage': songDataModel.name,
+                            'albumID': songDataModel.albumId!,
+                            'pageName': "SingerPage",
+                            'albumSongList': state.newAlbum[index].musics!.map((newAlbum) => AlbumDataMusicModel.fromNewAlbumDataModel(newAlbum))
+                            .toList(),
+                            // state.singerAllAlbum.map((newAlbumMusics) => AlbumDataMusicModel.fromCategoryMusicModel(newAlbumMusics))
+                            //     .toList(),
+                            'songDataModel': songDataModel,
+                          },
+                        );
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

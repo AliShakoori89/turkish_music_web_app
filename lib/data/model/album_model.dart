@@ -1,6 +1,7 @@
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 
 import 'category_model.dart';
+import 'new_album_model.dart';
 
 class AlbumModel {
   List<AlbumDataModel>? data;
@@ -183,6 +184,19 @@ class AlbumDataMusicModel {
   }
 
   factory AlbumDataMusicModel.fromNewSongDataModel(NewSongDataModel model) {
+    return AlbumDataMusicModel(
+      id: model.id,
+      name: model.name,
+      imageSource: model.imageSource,
+      fileSource: model.fileSource,
+      minute: model.minute,
+      second: model.second,
+      singerName: model.singerName,
+      albumId: model.albumId,
+    );
+  }
+
+  factory AlbumDataMusicModel.fromNewAlbumDataModel(NewAlbumMusicsModel model) {
     return AlbumDataMusicModel(
       id: model.id,
       name: model.name,

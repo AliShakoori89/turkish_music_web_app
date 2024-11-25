@@ -90,7 +90,7 @@ class _NewSongPageState extends State<NewSongPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                              flex: 1,
+                              flex: 2,
                               child: Padding(
                                 padding: EdgeInsets.only(
                                   top: 15,

@@ -92,7 +92,7 @@ class _TopSongPageState extends State<TopSongPage> {
                                 'songImage': "http://194.5.195.145/TurkishMusicFiles/MusicPhotos/2024-10-02-08-33-30-Sibel-Can-Bu-Devirde-1997.jpg",
                                 'albumID': songDataModel.albumId!,
                                 'pageName': "RecentlyPlaylist",
-                                'albumSongList': state.category[0].musics!.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
+                                'albumSongList': state.category[index].musics!.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
                                     .toList(),
                                 'songDataModel': songDataModel,
                               },

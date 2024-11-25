@@ -74,50 +74,61 @@ class _AllSingerPageState extends State<AllSingerPage>{
                       top: 15,
                       bottom: 15
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: allSinger[index].imageSource,
-                              imageBuilder: (context, imageProvider) => Container(
-                                height: MediaQuery.of(context).size.width / 8,
-                                width: MediaQuery.of(context).size.width / 8,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: NetworkImage(allSinger[index].imageSource),
-                                        fit: BoxFit.fill
-                                    )
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.width / 7.5,
+                      color: Colors.black,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            flex: 10,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CachedNetworkImage(
+                                  imageUrl: allSinger[index].imageSource,
+                                  imageBuilder: (context, imageProvider) => Container(
+                                    height: MediaQuery.of(context).size.width / 8,
+                                    width: MediaQuery.of(context).size.width / 8,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: NetworkImage(allSinger[index].imageSource),
+                                            fit: BoxFit.fill
+                                        )
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  allSinger[index].name,
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: MediaQuery.of(context).size.width / 8
+                              ),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Divider(
+                                  thickness: 0.2,
+                                  color: Colors.grey,
                                 ),
                               ),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
                             ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            Text(
-                              allSinger[index].name,
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 8
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Divider(
-                              thickness: 0.2,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )),
