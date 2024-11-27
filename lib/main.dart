@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
@@ -53,11 +53,8 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' show json;
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 
-/// The scopes required by this application.
-// #docregion Initialize
 const List<String> scopes = <String>[
   'email',
   'https://www.googleapis.com/auth/contacts.readonly',
@@ -70,14 +67,10 @@ GoogleSignIn googleSignIn = GoogleSignIn(
 );
 // #enddocregion Initialize
 
-FutureOr<void> main() async{
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
 
-  // runZonedGuarded(() async {
-  //   await SentryFlutter.init(
-  //         (options) {
-  //       options.dsn = 'https://example@sentry.io/https://f1cdf7541efb2cab8d645bdbcfa21b5c@o4508205725253632.ingest.us.sentry.io/4508205732265984';
-  //     },
-  //   );
+FutureOr<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
   // await DefaultCacheManager().emptyCache();
@@ -92,6 +85,16 @@ FutureOr<void> main() async{
       ? false
       : true;
 
+  // Initialize notification settings
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings =
+  InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
 
   runApp(
@@ -101,9 +104,7 @@ FutureOr<void> main() async{
             MyApp(isLoggedIn: isLoggedIn)
   // )
   ); // Wrap your app
-  // }, (exception, stackTrace) async {
-  //   await Sentry.captureException(exception, stackTrace: stackTrace);
-  // });
+
 }
 
 
