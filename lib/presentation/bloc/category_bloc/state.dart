@@ -15,27 +15,32 @@ class CategoryState extends Equatable{
 
   const CategoryState({
     required this.status,
+    required this.allCategory,
     required this.category
   });
 
-  static CategoryState initial() => const CategoryState(
+  static CategoryState initial() => CategoryState(
     status: CategoryStatus.initial,
-    category: []
+    allCategory: <CategoryDataModel>[],
+    category: CategoryDataModel(),
   );
 
   final CategoryStatus status;
-  final List<CategoryDataModel> category;
+  final List<CategoryDataModel> allCategory;
+  final CategoryDataModel category;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, category];
+  List<Object?> get props => [status, allCategory, category];
 
   CategoryState copyWith({
     CategoryStatus? status,
-    List<CategoryDataModel>? category
+    List<CategoryDataModel>? allCategory,
+    CategoryDataModel? category
   }) {
     return CategoryState(
-        status: status ?? this.status,
+      status: status ?? this.status,
+      allCategory: allCategory ?? this.allCategory,
       category: category ?? this.category
     );
   }

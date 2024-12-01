@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:turkish_music_app/data/model/category_model.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
@@ -43,7 +44,7 @@ import 'package:turkish_music_app/presentation/const/error_internet_connection_p
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/category_item/top_songs_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/category_item/category_songs_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/new_song_container/new_song_page/new_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
@@ -399,11 +400,21 @@ class _MyAppState extends State<MyApp> {
                         }
                     ),
                     GoRoute(
-                        path: TopSongPage.routeName,
-                        builder: (context, state){
-                          final imageSource = state.extra as String;
-                          return TopSongPage(imageSource: imageSource);
+                      path: 'CategorySongPage',
+                      name: CategorySongPage.routeName,
+                      builder: (context, state) {
+                        // Validate and parse the `state.extra` to ensure it's of type `Map` and contains required fields
+                        final extra = state.extra;
+                        if (extra is! Map || !extra.containsKey('imageSource') || !extra.containsKey('categoryName') || !extra.containsKey('categoryID')) {
+                          throw Exception("Invalid or missing `extra` data for CategorySongPage.");
                         }
+
+                        return CategorySongPage(
+                          imageSource: extra['imageSource'] as String,
+                          categoryName: extra['categoryName'] as String,
+                          categoryID: extra['categoryID'] as int,
+                        );
+                      },
                     ),
                     GoRoute(
                       path: 'PlaySongPage',

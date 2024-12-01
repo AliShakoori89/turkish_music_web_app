@@ -84,7 +84,7 @@ dependencies:
   external_path: ^2.0.1
   searchfield: ^1.1.6
   google_sign_in: ^6.2.1
-  flutter_local_notifications: ^15.0.0
+  flutter_local_notifications: ^18.0.1
 
 dev_dependencies:
   flutter_test:

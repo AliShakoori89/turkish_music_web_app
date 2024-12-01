@@ -7,7 +7,7 @@ import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/shimmer_container/category_shimmer_container.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/category_item/top_songs_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/category_item/category_songs_page.dart';
 import '../../../../../../const/title.dart';
 
 class CategoryItemContainer extends StatefulWidget {
@@ -47,7 +47,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
               scrollDirection: Axis.horizontal,
               cacheExtent: 1000,
               children: List.generate(
-                  state.category.length,
+                  state.allCategory.length,
                       (index){
                     return Padding(
                       padding: EdgeInsets.only(
@@ -59,12 +59,16 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                         ),
                         onTap: (){
                           context.push(
-                            "/"+TopSongPage.routeName, // The path defined in GoRouter
-                            extra: state.category[index].imageSource, // Pass the artistDetail via extra
+                            "/"+CategorySongPage.routeName, // The path defined in GoRouter
+                            extra: {
+                              'imageSource': state.allCategory[index].imageSource,
+                              'categoryName': state.allCategory[index].title,
+                              'categoryID': state.allCategory[index].id
+                            }, // Pass the artistDetail via extra
                           );
                         },
                         child: CachedNetworkImage(
-                          imageUrl: state.category[index].imageSource!,
+                          imageUrl: state.allCategory[index].imageSource!,
                           imageBuilder: (context, imageProvider) => Container(
                             width: orientation == Orientation.portrait
                                 ? MediaQuery.of(context).size.width * 0.3
@@ -78,7 +82,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                                 ],
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
-                                    image: NetworkImage(state.category[index].imageSource!),
+                                    image: NetworkImage(state.allCategory[index].imageSource!),
                                     fit: BoxFit.fill
                                 )
                             ),
