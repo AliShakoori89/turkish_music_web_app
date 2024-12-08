@@ -39,9 +39,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
     var size = MediaQuery.of(context).size;
 
-    print(size.height);
-    print((size.width / size.height));
-
     return widget.visibility == true
         ? Container(
         width: double.infinity,

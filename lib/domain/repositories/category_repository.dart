@@ -23,7 +23,6 @@ class CategoryRepository {
   }
 
   FutureOr<CategoryDataModel> getCategorySongs(int categoryID) async {
-    print("categoryID            "+categoryID.toString());
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       "apiKey": apiKey
@@ -31,13 +30,9 @@ class CategoryRepository {
 
     String accessToken = await getAccessTokenValue();
     final response = await api.get('/api/Category/GetOneCategory/$categoryID', accessToken: accessToken);
-    print(response.statusCode);
-    print("res body :            "+response.body.toString());
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      print("jsonResponse :            "+jsonResponse["data"].toString());
       final categoryModel = CategoryDataModel.fromJson(jsonResponse["data"]);
-      print("categoryModel.data! :            "+categoryModel.toString());
       return categoryModel;
     } else {
       throw Exception('Failed to load categories');

@@ -80,16 +80,15 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     on<SongCompletedEvent>((event, emit) async {
 
       await _playNextSong(emit);
-      await _saveCurrentSongData(_currentSelectedSong!);
+      await saveCurrentSongData(_currentSelectedSong!);
+      await readCurrentSongData();
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
     on<PlayNextSongEvent>((event, emit) async {
       _currentAlbum = event.currentAlbum;
       _singerName =  event.singerName;
-      await _saveCurrentSongData(_currentSelectedSong!);
       await _playNextSong(emit);
-
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
@@ -101,7 +100,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     on<PlayPreviousSongEvent>((event, emit) async {
       _currentAlbum = event.currentAlbum;
       _singerName =  event.singerName;
-      await _saveCurrentSongData(_currentSelectedSong!);
       await _playPreviousSong(emit);
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
@@ -118,10 +116,21 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   }
 
-  Future<void> _saveCurrentSongData(SongDataModel songDataModel) async {
+  Future<void> saveCurrentSongData(SongDataModel songDataModel) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("_saveCurrentSongData            "+songDataModel.id!.toString());
+    print("_saveCurrentSongData            "+songDataModel.albumId!.toString());
     await prefs.setInt('songID', songDataModel.id!);
     await prefs.setInt('albumID', songDataModel.albumId!);
+  }
+
+  FutureOr<List> readCurrentSongData() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final int songID = prefs.getInt('songID')!;
+    final int albumID = prefs.getInt('albumID')!;
+    List requirement = [songID, albumID];
+    return requirement;
   }
 
   Future<void> _playNextSong(Emitter<AudioControlState> emit) async {
@@ -143,6 +152,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         );
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
+        await saveCurrentSongData(_currentSelectedSong!);
+        await readCurrentSongData();
       }else{
         currentIndex = 0;
         final nextSong = _currentAlbum![currentIndex];
@@ -159,6 +170,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         );
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
+        await saveCurrentSongData(_currentSelectedSong!);
+        await readCurrentSongData();
       }
       // }
     }
@@ -182,6 +195,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         );
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
+        await saveCurrentSongData(_currentSelectedSong!);
+        await readCurrentSongData();
       }else{
         currentIndex = _currentAlbum!.length-1;
         final nextSong = _currentAlbum![currentIndex];
@@ -198,6 +213,8 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         );
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
+        await saveCurrentSongData(_currentSelectedSong!);
+        await readCurrentSongData();
       }
       // }
     }

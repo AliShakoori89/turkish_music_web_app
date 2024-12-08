@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page.dart';
@@ -32,15 +33,10 @@ class _MainPageState extends State<MainPage> {
   IconData? icon;
 
   @override
-  void initState() {
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     Orientation orientation = MediaQuery.of(context).orientation;
+    BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
 
     List myRoutes = [
       Padding(
@@ -137,29 +133,39 @@ class _MainPageState extends State<MainPage> {
                   int songID = state.songID;
                   int albumID = state.albumID;
 
-                  BlocProvider.of<SongBloc>(context)
-                      .add(FetchSongEvent(songID: songID));
                   BlocProvider.of<AlbumBloc>(context)
                       .add(GetAlbumAllSongsEvent(albumId: albumID));
+                  BlocProvider.of<SongBloc>(context)
+                      .add(FetchSongEvent(songID: songID));
                   // return Container();
                   return BlocBuilder<AlbumBloc, AlbumState>(
                       builder: (context, state) {
+
                         List<AlbumDataMusicModel> album = state.albumAllSongs;
-                        return BlocBuilder<SongBloc, SongState>(
-                            builder: (context, state) {
-                              if (state.status.isLoading) {
-                                return LinearProgressIndicator();
-                              } else if (state.status.isSuccess) {
-                                return MiniPlayingContainer(
-                                  visibility: visibility,
-                                  song: state.song,
-                                  album: album,
-                                );
-                              } else if (state.status.isError) {
-                                return Text("Error");
-                              }
-                              return Container();
-                            });
+
+                        if(state.status.isLoading){
+                          return LinearProgressIndicator();
+                        }else if(state.status.isSuccess){
+                          return BlocBuilder<SongBloc, SongState>(
+                              builder: (context, state) {
+                                AlbumDataMusicModel song = state.song;
+                                if (state.status.isLoading) {
+                                  return LinearProgressIndicator();
+                                } else if (state.status.isSuccess) {
+                                  return MiniPlayingContainer(
+                                    visibility: visibility,
+                                    song: song,
+                                    album: album,
+                                  );
+                                } else if (state.status.isError) {
+                                  return Container();
+                                }
+                                return Container();
+                              });
+                        }else if(state.status.isError){
+                          return Container();
+                        }
+                        return Container();
                       });
                 }),
           )
