@@ -1,0 +1,5 @@
+<resources>
+    <string name="channel_id">download_channel</string>
+    <string name="channel_name">Download Notifications</string>
+    <string name="channel_description">Notifications for download events</string>
+</resources>

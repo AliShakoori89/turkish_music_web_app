@@ -37,10 +37,17 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
   @override
   Widget build(BuildContext context) {
 
+    var size = MediaQuery.of(context).size;
+
+    print(size.height);
+    print((size.width / size.height));
+
     return widget.visibility == true
         ? Container(
         width: double.infinity,
-        height: 100,
+        height: (size.width / size.height) < 1.5
+            ? size.height / 12
+            : size.height / 7,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Colors.black, Colors.purple, ],
@@ -51,66 +58,71 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
         ),
         child: Column(
           children: [
-            const TopArrow(),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: InkWell(
-                      onTap: () {
+            Expanded(
+                flex: 1,
+                child: const TopArrow()),
+            Expanded(
+              flex: 15,
+              child: Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: InkWell(
+                        onTap: () {
 
-                        var path = widget.song.fileSource!.substring(0, 4)
-                            + ""
-                            + widget.song.fileSource!.substring(4, widget.song.fileSource?.length);
+                          var path = widget.song.fileSource!.substring(0, 4)
+                              + ""
+                              + widget.song.fileSource!.substring(4, widget.song.fileSource?.length);
 
-                        var newPath = path.replaceAll(" ", "%20");
+                          var newPath = path.replaceAll(" ", "%20");
 
-                        SongDataModel songDataModel = SongDataModel(
-                          id : widget.song.id,
-                          name: widget.song.name,
-                          imageSource: widget.song.imageSource,
-                          fileSource: newPath,
-                          minute: widget.song.minute,
-                          second: widget.song.second,
-                          singerName: widget.song.singerName,
-                          album: null,
-                          albumId: widget.song.albumId,
-                          categories: null,
-                        );
+                          SongDataModel songDataModel = SongDataModel(
+                            id : widget.song.id,
+                            name: widget.song.name,
+                            imageSource: widget.song.imageSource,
+                            fileSource: newPath,
+                            minute: widget.song.minute,
+                            second: widget.song.second,
+                            singerName: widget.song.singerName,
+                            album: null,
+                            albumId: widget.song.albumId,
+                            categories: null,
+                          );
 
-                        context.push(
-                          '/'+PlaySongPage.routeName,
-                          extra: {
-                            'songName': songDataModel.name,
-                            'songFile': newPath,
-                            'songID': songDataModel.id!,
-                            'singerName': songDataModel.singerName,
-                            'songImage': songDataModel.imageSource!,
-                            'albumID': songDataModel.albumId!,
-                            'pageName': "SingerPage",
-                            'albumSongList': widget.album,
-                            'songDataModel': songDataModel,
-                          },
-                        );
+                          context.push(
+                            '/'+PlaySongPage.routeName,
+                            extra: {
+                              'songName': songDataModel.name,
+                              'songFile': newPath,
+                              'songID': songDataModel.id!,
+                              'singerName': songDataModel.singerName,
+                              'songImage': songDataModel.imageSource!,
+                              'albumID': songDataModel.albumId!,
+                              'pageName': "SingerPage",
+                              'albumSongList': widget.album,
+                              'songDataModel': songDataModel,
+                            },
+                          );
 
-                      },
-                      child: SingerNameTrackNameImage(
-                        singerName: widget.song.singerName!,
-                        songName: widget.song.name!,
-                        imagePath: widget.song.imageSource!,
-                        align: MainAxisAlignment.start,
+                        },
+                        child: SingerNameTrackNameImage(
+                          singerName: widget.song.singerName!,
+                          songName: widget.song.name!,
+                          imagePath: widget.song.imageSource!,
+                          align: MainAxisAlignment.start,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: PlayButton(),
-                  ),
-                ],
+                    Expanded(
+                      flex: 1,
+                      child: PlayButton(),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

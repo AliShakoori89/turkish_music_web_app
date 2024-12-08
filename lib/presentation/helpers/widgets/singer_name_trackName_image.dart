@@ -30,8 +30,8 @@ class SingerNameTrackNameImage extends StatelessWidget {
             imageUrl: imagePath,
             imageBuilder: (context, imageProvider) => Container(
               width: orientation == Orientation.portrait
-                  ? MediaQuery.of(context).size.width * 0.14
-                  : MediaQuery.of(context).size.height / 9,
+                  ? MediaQuery.of(context).size.width * 0.11
+                  : MediaQuery.of(context).size.width / 9,
               height: orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.height * 0.065
                   : MediaQuery.of(context).size.height / 9,
@@ -48,10 +48,10 @@ class SingerNameTrackNameImage extends StatelessWidget {
         SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
         Expanded(
           flex: orientation == Orientation.portrait
-              ? 3
+              ? 4
               : 8,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DefaultTextStyle(

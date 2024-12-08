@@ -23,6 +23,7 @@ class MusicPage extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
           child: Container(
+            height: 1000,
             margin: EdgeInsets.only(
               right: MediaQuery.of(context).size.width * 0.033,
               left: MediaQuery.of(context).size.width * 0.033,
@@ -33,40 +34,32 @@ class MusicPage extends StatelessWidget {
                 Expanded(
                     flex: orientation == Orientation.portrait
                         ? 3
-                        : 5,
+                        : 10,
                     child: CustomPageWithCards(
-                      title: title,
-                      customIcon: customIcon,
-                      rowNumber: title.length,
-                      customColor: Colors.white)
+                        title: title,
+                        customIcon: customIcon,
+                        rowNumber: title.length,
+                        customColor: Colors.white)),
+                SizedBox(
+                  height: 20,
                 ),
                 Expanded(
-                  flex: 7,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text("Recently Playlist",
-                              style: TextStyle(
-                                  color: Colors.grey
-                              ),
-                            )
+                  flex: 1,
+                  child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Recently Playlist",
+                        style: TextStyle(
+                            color: Colors.grey
                         ),
-                      ),
-                      Expanded(
-                        flex: 8,
-                        child: RecentlyPlaylist(),
                       )
-                    ],
                   ),
                 ),
+                Expanded(
+                  flex: 8,
+                  child: RecentlyPlaylist(),
+                )
               ],
-            ),
+            )
           )
         )
       );

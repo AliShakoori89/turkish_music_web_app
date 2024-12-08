@@ -121,19 +121,19 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                                 style: TextStyle(
                                     fontSize: orientation == Orientation.portrait
                                         ? MediaQuery.of(context).size.height / 60
-                                        : MediaQuery.of(context).size.height / 30
+                                        : MediaQuery.of(context).size.height / 50
                                 ),),
                               Text(":",
                                   style: TextStyle(
                                       fontSize: orientation == Orientation.portrait
                                           ? MediaQuery.of(context).size.height / 60
-                                          : MediaQuery.of(context).size.height / 30
+                                          : MediaQuery.of(context).size.height / 50
                                   )),
                               Text((currentDurationSecond % 60).toString().padLeft(2 , "0"),
                                   style: TextStyle(
                                       fontSize: orientation == Orientation.portrait
                                           ? MediaQuery.of(context).size.height / 60
-                                          : MediaQuery.of(context).size.height / 30
+                                          : MediaQuery.of(context).size.height / 50
                                   )),
                             ],
                           ),
@@ -143,19 +143,19 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                                   style: TextStyle(
                                       fontSize: orientation == Orientation.portrait
                                           ? MediaQuery.of(context).size.height / 60
-                                          : MediaQuery.of(context).size.height / 30
+                                          : MediaQuery.of(context).size.height / 50
                                   )),
                               Text(":",
                                   style: TextStyle(
                                       fontSize: orientation == Orientation.portrait
                                           ? MediaQuery.of(context).size.height / 60
-                                          : MediaQuery.of(context).size.height / 30
+                                          : MediaQuery.of(context).size.height / 50
                                   )),
                               Text("${widget.second}".padLeft(2 , "0"),
                                   style: TextStyle(
                                       fontSize: orientation == Orientation.portrait
                                           ? MediaQuery.of(context).size.height / 60
-                                          : MediaQuery.of(context).size.height / 30
+                                          : MediaQuery.of(context).size.height / 50
                                   )),
                             ],
                           )

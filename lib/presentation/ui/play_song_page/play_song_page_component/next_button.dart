@@ -28,6 +28,8 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return IconButton(
         onPressed: () {
 
@@ -66,7 +68,9 @@ class NextButton extends StatelessWidget {
                   spreadRadius: 0),
             ]),
             child: Icon(
-              size: MediaQuery.of(context).size.height / 40,
+              size: orientation == Orientation.portrait
+                  ? MediaQuery.of(context).size.height / 40
+                  : MediaQuery.of(context).size.height / 20,
               Icons.skip_next_rounded,
               color: Colors.white,)));
   }

@@ -17,6 +17,8 @@ class _PlayButtonState extends State<PlayButton> {
     return BlocBuilder<PlayButtonStateBloc, PlayButtonState>(
       builder: (context, state) {
 
+        Orientation orientation = MediaQuery.of(context).orientation;
+
         var playStatus = state.playButtonState;
 
         return IconButton(
@@ -36,29 +38,35 @@ class _PlayButtonState extends State<PlayButton> {
             },
             icon: Container(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 10),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    offset: Offset(
-                      1.0,
-                      1.0,
-                    ),
-                    blurRadius: 10.0,
-                    spreadRadius: 7.0,
-                  ),
-                  BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
-                ]),
+                    vertical: 5,
+                    horizontal: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1), 
+                        offset: Offset(
+                          1.0, 
+                          1.0,
+                        ), 
+                        blurRadius: 10.0, 
+                        spreadRadius: 7.0,
+                      ), 
+                      BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
+                    ]), 
                 child: playStatus
                     ? Icon(
                   Icons.pause,
                   color: Colors.white,
-                  size: MediaQuery.of(context).size.height / 20,)
+                  size: orientation == Orientation.portrait
+                      ? MediaQuery.of(context).size.height / 25
+                      : MediaQuery.of(context).size.height / 15)
                     : Icon(
                   Icons.play_arrow_rounded,
                   color: Colors.white,
-                  size: MediaQuery.of(context).size.height / 20,)));
+                  size: orientation == Orientation.portrait
+                      ? MediaQuery.of(context).size.height / 25
+                      : MediaQuery.of(context).size.height / 15)));
       }
     );
   }

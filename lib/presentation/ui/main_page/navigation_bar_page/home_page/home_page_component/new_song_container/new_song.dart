@@ -44,11 +44,12 @@ class _NewSongState extends State<NewSong>{
                 height: orientation == Orientation.portrait
                     ? MediaQuery.of(context).size.height / 5
                     : width < 700
-                    ? MediaQuery.of(context).size.height / 2
-                    : MediaQuery.of(context).size.height / 3 ,
-                viewportFraction: orientation == Orientation.portrait
-                    ? 0.7
-                    : 0.5,
+                        ? MediaQuery.of(context).size.height / 2
+                        : MediaQuery.of(context).size.height / 2.5,
+                viewportFraction:
+                    orientation == Orientation.portrait ? 0.7 : 0.5,
+                enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                clipBehavior: Clip. hardEdge,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 pageSnapping: true,
@@ -57,24 +58,24 @@ class _NewSongState extends State<NewSong>{
                 autoPlayCurve: Curves.fastOutSlowIn,
                 pauseAutoPlayOnTouch: true,
                 onPageChanged: (index, reason) {
-                  setState(() {
-                  });
+                  setState(() {});
                 },
               ),
               items: List.generate(newSong.length, (index) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: InkWell(
-                    onTap: (){
-
-                      var path = state.newSong[index].fileSource!.substring(0, 4)
-                          + "s"
-                          + state.newSong[index].fileSource!.substring(4, state.newSong[index].fileSource!.length);
+                    onTap: () {
+                      var path =
+                          state.newSong[index].fileSource!.substring(0, 4) +
+                              "s" +
+                              state.newSong[index].fileSource!.substring(
+                                  4, state.newSong[index].fileSource!.length);
 
                       var newPath = path.replaceAll(" ", "%20");
 
                       SongDataModel songDataModel = SongDataModel(
-                        id : state.newSong[index].id,
+                        id: state.newSong[index].id,
                         name: state.newSong[index].name,
                         imageSource: state.newSong[index].imageSource,
                         fileSource: newPath,
@@ -87,7 +88,7 @@ class _NewSongState extends State<NewSong>{
                       );
 
                       context.push(
-                        '/'+PlaySongPage.routeName,
+                        '/' + PlaySongPage.routeName,
                         extra: {
                           'songName': songDataModel.name,
                           'songFile': newPath,
@@ -96,18 +97,21 @@ class _NewSongState extends State<NewSong>{
                           'songImage': songDataModel.imageSource,
                           'albumID': songDataModel.albumId!,
                           'pageName': "SingerPage",
-                          'albumSongList': state.newSong.map((categoryMusic) => AlbumDataMusicModel.fromNewSongDataModel(categoryMusic))
+                          'albumSongList': state.newSong
+                              .map((categoryMusic) =>
+                                  AlbumDataMusicModel.fromNewSongDataModel(
+                                      categoryMusic))
                               .toList(),
                           'songDataModel': songDataModel,
                         },
                       );
-                      },
+                    },
                     child: CachedNetworkImage(
                       imageUrl: newSong[index].imageSource!,
                       imageBuilder: (context, imageProvider) => Container(
-                        width: orientation == Orientation.portrait
-                            ? null
-                            : MediaQuery.of(context).size.width / 2,
+                          width: orientation == Orientation.portrait
+                              ? null
+                              : MediaQuery.of(context).size.width / 2,
                           decoration: BoxDecoration(
                               border: Border.all(
                                   width: 1,
@@ -115,32 +119,27 @@ class _NewSongState extends State<NewSong>{
                                   strokeAlign: BorderSide.strokeAlignOutside),
                               borderRadius: BorderRadius.circular(25.0),
                               image: DecorationImage(
-                                  image: NetworkImage(newSong[index].imageSource!),
+                                  image:
+                                      NetworkImage(newSong[index].imageSource!),
                                   opacity: 0.2,
-                                  fit: BoxFit.fitWidth
-                              )
-                          ),
-                        child: CachedNetworkImage(
-                          imageUrl: newSong[index].imageSource!,
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(newSong[index].imageSource!),
+                                  fit: BoxFit.fitWidth)),
+                          child: CachedNetworkImage(
+                              imageUrl: newSong[index].imageSource!,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                      image: NetworkImage(
+                                          newSong[index].imageSource!),
                                       fit: BoxFit.contain,
-                                  )
-                              ),
-                            )
-                        )
-                      ),
+                                    )),
+                                  ))),
                       placeholder: (context, url) => NewSongShimmerContainer(),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                   ),
                 );
-              }
-              )
-          )
-      );
+              })));
     });
   }
 }

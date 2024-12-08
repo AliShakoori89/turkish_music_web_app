@@ -77,20 +77,16 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                     width: double.infinity,
                                     height: orientation == Orientation.portrait
                                         ? MediaQuery.of(context).size.height * 0.08
-                                        : MediaQuery.of(context).size.height / 6,
+                                        : 50,
                                     child: Row(
                                       children: [
                                         Expanded(
-                                          flex: orientation == Orientation.portrait
-                                              ? 2
-                                              : 1,
+                                          flex: 1,
                                           child: CachedNetworkImage(
                                             imageUrl: state.allRecentlySongs[index].imageSource!,
                                             imageBuilder: (context, imageProvider) => Container(
-                                              width: MediaQuery.of(context).size.width * 0.12,
-                                              height: orientation == Orientation.portrait
-                                                  ? MediaQuery.of(context).size.height * 0.065
-                                                  : MediaQuery.of(context).size.height / 3,
+                                              width: 40,
+                                              height: 40,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(15),
                                                   image: DecorationImage(
@@ -104,9 +100,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                           width: MediaQuery.of(context).size.width * 0.03,
                                         ),
                                         Expanded(
-                                          flex: orientation == Orientation.portrait
-                                              ? 8
-                                              : 10,
+                                          flex: 14,
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             mainAxisAlignment: MainAxisAlignment.center,

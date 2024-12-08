@@ -35,6 +35,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<CategoryBloc>(context).add(ResetCategorySongsByIDEvent());
+      BlocProvider.of<CategoryBloc>(context).add(GetCategoryEvent());
       BlocProvider.of<CategoryBloc>(context).add(GetCategorySongsByIDEvent(categoryID: widget.categoryID));
     });
     super.initState();
@@ -44,8 +45,18 @@ class _CategorySongPageState extends State<CategorySongPage> {
   Widget build(BuildContext context) {
 
     var height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
+      appBar: orientation != Orientation.portrait
+          ? AppBar(
+        centerTitle: true,
+        title: Text(widget.categoryName,
+        style: TextStyle(
+          color: Colors.white
+        ),),
+      )
+          : null,
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.only(
@@ -57,7 +68,8 @@ class _CategorySongPageState extends State<CategorySongPage> {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                Container(
+                orientation == Orientation.portrait
+                    ? Container(
                   height: height / 3.5,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -65,21 +77,25 @@ class _CategorySongPageState extends State<CategorySongPage> {
                           fit: BoxFit.fill,
                           scale: 0.5)
                   ),
-                ),
+                )
+                    : Container(),
                 SizedBox(
                   height: 10,
                 ),
                 BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (context, state) {
 
-                    print("###########################################################################");
-
-
-                    List<CategoryMusicsModel> categoryAllSongs = state.category.musics!;
+                    List<CategoryMusicsModel>? categoryAllSongs = state.category.musics;
 
                     if(state.status.isLoading){
-                      return CustomIndicator();
-                    }else if(state.status.isSuccess){
+                      return Padding(
+                          padding: EdgeInsets.only(
+                            top: height / 5
+                          ),
+                          child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: CustomIndicator()));
+                    }else if(state.status.isSuccess && categoryAllSongs != null){
                       return ListView.builder(
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),

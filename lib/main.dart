@@ -99,11 +99,11 @@ FutureOr<void> main() async{
 
 
   runApp(
-      // DevicePreview(
-      //   enabled: !kReleaseMode,
-      //   builder: (context) =>
+      DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) =>
             MyApp(isLoggedIn: isLoggedIn)
-  // )
+  )
   ); // Wrap your app
 
 }

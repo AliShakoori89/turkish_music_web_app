@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/event.dart';
 import '../../../../../data/model/save_song_model.dart';
+import '../../../../main.dart';
 import '../../../bloc/download_bloc/state.dart';
 
 class DownloadButton extends StatefulWidget {
@@ -46,7 +48,7 @@ class _DownloadButtonState extends State<DownloadButton> {
         },
         icon: BlocConsumer<DownloadBloc, DownloadState>(
 
-            listener: (context, state){
+            listener: (context, state) async {
               if(state.status.isSuccess){
                 Fluttertoast.showToast(
                     msg: "Download Successfully .",
@@ -57,6 +59,25 @@ class _DownloadButtonState extends State<DownloadButton> {
                         0xFF00B01E).withOpacity(0.2),
                     textColor: Colors.white,
                     fontSize: 16.0
+                );
+
+                // Show local notification
+                const AndroidNotificationDetails androidDetails =
+                AndroidNotificationDetails(
+                  'download_channel', // channel ID
+                  'Download Notifications', // channel name
+                  importance: Importance.high,
+                  priority: Priority.high,
+                );
+
+                const NotificationDetails notificationDetails =
+                NotificationDetails(android: androidDetails);
+
+                await flutterLocalNotificationsPlugin.show(
+                  0, // Notification ID
+                  'Download Complete', // Notification title
+                  '${widget.songName} has been downloaded successfully.', // Notification body
+                  notificationDetails,
                 );
               }else if(state.status.isError){
                 Fluttertoast.showToast(

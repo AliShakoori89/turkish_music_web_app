@@ -1,8 +1,5 @@
-// presentation/ui/authenticate_page.dart
 import 'dart:async';
 import 'dart:ui';
-import 'dart:developer' as developer;
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +13,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../bloc/user_bloc/bloc.dart';
 import '../../bloc/user_bloc/event.dart';
 import '../../const/custom_icon/music_icons.dart';
-import '../../const/error_internet_connection_page.dart';
 import '../main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
@@ -42,7 +38,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   late Animation<double> animation3;
   late Animation<double> animation4;
 
-  late Animation<double> _heartAnimation;
   late AnimationController _heartController;
 
   late List<TextEditingController?> verificationCodeController;
@@ -57,14 +52,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     super.initState();
 
     const quick = Duration(milliseconds: 500);
-    final scaleTween = Tween(begin: 0.0, end: 1.0);
     _heartController = AnimationController(duration: quick, vsync: this);
-    _heartAnimation = scaleTween.animate(
-      CurvedAnimation(
-        parent: _heartController,
-        curve: Curves.elasticOut,
-      ),
-    );
 
     controller1 = AnimationController(
       vsync: this,
@@ -85,8 +73,9 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
         if (status == AnimationStatus.completed) {
           controller1.reverse();
         } else if (status == AnimationStatus.dismissed) {
+          if (mounted) {
           controller1.forward();
-        }
+        }}
       });
     animation2 = Tween<double>(begin: .02, end: .04).animate(
       CurvedAnimation(
@@ -114,8 +103,9 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
         if (status == AnimationStatus.completed) {
           controller2.reverse();
         } else if (status == AnimationStatus.dismissed) {
+          if (mounted) {
           controller2.forward();
-        }
+        }}
       });
     animation4 = Tween<double>(begin: 170, end: 190).animate(
       CurvedAnimation(
@@ -127,10 +117,12 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     });
 
     Timer(const Duration(milliseconds: 2500), () {
-      controller1.forward();
+      if (mounted) {
+      controller1.forward();}
     });
 
-    controller2.forward();
+    if (mounted) {
+    controller2.forward();}
   }
 
   Future<void> _handleSignIn() async {
@@ -146,8 +138,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     controller1.dispose();
     controller2.dispose();
     _heartController.dispose();
-    // Dispose of UserBloc
-    // BlocProvider.of<UserBloc>(context).close();
     super.dispose();
   }
 
@@ -217,8 +207,9 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                         left: 35
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 150,),
                         Text(
                           'Login',
                           style: TextStyle(
@@ -230,7 +221,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             wordSpacing: 4,
                           ),
                         ),
-                        Spacer(),
+                        SizedBox(height: size.height / 8,),
                         component1(
                             Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
                         const SizedBox(height: 10,),
@@ -255,9 +246,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                               splashColor: Colors.transparent,
                               onTap: _handleSignIn,
                               child: Container(
-                                height: orientation == Orientation.portrait
-                                    ? size.height / 18
-                                    : size.height / 8,
+                                height: 40,
                                 width: size.width,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
@@ -272,7 +261,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             ),
                           ),
                         ),
-                        const SizedBox(height: 150,),
                       ],
                     ),
                   ),
@@ -477,9 +465,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
           },
           child: Container(
-            height: orientation == Orientation.portrait
-                ? size.height / 18
-                : size.height / 8,
+            height: 40,
             width: size.width,
             alignment: Alignment.center,
             decoration: BoxDecoration(

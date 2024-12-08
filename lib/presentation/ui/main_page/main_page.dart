@@ -101,7 +101,7 @@ class _MainPageState extends State<MainPage> {
               selectedIndex: currentRoute,
               height: orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.height * 0.3
-                  : MediaQuery.of(context).size.height * 0.4,
+                  : MediaQuery.of(context).size.height * 0.5,
               width: orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.width * 0.12
                   : MediaQuery.of(context).size.width * 0.04,
@@ -114,16 +114,16 @@ class _MainPageState extends State<MainPage> {
               },
               items: const [
                 VerticalNavBarItem(
-                  title: "Home",
+                  title: Icons.home,
                 ),
                 VerticalNavBarItem(
-                  title: "profile",
+                  title: Icons.person,
                 ),
                 VerticalNavBarItem(
-                  title: "music",
+                  title: Icons.music_note,
                 ),
                 VerticalNavBarItem(
-                  title: "search",
+                  title: Icons.search,
                 ),
               ],
             ),
