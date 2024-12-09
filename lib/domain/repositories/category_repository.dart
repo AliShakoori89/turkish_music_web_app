@@ -24,9 +24,6 @@ class CategoryRepository {
 
   FutureOr<CategoryDataModel> getCategorySongs(int categoryID) async {
     ApiBaseHelper api = ApiBaseHelper();
-    var body = jsonEncode({
-      "apiKey": apiKey
-    });
 
     String accessToken = await getAccessTokenValue();
     final response = await api.get('/api/Category/GetOneCategory/$categoryID', accessToken: accessToken);

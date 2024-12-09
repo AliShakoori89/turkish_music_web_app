@@ -173,6 +173,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                 'pageName': "RecentlyPlaylist",
                                 'albumSongList': state.allRecentlySongs,
                                 'songDataModel': songDataModel,
+                                'categoryID': 0
                               },
                             );
                           })),

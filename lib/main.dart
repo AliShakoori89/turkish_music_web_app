@@ -45,7 +45,7 @@ import 'package:turkish_music_app/presentation/ui/authentication_page/authentica
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/categories/category_item/category_songs_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/new_song_container/new_song_page/new_song_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/new_song_container/new_song_page/all_new_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/download_page.dart';
@@ -382,9 +382,9 @@ class _MyAppState extends State<MyApp> {
                         }
                     ),
                     GoRoute(
-                        path: NewSongPage.routeName,
+                        path: AllNewSongsPage.routeName,
                         builder: (context, state){
-                          return NewSongPage();
+                          return AllNewSongsPage();
                         }
                     ),
                     GoRoute(

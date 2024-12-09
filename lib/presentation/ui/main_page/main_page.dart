@@ -8,9 +8,13 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
 import 'package:vertical_nav_bar/vertical_nav_bar.dart';
 import '../../../data/model/album_model.dart';
+import '../../../data/model/category_model.dart';
 import '../../bloc/album_bloc/bloc.dart';
 import '../../bloc/album_bloc/event.dart';
 import '../../bloc/album_bloc/state.dart';
+import '../../bloc/category_bloc/bloc.dart';
+import '../../bloc/category_bloc/event.dart';
+import '../../bloc/category_bloc/state.dart';
 import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../../bloc/mini_playing_container_bloc/state.dart';
@@ -37,6 +41,7 @@ class _MainPageState extends State<MainPage> {
 
     Orientation orientation = MediaQuery.of(context).orientation;
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+
 
     List myRoutes = [
       Padding(
@@ -129,26 +134,34 @@ class _MainPageState extends State<MainPage> {
             alignment: Alignment.bottomCenter,
             child: BlocBuilder<MiniPlayingContainerBloc, MiniPlayingContainerState>(
                 builder: (context, state) {
+
                   bool visibility = state.visibility;
                   int songID = state.songID;
                   int albumID = state.albumID;
+                  int categoryID = state.categoryID;
+                  String pageName = state.pageName;
 
                   BlocProvider.of<AlbumBloc>(context)
                       .add(GetAlbumAllSongsEvent(albumId: albumID));
                   BlocProvider.of<SongBloc>(context)
                       .add(FetchSongEvent(songID: songID));
-                  // return Container();
-                  return BlocBuilder<AlbumBloc, AlbumState>(
+                  BlocProvider.of<CategoryBloc>(context)
+                      .add(GetCategorySongsByIDEvent(categoryID: categoryID));
+
+                  return pageName != "CategorySongPage"
+                      ? BlocBuilder<AlbumBloc, AlbumState>(
                       builder: (context, state) {
 
                         List<AlbumDataMusicModel> album = state.albumAllSongs;
 
-                        if(state.status.isLoading){
+                        if (state.status.isLoading) {
                           return LinearProgressIndicator();
-                        }else if(state.status.isSuccess){
+                        } else if (state.status.isSuccess) {
                           return BlocBuilder<SongBloc, SongState>(
                               builder: (context, state) {
+
                                 AlbumDataMusicModel song = state.song;
+
                                 if (state.status.isLoading) {
                                   return LinearProgressIndicator();
                                 } else if (state.status.isSuccess) {
@@ -156,17 +169,63 @@ class _MainPageState extends State<MainPage> {
                                     visibility: visibility,
                                     song: song,
                                     album: album,
+                                    pageName: pageName
                                   );
                                 } else if (state.status.isError) {
                                   return Container();
                                 }
                                 return Container();
                               });
-                        }else if(state.status.isError){
+                        } else if (state.status.isError) {
                           return Container();
                         }
                         return Container();
-                      });
+                      })
+                      : BlocBuilder<SongBloc, SongState>(
+                      builder: (context, state) {
+
+                        AlbumDataMusicModel song = state.song;
+
+                        return BlocBuilder<CategoryBloc, CategoryState>(
+                            builder: (context, state) {
+
+                          List<CategoryMusicsModel>? categoryAllSongs =
+                              state.category.musics;
+
+                          // Handle null check
+                          if (categoryAllSongs == null) {
+                            return Container(); // Return an empty widget if null
+                          }
+
+                          // Convert List<CategoryMusicsModel> to List<AlbumDataMusicModel>
+                          List<AlbumDataMusicModel> albumDataList = categoryAllSongs.map((categoryMusic) {
+
+
+                            return AlbumDataMusicModel(
+                              id: categoryMusic.id,
+                              name: categoryMusic.name,
+                              imageSource: categoryMusic.imageSource,
+                              fileSource: categoryMusic.fileSource!.substring(0, 4)
+                                  + "s"
+                                  + categoryMusic.fileSource!
+                                      .substring(4,categoryMusic.fileSource!.length),
+                              minute: categoryMusic.minute,
+                              second: categoryMusic.second,
+                              singerName: "", // Fill in appropriate values if available
+                              album: null,    // Adjust as per your logic
+                              albumId: categoryMusic.albumId,
+                              categories: null, // Adjust as per your logic
+                            );
+                          }).toList();
+                          return MiniPlayingContainer(
+                            visibility: visibility,
+                            song: song,
+                            album: albumDataList,
+                            pageName: pageName,
+                          );
+                        });
+                            return Container();
+                          });
                 }),
           )
               : Container()

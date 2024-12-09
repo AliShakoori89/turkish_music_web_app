@@ -13,7 +13,8 @@ import '../../../bloc/recently_play_song_bloc/event.dart';
 
 class NextButton extends StatelessWidget {
   NextButton({super.key, required this.albumSongs, required this.songID, required this.albumID, required this.singerName,
-    required this.audioFileSec, required this.audioFileMin, required this.audioFilePath, required this.imageFilePath, required this.songName});
+    required this.audioFileSec, required this.audioFileMin, required this.audioFilePath, required this.imageFilePath, required this.songName,
+    required this.pageName, required this.categoryID});
 
   final List<AlbumDataMusicModel> albumSongs;
   final int songID;
@@ -24,6 +25,9 @@ class NextButton extends StatelessWidget {
   final String audioFilePath;
   final String imageFilePath;
   final String songName;
+  final String pageName;
+  final int categoryID;
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,9 @@ class NextButton extends StatelessWidget {
               .read<MiniPlayingContainerBloc>()
               .add(WriteSongIDForMiniPlayingSongContainerEvent(
               songID: songID,
-              albumID: albumID));
+              albumID: albumID,
+              pageName: pageName,
+              categoryID: categoryID));
 
           },
         icon: Container(

@@ -151,6 +151,7 @@ class _SingerPageState extends State<SingerPage> {
                                 'pageName': "SingerPage",
                                 'albumSongList': state.singerAllAlbum[index].musics!,
                                 'songDataModel': songDataModel,
+                                'categoryID': 0
                               },
                             );
                           },

@@ -11,7 +11,6 @@ import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/event.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/container_all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/download_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/favorite.dart';
@@ -23,7 +22,6 @@ import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/progressbar.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/repeat_button.dart';
 import '../../../data/model/album_model.dart';
-import '../../../data/model/new-song_model.dart';
 import '../../bloc/play_button_state_bloc/bloc.dart';
 import '../../bloc/play_button_state_bloc/event.dart';
 import '../../bloc/song_control_bloc/audio_control_bloc.dart';
@@ -63,24 +61,18 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
 
       int songID = data['songID'] as int;
       int albumID = data['albumID'] as int;
+      String pageName = data["pageName"] as String;
+      int categoryID = data["categoryID"] as int;
       BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: songID));
 
       context
           .read<MiniPlayingContainerBloc>()
           .add(WriteSongIDForMiniPlayingSongContainerEvent(songID: songID,
-          albumID: albumID));
+          albumID: albumID, pageName: pageName, categoryID: categoryID));
     });
 
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
     BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    // BlocProvider.of<AudioControlBloc>(context).add(AudioPlayDisposeEvent());
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override
@@ -89,14 +81,13 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     final Map<String, dynamic> data = GoRouterState.of(context).extra as Map<String, dynamic>;
 
     String songName = data['songName'] as String;
-    int songID = data['songID'] as int;
     int albumID = data['albumID'] as int;
-    SongDataModel songDataModel = data['songDataModel'] as SongDataModel;
     List<AlbumDataMusicModel> albumSongList = data['albumSongList'] as List<AlbumDataMusicModel>;
+    print(albumSongList.first.singerName);
     String singerName = data['singerName'] as String;
-    String songFile = data['songFile'] as String;
     String songImage = data['songImage'] as String;
     String pageName = data["pageName"] as String;
+    int categoryID = data["categoryID"] as int;
 
     return WillPopScope(
       onWillPop: () async {
@@ -248,7 +239,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                     audioFileMin: state.songModel.minute!,
                                                     audioFilePath: path,
                                                     imageFilePath: songImage,
-                                                    songName: songName),
+                                                    songName: songName,
+                                                    pageName: "PlaySongPage",
+                                                    categoryID: categoryID),
                                                 PlayButton(),
                                                 NextButton(
                                                     albumSongs : albumSongList,
@@ -259,7 +252,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                     audioFileMin: state.songModel.minute!,
                                                     audioFilePath: path,
                                                     imageFilePath: songImage,
-                                                    songName: songName
+                                                    songName: songName,
+                                                    pageName: "PlaySongPage",
+                                                    categoryID: categoryID
                                                 )
                                               ],
                                             ),
@@ -399,7 +394,10 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                         audioFileMin: state.songModel.minute!,
                                                         audioFilePath: path,
                                                         imageFilePath: songImage,
-                                                        songName: songName),
+                                                        songName: songName,
+                                                        pageName: pageName,
+                                                        categoryID: categoryID
+                                                    ),
                                                     PlayButton(),
                                                     NextButton(
                                                         albumSongs : albumSongList,
@@ -410,7 +408,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                         audioFileMin: state.songModel.minute!,
                                                         audioFilePath: path,
                                                         imageFilePath: songImage,
-                                                        songName: songName
+                                                        songName: songName,
+                                                        pageName: pageName,
+                                                        categoryID: categoryID
                                                     )
                                                   ],
                                                 ),

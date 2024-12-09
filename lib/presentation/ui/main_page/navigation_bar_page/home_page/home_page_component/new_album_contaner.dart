@@ -67,8 +67,6 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                       newAlbum.length, (index) {
                     return GestureDetector(
                       onTap: (){
-                        print("index                  "+index.toString());
-                        print("state.newAlbum[index].musics                  "+state.newAlbum[index].musics.toString());
 
                         var path = state.newAlbum[index].musics![0].fileSource!.substring(0, 4)
                             + "s"
@@ -98,12 +96,13 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                             'singerName': songDataModel.singerName,
                             'songImage': songDataModel.name,
                             'albumID': songDataModel.albumId!,
-                            'pageName': "SingerPage",
+                            'pageName': "NewAlbumContainer",
                             'albumSongList': state.newAlbum[index].musics!.map((newAlbum) => AlbumDataMusicModel.fromNewAlbumDataModel(newAlbum))
                             .toList(),
                             // state.singerAllAlbum.map((newAlbumMusics) => AlbumDataMusicModel.fromCategoryMusicModel(newAlbumMusics))
                             //     .toList(),
                             'songDataModel': songDataModel,
+                            'categoryID': 0
                           },
                         );
                       },

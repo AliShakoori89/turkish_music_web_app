@@ -35,7 +35,6 @@ class _NewSongState extends State<NewSong>{
     return BlocBuilder<NewSongBloc, NewSongState>(builder: (context, state) {
 
       List<NewSongDataModel> newSong = state.newSong;
-      print(newSong.length);
 
       return Padding(
           padding: const EdgeInsets.only(top: 10),
@@ -96,13 +95,14 @@ class _NewSongState extends State<NewSong>{
                           'singerName': songDataModel.singerName,
                           'songImage': songDataModel.imageSource,
                           'albumID': songDataModel.albumId!,
-                          'pageName': "SingerPage",
+                          'pageName': "NewSong",
                           'albumSongList': state.newSong
                               .map((categoryMusic) =>
                                   AlbumDataMusicModel.fromNewSongDataModel(
                                       categoryMusic))
                               .toList(),
                           'songDataModel': songDataModel,
+                          'categoryID': 0
                         },
                       );
                     },

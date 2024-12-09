@@ -88,8 +88,8 @@ class ContainerAllSongsList extends StatelessWidget {
                     flex: 5,
                     child: Row(
                       children: [
-                        categoryAllSongs.first.singerName == categoryAllSongs[1].singerName &&
-                            categoryAllSongs.first.singerName == categoryAllSongs.last.singerName
+                        categoryAllSongs.first.id == categoryAllSongs[1].id &&
+                            categoryAllSongs.first.id == categoryAllSongs.last.id
                             ? Container()
                             : Expanded(
                           flex: 1,

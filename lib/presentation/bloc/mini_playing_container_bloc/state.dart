@@ -15,36 +15,46 @@ class MiniPlayingContainerState extends Equatable{
     required this.status,
     required this.visibility,
     required this.songID,
-    required this.albumID
+    required this.albumID,
+    required this.pageName,
+    required this.categoryID
   });
 
   static MiniPlayingContainerState initial() => const MiniPlayingContainerState(
     status: MiniPlayingContainerStatus.initial,
     visibility: false,
     albumID: 0,
-    songID: 0
+    songID: 0,
+    pageName: '',
+    categoryID: 1
   );
 
   final MiniPlayingContainerStatus status;
   final bool visibility;
   final int songID;
   final int albumID;
+  final String pageName;
+  final int categoryID;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, visibility, songID, albumID];
+  List<Object?> get props => [status, visibility, songID, albumID, pageName, categoryID];
 
   MiniPlayingContainerState copyWith({
     MiniPlayingContainerStatus? status,
     bool? visibility,
     int? songID,
-    int? albumID
+    int? albumID,
+    String? pageName,
+    int? categoryID
   }) {
     return MiniPlayingContainerState(
       status: status ?? this.status,
       visibility: visibility ?? this.visibility,
       songID: songID ?? this.songID,
       albumID: albumID ?? this.albumID,
+      pageName: pageName ?? this.pageName,
+      categoryID: categoryID ?? this.categoryID
     );
   }
 }

@@ -52,14 +52,16 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
       WriteSongIDForMiniPlayingSongContainerEvent event, Emitter<MiniPlayingContainerState> emit) async {
     try {
       // emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
-      await miniPlayingContainerRepository.writeMiniPlayingRequirement(event.songID, event.albumID);
+      await miniPlayingContainerRepository.writeMiniPlayingRequirement(event.songID, event.albumID, event.pageName, event.categoryID);
       List requirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
 
       emit(
         state.copyWith(
           status: MiniPlayingContainerStatus.success,
+          songID: requirement[0],
           albumID: requirement[1],
-          songID: requirement[0]
+          pageName: requirement[2],
+          categoryID: requirement[3]
         ),
       );
     } catch (error) {
@@ -71,12 +73,15 @@ class MiniPlayingContainerBloc extends Bloc<MiniPlayingContainerEvent, MiniPlayi
       ReadSongIDForMiniPlayingSongContainerEvent event, Emitter<MiniPlayingContainerState> emit) async {
     try {
       // emit(state.copyWith(status: MiniPlayingContainerStatus.loading));
+
       List requirement = await miniPlayingContainerRepository.readMiniPlayingRequirement();
       emit(
         state.copyWith(
           status: MiniPlayingContainerStatus.success,
           songID: requirement[0],
           albumID: requirement[1],
+          pageName: requirement[2],
+          categoryID: requirement[3]
         ),
       );
     } catch (error) {

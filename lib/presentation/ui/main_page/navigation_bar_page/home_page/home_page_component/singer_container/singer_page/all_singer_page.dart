@@ -142,7 +142,6 @@ class _AllSingerPageState extends State<AllSingerPage>{
                 children: alphabets
                     .map((alphabet) => InkWell(
                   onTap: () {
-                    print(alphabet);
                     setSearchIndex(alphabet);
                   },
                   child: Text(

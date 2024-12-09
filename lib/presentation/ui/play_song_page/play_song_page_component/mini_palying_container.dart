@@ -15,11 +15,12 @@ import '../../../helpers/widgets/top_arrow_icon.dart';
 class MiniPlayingContainer extends StatefulWidget {
 
   MiniPlayingContainer({super.key,
-  required this.visibility, required this.song, required this.album});
+  required this.visibility, required this.song, required this.album, required this.pageName});
 
   final bool visibility;
   final AlbumDataMusicModel song;
   final List<AlbumDataMusicModel> album ;
+  final String pageName ;
 
   @override
   State<MiniPlayingContainer> createState() => _MiniPlayingContainerState();
@@ -73,7 +74,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
                           var path = widget.song.fileSource!.substring(0, 4)
                               + ""
-                              + widget.song.fileSource!.substring(4, widget.song.fileSource?.length);
+                              + widget.song.fileSource!.substring(4, widget.song.fileSource!.length);
 
                           var newPath = path.replaceAll(" ", "%20");
 
@@ -99,9 +100,10 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                               'singerName': songDataModel.singerName,
                               'songImage': songDataModel.imageSource!,
                               'albumID': songDataModel.albumId!,
-                              'pageName': "SingerPage",
+                              'pageName': widget.pageName,
                               'albumSongList': widget.album,
                               'songDataModel': songDataModel,
+                              'categoryID': 0
                             },
                           );
 
@@ -126,6 +128,17 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
         )
 
     )
-        : Container();
+        : Container(width: double.infinity,
+      height: (size.width / size.height) < 1.5
+          ? size.height / 12
+          : size.height / 7,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Colors.black, Colors.purple, ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),);
   }
 }

@@ -28,11 +28,9 @@ class _PlayButtonState extends State<PlayButton> {
                 if(playStatus){
                   BlocProvider.of<AudioControlBloc>(context).add(PauseSongEvent());
                   BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: false));
-                  print("playStatus                "+playStatus.toString());
                 }else{
                   BlocProvider.of<AudioControlBloc>(context).add(ResumeSongEvent());
                   BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
-                  print("playStatus                "+playStatus.toString());
                 }
 
             },

@@ -96,6 +96,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                               alignment: Alignment.bottomCenter,
                               child: CustomIndicator()));
                     }else if(state.status.isSuccess && categoryAllSongs != null){
+
                       return ListView.builder(
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
@@ -118,7 +119,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                                   fileSource: newPath,
                                   minute: categoryAllSongs[index].minute,
                                   second: categoryAllSongs[index].second,
-                                  singerName: "",
+                                  singerName: categoryAllSongs[index].singerName,
                                   album: null,
                                   albumId: categoryAllSongs[index].albumId,
                                   categories: null,
@@ -130,13 +131,14 @@ class _CategorySongPageState extends State<CategorySongPage> {
                                     'songName': songDataModel.name,
                                     'songFile': songDataModel.fileSource,
                                     'songID': songDataModel.id!,
-                                    'singerName': "",
-                                    'songImage': "http://194.5.195.145/TurkishMusicFiles/MusicPhotos/2024-10-02-08-33-30-Sibel-Can-Bu-Devirde-1997.jpg",
+                                    'singerName': songDataModel.singerName,
+                                    'songImage': songDataModel.imageSource,
                                     'albumID': songDataModel.albumId!,
-                                    'pageName': "RecentlyPlaylist",
+                                    'pageName': "CategorySongPage",
                                     'albumSongList': state.category.musics!.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
                                         .toList(),
                                     'songDataModel': songDataModel,
+                                    'categoryID': widget.categoryID
                                   },
                                 );
                               },

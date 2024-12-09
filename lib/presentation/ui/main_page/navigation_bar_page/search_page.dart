@@ -97,9 +97,10 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                 'singerName': songDataModel.singerName,
                                 'songImage': album.imageSource,
                                 'albumID': songDataModel.albumId!,
-                                'pageName': "SingerPage",
+                                'pageName': "SearchPage",
                                 'albumSongList': album.musics!,
                                 'songDataModel': songDataModel,
+                                'categoryID': 0
                               },
                             );
                           },
@@ -149,10 +150,6 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                 + song.fileSource!.substring(4, song.fileSource!.length);
 
                             var newPath = path.replaceAll(" ", "%20");
-
-                            print(song.fileSource!);
-                            print(newPath);
-                            print(song.imageSource);
 
                             SongDataModel songDataModel = SongDataModel(
                               id : song.id,
@@ -229,7 +226,6 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                   thumbColor: Colors.purple
                               ),
                               onSubmit: (value) {
-                                print(value);
                                 BlocProvider.of<SongBloc>(context).add(FetchAllSongsEvent(char: value));
                                 BlocProvider.of<AlbumBloc>(context).add(GetAllAlbumEvent(char: value));
                               },

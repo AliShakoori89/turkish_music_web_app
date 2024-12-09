@@ -51,8 +51,6 @@ class PlaylistPage extends StatelessWidget {
 
                         // var newPath = path.replaceAll(" ", "%20");
 
-                        print("newPath             "+path);
-
                         SongDataModel songDataModel = SongDataModel(
                           id : state.playlistSongs[index].id,
                           name: state.playlistSongs[index].name,
@@ -96,9 +94,10 @@ class PlaylistPage extends StatelessWidget {
                             'singerName': songDataModel.singerName,
                             'songImage': songDataModel.imageSource!,
                             'albumID': songDataModel.albumId!,
-                            'pageName': "SingerPage",
+                            'pageName': "PlaylistPage",
                             'albumSongList': playListSongs,
                             'songDataModel': songDataModel,
+                            'categoryID': 0
                           },
                         );
                       },
