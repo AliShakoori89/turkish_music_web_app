@@ -10,17 +10,17 @@ import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../helpers/widgets/song_card.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
-class NewSongPage extends StatefulWidget {
+class AllNewSongsPage extends StatefulWidget {
 
-  static String routeName = "NewSongPage";
+  static String routeName = "AllNewSongsPage";
 
-  const NewSongPage({super.key});
+  const AllNewSongsPage({super.key});
 
   @override
-  State<NewSongPage> createState() => _NewSongPageState();
+  State<AllNewSongsPage> createState() => _AllNewSongsPageState();
 }
 
-class _NewSongPageState extends State<NewSongPage> {
+class _AllNewSongsPageState extends State<AllNewSongsPage> {
 
   @override
   void initState() {
@@ -75,10 +75,11 @@ class _NewSongPageState extends State<NewSongPage> {
                           'singerName': songDataModel.singerName,
                           'songImage': songDataModel.imageSource,
                           'albumID': songDataModel.albumId!,
-                          'pageName': "SingerPage",
+                          'pageName': "AllNewSongsPage",
                           'albumSongList': state.allNewSong.map((categoryMusic) => AlbumDataMusicModel.fromNewSongDataModel(categoryMusic))
                               .toList(),
                           'songDataModel': songDataModel,
+                          'categoryID': 0
                         },
                       );
                     },
