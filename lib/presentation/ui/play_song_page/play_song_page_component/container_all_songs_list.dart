@@ -4,12 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/no_image.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
+import '../../../bloc/album_bloc/event.dart';
 import '../../../bloc/play_button_state_bloc/bloc.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
+import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../const/shimmer_container/playing_page_album_song_list_shimmer.dart';
 
@@ -18,12 +24,18 @@ class ContainerAllSongsList extends StatelessWidget {
   final List<AlbumDataMusicModel> categoryAllSongs;
   final String songName;
   final String singerName;
+  final int songID;
 
 
-  ContainerAllSongsList({super.key, required this.categoryAllSongs, required this.songName, required this.singerName});
+  ContainerAllSongsList({super.key, required this.categoryAllSongs, required this.songName,
+    required this.singerName, required this.songID});
 
   @override
   Widget build(BuildContext context) {
+
+    print(categoryAllSongs.first.albumId);
+    print(categoryAllSongs[1].albumId);
+    print(categoryAllSongs.last.albumId);
 
     return ListView.builder(
       itemCount: categoryAllSongs.length,
@@ -31,6 +43,8 @@ class ContainerAllSongsList extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
+
+
 
         return InkWell(
           onTap: (){
@@ -88,8 +102,8 @@ class ContainerAllSongsList extends StatelessWidget {
                     flex: 5,
                     child: Row(
                       children: [
-                        categoryAllSongs.first.id == categoryAllSongs[1].id &&
-                            categoryAllSongs.first.id == categoryAllSongs.last.id
+                        categoryAllSongs.first.albumId == categoryAllSongs[1].albumId &&
+                            categoryAllSongs.first.albumId == categoryAllSongs.last.albumId
                             ? Container()
                             : Expanded(
                           flex: 1,
@@ -123,7 +137,8 @@ class ContainerAllSongsList extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 5,),
-                        categoryAllSongs.isEmpty
+                        categoryAllSongs.isNotEmpty && categoryAllSongs.first.albumId != categoryAllSongs[2].albumId &&
+                            categoryAllSongs.first.albumId != categoryAllSongs.last.albumId
                             ? Expanded(
                           flex: 4,
                           child: Column(
@@ -145,17 +160,12 @@ class ContainerAllSongsList extends StatelessWidget {
                         )
                             : Expanded(
                           flex: 4,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: 15,
-                              bottom: 15
-                            ),
-                            child: OverflowTextAnimated(
-                              text: categoryAllSongs[index].name!,
-                              style: TextStyle(
-                                  fontSize: 14, color: Colors.white),
-                            ),
-                          ),
+                          child: OverflowTextAnimated(
+                            text: categoryAllSongs[index].name!,
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
+                            ),),
                         )
                       ],
                     ),

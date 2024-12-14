@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
+import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page.dart';
@@ -148,40 +151,8 @@ class _MainPageState extends State<MainPage> {
                   BlocProvider.of<CategoryBloc>(context)
                       .add(GetCategorySongsByIDEvent(categoryID: categoryID));
 
-                  return pageName != "CategorySongPage"
-                      ? BlocBuilder<AlbumBloc, AlbumState>(
-                      builder: (context, state) {
-
-                        List<AlbumDataMusicModel> album = state.albumAllSongs;
-
-                        if (state.status.isLoading) {
-                          return LinearProgressIndicator();
-                        } else if (state.status.isSuccess) {
-                          return BlocBuilder<SongBloc, SongState>(
-                              builder: (context, state) {
-
-                                AlbumDataMusicModel song = state.song;
-
-                                if (state.status.isLoading) {
-                                  return LinearProgressIndicator();
-                                } else if (state.status.isSuccess) {
-                                  return MiniPlayingContainer(
-                                    visibility: visibility,
-                                    song: song,
-                                    album: album,
-                                    pageName: pageName
-                                  );
-                                } else if (state.status.isError) {
-                                  return Container();
-                                }
-                                return Container();
-                              });
-                        } else if (state.status.isError) {
-                          return Container();
-                        }
-                        return Container();
-                      })
-                      : BlocBuilder<SongBloc, SongState>(
+                  return pageName == "CategorySongPage"
+                      ? BlocBuilder<SongBloc, SongState>(
                       builder: (context, state) {
 
                         AlbumDataMusicModel song = state.song;
@@ -211,7 +182,7 @@ class _MainPageState extends State<MainPage> {
                                       .substring(4,categoryMusic.fileSource!.length),
                               minute: categoryMusic.minute,
                               second: categoryMusic.second,
-                              singerName: "", // Fill in appropriate values if available
+                              singerName: categoryMusic.singerName, // Fill in appropriate values if available
                               album: null,    // Adjust as per your logic
                               albumId: categoryMusic.albumId,
                               categories: null, // Adjust as per your logic
@@ -225,7 +196,80 @@ class _MainPageState extends State<MainPage> {
                           );
                         });
                             return Container();
-                          });
+                          })
+                      : pageName == "NewSong"
+                      ? BlocBuilder<SongBloc, SongState>(
+                      builder: (context, state) {
+
+                        AlbumDataMusicModel song = state.song;
+
+                        return BlocBuilder<NewSongBloc, NewSongState>(
+                            builder: (context, state) {
+
+                              List<NewSongDataModel>? newSongDataModel =
+                                  state.newSong;
+
+                              // Convert List<CategoryMusicsModel> to List<AlbumDataMusicModel>
+                              List<AlbumDataMusicModel> albumDataList = newSongDataModel.map((categoryMusic) {
+
+                                return AlbumDataMusicModel(
+                                  id: categoryMusic.id,
+                                  name: categoryMusic.name,
+                                  imageSource: categoryMusic.imageSource,
+                                  fileSource: categoryMusic.fileSource!.substring(0, 4)
+                                      + "s"
+                                      + categoryMusic.fileSource!
+                                          .substring(4,categoryMusic.fileSource!.length),
+                                  minute: categoryMusic.minute,
+                                  second: categoryMusic.second,
+                                  singerName: categoryMusic.singerName, // Fill in appropriate values if available
+                                  album: null,    // Adjust as per your logic
+                                  albumId: categoryMusic.albumId,
+                                  categories: null, // Adjust as per your logic
+                                );
+                              }).toList();
+
+                              return MiniPlayingContainer(
+                                visibility: visibility,
+                                song: song,
+                                album: albumDataList,
+                                pageName: pageName,
+                              );
+                            });
+                        return Container();
+                      })
+                      : BlocBuilder<AlbumBloc, AlbumState>(
+                      builder: (context, state) {
+
+                        List<AlbumDataMusicModel> album = state.albumAllSongs;
+
+                        if (state.status.isLoading) {
+                          return LinearProgressIndicator();
+                        } else if (state.status.isSuccess) {
+                          return BlocBuilder<SongBloc, SongState>(
+                              builder: (context, state) {
+
+                                AlbumDataMusicModel song = state.song;
+
+                                if (state.status.isLoading) {
+                                  return LinearProgressIndicator();
+                                } else if (state.status.isSuccess) {
+                                  return MiniPlayingContainer(
+                                      visibility: visibility,
+                                      song: song,
+                                      album: album,
+                                      pageName: pageName
+                                  );
+                                } else if (state.status.isError) {
+                                  return Container();
+                                }
+                                return Container();
+                              });
+                        } else if (state.status.isError) {
+                          return Container();
+                        }
+                        return Container();
+                      });
                 }),
           )
               : Container()

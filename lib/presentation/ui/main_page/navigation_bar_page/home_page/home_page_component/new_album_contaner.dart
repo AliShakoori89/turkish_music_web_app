@@ -102,7 +102,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                             // state.singerAllAlbum.map((newAlbumMusics) => AlbumDataMusicModel.fromCategoryMusicModel(newAlbumMusics))
                             //     .toList(),
                             'songDataModel': songDataModel,
-                            'categoryID': 0
+                            'categoryID': 0,
                           },
                         );
                       },

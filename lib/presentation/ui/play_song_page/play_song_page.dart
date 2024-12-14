@@ -83,7 +83,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     String songName = data['songName'] as String;
     int albumID = data['albumID'] as int;
     List<AlbumDataMusicModel> albumSongList = data['albumSongList'] as List<AlbumDataMusicModel>;
-    print(albumSongList.first.singerName);
     String singerName = data['singerName'] as String;
     String songImage = data['songImage'] as String;
     String pageName = data["pageName"] as String;
@@ -280,7 +279,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     ContainerAllSongsList(
                                       singerName: singerName,
                                       categoryAllSongs: albumSongList,
-                                      songName: state.songModel.name!,)
+                                      songName: state.songModel.name!,
+                                      songID: songID,)
                                   ],
                                 ),
                               )
@@ -445,7 +445,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                     child: ContainerAllSongsList(
                                       singerName: singerName,
                                       categoryAllSongs: albumSongList,
-                                      songName: state.songModel.name!,),
+                                      songName: state.songModel.name!,
+                                      songID: songID,
+                                    ),
                                   ),
                                 )
                               ],
