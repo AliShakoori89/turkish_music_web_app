@@ -41,7 +41,7 @@ class MusicPage extends StatelessWidget {
                         rowNumber: title.length,
                         customColor: Colors.white)),
                 SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 Expanded(
                   flex: 1,

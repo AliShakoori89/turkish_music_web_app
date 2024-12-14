@@ -12,6 +12,7 @@ import '../../../../bloc/recently_play_song_bloc/state.dart';
 import '../../../../const/custom_divider.dart';
 import '../../../../const/no_music_widget.dart';
 import '../../../../helpers/widgets/singer_name_trackName_image.dart';
+import '../../../../helpers/widgets/song_card.dart';
 import '../../../../helpers/widgets/song_detail_list.dart';
 import '../../../play_song_page/play_song_page.dart';
 
@@ -78,50 +79,54 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                     height: orientation == Orientation.portrait
                                         ? MediaQuery.of(context).size.height * 0.08
                                         : 50,
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: CachedNetworkImage(
-                                            imageUrl: state.allRecentlySongs[index].imageSource!,
-                                            imageBuilder: (context, imageProvider) => Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(15),
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(state.allRecentlySongs[index].imageSource!),
-                                                      fit: BoxFit.fill)),
-                                            ),
-                                            errorWidget: (context, url, error) => Icon(Icons.error),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width * 0.03,
-                                        ),
-                                        Expanded(
-                                          flex: 14,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              OverflowTextAnimated(
-                                                text: state.allRecentlySongs[index].name!,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w700
-                                                ),),
-                                              Text(state.allRecentlySongs[index].singerName != null
-                                                  ? state.allRecentlySongs[index].singerName!
-                                                  : "",
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14
-                                                ),)
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                    child: SongCard(
+                                      songName: state.allRecentlySongs[index].name!,
+                                      imgPath: state.allRecentlySongs[index].imageSource!,
+                                      singerName: state.allRecentlySongs[index].singerName ?? "",),
+                                    // Row(
+                                    //   children: [
+                                    //     Expanded(
+                                    //       flex: 1,
+                                    //       child: CachedNetworkImage(
+                                    //         imageUrl: state.allRecentlySongs[index].imageSource!,
+                                    //         imageBuilder: (context, imageProvider) => Container(
+                                    //           width: 40,
+                                    //           height: 40,
+                                    //           decoration: BoxDecoration(
+                                    //               borderRadius: BorderRadius.circular(15),
+                                    //               image: DecorationImage(
+                                    //                   image: NetworkImage(state.allRecentlySongs[index].imageSource!),
+                                    //                   fit: BoxFit.fill)),
+                                    //         ),
+                                    //         errorWidget: (context, url, error) => Icon(Icons.error),
+                                    //       ),
+                                    //     ),
+                                    //     SizedBox(
+                                    //       width: MediaQuery.of(context).size.width * 0.03,
+                                    //     ),
+                                    //     Expanded(
+                                    //       flex: 14,
+                                    //       child: Column(
+                                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                                    //         mainAxisAlignment: MainAxisAlignment.center,
+                                    //         children: [
+                                    //           OverflowTextAnimated(
+                                    //             text: state.allRecentlySongs[index].name!,
+                                    //             style: TextStyle(
+                                    //                 fontWeight: FontWeight.w700
+                                    //             ),),
+                                    //           Text(state.allRecentlySongs[index].singerName != null
+                                    //               ? state.allRecentlySongs[index].singerName!
+                                    //               : "",
+                                    //             style: TextStyle(
+                                    //                 color: Colors.grey,
+                                    //                 fontSize: 14
+                                    //             ),)
+                                    //         ],
+                                    //       ),
+                                    //     )
+                                    //   ],
+                                    // ),
                                   ),
                                 ),
                                 Flexible(
