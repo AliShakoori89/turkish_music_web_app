@@ -117,19 +117,7 @@ FutureOr<void> main() async{
       // )
     )
   );
-
-  // you can also configure SENTRY_DSN, SENTRY_RELEASE, SENTRY_DIST, and
-  // SENTRY_ENVIRONMENT via Dart environment variable (--dart-define)
 }
-//   runApp(
-//       // DevicePreview(
-//       //   enabled: !kReleaseMode,
-//       //   builder: (context) =>
-//             MyApp(isLoggedIn: isLoggedIn)
-//   // )
-//   ); // Wrap your app
-//
-// }
 
 
 Future<void> requestStoragePermission() async {
@@ -163,10 +151,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   GoogleSignInAccount? _currentUser;
-  bool _isAuthorized = false; // has granted permissions?
-  String _contactText = '';
-
-  late ConnectivityResult _connectionStatus;
 
   final Connectivity _connectivity = Connectivity();
 
@@ -176,7 +160,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    _connectionStatus = ConnectivityResult.none;
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     checkInternetConnectionWithErrorHandling();
 
@@ -193,7 +176,6 @@ class _MyAppState extends State<MyApp> {
 
       setState(() {
         _currentUser = account;
-        _isAuthorized = isAuthorized;
       });
 
       // Now that we know that the user can access the required scopes, the app
@@ -215,7 +197,6 @@ class _MyAppState extends State<MyApp> {
   // Calls the People API REST endpoint for the signed-in user to retrieve information.
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
     setState(() {
-      _contactText = 'Loading contact info...';
     });
     final http.Response response = await http.get(
       Uri.parse('https://people.googleapis.com/v1/people/me/connections'
@@ -224,8 +205,6 @@ class _MyAppState extends State<MyApp> {
     );
     if (response.statusCode != 200) {
       setState(() {
-        _contactText = 'People API gave a ${response.statusCode} '
-            'response. Check logs for details.';
       });
       print('People API ${response.statusCode} response: ${response.body}');
       return;
@@ -235,9 +214,7 @@ class _MyAppState extends State<MyApp> {
     final String? namedContact = _pickFirstNamedContact(data);
     setState(() {
       if (namedContact != null) {
-        _contactText = 'I see you know $namedContact!';
       } else {
-        _contactText = 'No contacts to display.';
       }
     });
   }
@@ -262,21 +239,6 @@ class _MyAppState extends State<MyApp> {
     return null;
   }
 
-  Future<void> _handleAuthorizeScopes() async {
-    final bool isAuthorized = await googleSignIn.requestScopes(scopes);
-    // #enddocregion RequestScopes
-    setState(() {
-      _isAuthorized = isAuthorized;
-    });
-    // #docregion RequestScopes
-    if (isAuthorized) {
-      unawaited(_handleGetContact(_currentUser!));
-    }
-    // #enddocregion RequestScopes
-  }
-
-  Future<void> _handleSignOut() => googleSignIn.disconnect();
-
   @override
   void dispose() {
     _connectivitySubscription.cancel();
@@ -285,7 +247,6 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     setState(() {
-      _connectionStatus = result;
     });
   }
 
