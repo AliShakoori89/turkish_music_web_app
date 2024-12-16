@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
-import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
