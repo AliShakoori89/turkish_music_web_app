@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../../data/model/album_model.dart';
-import '../../../../data/model/save_song_model.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../bloc/play_button_state_bloc/bloc.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
-import '../../../bloc/recently_play_song_bloc/bloc.dart';
-import '../../../bloc/recently_play_song_bloc/event.dart';
+
 
 
 class NextButton extends StatelessWidget {

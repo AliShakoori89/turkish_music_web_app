@@ -1,20 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:delayed_widget/delayed_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:turkish_music_app/main.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
-import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
-import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
-import '../../../../../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 

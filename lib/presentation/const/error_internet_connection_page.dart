@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:restart_app/restart_app.dart';
 import '../helpers/widgets/header.dart';

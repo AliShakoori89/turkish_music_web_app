@@ -1,20 +1,16 @@
-import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:search_page/search_page.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:turkish_music_app/data/model/album_model.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
-import '../../../../data/model/search_model.dart';
 import '../../../../data/model/song_model.dart';
 import '../../../bloc/song_bloc/bloc.dart';
 import '../../../bloc/song_bloc/event.dart';
 import '../../../bloc/song_bloc/state.dart';
-import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../../../const/generate_new_path.dart';
 import '../../play_song_page/play_song_page.dart';
 

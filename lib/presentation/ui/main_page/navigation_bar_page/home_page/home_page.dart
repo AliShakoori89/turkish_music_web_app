@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../bloc/mini_playing_container_bloc/bloc.dart';
-import '../../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../../helpers/widgets/header.dart';
 import 'home_page_component/categories/category_item.dart';
 import 'home_page_component/new_album_contaner.dart';

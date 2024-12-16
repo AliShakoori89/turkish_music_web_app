@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:shaky_animated_listview/widgets/animated_listview.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import '../../../../../data/model/song_model.dart';

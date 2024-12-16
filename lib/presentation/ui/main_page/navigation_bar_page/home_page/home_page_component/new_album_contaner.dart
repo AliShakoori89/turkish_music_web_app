@@ -8,7 +8,6 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 import '../../../../../../data/model/album_model.dart';
-import '../../../../../../data/model/new_album_model.dart';
 import '../../../../../../data/model/song_model.dart';
 import '../../../../../bloc/album_bloc/event.dart';
 import '../../../../../const/shimmer_container/new_music_shimmer_container.dart';

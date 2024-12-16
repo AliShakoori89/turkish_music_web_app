@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SingerPageShimmerContainer extends StatelessWidget {
