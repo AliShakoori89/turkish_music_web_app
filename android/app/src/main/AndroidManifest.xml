@@ -11,7 +11,7 @@
 
     <application
         android:name="${applicationName}"
-        android:label="turkish_music_app"
+        android:label="Turkish Music"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
