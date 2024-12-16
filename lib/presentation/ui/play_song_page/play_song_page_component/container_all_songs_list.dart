@@ -104,7 +104,9 @@ class ContainerAllSongsList extends StatelessWidget {
                       children: [
                         categoryAllSongs.first.albumId == categoryAllSongs[1].albumId &&
                             categoryAllSongs.first.albumId == categoryAllSongs.last.albumId
-                            ? Container()
+                            ? Container(
+                          height: 50,
+                        )
                             : Expanded(
                           flex: 1,
                           child: Container(

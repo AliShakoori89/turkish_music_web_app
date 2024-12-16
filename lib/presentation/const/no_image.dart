@@ -11,7 +11,7 @@ class NoImage extends StatelessWidget {
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(Assets.imagesNoImage),
-                fit: BoxFit.cover
+                fit: BoxFit.fill
             ),
             color: Colors.black12,
             shape: BoxShape.circle),

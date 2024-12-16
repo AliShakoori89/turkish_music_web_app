@@ -187,7 +187,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                           }
                       );
                     }else if(state.status.isError){
-                      return Center(child: Text("error"));
+                      return Center();
                     }
                     return Center();
                   })

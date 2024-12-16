@@ -10,6 +10,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/data/model/category_model.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
@@ -97,16 +98,38 @@ FutureOr<void> main() async{
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-
-  runApp(
+  await SentryFlutter.init(
+        (options) {
+      options.dsn = 'https://f1cdf7541efb2cab8d645bdbcfa21b5c@o4508205725253632.ingest.us.sentry.io/4508205732265984';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      // The sampling rate for profiling is relative to tracesSampleRate
+      // Setting to 1.0 will profile 100% of sampled transactions:
+      // Note: Profiling alpha is available for iOS and macOS since SDK version 7.12.0
+      options.profilesSampleRate = 1.0;
+    },
+    appRunner: () =>   runApp(
       // DevicePreview(
       //   enabled: !kReleaseMode,
       //   builder: (context) =>
-            MyApp(isLoggedIn: isLoggedIn)
-  // )
-  ); // Wrap your app
+        MyApp(isLoggedIn: isLoggedIn)
+      // )
+    )
+  );
 
+  // you can also configure SENTRY_DSN, SENTRY_RELEASE, SENTRY_DIST, and
+  // SENTRY_ENVIRONMENT via Dart environment variable (--dart-define)
 }
+//   runApp(
+//       // DevicePreview(
+//       //   enabled: !kReleaseMode,
+//       //   builder: (context) =>
+//             MyApp(isLoggedIn: isLoggedIn)
+//   // )
+//   ); // Wrap your app
+//
+// }
 
 
 Future<void> requestStoragePermission() async {

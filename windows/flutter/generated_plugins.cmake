@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
   connectivity_plus
   permission_handler_windows
+  sentry_flutter
   simple_audio
   url_launcher_windows
 )

@@ -146,7 +146,7 @@ class _SingerPageState extends State<SingerPage> {
                                 'songFile': newPath,
                                 'songID': songDataModel.id!,
                                 'singerName': artistDetail.name,
-                                'songImage': artistDetail.imageSource,
+                                'songImage': state.singerAllAlbum[index].imageSource,
                                 'albumID': songDataModel.albumId!,
                                 'pageName': "SingerPage",
                                 'albumSongList': state.singerAllAlbum[index].musics!,

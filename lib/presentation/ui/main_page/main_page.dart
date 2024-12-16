@@ -197,7 +197,7 @@ class _MainPageState extends State<MainPage> {
                         });
                             return Container();
                           })
-                      : pageName == "NewSong"
+                      : pageName == "NewSong" || pageName == "AllNewSongsPage"
                       ? BlocBuilder<SongBloc, SongState>(
                       builder: (context, state) {
 

@@ -118,6 +118,8 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                     BlocProvider.of<RecentlyPlaySongBloc>(context).add(
                         SavePlayedSongIDToRecentlyPlayedEvent(
                             recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
+
+                    print("*******          "+state.songModel.imageSource!);
             
                     return ImagePixels(
                         imageProvider: NetworkImage(state.songModel.imageSource!),
