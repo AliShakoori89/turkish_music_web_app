@@ -7,7 +7,7 @@ import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page/search_page.dart';
 import 'package:vertical_nav_bar/vertical_nav_bar.dart';
 import '../../../data/model/album_model.dart';
 import '../../../data/model/category_model.dart';
@@ -271,7 +271,7 @@ class _MainPageState extends State<MainPage> {
                       });
                 }),
           )
-              : Container()
+              : Container(height: 0,)
         ],
       )),
     )

@@ -109,9 +109,9 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
                         },
                         child: SingerNameTrackNameImage(
-                          singerName: widget.song.singerName!,
-                          songName: widget.song.name!,
-                          imagePath: widget.song.imageSource!,
+                          singerName: widget.song.singerName ?? "",
+                          songName: widget.song.name ?? "",
+                          imagePath: widget.song.imageSource ?? "",
                           align: MainAxisAlignment.start,
                         ),
                       ),

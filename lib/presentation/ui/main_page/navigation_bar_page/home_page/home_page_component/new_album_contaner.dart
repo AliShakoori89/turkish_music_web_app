@@ -80,7 +80,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                           fileSource: newPath,
                           minute: state.newAlbum[index].musics![0].minute,
                           second: state.newAlbum[index].musics![0].second,
-                          singerName: state.newAlbum[index].musics![0].name,
+                          singerName: state.newAlbum[index].singer!.name,
                           album: null,
                           albumId: state.newAlbum[index].musics![0].id,
                           categories: null,

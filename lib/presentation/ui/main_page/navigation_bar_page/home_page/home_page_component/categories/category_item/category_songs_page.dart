@@ -87,6 +87,8 @@ class _CategorySongPageState extends State<CategorySongPage> {
 
                     List<CategoryMusicsModel>? categoryAllSongs = state.category.musics;
 
+                    print(categoryAllSongs);
+
                     if(state.status.isLoading){
                       return Padding(
                           padding: EdgeInsets.only(

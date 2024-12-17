@@ -97,7 +97,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
           body: SafeArea(
             child: BlocBuilder<AudioControlBloc, AudioControlState>(
                 builder: (context, state) {
-            
+
                   if (state is AudioPlayedState) {
             
                     var songID = state.songModel.id;
@@ -119,8 +119,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                         SavePlayedSongIDToRecentlyPlayedEvent(
                             recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
 
-                    print("*******          "+state.songModel.imageSource!);
-            
                     return ImagePixels(
                         imageProvider: NetworkImage(state.songModel.imageSource!),
                         builder: (context, img) {
@@ -184,7 +182,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                                                   color: Colors.white),
                                             ),
                                             Text(
-                                              singerName,
+                                              state.songModel.singerName!,
                                               style: TextStyle(
                                                   fontSize: MediaQuery.of(context).size.height / 70,
                                                   color: Colors.white60),

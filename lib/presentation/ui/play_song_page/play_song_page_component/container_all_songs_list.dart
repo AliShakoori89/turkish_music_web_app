@@ -24,18 +24,12 @@ class ContainerAllSongsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(categoryAllSongs.first.albumId);
-    print(categoryAllSongs[1].albumId);
-    print(categoryAllSongs.last.albumId);
-
     return ListView.builder(
       itemCount: categoryAllSongs.length,
       cacheExtent: 1000,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
-
-
 
         return InkWell(
           onTap: (){

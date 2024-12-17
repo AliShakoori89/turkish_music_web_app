@@ -26,6 +26,7 @@ class CategoryRepository {
     ApiBaseHelper api = ApiBaseHelper();
 
     String accessToken = await getAccessTokenValue();
+
     final response = await api.get('/api/Category/GetOneCategory/$categoryID', accessToken: accessToken);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
