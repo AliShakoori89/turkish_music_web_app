@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
+import 'package:turkish_music_app/presentation/const/shimmer_container/mini_player_shimmer.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page.dart';
@@ -243,7 +244,7 @@ class _MainPageState extends State<MainPage> {
                         List<AlbumDataMusicModel> album = state.albumAllSongs;
 
                         if (state.status.isLoading) {
-                          return LinearProgressIndicator();
+                          return MiniPlayerShimmer();
                         } else if (state.status.isSuccess) {
                           return BlocBuilder<SongBloc, SongState>(
                               builder: (context, state) {
