@@ -11,6 +11,7 @@ import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/event.dart';
+import 'package:turkish_music_app/presentation/ui/component/landscape/landscape_play_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/container_all_songs_list.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/download_button.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/favorite.dart';
@@ -25,6 +26,8 @@ import '../../../data/model/album_model.dart';
 import '../../bloc/play_button_state_bloc/bloc.dart';
 import '../../bloc/play_button_state_bloc/event.dart';
 import '../../bloc/song_control_bloc/audio_control_bloc.dart';
+import '../component/portrait/portrait_play_song_page.dart';
+import '../component/title.dart';
 
 class PlaySongPage extends StatefulWidget {
 
@@ -145,313 +148,35 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                               ),
                             ),
                             child: orientation == Orientation.portrait
-                                ? BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: double.infinity,
-                                      height: 50,
-                                      child: Center(
-                                        child: Text(
-                                          "Now Playing",
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(height: 50,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              state.songModel.name!,
-                                              style: TextStyle(
-                                                  fontSize: MediaQuery.of(context).size.height / 60,
-                                                  color: Colors.white),
-                                            ),
-                                            Text(
-                                              state.songModel.singerName!,
-                                              style: TextStyle(
-                                                  fontSize: MediaQuery.of(context).size.height / 70,
-                                                  color: Colors.white60),
-                                            ),
-                                          ],
-                                        ),
-                                        Spacer(flex: 10,),
-                                        FavoriteButton(
-                                          controller: _controller,
-                                          songID: songID!,
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 500,
-                                      width: double.infinity,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                DownloadButton(
-                                                    songFilePath: state.songModel.fileSource!,
-                                                    songName: state.songModel.name!,
-                                                    songModel : recentlyPlayedSongIdModel
-                                                ),
-                                                repeatButton()
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 10,
-                                            child: Progressbar(
-                                              minute: state.songModel.minute!,
-                                              second: state.songModel.second!,
-                                              songImage: state.songModel.imageSource!,),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                PreviousButton(
-                                                    albumSongs: albumSongList,
-                                                    songID: songID,
-                                                    albumID: albumID,
-                                                    singerName: singerName,
-                                                    audioFileSec: state.songModel.second!,
-                                                    audioFileMin: state.songModel.minute!,
-                                                    audioFilePath: path,
-                                                    imageFilePath: songImage,
-                                                    songName: songName,
-                                                    pageName: "PlaySongPage",
-                                                    categoryID: categoryID),
-                                                PlayButton(),
-                                                NextButton(
-                                                    albumSongs : albumSongList,
-                                                    songID: songID,
-                                                    albumID: albumID,
-                                                    singerName: singerName,
-                                                    audioFileSec: state.songModel.second!,
-                                                    audioFileMin: state.songModel.minute!,
-                                                    audioFilePath: path,
-                                                    imageFilePath: songImage,
-                                                    songName: songName,
-                                                    pageName: "PlaySongPage",
-                                                    categoryID: categoryID
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 15
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  PlayListButton(),
-                                                  loopButton()
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    ContainerAllSongsList(
-                                      singerName: singerName,
-                                      categoryAllSongs: albumSongList,
-                                      songName: state.songModel.name!,
-                                      songID: songID,)
-                                  ],
-                                ),
-                              )
+                                ? PortraitPlaySongPage(
+                              controller: _controller,
+                              songID: state.songModel.id!,
+                              songName: state.songModel.name!,
+                              singerName: singerName,
+                              songFilePath: state.songModel.fileSource!,
+                              saveSongModel: recentlyPlayedSongIdModel,
+                              minute: state.songModel.minute!,
+                              second: state.songModel.second!,
+                              songImagePath: state.songModel.imageSource!,
+                              albumAllSongsList: albumSongList,
+                              albumID: albumID,
+                              categoryID: categoryID,
                             )
-                                : BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          height: 30,
-                                          child: Center(
-                                            child: Text(
-                                              "Now Playing",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: orientation == Orientation.portrait
-                                                    ? 16
-                                                    : 22,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  state.songModel.name!,
-                                                  style: TextStyle(
-                                                      fontSize: orientation == Orientation.portrait
-                                                          ? MediaQuery.of(context).size.height / 30
-                                                          : MediaQuery.of(context).size.height / 40,
-                                                      color: Colors.white),
-                                                ),
-                                                Text(
-                                                  singerName,
-                                                  style: TextStyle(
-                                                      fontSize: orientation == Orientation.portrait
-                                                          ? MediaQuery.of(context).size.height / 35
-                                                          : MediaQuery.of(context).size.height / 45,
-                                                      color: Colors.white60),
-                                                ),
-                                              ],
-                                            ),
-                                            Spacer(),
-                                            FavoriteButton(
-                                              controller: _controller,
-                                              songID: songID!,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Expanded(
-                                        flex: 15,
-                                        child: Container(
-                                          height: MediaQuery.of(context).size.height / 1.2,
-                                          width: double.infinity,
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Flexible(
-                                                flex: 1,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    DownloadButton(
-                                                        songFilePath: state.songModel.fileSource!,
-                                                        songName: state.songModel.name!,
-                                                        songModel : recentlyPlayedSongIdModel
-                                                    ),
-                                                    repeatButton()
-                                                  ],
-                                                ),
-                                              ),
-                                              Flexible(
-                                                flex: 20,
-                                                child: Progressbar(
-                                                  minute: state.songModel.minute!,
-                                                  second: state.songModel.second!,
-                                                  songImage: state.songModel.imageSource!,),
-                                              ),
-                                              Flexible(
-                                                flex: 2,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    PreviousButton(
-                                                        albumSongs: albumSongList,
-                                                        songID: songID,
-                                                        albumID: albumID,
-                                                        singerName: singerName,
-                                                        audioFileSec: state.songModel.second!,
-                                                        audioFileMin: state.songModel.minute!,
-                                                        audioFilePath: path,
-                                                        imageFilePath: songImage,
-                                                        songName: songName,
-                                                        pageName: pageName,
-                                                        categoryID: categoryID
-                                                    ),
-                                                    PlayButton(),
-                                                    NextButton(
-                                                        albumSongs : albumSongList,
-                                                        songID: songID,
-                                                        albumID: albumID,
-                                                        singerName: singerName,
-                                                        audioFileSec: state.songModel.second!,
-                                                        audioFileMin: state.songModel.minute!,
-                                                        audioFilePath: path,
-                                                        imageFilePath: songImage,
-                                                        songName: songName,
-                                                        pageName: pageName,
-                                                        categoryID: categoryID
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              Flexible(
-                                                flex: 2,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 15
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      PlayListButton(),
-                                                      loopButton()
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: 10,),
-                                Expanded(
-                                  flex: 1,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: ContainerAllSongsList(
-                                      singerName: singerName,
-                                      categoryAllSongs: albumSongList,
-                                      songName: state.songModel.name!,
-                                      songID: songID,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )),
+                                : LandscapePlaySongPage(
+                              controller: _controller,
+                              songID: state.songModel.id!,
+                              songName: state.songModel.name!,
+                              singerName: singerName,
+                              songFilePath: state.songModel.fileSource!,
+                              saveSongModel: recentlyPlayedSongIdModel,
+                              minute: state.songModel.minute!,
+                              second: state.songModel.second!,
+                              songImagePath: state.songModel.imageSource!,
+                              albumAllSongsList: albumSongList,
+                              albumID: albumID,
+                              categoryID: categoryID,
+                              orientation: orientation,
+                              pageName: pageName,),
                           );
                         }
                     );

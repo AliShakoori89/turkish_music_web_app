@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shaky_animated_listview/widgets/animated_gridview.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
+import 'package:turkish_music_app/presentation/const/generate_new_path.dart';
 import 'package:turkish_music_app/presentation/const/title.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/under_image_singar_and_song_name.dart';
 import '../../../../../../data/model/album_model.dart';
@@ -143,79 +144,94 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                       }
                   ))
                   : AnimatedGridView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 4,
-                  mainAxisExtent: 220,
-                  crossAxisSpacing: 50,
-                  cacheExtent: 1000,
-                  children: List.generate(
-                      newAlbum.length,
-                          (index) {
-                        return GestureDetector(
-                          onTap: (){
-                            var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
-                                + "s"
-                                + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 4,
+                        mainAxisExtent: 220,
+                        crossAxisSpacing: 50,
+                        cacheExtent: 1000,
+                        children: List.generate(newAlbum.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
 
-                            var newPath = path.replaceAll(" ", "%20");
+                              var path = state.newAlbum[index].musics![0].fileSource!.substring(0, 4)
+                                  + "s"
+                                  + state.newAlbum[index].musics![0].fileSource!.substring(4, state.newAlbum[index].musics![0].fileSource!.length);
 
-                            SongDataModel songDataModel = SongDataModel(
-                                id : state.singerAllAlbum[index].musics![0].id,
-                                name: state.singerAllAlbum[index].musics![0].name,
-                                imageSource: state.singerAllAlbum[index].musics![0].imageSource,
+                              var newPath = path.replaceAll(" ", "%20");
+
+                              SongDataModel songDataModel = SongDataModel(
+                                id : state.newAlbum[index].musics![0].id,
+                                name: state.newAlbum[index].musics![0].name,
+                                imageSource: state.newAlbum[index].musics![0].imageSource,
                                 fileSource: newPath,
-                                minute: state.singerAllAlbum[index].musics![0].minute,
-                                second: state.singerAllAlbum[index].musics![0].second,
-                                singerName: newAlbum[index].singer!.name!,
+                                minute: state.newAlbum[index].musics![0].minute,
+                                second: state.newAlbum[index].musics![0].second,
+                                singerName: state.newAlbum[index].singer!.name,
                                 album: null,
-                                albumId: state.singerAllAlbum[index].id,
-                                categories: null
-                            );
+                                albumId: state.newAlbum[index].musics![0].id,
+                                categories: null,
+                              );
 
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => PlaySongPage()
-                              ),
-                            );
+                              context.push(
+                                '/'+PlaySongPage.routeName,
+                                extra: {
+                                  'songName': songDataModel.name,
+                                  'songFile': newPath,
+                                  'songID': songDataModel.id!,
+                                  'singerName': songDataModel.singerName,
+                                  'songImage': songDataModel.name,
+                                  'albumID': songDataModel.albumId!,
+                                  'pageName': "NewAlbumContainer",
+                                  'albumSongList': state.newAlbum[index].musics!.map((newAlbum) => AlbumDataMusicModel.fromNewAlbumDataModel(newAlbum))
+                                      .toList(),
+                                  'songDataModel': songDataModel,
+                                  'categoryID': 0,
+                                },
+                              );
+
                             },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: CachedNetworkImage(
-                                    imageUrl: newAlbum[index].imageSource!,
-                                    imageBuilder: (context, imageProvider) => Container(
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                              Colors.purple.withOpacity(0.5),
-                                              blurRadius: 10.0,
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                              image: NetworkImage(newAlbum[index].imageSource!),
-                                              fit: BoxFit.fill)),
-                                      width: double.infinity,
-                                    ),
-                                    placeholder: (context, url) => NewSongShimmerContainer(),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                  )),
-                              Expanded(
-                                flex: 2,
-                                child: UnderImageSingerAndSongName(
-                                    singerName: newAlbum[index].singer?.name,
-                                    albumName: newAlbum[index].name,
-                                    isArtist: true),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                  )
-              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    flex: 4,
+                                    child: CachedNetworkImage(
+                                      imageUrl: newAlbum[index].imageSource!,
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.purple
+                                                    .withOpacity(0.5),
+                                                blurRadius: 10.0,
+                                              ),
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    newAlbum[index]
+                                                        .imageSource!),
+                                                fit: BoxFit.fill)),
+                                        width: double.infinity,
+                                      ),
+                                      placeholder: (context, url) =>
+                                          NewSongShimmerContainer(),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    )),
+                                Expanded(
+                                  flex: 2,
+                                  child: UnderImageSingerAndSongName(
+                                      singerName: newAlbum[index].singer?.name,
+                                      albumName: newAlbum[index].name,
+                                      isArtist: true),
+                                ),
+                              ],
+                            ),
+                          );
+                        })),
             );
           })
         ),
