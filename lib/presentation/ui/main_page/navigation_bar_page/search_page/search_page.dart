@@ -111,10 +111,14 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                 child: Text("Song :"),
               ),
               Container(
-                  height: (MediaQuery.of(context).size.height / 2) - 200,
+                  height: orientation == Orientation.portrait
+                      ? (MediaQuery.of(context).size.height / 2) - 200
+                      : MediaQuery.of(context).size.width / 2,
                   margin: EdgeInsets.only(
                       left: 10,
-                      right: 10,
+                      right: orientation == Orientation.portrait
+                          ? 10
+                          : 100,
                       top: 20
                   ),
                   decoration: BoxDecoration(
@@ -129,83 +133,138 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                           return CustomIndicator();
                         } else if(state.status.isSuccess){
                           return allSong.isNotEmpty
-                              ? AnimatedListView(
-                            scrollDirection: Axis.vertical,
-                            children: List.generate(
-                                allSong.length,
-                                    (index) => GestureDetector(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20.0),
-                                        color: Colors.black87,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              offset: Offset(0, 0.5),
-                                              color: Colors.purple.withOpacity(0.5)
-                                          )
-                                        ]
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Flexible(
-                                          flex: 10,
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            height: orientation == Orientation.portrait
-                                                ? MediaQuery.of(context).size.height * 0.08
-                                                : 50,
-                                            child: InkWell(
-                                              onTap: (){
+                              ? Container(
+                                margin: EdgeInsets.only(
+                                    left: 10, right: 10, top: 10),
+                                child: AnimatedListView(
+                                  scrollDirection: Axis.vertical,
+                                  children: List.generate(
+                                      allSong.length,
+                                      (index) => GestureDetector(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20.0),
+                                                  color: Colors.black87,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 0.5),
+                                                        color: Colors.purple
+                                                            .withOpacity(0.5))
+                                                  ]),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Flexible(
+                                                    flex: 10,
+                                                    child: SizedBox(
+                                                      width: double.infinity,
+                                                      height: orientation ==
+                                                              Orientation
+                                                                  .portrait
+                                                          ? MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              0.08
+                                                          : 50,
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          var path =
+                                                              generateNewPath(
+                                                                  allSong[index]
+                                                                      .fileSource);
 
-                                                var path = generateNewPath(allSong[index].fileSource);
+                                                          var newPath =
+                                                              path.replaceAll(
+                                                                  " ", "%20");
 
-                                                var newPath = path.replaceAll(" ", "%20");
+                                                          SongDataModel songDataModel = SongDataModel(
+                                                              id: allSong[index]
+                                                                  .id,
+                                                              name: allSong[
+                                                                      index]
+                                                                  .name,
+                                                              imageSource: allSong[
+                                                                      index]
+                                                                  .imageSource,
+                                                              fileSource:
+                                                                  newPath,
+                                                              minute:
+                                                                  allSong[index]
+                                                                      .minute,
+                                                              second:
+                                                                  allSong[index]
+                                                                      .second,
+                                                              singerName:
+                                                                  allSong[index]
+                                                                      .singerName,
+                                                              album: null,
+                                                              albumId:
+                                                                  allSong[index]
+                                                                      .id,
+                                                              categories: null);
 
-                                                SongDataModel songDataModel = SongDataModel(
-                                                  id : allSong[index].id,
-                                                  name: allSong[index].name,
-                                                  imageSource: allSong[index].imageSource,
-                                                  fileSource: newPath,
-                                                  minute: allSong[index].minute,
-                                                  second: allSong[index].second,
-                                                  singerName: allSong[index].singerName,
-                                                  album: null,
-                                                  albumId: allSong[index].id,
-                                                  categories: null
-                                                );
-
-                                                context.push(
-                                                  '/'+PlaySongPage.routeName,
-                                                  extra: {
-                                                    'songName': songDataModel.name,
-                                                    'songFile': newPath,
-                                                    'songID': songDataModel.id!,
-                                                    'singerName': songDataModel.singerName,
-                                                    'songImage': songDataModel.imageSource!,
-                                                    'albumID': songDataModel.albumId!,
-                                                    'pageName': "SearchPage",
-                                                    'albumSongList': <AlbumDataMusicModel>[],
-                                                    'songDataModel': songDataModel,
-                                                    'categoryID': 0
-                                                  },
-                                                );
-                                              },
-                                              child: SongCard(
-                                                songName: allSong[index].name!,
-                                                imgPath: allSong[index].imageSource ?? "",
-                                                singerName: allSong[index].singerName ?? "",),
+                                                          context.push(
+                                                            '/' +
+                                                                PlaySongPage
+                                                                    .routeName,
+                                                            extra: {
+                                                              'songName':
+                                                                  songDataModel
+                                                                      .name,
+                                                              'songFile':
+                                                                  newPath,
+                                                              'songID':
+                                                                  songDataModel
+                                                                      .id!,
+                                                              'singerName':
+                                                                  songDataModel
+                                                                      .singerName,
+                                                              'songImage':
+                                                                  songDataModel
+                                                                      .imageSource!,
+                                                              'albumID':
+                                                                  songDataModel
+                                                                      .albumId!,
+                                                              'pageName':
+                                                                  "SearchPage",
+                                                              'albumSongList':
+                                                                  <AlbumDataMusicModel>[],
+                                                              'songDataModel':
+                                                                  songDataModel,
+                                                              'categoryID': 0
+                                                            },
+                                                          );
+                                                        },
+                                                        child: SongCard(
+                                                          songName:
+                                                              allSong[index]
+                                                                  .name!,
+                                                          imgPath: allSong[
+                                                                      index]
+                                                                  .imageSource ??
+                                                              "",
+                                                          singerName: allSong[
+                                                                      index]
+                                                                  .singerName ??
+                                                              "",
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                          )
-                              : Container();
+                                          )),
+                                ),
+                              )
+                            : Container();
                         }else if(state.status.isError){
                           return Container();
                         }
@@ -221,13 +280,17 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                 child: Text("Album :"),
               ),
               Container(
-                  height: (MediaQuery.of(context).size.height / 2) - 200,
+                  height: orientation == Orientation.portrait
+                      ? (MediaQuery.of(context).size.height / 2) - 200
+                      : MediaQuery.of(context).size.width / 2,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.purple)
                   ),
                   margin: EdgeInsets.only(
                       left: 10,
-                      right: 10,
+                      right: orientation == Orientation.portrait
+                          ? 10
+                          : 100,
                       top: 20
                   ),
                   child: BlocBuilder<AlbumBloc, AlbumState>(
@@ -239,91 +302,165 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                           return CustomIndicator();
                         } else if(state.status.isSuccess){
                           return allAlbum.isNotEmpty
-                              ? AnimatedListView(
-                            scrollDirection: Axis.vertical,
-                            children: List.generate(
-                                allAlbum.length,
-                                    (index) => GestureDetector(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20.0),
-                                        color: Colors.black87,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              offset: Offset(0, 0.5),
-                                              color: Colors.purple.withOpacity(0.5)
-                                          )
-                                        ]
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Flexible(
-                                          flex: 10,
-                                          child: SizedBox(
-                                            width: double.infinity,
-                                            height: orientation == Orientation.portrait
-                                                ? MediaQuery.of(context).size.height * 0.08
-                                                : 50,
-                                            child: InkWell(
-                                              onTap: (){
+                              ? Container(
+                            margin: EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                top: 10
+                            ),
+                                child: AnimatedListView(
+                                  scrollDirection: Axis.vertical,
+                                  children: List.generate(
+                                      allAlbum.length,
+                                      (index) => GestureDetector(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20.0),
+                                                  color: Colors.black87,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 0.5),
+                                                        color: Colors.purple
+                                                            .withOpacity(0.5))
+                                                  ]),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Flexible(
+                                                    flex: 10,
+                                                    child: SizedBox(
+                                                      width: double.infinity,
+                                                      height: orientation ==
+                                                              Orientation
+                                                                  .portrait
+                                                          ? MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height *
+                                                              0.08
+                                                          : 50,
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          var path =
+                                                              generateNewPath(
+                                                                  allAlbum[
+                                                                          index]
+                                                                      .musics![
+                                                                          0]
+                                                                      .fileSource!);
 
-                                                var path = generateNewPath(allAlbum[index].musics![0].fileSource!);
+                                                          var newPath =
+                                                              path.replaceAll(
+                                                                  " ", "%20");
 
-                                                var newPath = path.replaceAll(" ", "%20");
+                                                          SongDataModel
+                                                              songDataModel =
+                                                              SongDataModel(
+                                                            id: allAlbum[index]
+                                                                .musics![0]
+                                                                .id,
+                                                            name:
+                                                                allAlbum[index]
+                                                                    .musics![0]
+                                                                    .name,
+                                                            imageSource:
+                                                                allAlbum[index]
+                                                                    .imageSource,
+                                                            fileSource: newPath,
+                                                            minute:
+                                                                allAlbum[index]
+                                                                    .musics![0]
+                                                                    .minute,
+                                                            second:
+                                                                allAlbum[index]
+                                                                    .musics![0]
+                                                                    .second,
+                                                            singerName:
+                                                                allAlbum[index]
+                                                                    .singer!
+                                                                    .name,
+                                                            album: null,
+                                                            albumId:
+                                                                allAlbum[index]
+                                                                    .id,
+                                                            categories: <SongDataCategoriesModel>[
+                                                              SongDataCategoriesModel(
+                                                                  creationDate:
+                                                                      '',
+                                                                  id: 0,
+                                                                  imageSource:
+                                                                      '',
+                                                                  musics: [],
+                                                                  title: '')
+                                                            ],
+                                                          );
 
-                                                SongDataModel songDataModel = SongDataModel(
-                                                  id : allAlbum[index].musics![0].id,
-                                                  name: allAlbum[index].musics![0].name,
-                                                  imageSource: allAlbum[index].imageSource,
-                                                  fileSource: newPath,
-                                                  minute: allAlbum[index].musics![0].minute,
-                                                  second: allAlbum[index].musics![0].second,
-                                                  singerName: allAlbum[index].singer!.name,
-                                                  album: null,
-                                                  albumId: allAlbum[index].id,
-                                                  categories: <SongDataCategoriesModel>[
-                                                    SongDataCategoriesModel(
-                                                      creationDate: '',
-                                                      id: 0,
-                                                      imageSource: '',
-                                                      musics: [],
-                                                      title: ''
-                                                    )
-                                                  ],
-                                                );
-
-                                                context.push(
-                                                  '/'+PlaySongPage.routeName,
-                                                  extra: {
-                                                    'songName': songDataModel.name,
-                                                    'songFile': newPath,
-                                                    'songID': songDataModel.id!,
-                                                    'singerName': songDataModel.singerName,
-                                                    'songImage': allAlbum[index].imageSource,
-                                                    'albumID': songDataModel.albumId!,
-                                                    'pageName': "SearchPage",
-                                                    'albumSongList': allAlbum[index].musics!,
-                                                    'songDataModel': songDataModel,
-                                                    'categoryID': 0
-                                                  },
-                                                );
-
-                                              },
-                                              child: SongCard(
-                                                songName: state.allAlbum[index].name!,
-                                                imgPath: state.allAlbum[index].imageSource ?? "",
-                                                singerName: state.allAlbum[index].singer!.name ?? "",),
+                                                          context.push(
+                                                            '/' +
+                                                                PlaySongPage
+                                                                    .routeName,
+                                                            extra: {
+                                                              'songName':
+                                                                  songDataModel
+                                                                      .name,
+                                                              'songFile':
+                                                                  newPath,
+                                                              'songID':
+                                                                  songDataModel
+                                                                      .id!,
+                                                              'singerName':
+                                                                  songDataModel
+                                                                      .singerName,
+                                                              'songImage':
+                                                                  allAlbum[
+                                                                          index]
+                                                                      .imageSource,
+                                                              'albumID':
+                                                                  songDataModel
+                                                                      .albumId!,
+                                                              'pageName':
+                                                                  "SearchPage",
+                                                              'albumSongList':
+                                                                  allAlbum[
+                                                                          index]
+                                                                      .musics!,
+                                                              'songDataModel':
+                                                                  songDataModel,
+                                                              'categoryID': 0
+                                                            },
+                                                          );
+                                                        },
+                                                        child: SongCard(
+                                                          songName: state
+                                                              .allAlbum[index]
+                                                              .name!,
+                                                          imgPath: state
+                                                                  .allAlbum[
+                                                                      index]
+                                                                  .imageSource ??
+                                                              "",
+                                                          singerName: state
+                                                                  .allAlbum[
+                                                                      index]
+                                                                  .singer!
+                                                                  .name ??
+                                                              "",
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                          )
+                                          )),
+                                ),
+                              )
                               : Container();
                         }else if(state.status.isError){
                           return Container();
