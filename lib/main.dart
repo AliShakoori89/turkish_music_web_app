@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:app_upgrade_flutter_sdk/app_upgrade_flutter_sdk.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -268,6 +270,20 @@ class _MyAppState extends State<MyApp> {
 
     final GoogleSignInAccount? user = _currentUser;
 
+    AppInfo appInfo = AppInfo(
+        appName: 'Turkish Music', // Your app name
+        appVersion: '1.0.1', // Your app version
+        platform: Platform.operatingSystem, // App Platform, android or ios
+        environment: 'development', // Environment in which app is running, production, staging or development etc.
+        appLanguage: 'en',
+        appId: '' // App language ex: en, es etc. Optional.
+    );
+
+    DialogConfig dialogConfig = DialogConfig(
+        dialogStyle: DialogStyle.material,
+        title: 'App update required!',
+        updateButtonTitle: 'Update Now');
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -316,111 +332,116 @@ class _MyAppState extends State<MyApp> {
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(brightness: Brightness.dark),
-        themeMode: ThemeMode.dark,
-        routerConfig: GoRouter(
-            routes: [
-              GoRoute(
-                  path: "/",
-                  builder: (context, state){
-                    return isOffline ?
-                    widget.isLoggedIn || user != null
-                        ? MainPage()
-                        : AuthenticatePage(googleSignIn: googleSignIn)
-                        : const ErrorInternetConnectionPage();
-                  },
-                  routes: [
-                    GoRoute(
-                      path: MainPage.routeName,
-                      builder: (context, state){
-                        return MainPage();
-                      },),
-                    GoRoute(
-                      path: HomePage.routeName,
-                      builder: (context, state){
-                        return HomePage();
-                      },),
-                    GoRoute(
-                      path: SingerPage.routeName,
-                      builder: (context, state){
-                        return SingerPage();
-                      },
-                    ),
-                    GoRoute(
-                      path: SearchPage.routeName,
-                      builder: (context, state){
-                        return SearchPage();
-                      },
-                    ),
-                    GoRoute(
-                        path: AllSingerPage.routeName,
+      child: AppUpgradeAlert(
+        appInfo: appInfo, // Pass app metadata
+        dialogConfig: dialogConfig, // Pass dialog customization
+        xApiKey: 'YTgxN2RhYmYtMzllYi00MGUwLTkyZTYtMDhmOGI1NmJiMWFj',
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(brightness: Brightness.dark),
+          themeMode: ThemeMode.dark,
+          routerConfig: GoRouter(
+              routes: [
+                GoRoute(
+                    path: "/",
+                    builder: (context, state){
+                      return isOffline ?
+                      widget.isLoggedIn || user != null
+                          ? MainPage()
+                          : AuthenticatePage(googleSignIn: googleSignIn)
+                          : const ErrorInternetConnectionPage();
+                    },
+                    routes: [
+                      GoRoute(
+                        path: MainPage.routeName,
                         builder: (context, state){
-                          return AllSingerPage();
-                        }
-                    ),
-                    GoRoute(
-                        path: AllNewSongsPage.routeName,
+                          return MainPage();
+                        },),
+                      GoRoute(
+                        path: HomePage.routeName,
                         builder: (context, state){
-                          return AllNewSongsPage();
-                        }
-                    ),
-                    GoRoute(
-                        path: DownloadPage.routeName,
+                          return HomePage();
+                        },),
+                      GoRoute(
+                        path: SingerPage.routeName,
                         builder: (context, state){
-                          return DownloadPage();
-                        }
-                    ),
-                    GoRoute(
-                        path: PlaylistPage.routeName,
+                          return SingerPage();
+                        },
+                      ),
+                      GoRoute(
+                        path: SearchPage.routeName,
                         builder: (context, state){
-                          return PlaylistPage();
-                        }
-                    ),
-                    GoRoute(
-                      path: 'CategorySongPage',
-                      name: CategorySongPage.routeName,
-                      builder: (context, state) {
-                        // Validate and parse the `state.extra` to ensure it's of type `Map` and contains required fields
-                        final extra = state.extra;
-                        if (extra is! Map || !extra.containsKey('imageSource') || !extra.containsKey('categoryName') || !extra.containsKey('categoryID')) {
-                          throw Exception("Invalid or missing `extra` data for CategorySongPage.");
-                        }
-
-                        return CategorySongPage(
-                          imageSource: extra['imageSource'] as String,
-                          categoryName: extra['categoryName'] as String,
-                          categoryID: extra['categoryID'] as int,
-                        );
-                      },
-                    ),
-                    GoRoute(
-                      path: 'PlaySongPage',
-                      name: PlaySongPage.routeName,
-                      pageBuilder: (context, state) {
-                        return CustomTransitionPage(
-                          transitionDuration: Duration(seconds: 1),
-                          child: PlaySongPage(),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(0.0, 1.0);  // Bottom to top transition
-                            const end = Offset.zero;
-                            const curve = Curves.easeOut;
-
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        );
-                      },
-                    ),
-
-                  ]
-              ),
-            ]
+                          return SearchPage();
+                        },
+                      ),
+                      GoRoute(
+                          path: AllSingerPage.routeName,
+                          builder: (context, state){
+                            return AllSingerPage();
+                          }
+                      ),
+                      GoRoute(
+                          path: AllNewSongsPage.routeName,
+                          builder: (context, state){
+                            return AllNewSongsPage();
+                          }
+                      ),
+                      GoRoute(
+                          path: DownloadPage.routeName,
+                          builder: (context, state){
+                            return DownloadPage();
+                          }
+                      ),
+                      GoRoute(
+                          path: PlaylistPage.routeName,
+                          builder: (context, state){
+                            return PlaylistPage();
+                          }
+                      ),
+                      GoRoute(
+                        path: 'CategorySongPage',
+                        name: CategorySongPage.routeName,
+                        builder: (context, state) {
+                          // Validate and parse the `state.extra` to ensure it's of type `Map` and contains required fields
+                          final extra = state.extra;
+                          if (extra is! Map || !extra.containsKey('imageSource') || !extra.containsKey('categoryName') || !extra.containsKey('categoryID')) {
+                            throw Exception("Invalid or missing `extra` data for CategorySongPage.");
+                          }
+        
+                          return CategorySongPage(
+                            imageSource: extra['imageSource'] as String,
+                            categoryName: extra['categoryName'] as String,
+                            categoryID: extra['categoryID'] as int,
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: 'PlaySongPage',
+                        name: PlaySongPage.routeName,
+                        pageBuilder: (context, state) {
+                          return CustomTransitionPage(
+                            transitionDuration: Duration(seconds: 1),
+                            child: PlaySongPage(),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                              const begin = Offset(0.0, 1.0);  // Bottom to top transition
+                              const end = Offset.zero;
+                              const curve = Curves.easeOut;
+        
+                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          );
+                        },
+                      ),
+        
+                    ]
+                ),
+              ]
+          ),
         ),
       ),
     );
