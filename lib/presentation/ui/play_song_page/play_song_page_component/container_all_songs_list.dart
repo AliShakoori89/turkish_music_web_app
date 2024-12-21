@@ -87,7 +87,8 @@ class ContainerAllSongsList extends StatelessWidget {
                     flex: 5,
                     child: Row(
                       children: [
-                        categoryAllSongs.first.albumId == categoryAllSongs[1].albumId &&
+                        categoryAllSongs.length != 1
+                            ? categoryAllSongs.first.albumId == categoryAllSongs[1].albumId &&
                             categoryAllSongs.first.albumId == categoryAllSongs.last.albumId
                             ? Container(
                           height: 50,
@@ -122,9 +123,41 @@ class ContainerAllSongsList extends StatelessWidget {
                                             .imageSource!),
                                     fit: BoxFit.cover)),
                           ),
-                        ),
+                        )
+                            : Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 50,
+                            width: 40,
+                            margin: const EdgeInsets.only(right: 5),
+                            child: CachedNetworkImage(
+                                fit: BoxFit.fill,
+                                imageUrl: categoryAllSongs[index].imageSource!,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.fill),
+                                      ),
+                                    ),
+                                placeholder: (context, url) =>
+                                    PlayingPageAlbumSongListShimmer(),
+                                errorWidget: (context, url, error) => NoImage()),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        categoryAllSongs[index]
+                                            .imageSource!),
+                                    fit: BoxFit.cover)),
+                          ),
+                        ) ,
                         const SizedBox(width: 5,),
-                        categoryAllSongs.isNotEmpty && categoryAllSongs.first.albumId != categoryAllSongs[2].albumId &&
+                        categoryAllSongs.length != 1 ?
+                        categoryAllSongs.isNotEmpty && categoryAllSongs.first.albumId != categoryAllSongs[1].albumId &&
                             categoryAllSongs.first.albumId != categoryAllSongs.last.albumId
                             ? Expanded(
                           flex: 4,
@@ -153,6 +186,25 @@ class ContainerAllSongsList extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
                             ),),
+                        )
+                            : Expanded(
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              OverflowTextAnimated(
+                                text: categoryAllSongs[index].name!,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold
+                                ),),
+                              Text(categoryAllSongs[index].singerName!,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white54
+                                ),)
+                            ],
+                          ),
                         )
                       ],
                     ),

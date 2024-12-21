@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,22 +11,11 @@ import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/ui/component/landscape/landscape_play_song_page.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/container_all_songs_list.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/download_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/favorite.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/loop_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/next_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/play_list_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/previous_button.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/progressbar.dart';
-import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/repeat_button.dart';
 import '../../../data/model/album_model.dart';
 import '../../bloc/play_button_state_bloc/bloc.dart';
 import '../../bloc/play_button_state_bloc/event.dart';
 import '../../bloc/song_control_bloc/audio_control_bloc.dart';
 import '../component/portrait/portrait_play_song_page.dart';
-import '../component/title.dart';
 
 class PlaySongPage extends StatefulWidget {
 

@@ -24,6 +24,7 @@ import '../../bloc/mini_playing_container_bloc/state.dart';
 import '../../bloc/song_bloc/bloc.dart';
 import '../../bloc/song_bloc/event.dart';
 import '../../bloc/song_bloc/state.dart';
+import '../../const/generate_new_path.dart';
 import '../play_song_page/play_song_page_component/mini_palying_container.dart';
 
 class MainPage extends StatefulWidget {
@@ -171,15 +172,17 @@ class _MainPageState extends State<MainPage> {
                           // Convert List<CategoryMusicsModel> to List<AlbumDataMusicModel>
                           List<AlbumDataMusicModel> albumDataList = categoryAllSongs.map((categoryMusic) {
 
+                            var path = generateNewPath(categoryMusic.fileSource!);
+
+                            var newPath =
+                            path.replaceAll(
+                                " ", "%20");
 
                             return AlbumDataMusicModel(
                               id: categoryMusic.id,
                               name: categoryMusic.name,
                               imageSource: categoryMusic.imageSource,
-                              fileSource: categoryMusic.fileSource!.substring(0, 4)
-                                  + "s"
-                                  + categoryMusic.fileSource!
-                                      .substring(4,categoryMusic.fileSource!.length),
+                              fileSource: newPath,
                               minute: categoryMusic.minute,
                               second: categoryMusic.second,
                               singerName: categoryMusic.singerName, // Fill in appropriate values if available

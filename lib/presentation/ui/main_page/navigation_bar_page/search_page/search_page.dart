@@ -150,110 +150,56 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                   boxShadow: [
                                                     BoxShadow(
                                                         offset: Offset(0, 0.5),
-                                                        color: Colors.purple
-                                                            .withOpacity(0.5))
+                                                        color: Colors.purple.withOpacity(0.5))
                                                   ]),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Flexible(
                                                     flex: 10,
                                                     child: SizedBox(
                                                       width: double.infinity,
-                                                      height: orientation ==
-                                                              Orientation
-                                                                  .portrait
-                                                          ? MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height *
-                                                              0.08
+                                                      height: orientation == Orientation.portrait
+                                                          ? MediaQuery.of(context).size.height * 0.08
                                                           : 50,
                                                       child: InkWell(
                                                         onTap: () {
-                                                          var path =
-                                                              generateNewPath(
-                                                                  allSong[index]
-                                                                      .fileSource);
+                                                          var path = generateNewPath(allSong[index].fileSource);
 
-                                                          var newPath =
-                                                              path.replaceAll(
-                                                                  " ", "%20");
+                                                          var newPath = path.replaceAll(" ", "%20");
 
                                                           SongDataModel songDataModel = SongDataModel(
-                                                              id: allSong[index]
-                                                                  .id,
-                                                              name: allSong[
-                                                                      index]
-                                                                  .name,
-                                                              imageSource: allSong[
-                                                                      index]
-                                                                  .imageSource,
-                                                              fileSource:
-                                                                  newPath,
-                                                              minute:
-                                                                  allSong[index]
-                                                                      .minute,
-                                                              second:
-                                                                  allSong[index]
-                                                                      .second,
-                                                              singerName:
-                                                                  allSong[index]
-                                                                      .singerName,
+                                                              id: allSong[index].id,
+                                                              name: allSong[index].name,
+                                                              imageSource: allSong[index].imageSource,
+                                                              fileSource: newPath,
+                                                              minute: allSong[index].minute,
+                                                              second: allSong[index].second,
+                                                              singerName: allSong[index].singerName,
                                                               album: null,
-                                                              albumId:
-                                                                  allSong[index]
-                                                                      .id,
+                                                              albumId: allSong[index].id,
                                                               categories: null);
 
-                                                          context.push(
-                                                            '/' +
-                                                                PlaySongPage
-                                                                    .routeName,
+                                                          context.push('/' + PlaySongPage.routeName,
                                                             extra: {
-                                                              'songName':
-                                                                  songDataModel
-                                                                      .name,
-                                                              'songFile':
-                                                                  newPath,
-                                                              'songID':
-                                                                  songDataModel
-                                                                      .id!,
-                                                              'singerName':
-                                                                  songDataModel
-                                                                      .singerName,
-                                                              'songImage':
-                                                                  songDataModel
-                                                                      .imageSource!,
-                                                              'albumID':
-                                                                  songDataModel
-                                                                      .albumId!,
-                                                              'pageName':
-                                                                  "SearchPage",
-                                                              'albumSongList':
-                                                                  <AlbumDataMusicModel>[],
-                                                              'songDataModel':
-                                                                  songDataModel,
+                                                              'songName': songDataModel.name,
+                                                              'songFile': newPath,
+                                                              'songID': songDataModel.id!,
+                                                              'singerName': songDataModel.singerName,
+                                                              'songImage': songDataModel.imageSource!,
+                                                              'albumID': songDataModel.albumId!,
+                                                              'pageName': "SearchPage",
+                                                              'albumSongList': <AlbumDataMusicModel>[],
+                                                              'songDataModel': songDataModel,
                                                               'categoryID': 0
                                                             },
                                                           );
                                                         },
                                                         child: SongCard(
-                                                          songName:
-                                                              allSong[index]
-                                                                  .name!,
-                                                          imgPath: allSong[
-                                                                      index]
-                                                                  .imageSource ??
-                                                              "",
-                                                          singerName: allSong[
-                                                                      index]
-                                                                  .singerName ??
-                                                              "",
+                                                          songName: allSong[index].name!,
+                                                          imgPath: allSong[index].imageSource ?? "",
+                                                          singerName: allSong[index].singerName ?? "",
                                                         ),
                                                       ),
                                                     ),
@@ -347,110 +293,51 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                           : 50,
                                                       child: InkWell(
                                                         onTap: () {
-                                                          var path =
-                                                              generateNewPath(
-                                                                  allAlbum[
-                                                                          index]
-                                                                      .musics![
-                                                                          0]
-                                                                      .fileSource!);
+                                                          var path = generateNewPath(allAlbum[index].musics![0].fileSource!);
 
-                                                          var newPath =
-                                                              path.replaceAll(
-                                                                  " ", "%20");
+                                                          var newPath = path.replaceAll(" ", "%20");
 
                                                           SongDataModel
                                                               songDataModel =
                                                               SongDataModel(
-                                                            id: allAlbum[index]
-                                                                .musics![0]
-                                                                .id,
-                                                            name:
-                                                                allAlbum[index]
-                                                                    .musics![0]
-                                                                    .name,
-                                                            imageSource:
-                                                                allAlbum[index]
-                                                                    .imageSource,
+                                                            id: allAlbum[index].musics![0].id,
+                                                            name: allAlbum[index].musics![0].name,
+                                                            imageSource: allAlbum[index].imageSource,
                                                             fileSource: newPath,
-                                                            minute:
-                                                                allAlbum[index]
-                                                                    .musics![0]
-                                                                    .minute,
-                                                            second:
-                                                                allAlbum[index]
-                                                                    .musics![0]
-                                                                    .second,
-                                                            singerName:
-                                                                allAlbum[index]
-                                                                    .singer!
-                                                                    .name,
+                                                            minute: allAlbum[index].musics![0].minute,
+                                                            second: allAlbum[index].musics![0].second,
+                                                            singerName: allAlbum[index].singer!.name,
                                                             album: null,
-                                                            albumId:
-                                                                allAlbum[index]
-                                                                    .id,
+                                                            albumId: allAlbum[index].id,
                                                             categories: <SongDataCategoriesModel>[
                                                               SongDataCategoriesModel(
-                                                                  creationDate:
-                                                                      '',
+                                                                  creationDate: '',
                                                                   id: 0,
-                                                                  imageSource:
-                                                                      '',
+                                                                  imageSource: '',
                                                                   musics: [],
                                                                   title: '')
                                                             ],
                                                           );
 
-                                                          context.push(
-                                                            '/' +
-                                                                PlaySongPage
-                                                                    .routeName,
+                                                          context.push('/' + PlaySongPage.routeName,
                                                             extra: {
-                                                              'songName':
-                                                                  songDataModel
-                                                                      .name,
-                                                              'songFile':
-                                                                  newPath,
-                                                              'songID':
-                                                                  songDataModel
-                                                                      .id!,
-                                                              'singerName':
-                                                                  songDataModel
-                                                                      .singerName,
-                                                              'songImage':
-                                                                  allAlbum[
-                                                                          index]
-                                                                      .imageSource,
-                                                              'albumID':
-                                                                  songDataModel
-                                                                      .albumId!,
-                                                              'pageName':
-                                                                  "SearchPage",
-                                                              'albumSongList':
-                                                                  allAlbum[
-                                                                          index]
-                                                                      .musics!,
-                                                              'songDataModel':
-                                                                  songDataModel,
+                                                              'songName': songDataModel.name,
+                                                              'songFile': newPath,
+                                                              'songID': songDataModel.id!,
+                                                              'singerName': songDataModel.singerName,
+                                                              'songImage': allAlbum[index].imageSource,
+                                                              'albumID': songDataModel.albumId!,
+                                                              'pageName': "SearchPage",
+                                                              'albumSongList': allAlbum[index].musics!,
+                                                              'songDataModel': songDataModel,
                                                               'categoryID': 0
                                                             },
                                                           );
                                                         },
                                                         child: SongCard(
-                                                          songName: state
-                                                              .allAlbum[index]
-                                                              .name!,
-                                                          imgPath: state
-                                                                  .allAlbum[
-                                                                      index]
-                                                                  .imageSource ??
-                                                              "",
-                                                          singerName: state
-                                                                  .allAlbum[
-                                                                      index]
-                                                                  .singer!
-                                                                  .name ??
-                                                              "",
+                                                          songName: state.allAlbum[index].name!,
+                                                          imgPath: state.allAlbum[index].imageSource ?? "",
+                                                          singerName: state.allAlbum[index].singer!.name ?? "",
                                                         ),
                                                       ),
                                                     ),

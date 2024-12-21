@@ -145,7 +145,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   Widget build(BuildContext context) {
 
     Size size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
         backgroundColor: const Color(0xff192028),

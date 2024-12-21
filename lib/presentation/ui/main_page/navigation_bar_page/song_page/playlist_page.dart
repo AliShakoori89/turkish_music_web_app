@@ -8,6 +8,7 @@ import '../../../../../data/model/song_model.dart';
 import '../../../../bloc/play_list_bloc/bloc.dart';
 import '../../../../bloc/play_list_bloc/state.dart';
 import '../../../../const/custom_indicator.dart';
+import '../../../../const/generate_new_path.dart';
 import '../../../play_song_page/play_song_page.dart';
 
 
@@ -45,17 +46,15 @@ class PlaylistPage extends StatelessWidget {
                     return GestureDetector(
                       onTap: (){
 
-                        var path = state.playlistSongs[index].fileSource!.substring(0, 4)
-                            + "s"
-                            + state.playlistSongs[index].fileSource!.substring(4, state.playlistSongs[index].fileSource!.length);
+                        var path = generateNewPath(state.playlistSongs[index].fileSource!);
 
-                        // var newPath = path.replaceAll(" ", "%20");
+                        var newPath = path.replaceAll(" ", "%20");
 
                         SongDataModel songDataModel = SongDataModel(
                           id : state.playlistSongs[index].id,
                           name: state.playlistSongs[index].name,
                           imageSource: state.playlistSongs[index].imageSource,
-                          fileSource: path,
+                          fileSource: newPath,
                           minute: state.playlistSongs[index].minute,
                           second: state.playlistSongs[index].second,
                           singerName: state.playlistSongs[index].singerName,
