@@ -62,15 +62,29 @@ class _DownloadButtonState extends State<DownloadButton> {
                 );
 
                 // Show local notification
-                const AndroidNotificationDetails androidDetails =
+                AndroidNotificationDetails androidDetails =
                 AndroidNotificationDetails(
                   'download_channel', // channel ID
                   'Download Notifications', // channel name
+                  channelDescription: 'Channel for download completion notifications',
                   importance: Importance.high,
                   priority: Priority.high,
+                  actions: <AndroidNotificationAction>[
+                    AndroidNotificationAction(
+                      'id_open', // Unique ID for the action
+                      'Open Song', // Button label
+                      icon: DrawableResourceAndroidBitmap('id_open', // Optional: add custom drawable icon
+                    ),),
+                    AndroidNotificationAction(
+                      'id_dismiss', // Action ID
+                      'Dismiss', // Button label
+                      icon: DrawableResourceAndroidBitmap('id_dismiss', // Optional: add custom drawable icon
+                      ),
+                    ),
+                  ]
                 );
 
-                const NotificationDetails notificationDetails =
+                NotificationDetails notificationDetails =
                 NotificationDetails(android: androidDetails);
 
                 await flutterLocalNotificationsPlugin.show(
@@ -78,7 +92,9 @@ class _DownloadButtonState extends State<DownloadButton> {
                   'Download Complete', // Notification title
                   '${widget.songName} has been downloaded successfully.', // Notification body
                   notificationDetails,
+                  payload: widget.songFilePath,
                 );
+
               }else if(state.status.isError){
                 Fluttertoast.showToast(
                     msg: "Download Failed .",

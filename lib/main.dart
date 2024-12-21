@@ -87,6 +87,17 @@ FutureOr<void> main() async{
       ? false
       : true;
 
+  // Define the callback for notification responses
+  void onNotificationResponse(NotificationResponse response) {
+    if (response.actionId == 'id_open') {
+      print('Open button tapped! Payload: ${response.payload}');
+      // Add logic to open or play the file
+    } else if (response.actionId == 'id_dismiss') {
+      print('Dismiss button tapped!');
+      // Handle dismiss action if needed
+    }
+  }
+
   // Initialize notification settings
   const AndroidInitializationSettings initializationSettingsAndroid =
   AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -96,7 +107,9 @@ FutureOr<void> main() async{
     android: initializationSettingsAndroid,
   );
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse: onNotificationResponse,);
 
   await SentryFlutter.init(
         (options) {
@@ -191,6 +204,7 @@ class _MyAppState extends State<MyApp> {
     // and the Google Sign In button together to "reduce friction and improve
     // sign-in rates" ([docs](https://developers.google.com/identity/gsi/web/guides/display-button#html)).
     googleSignIn.signInSilently();
+    requestNotificationPermission();
     super.initState();
   }
 
@@ -262,6 +276,21 @@ class _MyAppState extends State<MyApp> {
       isOffline = true;
     } else {
       isOffline = false;
+    }
+  }
+
+  void requestNotificationPermission() async {
+    final plugin = flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+
+    if (plugin != null) {
+      final bool granted = await plugin.requestNotificationsPermission() ?? false;
+      if (granted) {
+        print("Notification permission granted............................................");
+      } else {
+        print("Notification permission denied............................................");
+      }
     }
   }
 

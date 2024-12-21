@@ -48,11 +48,7 @@ class _MainPageState extends State<MainPage> {
 
 
     List myRoutes = [
-      Padding(
-        padding: EdgeInsets.only(
-          // bottom: MediaQuery.of(context).size.height * 0.09 + 50,
-        ),
-        child: SizedBox(
+      SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: EdgeInsets.only(
@@ -60,7 +56,6 @@ class _MainPageState extends State<MainPage> {
             ),
             child: HomePage(),
           )
-        ),
       ),
       Padding(
         padding: EdgeInsets.only(
