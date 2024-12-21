@@ -10,6 +10,7 @@ import 'package:turkish_music_app/presentation/helpers/widgets/song_card.dart';
 import '../../../../../../../../data/model/album_model.dart';
 import '../../../../../../../../data/model/category_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
+import '../../../../../../../const/generate_new_path.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
 class CategorySongPage extends StatefulWidget {
@@ -107,10 +108,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                             return InkWell(
                               onTap: (){
 
-                                var path = categoryAllSongs[index].fileSource!.substring(0, 4)
-                                    + "s"
-                                    + categoryAllSongs[index].fileSource!
-                                        .substring(4, categoryAllSongs[index].fileSource!.length);
+                                var path = generateNewPath(categoryAllSongs[index].fileSource!);
 
                                 var newPath = path.replaceAll(" ", "%20");
 

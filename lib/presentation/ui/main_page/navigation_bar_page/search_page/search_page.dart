@@ -293,6 +293,7 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                           : 50,
                                                       child: InkWell(
                                                         onTap: () {
+
                                                           var path = generateNewPath(allAlbum[index].musics![0].fileSource!);
 
                                                           var newPath = path.replaceAll(" ", "%20");

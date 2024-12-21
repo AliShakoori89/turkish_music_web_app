@@ -9,6 +9,7 @@ import '../../../../../../../data/model/song_model.dart';
 import '../../../../../../bloc/new_song_bloc/bloc.dart';
 import '../../../../../../bloc/new_song_bloc/event.dart';
 import '../../../../../../bloc/new_song_bloc/state.dart';
+import '../../../../../../const/generate_new_path.dart';
 import '../../../../../../const/shimmer_container/new_music_shimmer_container.dart';
 import '../../../../../play_song_page/play_song_page.dart';
 
@@ -65,11 +66,8 @@ class _NewSongState extends State<NewSong>{
                   padding: const EdgeInsets.only(right: 10),
                   child: InkWell(
                     onTap: () {
-                      var path =
-                          state.newSong[index].fileSource!.substring(0, 4) +
-                              "s" +
-                              state.newSong[index].fileSource!.substring(
-                                  4, state.newSong[index].fileSource!.length);
+
+                      var path = generateNewPath(state.newSong[index].fileSource!);
 
                       var newPath = path.replaceAll(" ", "%20");
 

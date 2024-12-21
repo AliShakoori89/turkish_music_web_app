@@ -8,6 +8,7 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
+import '../../../../../../../const/generate_new_path.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
@@ -113,9 +114,7 @@ class _SingerPageState extends State<SingerPage> {
                         return GestureDetector(
                           onTap: (){
 
-                            var path = state.singerAllAlbum[index].musics![0].fileSource!.substring(0, 4)
-                                + "s"
-                                + state.singerAllAlbum[index].musics![0].fileSource!.substring(4, state.singerAllAlbum[index].musics![0].fileSource?.length);
+                            var path = generateNewPath(state.singerAllAlbum[index].musics![0].fileSource!);
 
                             var newPath = path.replaceAll(" ", "%20");
 

@@ -7,6 +7,7 @@ import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 
 import '../../../../../../../../data/model/album_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
+import '../../../../../../../const/generate_new_path.dart';
 import '../../../../../../../helpers/widgets/song_card.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
@@ -47,9 +48,7 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
                   return InkWell(
                     onTap: (){
 
-                      var path = state.allNewSong[index].fileSource!.substring(0, 4)
-                          + "s"
-                          + state.allNewSong[index].fileSource!.substring(4, state.allNewSong[index].fileSource!.length);
+                      var path = generateNewPath(state.allNewSong[index].fileSource!);
 
                       var newPath = path.replaceAll(" ", "%20");
 
