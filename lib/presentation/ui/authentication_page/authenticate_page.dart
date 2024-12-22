@@ -236,30 +236,30 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                           emailFormKey,
                         ),
                         const SizedBox(height: 10,),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
-                            child: InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: _handleSignIn,
-                              child: Container(
-                                height: 40,
-                                width: size.width,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(.05),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  "Login with google Account",
-                                  style: TextStyle(color: Colors.white.withOpacity(.8)),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // ClipRRect(
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   child: BackdropFilter(
+                        //     filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
+                        //     child: InkWell(
+                        //       highlightColor: Colors.transparent,
+                        //       splashColor: Colors.transparent,
+                        //       onTap: _handleSignIn,
+                        //       child: Container(
+                        //         height: 40,
+                        //         width: size.width,
+                        //         alignment: Alignment.center,
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white.withOpacity(.05),
+                        //           borderRadius: BorderRadius.circular(15),
+                        //         ),
+                        //         child: Text(
+                        //           "Login with google Account",
+                        //           style: TextStyle(color: Colors.white.withOpacity(.8)),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

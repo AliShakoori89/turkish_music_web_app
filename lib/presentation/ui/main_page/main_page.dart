@@ -21,6 +21,7 @@ import '../../bloc/category_bloc/state.dart';
 import '../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../bloc/mini_playing_container_bloc/event.dart';
 import '../../bloc/mini_playing_container_bloc/state.dart';
+import '../../bloc/new_song_bloc/event.dart';
 import '../../bloc/song_bloc/bloc.dart';
 import '../../bloc/song_bloc/event.dart';
 import '../../bloc/song_bloc/state.dart';
@@ -45,6 +46,7 @@ class _MainPageState extends State<MainPage> {
 
     Orientation orientation = MediaQuery.of(context).orientation;
     BlocProvider.of<MiniPlayingContainerBloc>(context).add(ReadSongIDForMiniPlayingSongContainerEvent());
+    BlocProvider.of<NewSongBloc>(context).add(GetAllNewSongEvent());
 
 
     List myRoutes = [
@@ -205,7 +207,7 @@ class _MainPageState extends State<MainPage> {
                             builder: (context, state) {
 
                               List<NewSongDataModel>? newSongDataModel =
-                                  state.newSong;
+                                  state.allNewSong;
 
                               // Convert List<CategoryMusicsModel> to List<AlbumDataMusicModel>
                               List<AlbumDataMusicModel> albumDataList = newSongDataModel.map((categoryMusic) {
