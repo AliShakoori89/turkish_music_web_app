@@ -25,10 +25,10 @@ class CustomPageWithCards extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.height * 0.1,
-        right: orientation == Orientation.portrait
-            ? 0
-            : 30
+          top: MediaQuery.of(context).size.height * 0.1,
+          right: orientation == Orientation.portrait
+              ? 0
+              : 30
       ),
       child: ListView.builder(
         itemCount: rowNumber,

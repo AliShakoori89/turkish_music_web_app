@@ -112,23 +112,23 @@ FutureOr<void> main() async{
     onDidReceiveNotificationResponse: onNotificationResponse,);
 
   await SentryFlutter.init(
-        (options) {
-      options.dsn = 'https://f1cdf7541efb2cab8d645bdbcfa21b5c@o4508205725253632.ingest.us.sentry.io/4508205732265984';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
-      // We recommend adjusting this value in production.
-      options.tracesSampleRate = 1.0;
-      // The sampling rate for profiling is relative to tracesSampleRate
-      // Setting to 1.0 will profile 100% of sampled transactions:
-      // Note: Profiling alpha is available for iOS and macOS since SDK version 7.12.0
-      options.profilesSampleRate = 1.0;
-    },
-    appRunner: () =>   runApp(
-      // DevicePreview(
-      //   enabled: !kReleaseMode,
-      //   builder: (context) =>
-        MyApp(isLoggedIn: isLoggedIn)
-      // )
-    )
+          (options) {
+        options.dsn = 'https://f1cdf7541efb2cab8d645bdbcfa21b5c@o4508205725253632.ingest.us.sentry.io/4508205732265984';
+        // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+        // We recommend adjusting this value in production.
+        options.tracesSampleRate = 1.0;
+        // The sampling rate for profiling is relative to tracesSampleRate
+        // Setting to 1.0 will profile 100% of sampled transactions:
+        // Note: Profiling alpha is available for iOS and macOS since SDK version 7.12.0
+        options.profilesSampleRate = 1.0;
+      },
+      appRunner: () =>   runApp(
+        // DevicePreview(
+        //   enabled: !kReleaseMode,
+        //   builder: (context) =>
+          MyApp(isLoggedIn: isLoggedIn)
+        // )
+      )
   );
 }
 
@@ -437,7 +437,7 @@ class _MyAppState extends State<MyApp> {
                           if (extra is! Map || !extra.containsKey('imageSource') || !extra.containsKey('categoryName') || !extra.containsKey('categoryID')) {
                             throw Exception("Invalid or missing `extra` data for CategorySongPage.");
                           }
-        
+
                           return CategorySongPage(
                             imageSource: extra['imageSource'] as String,
                             categoryName: extra['categoryName'] as String,
@@ -456,7 +456,7 @@ class _MyAppState extends State<MyApp> {
                               const begin = Offset(0.0, 1.0);  // Bottom to top transition
                               const end = Offset.zero;
                               const curve = Curves.easeOut;
-        
+
                               var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
                               return SlideTransition(
                                 position: animation.drive(tween),
@@ -466,7 +466,7 @@ class _MyAppState extends State<MyApp> {
                           );
                         },
                       ),
-        
+
                     ]
                 ),
               ]

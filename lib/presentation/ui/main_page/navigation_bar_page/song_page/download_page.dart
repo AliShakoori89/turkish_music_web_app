@@ -117,7 +117,7 @@ class _DownloadPageState extends State<DownloadPage> {
   }
 
   Future<void> _requestPermissionAndFetchFiles() async {
-      _fetchAudioFiles();
+    _fetchAudioFiles();
   }
 
   // Fetch audio files from the Music directory
@@ -153,81 +153,81 @@ class _DownloadPageState extends State<DownloadPage> {
           : audioFiles!.isEmpty
           ? Center(child: Text("No audio files found in the Music folder"))
           : Stack(
-            children: [
-              ListView.builder(
-                      itemCount: audioFiles!.length,
-                      itemBuilder: (context, index) {
-              File file = audioFiles![index] as File;
-              return Container(
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                      Colors.purple.withOpacity(0.5),
-                      blurRadius: 10.0,
-                    ),
-                    ]
-                ),
-                margin: EdgeInsets.only(
-                ),
-                child: ListTile(
-                  selectedColor: Colors.purple,
-                  leading: Icon(Icons.audiotrack),
-                  title: Text(file.path.split('/').last),
-                  onTap: () async{
-
-                    String uriPath = Uri.file(file.path).toString();
-
-                    // Set the release mode to keep the source after playback has completed.
-                    player.setReleaseMode(ReleaseMode.stop);
-
-                    // Start the player as soon as the app is displayed.
-                    WidgetsBinding.instance.addPostFrameCallback((_) async {
-                      await player.play(UrlSource(uriPath));
-                      await player.resume();
-                    });
-                  },
-                ),
-              );
-              }),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  color: Colors.purple.withOpacity(0.4),
-                  width: size.width,
-                  height: size.height / 14,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        key: const Key('play_button'),
-                        onPressed: _isPlaying ? null : _play,
-                        iconSize: MediaQuery.of(context).size.height / 30,
-                        icon: const Icon(Icons.play_arrow),
-                        color: Colors.white,
-                      ),
-                      IconButton(
-                        key: const Key('pause_button'),
-                        onPressed: _isPlaying ? _pause : null,
-                        iconSize: MediaQuery.of(context).size.height / 30,
-                        icon: const Icon(Icons.pause),
-                        color: Colors.white,
-                      ),
-                      IconButton(
-                        key: const Key('stop_button'),
-                        onPressed: _isPlaying || _isPaused ? _stop : null,
-                        iconSize: MediaQuery.of(context).size.height / 30,
-                        icon: const Icon(Icons.stop),
-                        color: Colors.white,
-                      ),
-                    ],
+        children: [
+          ListView.builder(
+              itemCount: audioFiles!.length,
+              itemBuilder: (context, index) {
+                File file = audioFiles![index] as File;
+                return Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                          Colors.purple.withOpacity(0.5),
+                          blurRadius: 10.0,
+                        ),
+                      ]
                   ),
-                ),
-              )
-            ],
-          ),
+                  margin: EdgeInsets.only(
+                  ),
+                  child: ListTile(
+                    selectedColor: Colors.purple,
+                    leading: Icon(Icons.audiotrack),
+                    title: Text(file.path.split('/').last),
+                    onTap: () async{
+
+                      String uriPath = Uri.file(file.path).toString();
+
+                      // Set the release mode to keep the source after playback has completed.
+                      player.setReleaseMode(ReleaseMode.stop);
+
+                      // Start the player as soon as the app is displayed.
+                      WidgetsBinding.instance.addPostFrameCallback((_) async {
+                        await player.play(UrlSource(uriPath));
+                        await player.resume();
+                      });
+                    },
+                  ),
+                );
+              }),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Colors.purple.withOpacity(0.4),
+              width: size.width,
+              height: size.height / 14,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    key: const Key('play_button'),
+                    onPressed: _isPlaying ? null : _play,
+                    iconSize: MediaQuery.of(context).size.height / 30,
+                    icon: const Icon(Icons.play_arrow),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    key: const Key('pause_button'),
+                    onPressed: _isPlaying ? _pause : null,
+                    iconSize: MediaQuery.of(context).size.height / 30,
+                    icon: const Icon(Icons.pause),
+                    color: Colors.white,
+                  ),
+                  IconButton(
+                    key: const Key('stop_button'),
+                    onPressed: _isPlaying || _isPaused ? _stop : null,
+                    iconSize: MediaQuery.of(context).size.height / 30,
+                    icon: const Icon(Icons.stop),
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

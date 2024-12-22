@@ -141,14 +141,14 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
 
         SaveSongModel saveSongModel = SaveSongModel(
-          id: _currentSelectedSong!.id,
-          singerName: _singerName,
-          audioFileAlbumId: _currentSelectedSong!.albumId,
-          audioFileMin: _currentSelectedSong!.minute,
-          audioFilePath: _currentSelectedSong!.fileSource,
-          audioFileSec: _currentSelectedSong!.second,
-          imageFilePath: _currentSelectedSong!.imageSource,
-          songName: _currentSelectedSong!.name
+            id: _currentSelectedSong!.id,
+            singerName: _singerName,
+            audioFileAlbumId: _currentSelectedSong!.albumId,
+            audioFileMin: _currentSelectedSong!.minute,
+            audioFilePath: _currentSelectedSong!.fileSource,
+            audioFileSec: _currentSelectedSong!.second,
+            imageFilePath: _currentSelectedSong!.imageSource,
+            songName: _currentSelectedSong!.name
         );
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
