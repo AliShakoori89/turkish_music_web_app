@@ -19,7 +19,6 @@ class SongRepository {
         List<SongDataModel> allSongs = [];
         final data = jsonDecode(response.body);
         final List<dynamic> allSongList = data['data'];
-        print(allSongList);
         try {
           allSongs = allSongList.map((e) => SongDataModel.fromJson(e)).toList();
         } catch (e) {

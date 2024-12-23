@@ -160,7 +160,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                                       width: 10,
                                     ),
                                     Expanded(
-                                      flex: 15,
+                                      flex: 20,
                                       child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(

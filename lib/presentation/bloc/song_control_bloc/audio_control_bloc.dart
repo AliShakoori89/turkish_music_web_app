@@ -118,8 +118,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   Future<void> saveCurrentSongData(SongDataModel songDataModel) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("_saveCurrentSongData            "+songDataModel.id!.toString());
-    print("_saveCurrentSongData            "+songDataModel.albumId!.toString());
     await prefs.setInt('songID', songDataModel.id!);
     await prefs.setInt('albumID', songDataModel.albumId!);
   }

@@ -9,6 +9,7 @@ import '../../../../data/model/song_model.dart';
 import '../../../bloc/mini_playing_container_bloc/bloc.dart';
 import '../../../bloc/mini_playing_container_bloc/event.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
+import '../../../const/generate_new_path.dart';
 import '../../../helpers/widgets/singer_name_trackName_image.dart';
 import '../../../helpers/widgets/top_arrow_icon.dart';
 
@@ -72,9 +73,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                       child: InkWell(
                         onTap: () {
 
-                          var path = widget.song.fileSource!.substring(0, 4)
-                              + ""
-                              + widget.song.fileSource!.substring(4, widget.song.fileSource!.length);
+                          var path = generateNewPath(widget.song.fileSource!);
 
                           var newPath = path.replaceAll(" ", "%20");
 

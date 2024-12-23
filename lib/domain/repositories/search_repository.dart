@@ -15,10 +15,5 @@ FutureOr<dynamic> getSearchSong(String searchWord) async {
     final response1 = await api.get('/api/Music/GetAll', page: "1", count: "111", searchChar: "$searchWord");
     final productJson1 = json.decode(response1.body);
     var allSongData = GetAllMusicDataModel.fromJson(productJson1);
-
-    print(allSongData.name);
-
-
-    // return searchedSinger;
   }
 }

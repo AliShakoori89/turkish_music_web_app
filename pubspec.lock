@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  auto_scroll_text:
+    dependency: "direct main"
+    description:
+      name: auto_scroll_text
+      sha256: "8de28056f844f24f13771606417ffa109397f75a66440fe60ec2d38c133e16dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7"
   baseflow_plugin_template:
     dependency: "direct main"
     description:
@@ -728,14 +736,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  overflow_text_animated:
-    dependency: "direct main"
-    description:
-      name: overflow_text_animated
-      sha256: "9ac5935eec58785f8d1ee29d82d73c9631c6b6c850fec1614a5ab29417d854ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
   package_info_plus:
     dependency: transitive
     description:

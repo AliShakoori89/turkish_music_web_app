@@ -16,17 +16,9 @@ class UserRepository {
 
     final response = await api.post("/api/User/registerPublic",body);
     if (response.statusCode == 200) {
-
-      // Get.snackbar("Registration", "Registration was successful",
-      //     backgroundColor: const Color(
-      //         0xFF00B01E).withOpacity(0.2));
       return 'sent';
     }
     else {
-      // Get.snackbar("Registration", "The desired user exists !!!",
-      //     backgroundColor: const Color(
-      //         0xFFC20808).withOpacity(0.2));
-
       var parsedJson = json.decode(response.body);
       var message = parsedJson['message'];
       return message;
@@ -46,21 +38,12 @@ class UserRepository {
     final response = await api.post("/api/User/FirstStepLogin", body);
 
     if (response.statusCode == 200) {
-      // Get.snackbar("Verification Code","Send verification code successfully .",
-      //     backgroundColor: const Color(
-      //         0xFF00B01E).withOpacity(0.2));
       return true;
     }
     else if (response.statusCode == 401){
-      // Get.snackbar("Verification Code","OnAuthorize !!",
-      //     backgroundColor: const Color(
-      //         0xFFC20808).withOpacity(0.2));
       return false;
     }
     else if (response.statusCode == 404){
-      // Get.snackbar("Verification Code","User Not Exist !!",
-      //     backgroundColor: const Color(
-      //         0xFFC20808).withOpacity(0.2));
       return false;
     }
   }

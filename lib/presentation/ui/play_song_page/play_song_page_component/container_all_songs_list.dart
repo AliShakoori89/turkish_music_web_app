@@ -1,13 +1,14 @@
+import 'package:auto_scroll_text/auto_scroll_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:turkish_music_app/presentation/const/no_image.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
 import '../../../bloc/play_button_state_bloc/bloc.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
 import '../../../bloc/song_control_bloc/audio_control_bloc.dart';
+import '../../../const/generate_new_path.dart';
 import '../../../const/shimmer_container/playing_page_album_song_list_shimmer.dart';
 
 class ContainerAllSongsList extends StatelessWidget {
@@ -34,9 +35,7 @@ class ContainerAllSongsList extends StatelessWidget {
         return InkWell(
           onTap: (){
 
-            var path = categoryAllSongs[index].fileSource!.substring(0, 4)
-                + "s"
-                + categoryAllSongs[index].fileSource!.substring(4, categoryAllSongs[index].fileSource!.length);
+            var path = generateNewPath(categoryAllSongs[index].fileSource!);
 
             var newPath = path.replaceAll(" ", "%20");
 
@@ -164,8 +163,8 @@ class ContainerAllSongsList extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              OverflowTextAnimated(
-                                text: categoryAllSongs[index].name!,
+                              AutoScrollText(
+                                categoryAllSongs[index].name!,
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold
@@ -180,8 +179,8 @@ class ContainerAllSongsList extends StatelessWidget {
                         )
                             : Expanded(
                           flex: 4,
-                          child: OverflowTextAnimated(
-                            text: categoryAllSongs[index].name!,
+                          child: AutoScrollText(
+                            categoryAllSongs[index].name!,
                             style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
@@ -192,8 +191,8 @@ class ContainerAllSongsList extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              OverflowTextAnimated(
-                                text: categoryAllSongs[index].name!,
+                              AutoScrollText(
+                                categoryAllSongs[index].name!,
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold

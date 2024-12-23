@@ -43,8 +43,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     try {
       emit(state.copyWith(status: CategoryStatus.loading));
 
-      print("111111111111111111111111111111111111111");
-
       CategoryDataModel categoryData = await categoryRepository.getCategorySongs(event.categoryID);
 
       emit(

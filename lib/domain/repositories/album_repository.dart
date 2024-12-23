@@ -36,7 +36,6 @@ class AlbumRepository {
     for(int i = newAlbumData.data!.length-4; i < newAlbumData.data!.length; i++){
       list.add(newAlbumData.data![i]);
     }
-    print(list);
     return list;
   }
 
@@ -53,7 +52,6 @@ class AlbumRepository {
       list.add(singerAllAlbum.data![i].name!);
     }
 
-    print(list);
     list.sort((a, b) {
       var yearA = extractYearOrAlbum(a);
       var yearB = extractYearOrAlbum(b);

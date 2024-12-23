@@ -1,3 +1,4 @@
+import 'package:auto_scroll_text/auto_scroll_text.dart';
 import 'package:flutter/material.dart';
 
 class SongCard extends StatelessWidget {
@@ -11,16 +12,18 @@ class SongCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
-        Container(
-          height: 60,
-          width: 60,
-          margin: const EdgeInsets.only(right: 5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              image: DecorationImage(
-                  image: NetworkImage(imgPath),
-                  fit: BoxFit.cover)),
+      children: <Widget>[
+        Flexible(
+          child: Container(
+            height: 60,
+            width: 60,
+            margin: const EdgeInsets.only(right: 5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                image: DecorationImage(
+                    image: NetworkImage(imgPath),
+                    fit: BoxFit.cover)),
+          ),
         ),
         const SizedBox(
           width: 5,
@@ -29,8 +32,9 @@ class SongCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            AutoScrollText(
               songName,
+              mode: AutoScrollTextMode.endless,
               style: const TextStyle(
                   fontSize: 16, fontWeight: FontWeight.bold),
             ),
