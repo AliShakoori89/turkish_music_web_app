@@ -21,6 +21,6 @@ class Assets {
   static const String imagesTarkan = 'assets/images/tarkan.png';
   static const String imagesTarkan1 = 'assets/images/tarkan1.png';
   static const String logoTMusic = 'assets/logo/tMusic.png';
-  static const String turkishMusicApp = '.env';
+  static const String turkishMusicApp = '..env';
 
 }

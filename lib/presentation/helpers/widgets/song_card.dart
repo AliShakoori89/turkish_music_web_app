@@ -1,5 +1,5 @@
-import 'package:auto_scroll_text/auto_scroll_text.dart';
 import 'package:flutter/material.dart';
+import 'package:overflow_text_animated/overflow_text_animated.dart';
 
 class SongCard extends StatelessWidget {
 
@@ -13,39 +13,38 @@ class SongCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Flexible(
-          child: Container(
-            height: 60,
-            width: 60,
-            margin: const EdgeInsets.only(right: 5),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                    image: NetworkImage(imgPath),
-                    fit: BoxFit.cover)),
-          ),
+        Container(
+          height: 60,
+          width: 60,
+          margin: const EdgeInsets.only(right: 5),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                  image: NetworkImage(imgPath),
+                  fit: BoxFit.cover)),
         ),
         const SizedBox(
           width: 5,
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AutoScrollText(
-              songName,
-              mode: AutoScrollTextMode.endless,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            Text(
-                singerName,
+        Flexible(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                songName,
                 style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white54
-                )
-            )
-          ],
+                    fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                  singerName,
+                  style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white54
+                  )
+              )
+            ],
+          ),
         ),
       ],
   );

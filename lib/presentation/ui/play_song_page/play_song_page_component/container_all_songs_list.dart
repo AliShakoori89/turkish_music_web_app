@@ -1,7 +1,7 @@
-import 'package:auto_scroll_text/auto_scroll_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:overflow_text_animated/overflow_text_animated.dart';
 import 'package:turkish_music_app/presentation/const/no_image.dart';
 import '../../../../../data/model/album_model.dart';
 import '../../../../../data/model/song_model.dart';
@@ -163,8 +163,8 @@ class ContainerAllSongsList extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AutoScrollText(
-                                categoryAllSongs[index].name!,
+                              OverflowTextAnimated(
+                                text: categoryAllSongs[index].name!,
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold
@@ -179,8 +179,8 @@ class ContainerAllSongsList extends StatelessWidget {
                         )
                             : Expanded(
                           flex: 4,
-                          child: AutoScrollText(
-                            categoryAllSongs[index].name!,
+                          child: OverflowTextAnimated(
+                            text: categoryAllSongs[index].name!,
                             style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
@@ -191,8 +191,8 @@ class ContainerAllSongsList extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AutoScrollText(
-                                categoryAllSongs[index].name!,
+                              OverflowTextAnimated(
+                                text: categoryAllSongs[index].name!,
                                 style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold

@@ -1,6 +1,6 @@
-import 'package:auto_scroll_text/auto_scroll_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:overflow_text_animated/overflow_text_animated.dart';
 
 class SingerNameTrackNameImage extends StatelessWidget {
 
@@ -59,8 +59,8 @@ class SingerNameTrackNameImage extends StatelessWidget {
                       fontSize: 15,
                       color: Colors.white
                   ),
-                  child: AutoScrollText(
-                    songName,
+                  child: OverflowTextAnimated(
+                    text:  songName,
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.white
