@@ -229,10 +229,10 @@ packages:
     dependency: "direct main"
     description:
       name: device_info_plus
-      sha256: a7fd703482b391a87d60b6061d04dfdeab07826b96f9abd8f5ed98068acc0074
+      sha256: "4fa68e53e26ab17b70ca39f072c285562cfc1589df5bb1e9295db90f6645f431"
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.2"
+    version: "11.2.0"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -273,14 +273,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
-  external_path:
-    dependency: "direct main"
-    description:
-      name: external_path
-      sha256: "272d067c719c2421ff40c202ac32ccddcb689f3b0c839ec370942666dae589db"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -524,10 +516,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_pixels
-      sha256: "01ba99b6f1bf6a553df8d9cc858f55000d949bc3ccbb9af6f5d5494d304a8736"
+      sha256: "9043bf47b5856c41d41c5321ff31e5eb07cbb77fd81a18c5191ddc743ad54228"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "4.0.0"
   internet_connection_checker:
     dependency: "direct main"
     description:
@@ -756,10 +748,10 @@ packages:
     dependency: "direct main"
     description:
       name: page_transition
-      sha256: dee976b1f23de9bbef5cd512fe567e9f6278caee11f5eaca9a2115c19dc49ef6
+      sha256: "9d2a780d7d68b53ae82fbcc43e06a16195e6775e9aae40e55dc0cbb593460f9d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.1"
   path:
     dependency: transitive
     description:
@@ -944,14 +936,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  searchfield:
-    dependency: "direct main"
-    description:
-      name: searchfield
-      sha256: "95f0630953ed7a5dda1290c3af61225700560e7f4876845a7aa8212848d40912"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
   sentry:
     dependency: transitive
     description:
