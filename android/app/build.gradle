@@ -32,6 +32,12 @@ android {
         coreLibraryDesugaringEnabled true
     }
 
+    repositories {
+        flatDir {
+            dirs 'libs' // SDK
+        }
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
