@@ -73,9 +73,11 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                       child: InkWell(
                         onTap: () {
 
-                          var path = generateNewPath(widget.song.fileSource!);
+                          // var path = generateNewPath(widget.song.fileSource!);
 
-                          var newPath = path.replaceAll(" ", "%20");
+                          var newPath = widget.song.fileSource!.replaceAll(" ", "%20");
+
+                          print("CCCCCCCCCCCC            "+widget.song.name!);
 
                           SongDataModel songDataModel = SongDataModel(
                             id : widget.song.id,
@@ -108,8 +110,8 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
                         },
                         child: SingerNameTrackNameImage(
-                          singerName: widget.song.singerName ?? "",
                           songName: widget.song.name ?? "",
+                          singerName: widget.song.singerName ?? "",
                           imagePath: widget.song.imageSource ?? "",
                           align: MainAxisAlignment.start,
                         ),

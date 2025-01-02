@@ -20,7 +20,11 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
 
   @override
   void initState() {
-    BlocProvider.of<CategoryBloc>(context).add(GetCategoryEvent());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<CategoryBloc>(context).add(ResetCategorySongsByIDEvent());
+      BlocProvider.of<CategoryBloc>(context).add(GetCategoryEvent());
+    });
+
     super.initState();
   }
 

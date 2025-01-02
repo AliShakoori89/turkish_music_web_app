@@ -55,29 +55,38 @@ class DatabaseHelper{
 
   Future<bool> saveRecentlyPlayedSong(SaveSongModel recentlyPlayedSong) async {
     var db = await database;
-
-    print(recentlyPlayedSong.id);
-
-    // Check if the song already exists in the database
-    List<Map<String, dynamic>> existingRecords = await db.query(
+    await db.insert(
       recentlyPlaylistTable,
-      where: 'songName = ?', // Assuming 'id' is the unique identifier for the song
-      whereArgs: [recentlyPlayedSong.songName],
+      recentlyPlayedSong.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.ignore, // Avoids inserting duplicates
     );
 
-    if (existingRecords.isEmpty) {
-      // Insert the song only if it doesn't exist in the database
-      await db.insert(
-        recentlyPlaylistTable,
-        recentlyPlayedSong.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.ignore, // Avoids inserting duplicates
-      );
-      return true;
-    } else {
-      // Song already exists, do not insert it again
-      print("Song already exists in the recently played list.");
-      return false;
-    }
+    return true;
+
+    // print(recentlyPlayedSong.id);
+    //
+    // // Check if the song already exists in the database
+    // List<Map<String, dynamic>> existingRecords = await db.query(
+    //   recentlyPlaylistTable,
+    //   where: 'songName = ?', // Assuming 'id' is the unique identifier for the song
+    //   whereArgs: [recentlyPlayedSong.songName],
+    // );
+    //
+    // if (existingRecords.isEmpty) {
+    //   // Insert the song only if it doesn't exist in the database
+    //
+    //   print("saveRecentlyPlayedSong             "+recentlyPlayedSong.singerName.toString());
+    //   await db.insert(
+    //     recentlyPlaylistTable,
+    //     recentlyPlayedSong.toJson(),
+    //     conflictAlgorithm: ConflictAlgorithm.ignore, // Avoids inserting duplicates
+    //   );
+    //   return true;
+    // } else {
+    //   // Song already exists, do not insert it again
+    //   print("Song already exists in the recently played list.");
+    //   return false;
+    // }
   }
 
   Future<List<SaveSongModel>> getAllRecentlyPlayedSong() async {

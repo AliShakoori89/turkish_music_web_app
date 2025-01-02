@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
@@ -17,10 +16,9 @@ import '../main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
 
-  late GoogleSignIn googleSignIn;
   final String pageName = "AuthenticatePage";
 
-  AuthenticatePage({super.key,required this.googleSignIn});
+  AuthenticatePage({super.key});
 
   @override
   State<AuthenticatePage> createState() => _AuthenticatePageState();
@@ -125,13 +123,13 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
     controller2.forward();}
   }
 
-  Future<void> _handleSignIn() async {
-    try {
-      await widget.googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
-  }
+  // Future<void> _handleSignIn() async {
+  //   try {
+  //     await widget.googleSignIn.signIn();
+  //   } catch (error) {
+  //     print(error);
+  //   }
+  // }
 
   @override
   void dispose() {

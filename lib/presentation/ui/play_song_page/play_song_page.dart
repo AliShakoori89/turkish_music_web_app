@@ -90,14 +90,14 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                 builder: (context, state) {
 
                   if (state is AudioPlayedState) {
-            
+
                     var songID = state.songModel.id;
-            
+
                     var path = state.songModel.fileSource!.replaceRange(4, 5, "");
-            
+
                     SaveSongModel recentlyPlayedSongIdModel = SaveSongModel(
                         id: songID,
-                        singerName: singerName,
+                        singerName: state.songModel.singerName,
                         audioFileAlbumId: albumID,
                         audioFileSec: state.songModel.second,
                         audioFileMin: state.songModel.minute,
@@ -105,7 +105,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                         imageFilePath: songImage,
                         songName: songName
                     );
-            
+
                     BlocProvider.of<RecentlyPlaySongBloc>(context).add(
                         SavePlayedSongIDToRecentlyPlayedEvent(
                             recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
@@ -140,7 +140,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                               controller: _controller,
                               songID: state.songModel.id!,
                               songName: state.songModel.name!,
-                              singerName: singerName,
+                              singerName: state.songModel.singerName!,
                               songFilePath: state.songModel.fileSource!,
                               saveSongModel: recentlyPlayedSongIdModel,
                               minute: state.songModel.minute!,
@@ -154,7 +154,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                               controller: _controller,
                               songID: state.songModel.id!,
                               songName: state.songModel.name!,
-                              singerName: singerName,
+                              singerName: state.songModel.singerName!,
                               songFilePath: state.songModel.fileSource!,
                               saveSongModel: recentlyPlayedSongIdModel,
                               minute: state.songModel.minute!,

@@ -34,11 +34,9 @@ class _CategorySongPageState extends State<CategorySongPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<CategoryBloc>(context).add(ResetCategorySongsByIDEvent());
-      BlocProvider.of<CategoryBloc>(context).add(GetCategoryEvent());
-      BlocProvider.of<CategoryBloc>(context).add(GetCategorySongsByIDEvent(categoryID: widget.categoryID));
-    });
+
+    BlocProvider.of<CategoryBloc>(context).add(GetCategoryEvent());
+    BlocProvider.of<CategoryBloc>(context).add(GetCategorySongsByIDEvent(categoryID: widget.categoryID));
     super.initState();
   }
 
@@ -87,8 +85,6 @@ class _CategorySongPageState extends State<CategorySongPage> {
                   builder: (context, state) {
 
                     List<CategoryMusicsModel>? categoryAllSongs = state.category.musics;
-
-                    print(categoryAllSongs);
 
                     if(state.status.isLoading){
                       return Padding(

@@ -20,6 +20,8 @@ class SingerNameTrackNameImage extends StatelessWidget {
 
     Orientation orientation = MediaQuery.of(context).orientation;
 
+    print("2222222222222222222          "+songName);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: align,
@@ -65,7 +67,6 @@ class SingerNameTrackNameImage extends StatelessWidget {
                         fontSize: 18,
                         color: Colors.white
                     ),
-                    curve: Curves.fastEaseInToSlowEaseOut,
                   )
               ),
               DefaultTextStyle(

@@ -2,14 +2,12 @@ import 'dart:async';
 import 'dart:io';
 import 'package:app_upgrade_flutter_sdk/app_upgrade_flutter_sdk.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,21 +51,6 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' show json;
-
-
-const List<String> scopes = <String>[
-  'email',
-  'https://www.googleapis.com/auth/contacts.readonly',
-];
-
-GoogleSignIn googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: 'your-client_id.apps.googleusercontent.com',
-  scopes: scopes,
-);
-// #enddocregion Initialize
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -75,7 +58,6 @@ FlutterLocalNotificationsPlugin();
 FutureOr<void> main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
-  // await DefaultCacheManager().emptyCache();
   await requestStoragePermission();
 
   await dotenv.load(fileName: ".env");
@@ -163,8 +145,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  GoogleSignInAccount? _currentUser;
-
   final Connectivity _connectivity = Connectivity();
 
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -176,81 +156,8 @@ class _MyAppState extends State<MyApp> {
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     checkInternetConnectionWithErrorHandling();
 
-    googleSignIn.onCurrentUserChanged
-        .listen((GoogleSignInAccount? account) async {
-// #docregion CanAccessScopes
-      // In mobile, being authenticated means being authorized...
-      bool isAuthorized = account != null;
-      // However, on web...
-      if (kIsWeb && account != null) {
-        isAuthorized = await googleSignIn.canAccessScopes(scopes);
-      }
-// #enddocregion CanAccessScopes
-
-      setState(() {
-        _currentUser = account;
-      });
-
-      // Now that we know that the user can access the required scopes, the app
-      // can call the REST API.
-      if (isAuthorized) {
-        unawaited(_handleGetContact(account!));
-      }
-    });
-
-    // In the web, _googleSignIn.signInSilently() triggers the One Tap UX.
-    //
-    // It is recommended by Google Identity Services to render both the One Tap UX
-    // and the Google Sign In button together to "reduce friction and improve
-    // sign-in rates" ([docs](https://developers.google.com/identity/gsi/web/guides/display-button#html)).
-    googleSignIn.signInSilently();
     requestNotificationPermission();
     super.initState();
-  }
-
-  // Calls the People API REST endpoint for the signed-in user to retrieve information.
-  Future<void> _handleGetContact(GoogleSignInAccount user) async {
-    setState(() {
-    });
-    final http.Response response = await http.get(
-      Uri.parse('https://people.googleapis.com/v1/people/me/connections'
-          '?requestMask.includeField=person.names'),
-      headers: await user.authHeaders,
-    );
-    if (response.statusCode != 200) {
-      setState(() {
-      });
-      print('People API ${response.statusCode} response: ${response.body}');
-      return;
-    }
-    final Map<String, dynamic> data =
-    json.decode(response.body) as Map<String, dynamic>;
-    final String? namedContact = _pickFirstNamedContact(data);
-    setState(() {
-      if (namedContact != null) {
-      } else {
-      }
-    });
-  }
-
-  String? _pickFirstNamedContact(Map<String, dynamic> data) {
-    final List<dynamic>? connections = data['connections'] as List<dynamic>?;
-    final Map<String, dynamic>? contact = connections?.firstWhere(
-          (dynamic contact) => (contact as Map<Object?, dynamic>)['names'] != null,
-      orElse: () => null,
-    ) as Map<String, dynamic>?;
-    if (contact != null) {
-      final List<dynamic> names = contact['names'] as List<dynamic>;
-      final Map<String, dynamic>? name = names.firstWhere(
-            (dynamic name) =>
-        (name as Map<Object?, dynamic>)['displayName'] != null,
-        orElse: () => null,
-      ) as Map<String, dynamic>?;
-      if (name != null) {
-        return name['displayName'] as String?;
-      }
-    }
-    return null;
   }
 
   @override
@@ -296,8 +203,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
-    final GoogleSignInAccount? user = _currentUser;
 
     AppInfo appInfo = AppInfo(
         appName: 'Turkish Music', // Your app name
@@ -376,9 +281,9 @@ class _MyAppState extends State<MyApp> {
                     path: "/",
                     builder: (context, state){
                       return isOffline ?
-                      widget.isLoggedIn || user != null
+                      widget.isLoggedIn
                           ? MainPage()
-                          : AuthenticatePage(googleSignIn: googleSignIn)
+                          : AuthenticatePage()
                           : const ErrorInternetConnectionPage();
                     },
                     routes: [
@@ -432,7 +337,6 @@ class _MyAppState extends State<MyApp> {
                         path: 'CategorySongPage',
                         name: CategorySongPage.routeName,
                         builder: (context, state) {
-                          // Validate and parse the `state.extra` to ensure it's of type `Map` and contains required fields
                           final extra = state.extra;
                           if (extra is! Map || !extra.containsKey('imageSource') || !extra.containsKey('categoryName') || !extra.containsKey('categoryID')) {
                             throw Exception("Invalid or missing `extra` data for CategorySongPage.");

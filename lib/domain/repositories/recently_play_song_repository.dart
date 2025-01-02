@@ -24,6 +24,8 @@ class RecentlyPlaySongRepository {
     if(recentlyPlayedSong.length < 30){
       for(int i = 0 ; i < recentlyPlayedSong.length ; i++){
 
+        print("1111111111111111                         "+recentlyPlayedSong[i].singerName.toString());
+
         AlbumDataMusicModel albumDataMusicModel = AlbumDataMusicModel(
             id: recentlyPlayedSong[i].id,
             name: recentlyPlayedSong[i].songName,
@@ -62,6 +64,11 @@ class RecentlyPlaySongRepository {
   }
 
   saveRecentlyPlayedSong(SaveSongModel recentlyPlayedSongIdModel) async{
-    return await helper.saveRecentlyPlayedSong(recentlyPlayedSongIdModel);
+    if (recentlyPlayedSongIdModel.singerName != null) {
+      print("****************88 " + recentlyPlayedSongIdModel.singerName.toString());
+      return await helper.saveRecentlyPlayedSong(recentlyPlayedSongIdModel);
+    } else {
+      print("Singer name is null, skipping save.");
+    }
   }
 }

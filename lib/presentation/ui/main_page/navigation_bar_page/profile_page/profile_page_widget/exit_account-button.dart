@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
 import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
-import '../../../../../../main.dart';
 import '../../../../../bloc/fetch_user_bloc/event.dart';
 import '../../../../../helpers/widgets/custom_card.dart';
 
@@ -28,7 +27,6 @@ class ExitAccountButton extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   BlocProvider.of<FetchUserBloc>(context).add(ExitAccountEvent());
-                  _handleSignOut();
                   FlutterExitApp.exitApp();
                   },
                 child: Text("Yes")),
@@ -48,5 +46,5 @@ class ExitAccountButton extends StatelessWidget {
     );
   }
 
-  Future<void> _handleSignOut() => googleSignIn.disconnect();
+  // Future<void> _handleSignOut() => googleSignIn.disconnect();
 }
