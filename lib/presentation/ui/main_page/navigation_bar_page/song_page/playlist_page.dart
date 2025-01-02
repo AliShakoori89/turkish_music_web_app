@@ -12,16 +12,26 @@ import '../../../../const/generate_new_path.dart';
 import '../../../play_song_page/play_song_page.dart';
 
 
-class PlaylistPage extends StatelessWidget {
+class PlaylistPage extends StatefulWidget {
 
   static String routeName = "PlaylistPage";
 
   const PlaylistPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  State<PlaylistPage> createState() => _PlaylistPageState();
+}
 
-    BlocProvider.of<PlaylistBloc>(context).add(GetAllMusicInPlaylistEvent());
+class _PlaylistPageState extends State<PlaylistPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<PlaylistBloc>().add(GetAllMusicInPlaylistEvent());
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
@@ -117,18 +127,22 @@ class PlaylistPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SongCard(
-                              songName: state.playlistSongs[index].name!,
-                              imgPath: state.playlistSongs[index].imageSource!,
-                              singerName: state.playlistSongs[index].singerName!,),
-                            IconButton(
-                                onPressed: (){
-                                  BlocProvider.of<PlaylistBloc>(context).add(
-                                      RemoveMusicFromPlaylistEvent(musicID: state.playlistSongs[index].id!));
-                                  BlocProvider.of<PlaylistBloc>(context).add(RemoveSongIDEvent(songID: state.playlistSongs[index].id!));
-                                },
-                                icon: Icon(Icons.close,
-                                  size: 15,))
+                            Flexible(
+                              child: SongCard(
+                                songName: state.playlistSongs[index].name!,
+                                imgPath: state.playlistSongs[index].imageSource!,
+                                singerName: state.playlistSongs[index].singerName!,),
+                            ),
+                            Flexible(
+                              child: IconButton(
+                                  onPressed: (){
+                                    BlocProvider.of<PlaylistBloc>(context).add(
+                                        RemoveMusicFromPlaylistEvent(musicID: state.playlistSongs[index].id!));
+                                    BlocProvider.of<PlaylistBloc>(context).add(RemoveSongIDEvent(songID: state.playlistSongs[index].id!));
+                                  },
+                                  icon: Icon(Icons.close,
+                                    size: 15,)),
+                            )
                           ],
                         ),
                       ),

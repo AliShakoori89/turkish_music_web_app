@@ -43,7 +43,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
   int _state = 0;
 
-  IconData? icon;
+  late List<Map<String, dynamic>> iconAnimations;
 
   @override
   void initState() {
@@ -54,82 +54,70 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
     controller1 = AnimationController(
       vsync: this,
-      duration: const Duration(
-        seconds: 5,
-      ),
+      duration: const Duration(seconds: 5),
     );
+
     animation1 = Tween<double>(begin: .1, end: .15).animate(
-      CurvedAnimation(
-        parent: controller1,
-        curve: Curves.easeInOut,
-      ),
-    )
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller1.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          if (mounted) {
-          controller1.forward();
-        }}
-      });
+      CurvedAnimation(parent: controller1, curve: Curves.easeInOut),
+    )..addStatusListener((status) => _animationStatusListener(controller1, status));
+
     animation2 = Tween<double>(begin: .02, end: .04).animate(
-      CurvedAnimation(
-        parent: controller1,
-        curve: Curves.easeInOut,
-      ),
-    )..addListener(() {
-      setState(() {});
-    });
+      CurvedAnimation(parent: controller1, curve: Curves.easeInOut),
+    );
 
     controller2 = AnimationController(
       vsync: this,
-      duration: const Duration(
-        seconds: 5,
-      ),
+      duration: const Duration(seconds: 5),
     );
-    animation3 = Tween<double>(begin: .41, end: .38).animate(CurvedAnimation(
-      parent: controller2,
-      curve: Curves.easeInOut,
-    ))
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller2.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          if (mounted) {
-          controller2.forward();
-        }}
-      });
+
+    animation3 = Tween<double>(begin: .41, end: .38).animate(
+      CurvedAnimation(parent: controller2, curve: Curves.easeInOut),
+    )..addStatusListener((status) => _animationStatusListener(controller2, status));
+
     animation4 = Tween<double>(begin: 170, end: 190).animate(
-      CurvedAnimation(
-        parent: controller2,
-        curve: Curves.easeInOut,
-      ),
-    )..addListener(() {
-      setState(() {});
-    });
+      CurvedAnimation(parent: controller2, curve: Curves.easeInOut),
+    );
+
+    // تعریف لیست آیکون‌ها
+    iconAnimations = [
+      {
+        "topValue": .15,
+        "leftValue": .5,
+        "iconSize": 80.0,
+        "animation": animation2,
+        "icon": MyFlutterApp.music,
+      },
+      {
+        "topValue": .2,
+        "leftValue": .05,
+        "iconSize": 110.0,
+        "animation": animation1,
+        "icon": MyFlutterApp.music,
+      },
+      {
+        "topValue": .3,
+        "leftValue": .05,
+        "iconSize": 110.0,
+        "animation": animation1,
+        "icon": MyFlutterApp.music_note,
+      },
+      // سایر آیکون‌ها را در اینجا اضافه کنید.
+    ];
 
     Timer(const Duration(milliseconds: 2500), () {
-      if (mounted) {
-      controller1.forward();}
+      if (mounted) controller1.forward();
     });
 
-    if (mounted) {
-    controller2.forward();}
+    if (mounted) controller2.forward();
   }
 
-  // Future<void> _handleSignIn() async {
-  //   try {
-  //     await widget.googleSignIn.signIn();
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
+  void _animationStatusListener(AnimationController controller, AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      controller.reverse();
+    } else if (status == AnimationStatus.dismissed) {
+      if (mounted) controller.forward();
+    }
+  }
 
   @override
   void dispose() {

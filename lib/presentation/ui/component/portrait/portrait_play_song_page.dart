@@ -15,7 +15,11 @@ import '../../play_song_page/play_song_page_component/repeat_button.dart';
 import '../title.dart';
 
 class PortraitPlaySongPage extends StatelessWidget {
-  const PortraitPlaySongPage({super.key, required this.songName, required this.singerName, required this.songID, required this.controller, required this.songFilePath, required this.saveSongModel, required this.minute, required this.second, required this.songImagePath, required this.albumAllSongsList, required this.albumID, required this.categoryID});
+  PortraitPlaySongPage({super.key, required this.songName, required this.singerName,
+    required this.songID, required this.controller, required this.songFilePath,
+    required this.saveSongModel, required this.minute, required this.second,
+    required this.songImagePath, required this.albumAllSongsList,
+    required this.albumID, required this.categoryID});
 
   final String songName;
   final String singerName;
@@ -101,7 +105,8 @@ class PortraitPlaySongPage extends StatelessWidget {
                       child: Progressbar(
                         minute: minute,
                         second: second,
-                        songImage: songImagePath),
+                        songImage: songImagePath,
+                      ),
                     ),
                     Expanded(
                       flex: 2,

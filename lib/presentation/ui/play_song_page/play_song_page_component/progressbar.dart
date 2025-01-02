@@ -7,7 +7,7 @@ import '../../../const/no_image.dart';
 import '../../../const/shimmer_container/playing_page_image_shimmer.dart';
 
 class Progressbar extends StatefulWidget {
-  const Progressbar({super.key, required this.minute, required this.second, required this.songImage});
+  Progressbar({super.key, required this.minute, required this.second, required this.songImage});
 
   final String minute;
   final String second;
@@ -69,7 +69,7 @@ class _ProgressbarState extends State<Progressbar> with SingleTickerProviderStat
                       appearance: CircularSliderAppearance(
                           customWidths: CustomSliderWidths(progressBarWidth: 10)),
                       min: 0,
-                      max: double.parse(widget.minute ?? "0") * 60 + double.parse(widget.second ?? "0"),
+                      max: double.parse(widget.minute) * 60 + double.parse(widget.second),
                       initialValue: (snapshot.data?.inSeconds)?.toDouble() ?? 0,
                       onChange: (val) {
                         BlocProvider.of<AudioControlBloc>(context).seekTo(Duration(seconds: val.toInt()));

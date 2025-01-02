@@ -128,7 +128,8 @@ class LandscapePlaySongPage extends StatelessWidget {
                             child: Progressbar(
                               minute: minute,
                               second: second,
-                              songImage: songImagePath),
+                              songImage: songImagePath,
+                            ),
                           ),
                           Flexible(
                             flex: 2,

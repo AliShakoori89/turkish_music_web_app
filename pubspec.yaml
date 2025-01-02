@@ -49,7 +49,6 @@ dependencies:
   flutter_exit_app: ^1.1.4
   mailer: ^6.3.0
   vertical_nav_bar: ^0.0.1
-#  device_preview: ^1.1.0
   carousel_slider: ^5.0.0
   flutter_bloc: ^8.1.6
   equatable: ^2.0.7
@@ -64,7 +63,6 @@ dependencies:
   cached_network_image: ^3.4.1
   open_file: ^3.5.10
   percent_indicator: ^4.2.4
-#  logger: ^2.3.0
   scrollable_positioned_list: ^0.3.8
   delayed_widget: ^1.1.2
   dio: ^5.7.0
@@ -80,10 +78,10 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   go_router: ^14.6.2
   file_manager: ^1.0.2
-#  google_sign_in: ^6.2.1
   flutter_local_notifications: ^18.0.1
   sentry_flutter: ^8.11.0
   app_upgrade_flutter_sdk: ^3.0.0
+  flutter_isolate: ^2.1.0
 
 dev_dependencies:
   flutter_test:
