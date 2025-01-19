@@ -17,6 +17,7 @@ import '../main_page/main_page.dart';
 class AuthenticatePage extends StatefulWidget {
 
   final String pageName = "AuthenticatePage";
+  static String routeName = "AuthenticatePage";
 
   AuthenticatePage({super.key});
 

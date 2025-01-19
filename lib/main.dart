@@ -51,6 +51,7 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
+import 'package:turkish_music_app/presentation/ui/privacy_screen/privacy_screen.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -65,6 +66,7 @@ FutureOr<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool isAgreed = prefs.getBool('isAgreed') ?? false;
   bool isLoggedIn = (prefs.getString('accessToken') == null)
       ? false
       : true;
@@ -108,7 +110,7 @@ FutureOr<void> main() async{
         // DevicePreview(
         //   enabled: !kReleaseMode,
         //   builder: (context) =>
-          MyApp(isLoggedIn: isLoggedIn)
+          MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed,)
         // )
       )
   );
@@ -136,14 +138,15 @@ Future<void> requestStoragePermission() async {
 class MyApp extends StatefulWidget {
 
   final bool isLoggedIn;
+  final bool isAgreed;
 
-  MyApp({key, required this.isLoggedIn});
+  MyApp({key, required this.isLoggedIn, required this.isAgreed});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   final Connectivity _connectivity = Connectivity();
 
@@ -157,12 +160,14 @@ class _MyAppState extends State<MyApp> {
     checkInternetConnectionWithErrorHandling();
 
     requestNotificationPermission();
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
     _connectivitySubscription.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -280,17 +285,24 @@ class _MyAppState extends State<MyApp> {
                 GoRoute(
                     path: "/",
                     builder: (context, state){
-                      return isOffline ?
-                      widget.isLoggedIn
+                      return widget.isAgreed
+                          ? isOffline
+                          ? widget.isLoggedIn
                           ? MainPage()
                           : AuthenticatePage()
-                          : const ErrorInternetConnectionPage();
+                          : const ErrorInternetConnectionPage()
+                          : TermsAndConditionsPage();
                     },
                     routes: [
                       GoRoute(
                         path: MainPage.routeName,
                         builder: (context, state){
                           return MainPage();
+                        },),
+                      GoRoute(
+                        path: AuthenticatePage.routeName,
+                        builder: (context, state){
+                          return AuthenticatePage();
                         },),
                       GoRoute(
                         path: HomePage.routeName,
