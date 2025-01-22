@@ -50,7 +50,7 @@ class _NewSongState extends State<NewSong>{
                     orientation == Orientation.portrait ? 0.7 : 0.5,
                 enlargeStrategy: CenterPageEnlargeStrategy.zoom,
                 clipBehavior: Clip. hardEdge,
-                autoPlay: true,
+                autoPlay: false,
                 enlargeCenterPage: true,
                 pageSnapping: true,
                 autoPlayInterval: const Duration(seconds: 10),
