@@ -12,6 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
+import 'package:turkish_music_app/domain/repositories/category_item_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
@@ -26,6 +27,7 @@ import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/category_item_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
@@ -270,6 +272,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                CategoryItemBloc(CategoryItemRepository())),
       ],
       child: AppUpgradeAlert(
         appInfo: appInfo, // Pass app metadata

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/category_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/category_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/category_item_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/custom_indicator.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/song_card.dart';
-
 import '../../../../../../../../data/model/album_model.dart';
 import '../../../../../../../../data/model/category_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
+import '../../../../../../../bloc/category_item_bloc/bloc.dart';
+import '../../../../../../../bloc/category_item_bloc/event.dart';
 import '../../../../../../../const/generate_new_path.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
@@ -34,9 +33,8 @@ class _CategorySongPageState extends State<CategorySongPage> {
 
   @override
   void initState() {
-
-    BlocProvider.of<CategoryBloc>(context).add(GetCategoryEvent());
-    BlocProvider.of<CategoryBloc>(context).add(GetCategorySongsByIDEvent(categoryID: widget.categoryID));
+    BlocProvider.of<CategoryItemBloc>(context).add(ResetCategorySongsEvent());
+    BlocProvider.of<CategoryItemBloc>(context).add(GetCategorySongsByIDEvent(categoryID: widget.categoryID));
     super.initState();
   }
 
@@ -81,7 +79,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                 SizedBox(
                   height: 10,
                 ),
-                BlocBuilder<CategoryBloc, CategoryState>(
+                BlocBuilder<CategoryItemBloc, CategoryItemState>(
                   builder: (context, state) {
 
                     List<CategoryMusicsModel>? categoryAllSongs = state.category.musics;
@@ -145,18 +143,17 @@ class _CategorySongPageState extends State<CategorySongPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Padding(
-                                          padding: EdgeInsets.only(top: 10),
-                                          child: Text((index+1).toString())
-                                      ),
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 10),
+                                        child: SizedBox(
+                                            width: 15,
+                                            child: Text((index+1).toString()))
                                     ),
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Expanded(
-                                      flex: 20,
+                                    SizedBox(
+                                      width: MediaQuery.sizeOf(context).width - 70,
                                       child: Container(
                                           width: double.infinity,
                                           decoration: BoxDecoration(
@@ -175,7 +172,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                                               imgPath: categoryAllSongs[index].imageSource!,
                                               singerName: categoryAllSongs[index].singerName!)
                                       ),
-                                    ),
+                                    )
                                   ],
                                 ),
                               ),

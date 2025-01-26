@@ -11,13 +11,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc(this.categoryRepository) : super(
       CategoryState.initial()){
     on<GetCategoryEvent>(_mapGetCategoryEventToState);
-    on<GetCategorySongsByIDEvent>(_mapGetCategorySongsByIDEventToState);
-    on<ResetCategorySongsByIDEvent>(_mapResetCategorySongsByIDEventToState);
-  }
-
-  void _mapResetCategorySongsByIDEventToState(
-      ResetCategorySongsByIDEvent event, Emitter<CategoryState> emit) {
-    emit(CategoryState.initial());  // Reset the state to the initial empty state
   }
 
   void _mapGetCategoryEventToState(
@@ -38,21 +31,4 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     }
   }
 
-  void _mapGetCategorySongsByIDEventToState(
-      GetCategorySongsByIDEvent event, Emitter<CategoryState> emit) async {
-    try {
-      emit(state.copyWith(status: CategoryStatus.loading));
-
-      CategoryDataModel categoryData = await categoryRepository.getCategorySongs(event.categoryID);
-
-      emit(
-        state.copyWith(
-            status: CategoryStatus.success,
-            category: categoryData
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: CategoryStatus.error));
-    }
-  }
 }

@@ -147,7 +147,7 @@ class _MainPageState extends State<MainPage> {
                   BlocProvider.of<SongBloc>(context)
                       .add(FetchSongEvent(songID: songID));
                   BlocProvider.of<CategoryBloc>(context)
-                      .add(GetCategorySongsByIDEvent(categoryID: categoryID));
+                      .add(GetCategoryEvent());
 
                   return pageName == "CategorySongPage"
                       ? BlocBuilder<SongBloc, SongState>(
