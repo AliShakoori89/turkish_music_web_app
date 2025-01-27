@@ -77,8 +77,6 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
 
                           var newPath = widget.song.fileSource!.replaceAll(" ", "%20");
 
-                          print("CCCCCCCCCCCC            "+widget.song.name!);
-
                           SongDataModel songDataModel = SongDataModel(
                             id : widget.song.id,
                             name: widget.song.name,
