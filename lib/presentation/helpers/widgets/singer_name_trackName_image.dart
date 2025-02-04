@@ -61,8 +61,8 @@ class SingerNameTrackNameImage extends StatelessWidget {
                       fontSize: 15,
                       color: Colors.white
                   ),
-                  child: OverflowTextAnimated(
-                    text:  songName,
+                  child: Text(
+                    songName,
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.white

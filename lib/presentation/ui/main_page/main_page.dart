@@ -145,6 +145,8 @@ class _MainPageState extends State<MainPage> {
                   int categoryID = state.categoryID;
                   String pageName = state.pageName;
 
+                  print("444444444444444444444444444               "+categoryID.toString());
+
                   BlocProvider.of<AlbumBloc>(context)
                       .add(GetAlbumAllSongsEvent(albumId: albumID));
                   BlocProvider.of<SongBloc>(context)
@@ -195,6 +197,7 @@ class _MainPageState extends State<MainPage> {
                             song: song,
                             album: albumDataList,
                             pageName: pageName,
+                            categoryID: categoryID,
                           );
                         });
                             return Container();
@@ -236,6 +239,7 @@ class _MainPageState extends State<MainPage> {
                                 song: song,
                                 album: albumDataList,
                                 pageName: pageName,
+                                categoryID: categoryID,
                               );
                             });
                         return Container();
@@ -257,10 +261,11 @@ class _MainPageState extends State<MainPage> {
                                   return LinearProgressIndicator();
                                 } else if (state.status.isSuccess) {
                                   return MiniPlayingContainer(
-                                      visibility: visibility,
-                                      song: song,
-                                      album: album,
-                                      pageName: pageName
+                                    visibility: visibility,
+                                    song: song,
+                                    album: album,
+                                    pageName: pageName,
+                                    categoryID: categoryID,
                                   );
                                 } else if (state.status.isError) {
                                   return Container();

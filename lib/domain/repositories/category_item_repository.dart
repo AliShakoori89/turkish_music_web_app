@@ -18,7 +18,6 @@ class CategoryItemRepository {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final categoryModel = CategoryDataModel.fromJson(jsonResponse["data"]);
-      print(categoryModel.musics![0].name);
       return categoryModel;
     } else {
       throw Exception('Failed to load categories');

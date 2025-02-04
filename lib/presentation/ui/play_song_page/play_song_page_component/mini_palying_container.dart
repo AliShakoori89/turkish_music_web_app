@@ -16,12 +16,13 @@ import '../../../helpers/widgets/top_arrow_icon.dart';
 class MiniPlayingContainer extends StatefulWidget {
 
   MiniPlayingContainer({super.key,
-  required this.visibility, required this.song, required this.album, required this.pageName});
+  required this.visibility, required this.song, required this.album, required this.pageName, required this.categoryID});
 
   final bool visibility;
   final AlbumDataMusicModel song;
   final List<AlbumDataMusicModel> album ;
-  final String pageName ;
+  final String pageName;
+  final int categoryID;
 
   @override
   State<MiniPlayingContainer> createState() => _MiniPlayingContainerState();
@@ -102,7 +103,7 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                               'pageName': widget.pageName,
                               'albumSongList': widget.album,
                               'songDataModel': songDataModel,
-                              'categoryID': 0
+                              'categoryID': widget.categoryID
                             },
                           );
 
