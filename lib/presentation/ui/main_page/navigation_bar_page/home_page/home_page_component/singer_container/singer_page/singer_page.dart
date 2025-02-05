@@ -164,12 +164,6 @@ class _SingerPageState extends State<SingerPage> {
                                           width: MediaQuery.of(context).size.width * 0.3,
                                           height: MediaQuery.of(context).size.width * 0.6,
                                           decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.purple.withOpacity(0.5),
-                                                  blurRadius: 20,
-                                                ),
-                                              ],
                                               borderRadius: const BorderRadius.all(Radius.circular(8)),
                                               image: DecorationImage(
                                                 image: NetworkImage(
@@ -236,12 +230,6 @@ class _SingerPageState extends State<SingerPage> {
                                     width: MediaQuery.of(context).size.width * 0.3,
                                     height: MediaQuery.of(context).size.width * 0.6,
                                     decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.purple.withOpacity(0.5),
-                                            blurRadius: 20,
-                                          ),
-                                        ],
                                         borderRadius: const BorderRadius.all(Radius.circular(8)),
                                         image: DecorationImage(
                                           image: NetworkImage(

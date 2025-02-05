@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/new-song_model.dart';
 import 'package:turkish_music_app/presentation/bloc/category_item_bloc/state.dart';
+import 'package:turkish_music_app/presentation/bloc/category_songs_for_mini_player_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/category_songs_for_mini_player_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/category_songs_for_mini_player_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 import 'package:turkish_music_app/presentation/const/shimmer_container/mini_player_shimmer.dart';
@@ -151,15 +154,15 @@ class _MainPageState extends State<MainPage> {
                       .add(GetAlbumAllSongsEvent(albumId: albumID));
                   BlocProvider.of<SongBloc>(context)
                       .add(FetchSongEvent(songID: songID));
-                  BlocProvider.of<CategoryItemBloc>(context)
-                      .add(GetCategorySongsByIDEvent(categoryID: categoryID));
+                  BlocProvider.of<CategorySongForMiniPlayerBloc>(context)
+                      .add(GetCategorySongForMiniPlayerEvent(categoryID: categoryID));
 
                   return pageName == "CategorySongPage"
                       ? BlocBuilder<SongBloc, SongState>(
                       builder: (context, state) {
                         AlbumDataMusicModel song = state.song;
 
-                        return BlocBuilder<CategoryItemBloc, CategoryItemState>(
+                        return BlocBuilder<CategorySongForMiniPlayerBloc, CategorySongForMiniPlayerState>(
                             builder: (context, state) {
 
                           List<CategoryMusicsModel>? categoryAllSongs =

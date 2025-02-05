@@ -28,6 +28,7 @@ import 'package:turkish_music_app/domain/repositories/user_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_item_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/category_songs_for_mini_player_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
@@ -275,6 +276,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(
             create: (BuildContext context) =>
                 CategoryItemBloc(CategoryItemRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                CategorySongForMiniPlayerBloc(CategoryItemRepository())),
       ],
       child: AppUpgradeAlert(
         appInfo: appInfo, // Pass app metadata
