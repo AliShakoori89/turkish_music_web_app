@@ -16,18 +16,23 @@ class MusicIconAnimation extends StatelessWidget {
 
     Size size = MediaQuery.of(context).size;
 
-    return Positioned(
-      top: size.height * (animation.value + topValue),
-      left: size.width * leftValue,
-      child: GradientIcon(
-        icon: icon,
-        gradient: const LinearGradient(
-          colors: [Color(0xffb188ef), Color(0xff5b07bb)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        size: iconSize,
-      ),
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) {
+        return Positioned(
+          top: size.height * (animation.value + topValue),
+          left: size.width * leftValue,
+          child: GradientIcon(
+            icon: icon,
+            gradient: const LinearGradient(
+              colors: [Color(0xffb188ef), Color(0xff5b07bb)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            size: iconSize,
+          ),
+        );
+      },
     );
   }
 }

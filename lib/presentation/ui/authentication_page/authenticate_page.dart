@@ -79,6 +79,14 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
       CurvedAnimation(parent: controller2, curve: Curves.easeInOut),
     );
 
+    // Start animations after the first frame is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        controller1.forward();
+        controller2.forward();
+      }
+    });
+
     // تعریف لیست آیکون‌ها
     iconAnimations = [
       {
@@ -113,10 +121,12 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
   }
 
   void _animationStatusListener(AnimationController controller, AnimationStatus status) {
-    if (status == AnimationStatus.completed) {
-      controller.reverse();
-    } else if (status == AnimationStatus.dismissed) {
-      if (mounted) controller.forward();
+    if (mounted) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
     }
   }
 
@@ -167,6 +177,18 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
               height: size.height,
               child: Stack(
                 children: [
+                  AnimatedBuilder(
+                    animation: animation1,
+                    builder: (context, child) {
+                      return MusicIconAnimation(
+                        topValue: animation1.value,
+                        leftValue: .5,
+                        iconSize: 80,
+                        animation: animation2,
+                        icon: MyFlutterApp.music,
+                      );
+                    },
+                  ),
                   MusicIconAnimation(topValue: .15, leftValue: .5, iconSize: 80, animation: animation2, icon: MyFlutterApp.music,),
                   MusicIconAnimation(topValue: .2, leftValue: .05, iconSize: 110.0, animation: animation1, icon: MyFlutterApp.music,),
                   MusicIconAnimation(topValue: .3, leftValue: .05, iconSize: 110.0, animation: animation1, icon: MyFlutterApp.music_note),
@@ -266,7 +288,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 return "Enter a valid email";
               },
               decoration: InputDecoration(
-                fillColor: Colors.white.withValues(alpha: 0.5),
+                fillColor: Colors.white.withValues(alpha: 0.1),
                 filled: true,
                 prefixIcon: Icon(
                   icon,
@@ -276,7 +298,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 hintMaxLines: 1,
                 hintText: hintText,
                 hintStyle:
-                TextStyle(fontSize: 14, color: Colors.white.withValues(alpha: 0.5),),
+                TextStyle(fontSize: 14, color: Colors.white.withValues(alpha: 0.8),),
               ),
             ),
           ),
@@ -431,7 +453,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             width: size.width,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.5),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
