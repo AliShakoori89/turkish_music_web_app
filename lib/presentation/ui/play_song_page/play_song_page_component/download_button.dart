@@ -56,7 +56,7 @@ class _DownloadButtonState extends State<DownloadButton> {
                     gravity: ToastGravity.TOP,
                     timeInSecForIosWeb: 3,
                     backgroundColor: const Color(
-                        0xFF00B01E).withOpacity(0.2),
+                        0xFF00B01E).withValues(alpha: 0.2),
                     textColor: Colors.white,
                     fontSize: 16.0
                 );
@@ -102,7 +102,7 @@ class _DownloadButtonState extends State<DownloadButton> {
                     gravity: ToastGravity.TOP,
                     timeInSecForIosWeb: 3,
                     backgroundColor: const Color(
-                        0xFFC20808).withOpacity(0.2),
+                        0xFFC20808).withValues(alpha: 0.2),
                     textColor: Colors.white,
                     fontSize: 16.0
                 );

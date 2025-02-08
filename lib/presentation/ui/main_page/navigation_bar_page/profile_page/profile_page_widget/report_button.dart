@@ -46,7 +46,7 @@ class ReportButton extends StatelessWidget {
       style: TextStyle(
         color: Colors.white
       )),
-        backgroundColor: Colors.white.withOpacity(0.3),));
+        backgroundColor: Colors.white.withValues(alpha: 0.3),));
     } on MailerException catch (e) {
       print('Message not sent.');
       print(e.message);

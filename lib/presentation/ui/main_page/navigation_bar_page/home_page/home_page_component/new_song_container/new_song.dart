@@ -113,7 +113,7 @@ class _NewSongState extends State<NewSong>{
                           decoration: BoxDecoration(
                               border: Border.all(
                                   width: 1,
-                                  color: Colors.purple.withOpacity(0.5),
+                                  color: Colors.purple.withValues(alpha: 0.5),
                                   strokeAlign: BorderSide.strokeAlignOutside),
                               borderRadius: BorderRadius.circular(25.0),
                               image: DecorationImage(

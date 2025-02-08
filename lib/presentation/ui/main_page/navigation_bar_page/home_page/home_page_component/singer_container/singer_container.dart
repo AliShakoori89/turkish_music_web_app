@@ -79,7 +79,7 @@ class SingerContainer extends StatelessWidget {
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       width: 1,
-                                      color: Colors.purple.withOpacity(0.5),
+                                      color: Colors.purple.withValues(alpha: 0.5),
                                       strokeAlign: BorderSide.strokeAlignOutside),
                                   shape: BoxShape.circle,
                               image: DecorationImage(

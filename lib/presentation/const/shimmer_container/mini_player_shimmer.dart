@@ -10,7 +10,7 @@ class MiniPlayerShimmer extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     return Shimmer.fromColors(
-        baseColor: Colors.purple.withOpacity(0.1),
+        baseColor: Colors.purple.withValues(alpha: 0.1),
         highlightColor: Colors.white,
         child: Container(
           margin: EdgeInsets.all(5),

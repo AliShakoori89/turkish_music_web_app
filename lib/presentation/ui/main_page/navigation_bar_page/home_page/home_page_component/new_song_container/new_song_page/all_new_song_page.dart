@@ -112,7 +112,7 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
                                           spreadRadius: 2,
                                           blurRadius: 1,
                                           offset: Offset(0, 2),
-                                          color: Colors.purple.withOpacity(0.5)
+                                          color: Colors.purple.withValues(alpha: 0.5),
                                       )
                                     ]
                                 ),

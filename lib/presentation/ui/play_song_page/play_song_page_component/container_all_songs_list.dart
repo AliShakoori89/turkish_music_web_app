@@ -67,8 +67,8 @@ class ContainerAllSongsList extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 color: categoryAllSongs[index].name == songName
-                    ? Colors.white30.withOpacity(0.5)
-                    : Colors.white30.withOpacity(0.1),
+                    ? Colors.white30.withValues(alpha: 0.5)
+                    : Colors.white30.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(15)
             ),
             margin: const EdgeInsets.only(

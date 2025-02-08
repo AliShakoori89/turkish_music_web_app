@@ -113,7 +113,7 @@ class _MainPageState extends State<MainPage> {
               width: orientation == Orientation.portrait
                   ? MediaQuery.of(context).size.width * 0.12
                   : MediaQuery.of(context).size.width * 0.04,
-              backgroundColor: Colors.purple.withOpacity(0.3),
+              backgroundColor: Colors.purple.withValues(alpha: 0.3),
               borderRadius: 15,
               onItemSelected: (value) {
                 setState(() {
@@ -147,8 +147,6 @@ class _MainPageState extends State<MainPage> {
                   int albumID = state.albumID;
                   int categoryID = state.categoryID;
                   String pageName = state.pageName;
-
-                  print("444444444444444444444444444               "+categoryID.toString());
 
                   BlocProvider.of<AlbumBloc>(context)
                       .add(GetAlbumAllSongsEvent(albumId: albumID));

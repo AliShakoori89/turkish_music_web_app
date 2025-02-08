@@ -114,7 +114,7 @@ class _AuthenticationButtonState extends State<AuthenticationButton> {
                               OtpTextField(
                                 numberOfFields: 6,
                                 borderColor: Colors.white,
-                                fillColor: Colors.white.withOpacity(.05),
+                                fillColor: Colors.white.withValues(alpha: 0.5),
                                 borderWidth: 0.25,
                                 margin: EdgeInsets.only(
                                     right: 2,
@@ -145,7 +145,7 @@ class _AuthenticationButtonState extends State<AuthenticationButton> {
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 3,
                                         backgroundColor: const Color(
-                                            0xFF00B01E).withOpacity(0.2),
+                                            0xFF00B01E).withValues(alpha: 0.2),
                                         textColor: Colors.white,
                                         fontSize: 16.0
                                     );
@@ -161,7 +161,7 @@ class _AuthenticationButtonState extends State<AuthenticationButton> {
                                         gravity: ToastGravity.TOP,
                                         timeInSecForIosWeb: 3,
                                         backgroundColor: const Color(
-                                            0xFFC20808).withOpacity(0.2),
+                                            0xFFC20808).withValues(alpha: 0.2),
                                         textColor: Colors.white,
                                         fontSize: 16.0
                                     );
@@ -194,12 +194,12 @@ class _AuthenticationButtonState extends State<AuthenticationButton> {
             width: size.width / widget.width,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.05),
+              color: Colors.white.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
               widget.string,
-              style: TextStyle(color: Colors.white.withOpacity(.8)),
+              style: TextStyle(color: Colors.white.withValues(alpha: 0.8),),
             ),
           ),
         ),

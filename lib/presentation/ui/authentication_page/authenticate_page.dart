@@ -144,7 +144,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                   gravity: ToastGravity.TOP,
                   timeInSecForIosWeb: 3,
                   backgroundColor: const Color(
-                      0xFF00B01E).withOpacity(0.2),
+                      0xFF00B01E).withValues(alpha: 0.2),
                   textColor: Colors.white,
                   fontSize: 16.0
               );
@@ -155,7 +155,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                   gravity: ToastGravity.TOP,
                   timeInSecForIosWeb: 3,
                   backgroundColor: const Color(
-                      0xFFC20808).withOpacity(0.2),
+                      0xFFC20808).withValues(alpha: 0.2),
                   textColor: Colors.white,
                   fontSize: 16.0
               );
@@ -199,7 +199,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                         Text(
                           'Login',
                           style: TextStyle(
-                            color: Colors.white.withOpacity(.7),
+                            color: Colors.white.withValues(alpha: 0.7),
                             fontSize: 50,
                             fontFamily: "Salsa",
                             fontWeight: FontWeight.bold,
@@ -223,30 +223,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                           emailFormKey,
                         ),
                         const SizedBox(height: 10,),
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(15),
-                        //   child: BackdropFilter(
-                        //     filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
-                        //     child: InkWell(
-                        //       highlightColor: Colors.transparent,
-                        //       splashColor: Colors.transparent,
-                        //       onTap: _handleSignIn,
-                        //       child: Container(
-                        //         height: 40,
-                        //         width: size.width,
-                        //         alignment: Alignment.center,
-                        //         decoration: BoxDecoration(
-                        //           color: Colors.white.withOpacity(.05),
-                        //           borderRadius: BorderRadius.circular(15),
-                        //         ),
-                        //         child: Text(
-                        //           "Login with google Account",
-                        //           style: TextStyle(color: Colors.white.withOpacity(.8)),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -274,7 +250,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             key: emailFormKey,
             child: TextFormField(
               controller: controller,
-              style: TextStyle(color: Colors.white.withOpacity(.8)),
+              style: TextStyle(color: Colors.white.withValues(alpha: 0.8),),
               cursorColor: Colors.white,
               obscureText: isPassword,
               keyboardType:
@@ -290,17 +266,17 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                 return "Enter a valid email";
               },
               decoration: InputDecoration(
-                fillColor: Colors.white.withOpacity(.05),
+                fillColor: Colors.white.withValues(alpha: 0.5),
                 filled: true,
                 prefixIcon: Icon(
                   icon,
-                  color: Colors.white.withOpacity(.7),
+                  color: Colors.white.withValues(alpha: 0.7),
                 ),
                 border: InputBorder.none,
                 hintMaxLines: 1,
                 hintText: hintText,
                 hintStyle:
-                TextStyle(fontSize: 14, color: Colors.white.withOpacity(.5)),
+                TextStyle(fontSize: 14, color: Colors.white.withValues(alpha: 0.5),),
               ),
             ),
           ),
@@ -375,7 +351,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                               OtpTextField(
                                 numberOfFields: 6,
                                 borderColor: Colors.white,
-                                fillColor: Colors.white.withOpacity(.05),
+                                fillColor: Colors.white.withValues(alpha: 0.5),
                                 borderWidth: 0.25,
                                 margin: EdgeInsets.only(
                                     right: 2,
@@ -406,7 +382,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 3,
                                         backgroundColor: const Color(
-                                            0xFF00B01E).withOpacity(0.2),
+                                            0xFF00B01E).withValues(alpha: 0.2),
                                         textColor: Colors.white,
                                         fontSize: 16.0
                                     );
@@ -422,7 +398,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                                         gravity: ToastGravity.TOP,
                                         timeInSecForIosWeb: 3,
                                         backgroundColor: const Color(
-                                            0xFFC20808).withOpacity(0.2),
+                                            0xFFC20808).withValues(alpha: 0.2),
                                         textColor: Colors.white,
                                         fontSize: 16.0
                                     );
@@ -455,12 +431,12 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             width: size.width,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.05),
+              color: Colors.white.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(
               string,
-              style: TextStyle(color: Colors.white.withOpacity(.8)),
+              style: TextStyle(color: Colors.white.withValues(alpha: 0.8),),
             ),
           ),
         ),

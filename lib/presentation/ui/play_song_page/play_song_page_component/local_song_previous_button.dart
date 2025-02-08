@@ -22,7 +22,7 @@ class LocalSongPreviousButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 offset: Offset(
                   1.0,
                   1.0,
@@ -30,7 +30,7 @@ class LocalSongPreviousButton extends StatelessWidget {
                 blurRadius: 10.0,
                 spreadRadius: 7.0,
               ),
-              BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
+              BoxShadow(color: Colors.white.withValues(alpha: 0.2), spreadRadius: 0),
             ]),
             child: Icon(
               size: MediaQuery.of(context).size.height / 40,

@@ -165,7 +165,7 @@ class _DownloadPageState extends State<DownloadPage> {
                       boxShadow: [
                         BoxShadow(
                           color:
-                          Colors.purple.withOpacity(0.5),
+                          Colors.purple.withValues(alpha: 0.5),
                           blurRadius: 10.0,
                         ),
                       ]
@@ -195,7 +195,7 @@ class _DownloadPageState extends State<DownloadPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              color: Colors.purple.withOpacity(0.4),
+              color: Colors.purple.withValues(alpha: 0.4),
               width: size.width,
               height: size.height / 14,
               child: Row(

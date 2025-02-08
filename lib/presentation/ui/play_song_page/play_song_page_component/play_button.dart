@@ -43,7 +43,7 @@ class _PlayButtonState extends State<PlayButton> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1), 
+                        color: Colors.black.withValues(alpha: 0.1),
                         offset: Offset(
                           1.0, 
                           1.0,
@@ -51,7 +51,7 @@ class _PlayButtonState extends State<PlayButton> {
                         blurRadius: 10.0, 
                         spreadRadius: 7.0,
                       ), 
-                      BoxShadow(color: Colors.white.withOpacity(0.2), spreadRadius: 0),
+                      BoxShadow(color: Colors.white.withValues(alpha: 0.2), spreadRadius: 0),
                     ]), 
                 child: playStatus
                     ? Icon(

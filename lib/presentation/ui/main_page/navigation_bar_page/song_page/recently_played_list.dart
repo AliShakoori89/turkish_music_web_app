@@ -61,7 +61,7 @@ class _RecentlyPlaylistState extends State<RecentlyPlaylist> {
                                 boxShadow: [
                                   BoxShadow(
                                       offset: Offset(0, 0.5),
-                                      color: Colors.purple.withOpacity(0.5)
+                                      color: Colors.purple.withValues(alpha: 0.5),
                                   )
                                 ]
                             ),
@@ -156,7 +156,7 @@ class BottomDialog {
     showGeneralDialog(
       barrierLabel: "showGeneralDialog",
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       transitionDuration: const Duration(milliseconds: 400),
       context: context,
       pageBuilder: (context, _, __) {

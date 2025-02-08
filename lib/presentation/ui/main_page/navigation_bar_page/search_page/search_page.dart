@@ -150,7 +150,7 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                   boxShadow: [
                                                     BoxShadow(
                                                         offset: Offset(0, 0.5),
-                                                        color: Colors.purple.withOpacity(0.5))
+                                                        color: Colors.purple.withValues(alpha: 0.5),)
                                                   ]),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,7 +269,7 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                     BoxShadow(
                                                         offset: Offset(0, 0.5),
                                                         color: Colors.purple
-                                                            .withOpacity(0.5))
+                                                            .withValues(alpha: 0.5),)
                                                   ]),
                                               child: Row(
                                                 mainAxisAlignment:

@@ -117,7 +117,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                             boxShadow: [
                               BoxShadow(
                                   offset: Offset(0, 0.5),
-                                  color: Colors.purple.withOpacity(0.5)
+                                  color: Colors.purple.withValues(alpha: 0.5),
                               )
                             ]),
                         margin: const EdgeInsets.only(

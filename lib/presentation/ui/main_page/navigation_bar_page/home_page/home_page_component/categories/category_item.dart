@@ -76,7 +76,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                             decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.purple.withOpacity(0.5),
+                                    color: Colors.purple.withValues(alpha: 0.5),
                                     blurRadius: 10,
                                   ),
                                 ],

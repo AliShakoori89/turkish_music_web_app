@@ -8,7 +8,7 @@ class SkipNext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleButton(
-      color: Colors.white30.withOpacity(0.3),
+      color: Colors.white30.withValues(alpha: 0.3),
       size: 35,
       onPressed:(){
 

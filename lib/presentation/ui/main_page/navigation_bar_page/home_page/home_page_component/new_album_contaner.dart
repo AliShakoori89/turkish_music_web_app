@@ -118,7 +118,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                       boxShadow: [
                                         BoxShadow(
                                           color:
-                                          Colors.purple.withOpacity(0.5),
+                                          Colors.purple.withValues(alpha: 0.5),
                                           blurRadius: 10.0,
                                         ),
                                       ],
@@ -201,7 +201,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.purple
-                                                    .withOpacity(0.5),
+                                                    .withValues(alpha: 0.5),
                                                 blurRadius: 10.0,
                                               ),
                                             ],

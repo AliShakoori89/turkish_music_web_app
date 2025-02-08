@@ -19,7 +19,7 @@ Widget component1(
           key: emailFormKey,
           child: TextFormField(
             controller: controller,
-            style: TextStyle(color: Colors.white.withOpacity(.8)),
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.6),),
             cursorColor: Colors.white,
             obscureText: isPassword,
             keyboardType:
@@ -35,17 +35,17 @@ Widget component1(
               return "Enter a valid email";
             },
             decoration: InputDecoration(
-              fillColor: Colors.white.withOpacity(.05),
+              fillColor: Colors.white.withValues(alpha: 0.5),
               filled: true,
               prefixIcon: Icon(
                 icon,
-                color: Colors.white.withOpacity(.7),
+                color: Colors.white.withValues(alpha: 0.7),
               ),
               border: InputBorder.none,
               hintMaxLines: 1,
               hintText: hintText,
               hintStyle:
-              TextStyle(fontSize: 14, color: Colors.white.withOpacity(.5)),
+              TextStyle(fontSize: 14, color: Colors.white.withValues(alpha: 0.5),),
             ),
           ),
         ),
