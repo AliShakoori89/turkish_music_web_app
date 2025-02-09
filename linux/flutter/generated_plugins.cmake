@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  audioplayers_linux
   open_file_linux
   sentry_flutter
   url_launcher_linux

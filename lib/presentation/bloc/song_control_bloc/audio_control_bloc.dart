@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +7,7 @@ import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/domain/repositories/recently_play_song_repository.dart';
 import '../../../data/model/album_model.dart';
 import '../../../data/model/song_model.dart';
-import '../../../domain/repositories/new_song_repository.dart';
+import 'package:just_audio/just_audio.dart';
 
 part 'audio_control_event.dart';
 part 'audio_control_state.dart';
@@ -28,7 +27,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   SongDataModel? get currentSelectedSong => _currentSelectedSong;
 
-  Stream<Duration> get positionStream => _audioPlayer.onPositionChanged;
+  Stream<Duration> get positionStream => _audioPlayer.positionStream;
 
   StreamSubscription? _audioStream;
 
@@ -38,9 +37,12 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   AudioControlBloc() : super(AudioControlInitial()) {
 
-    _audioStream = _audioPlayer.onPlayerComplete.listen((_) async{
-      add(SongCompletedEvent());
+    _audioStream = _audioPlayer.playerStateStream.listen((playerState) {
+      if (playerState.processingState == ProcessingState.completed) {
+        add(SongCompletedEvent());
+      }
     });
+
 
     on<PlaySongEvent>((event, emit) async {
 
@@ -62,16 +64,17 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     });
 
     on<RepeatSongEvent>((event, emit) async {
-      await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+      await _audioPlayer.setLoopMode(LoopMode.one);
     });
 
     on<ResumeSongEvent>((event, emit) async {
-      await _audioPlayer.resume();
+      await _audioPlayer.play();
     });
 
     on<StopRepeatingEvent>((event, emit) async {
-      await _audioPlayer.setReleaseMode(ReleaseMode.stop);
+      await _audioPlayer.setLoopMode(LoopMode.off);
     });
+
 
     on<initialSongEvent>((event, emit) async {
       emit(AudioControlInitial());
@@ -221,21 +224,29 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   Future<void> _playCurrentSong(Emitter<AudioControlState> emit) async {
     if (_currentSelectedSong != null) {
       final String modifiedUrl = _currentSelectedSong!.fileSource!.replaceAll("%20", " ");
-      final Source source = UrlSource(modifiedUrl ?? "");
+
       SaveSongModel saveSongModel = SaveSongModel(
-          id: _currentSelectedSong!.id,
-          singerName: _currentSelectedSong!.singerName,
-          audioFileAlbumId: _currentSelectedSong!.albumId,
-          audioFileMin: _currentSelectedSong!.minute,
-          audioFilePath: _currentSelectedSong!.fileSource,
-          audioFileSec: _currentSelectedSong!.second,
-          imageFilePath: _currentSelectedSong!.imageSource,
-          songName: _currentSelectedSong!.name
+        id: _currentSelectedSong!.id,
+        singerName: _currentSelectedSong!.singerName,
+        audioFileAlbumId: _currentSelectedSong!.albumId,
+        audioFileMin: _currentSelectedSong!.minute,
+        audioFilePath: _currentSelectedSong!.fileSource,
+        audioFileSec: _currentSelectedSong!.second,
+        imageFilePath: _currentSelectedSong!.imageSource,
+        songName: _currentSelectedSong!.name,
       );
+
       await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
-      await _audioPlayer.play(source);
+
+      try {
+        await _audioPlayer.setUrl(modifiedUrl);
+        await _audioPlayer.play();
+      } catch (e) {
+        print("Error playing audio: $e");
+      }
     }
   }
+
 
   SongDataModel _mapAlbumDataMusicModelToSongDataModel(AlbumDataMusicModel song) {
     return SongDataModel(
@@ -256,7 +267,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         return i;
       }
     }
-    // return songs.indexWhere((s) => s.id == song.id);
+    return songs.indexWhere((s) => s.id == song.id);
   }
 
   stopAudio() async {
