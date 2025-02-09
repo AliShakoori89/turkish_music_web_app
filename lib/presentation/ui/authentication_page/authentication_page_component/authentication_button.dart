@@ -114,7 +114,7 @@ class _AuthenticationButtonState extends State<AuthenticationButton> {
                               OtpTextField(
                                 numberOfFields: 6,
                                 borderColor: Colors.white,
-                                fillColor: Colors.white.withValues(alpha: 0.5),
+                                fillColor: Colors.white.withValues(alpha: 0.1),
                                 borderWidth: 0.25,
                                 margin: EdgeInsets.only(
                                     right: 2,
