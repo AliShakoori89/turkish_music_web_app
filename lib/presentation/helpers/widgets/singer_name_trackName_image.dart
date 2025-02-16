@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:overflow_text_animated/overflow_text_animated.dart';
 
 class SingerNameTrackNameImage extends StatelessWidget {
 
@@ -19,8 +18,6 @@ class SingerNameTrackNameImage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Orientation orientation = MediaQuery.of(context).orientation;
-
-    print("2222222222222222222          "+songName);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

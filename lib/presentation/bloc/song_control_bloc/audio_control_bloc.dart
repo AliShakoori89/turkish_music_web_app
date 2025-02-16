@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -239,7 +240,19 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
 
       try {
-        await _audioPlayer.setUrl(modifiedUrl);
+        await _audioPlayer.setAudioSource(
+          AudioSource. uri(
+            Uri.parse(modifiedUrl),
+            tag: MediaItem(
+              id: '1',
+              album: "Turkish Music Album",
+              title: saveSongModel.songName!,
+              artist: saveSongModel.singerName,
+              artUri: Uri.parse(saveSongModel.imageFilePath!), // Cover Art
+            ),
+          ),
+        );
+        // await _audioPlayer.setUrl(modifiedUrl);
         await _audioPlayer.play();
       } catch (e) {
         print("Error playing audio: $e");

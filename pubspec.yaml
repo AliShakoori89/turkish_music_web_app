@@ -81,6 +81,9 @@ dependencies:
   sentry_flutter: ^8.11.0
   app_upgrade_flutter_sdk: ^3.0.0
   just_audio: ^0.9.46
+  just_audio_background:
+  audio_service:
+  flutter_foreground_task:
 
 dev_dependencies:
   flutter_test:
