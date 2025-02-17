@@ -147,7 +147,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
         SaveSongModel saveSongModel = SaveSongModel(
             id: _currentSelectedSong!.id,
-            singerName: _singerName,
+            singerName: _currentSelectedSong!.singerName,
             audioFileAlbumId: _currentSelectedSong!.albumId,
             audioFileMin: _currentSelectedSong!.minute,
             audioFilePath: _currentSelectedSong!.fileSource,
@@ -159,7 +159,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         MiniPlayerModel song = MiniPlayerModel(
             songID: _currentSelectedSong!.id,
             songName: _currentSelectedSong!.name,
-            songsSingerName: _singerName,
+            songsSingerName: _currentSelectedSong!.singerName,
             songImagePath: _currentSelectedSong!.imageSource,
             songFilePath: _currentSelectedSong!.fileSource,
             minute: _currentSelectedSong!.minute,
@@ -180,7 +180,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
         SaveSongModel saveSongModel = SaveSongModel(
             id: _currentSelectedSong!.id,
-            singerName: _singerName,
+            singerName: _currentSelectedSong!.singerName,
             audioFileAlbumId: _currentSelectedSong!.albumId,
             audioFileMin: _currentSelectedSong!.minute,
             audioFilePath: _currentSelectedSong!.fileSource,
@@ -192,7 +192,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         MiniPlayerModel song = MiniPlayerModel(
             songID: _currentSelectedSong!.id,
             songName: _currentSelectedSong!.name,
-            songsSingerName: _singerName,
+            songsSingerName: _currentSelectedSong!.singerName,
             songImagePath: _currentSelectedSong!.imageSource,
             songFilePath: _currentSelectedSong!.fileSource,
             minute: _currentSelectedSong!.minute,
@@ -220,7 +220,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
         SaveSongModel saveSongModel = SaveSongModel(
             id: _currentSelectedSong!.id,
-            singerName: _singerName,
+            singerName: _currentSelectedSong!.singerName,
             audioFileAlbumId: _currentSelectedSong!.albumId,
             audioFileMin: _currentSelectedSong!.minute,
             audioFilePath: _currentSelectedSong!.fileSource,
@@ -232,7 +232,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         MiniPlayerModel song = MiniPlayerModel(
             songID: _currentSelectedSong!.id,
             songName: _currentSelectedSong!.name,
-            songsSingerName: _singerName,
+            songsSingerName: _currentSelectedSong!.singerName,
             songImagePath: _currentSelectedSong!.imageSource,
             songFilePath: _currentSelectedSong!.fileSource,
             minute: _currentSelectedSong!.minute,
@@ -253,7 +253,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
         SaveSongModel saveSongModel = SaveSongModel(
             id: _currentSelectedSong!.id,
-            singerName: _singerName,
+            singerName: _currentSelectedSong!.singerName,
             audioFileAlbumId: _currentSelectedSong!.albumId,
             audioFileMin: _currentSelectedSong!.minute,
             audioFilePath: _currentSelectedSong!.fileSource,
@@ -265,7 +265,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         MiniPlayerModel song = MiniPlayerModel(
             songID: _currentSelectedSong!.id,
             songName: _currentSelectedSong!.name,
-            songsSingerName: _singerName,
+            songsSingerName: _currentSelectedSong!.singerName,
             songImagePath: _currentSelectedSong!.imageSource,
             songFilePath: _currentSelectedSong!.fileSource,
             minute: _currentSelectedSong!.minute,
