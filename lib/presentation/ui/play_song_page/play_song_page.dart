@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_pixels/image_pixels.dart';
+import 'package:turkish_music_app/data/model/miniplayer_model.dart';
 import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
-import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/event.dart';
+import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
@@ -50,19 +50,32 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
           )
       );
 
+      String songName = data['songName'] as String;
       int songID = data['songID'] as int;
-      int albumID = data['albumID'] as int;
-      String pageName = data["pageName"] as String;
+      String singerName = data['singerName'] as String;
+      String songImage = data['songImage'] as String;
+      String songFile = data['songFile'] as String;
       int categoryID = data["categoryID"] as int;
+      int albumID = data['albumID'] as int;
+      List<AlbumDataMusicModel> SongList = data['albumSongList'] as List<AlbumDataMusicModel>;
       BlocProvider.of<PlaylistBloc>(context).add(SearchSongIDEvent(songID: songID));
 
-      context
-          .read<MiniPlayingContainerBloc>()
-          .add(WriteSongIDForMiniPlayingSongContainerEvent(songID: songID,
-          albumID: albumID, pageName: pageName, categoryID: categoryID));
+      MiniPlayerModel song = MiniPlayerModel(
+          songID: songID,
+          songName: songName,
+          songsSingerName: singerName,
+          songImagePath: songImage,
+          songFilePath: songFile,
+          minute: songDataModel.minute,
+          second: songDataModel.second,
+          categoryID: categoryID,
+          albumID: albumID,
+          songList: SongList
+      );
+
+      MiniPlayerRepo().saveToMiniPlayer(song);
     });
 
-    BlocProvider.of<MiniPlayingContainerBloc>(context).add(FirstPlayingSongEvent());
     BlocProvider.of<PlayButtonStateBloc>(context).add(SetPlayButtonStateEvent(playButtonState: true));
   }
 
@@ -74,7 +87,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
     String songName = data['songName'] as String;
     int albumID = data['albumID'] as int;
     List<AlbumDataMusicModel> albumSongList = data['albumSongList'] as List<AlbumDataMusicModel>;
-    String singerName = data['singerName'] as String;
     String songImage = data['songImage'] as String;
     String pageName = data["pageName"] as String;
     int categoryID = data["categoryID"] as int;
@@ -113,9 +125,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                     return ImagePixels(
                         imageProvider: NetworkImage(state.songModel.imageSource!),
                         builder: (context, img) {
-            
+
                           Orientation orientation = MediaQuery.of(context).orientation;
-            
+
                           return Container(
                             width: double.infinity,
                             margin: EdgeInsets.only(
@@ -168,7 +180,7 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                           );
                         }
                     );
-            
+
                   } else {
                     return const Center(child: Text('Something went wrong'));
                   }

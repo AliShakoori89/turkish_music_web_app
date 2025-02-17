@@ -16,7 +16,6 @@ import 'package:turkish_music_app/domain/repositories/category_item_repository.d
 import 'package:turkish_music_app/domain/repositories/category_repository.dart';
 import 'package:turkish_music_app/domain/repositories/download_repository.dart';
 import 'package:turkish_music_app/domain/repositories/internet_repository.dart';
-import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_button_state_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_list_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
@@ -32,7 +31,6 @@ import 'package:turkish_music_app/presentation/bloc/category_songs_for_mini_play
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/mini_playing_container_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
@@ -261,9 +259,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(
             create: (BuildContext context) =>
                 PlaylistBloc(PlayListRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
-                MiniPlayingContainerBloc(MiniPlayingContainerRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 DownloadBloc(DownloadRepository())),
