@@ -4,11 +4,14 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:turkish_music_app/data/model/miniplayer_model.dart';
 import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/domain/repositories/recently_play_song_repository.dart';
 import '../../../data/model/album_model.dart';
 import '../../../data/model/song_model.dart';
 import 'package:just_audio/just_audio.dart';
+
+import '../../../domain/repositories/mini_playing_container_repository.dart';
 
 part 'audio_control_event.dart';
 part 'audio_control_state.dart';
@@ -152,6 +155,21 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
             imageFilePath: _currentSelectedSong!.imageSource,
             songName: _currentSelectedSong!.name
         );
+
+        MiniPlayerModel song = MiniPlayerModel(
+            songID: _currentSelectedSong!.id,
+            songName: _currentSelectedSong!.name,
+            songsSingerName: _singerName,
+            songImagePath: _currentSelectedSong!.imageSource,
+            songFilePath: _currentSelectedSong!.fileSource,
+            minute: _currentSelectedSong!.minute,
+            second: _currentSelectedSong!.second,
+            categoryID: 0,
+            albumID: _currentSelectedSong!.albumId,
+            songList: _currentAlbum);
+
+        MiniPlayerRepo().saveToMiniPlayer(song);
+
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
         await saveCurrentSongData(_currentSelectedSong!);
@@ -170,6 +188,21 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
             imageFilePath: _currentSelectedSong!.imageSource,
             songName: _currentSelectedSong!.name
         );
+
+        MiniPlayerModel song = MiniPlayerModel(
+            songID: _currentSelectedSong!.id,
+            songName: _currentSelectedSong!.name,
+            songsSingerName: _singerName,
+            songImagePath: _currentSelectedSong!.imageSource,
+            songFilePath: _currentSelectedSong!.fileSource,
+            minute: _currentSelectedSong!.minute,
+            second: _currentSelectedSong!.second,
+            categoryID: 0,
+            albumID: _currentSelectedSong!.albumId,
+            songList: _currentAlbum);
+
+        MiniPlayerRepo().saveToMiniPlayer(song);
+
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
         await saveCurrentSongData(_currentSelectedSong!);
@@ -195,6 +228,21 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
             imageFilePath: _currentSelectedSong!.imageSource,
             songName: _currentSelectedSong!.name
         );
+
+        MiniPlayerModel song = MiniPlayerModel(
+            songID: _currentSelectedSong!.id,
+            songName: _currentSelectedSong!.name,
+            songsSingerName: _singerName,
+            songImagePath: _currentSelectedSong!.imageSource,
+            songFilePath: _currentSelectedSong!.fileSource,
+            minute: _currentSelectedSong!.minute,
+            second: _currentSelectedSong!.second,
+            categoryID: 0,
+            albumID: _currentSelectedSong!.albumId,
+            songList: _currentAlbum);
+
+        MiniPlayerRepo().saveToMiniPlayer(song);
+
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
         await saveCurrentSongData(_currentSelectedSong!);
@@ -213,6 +261,21 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
             imageFilePath: _currentSelectedSong!.imageSource,
             songName: _currentSelectedSong!.name
         );
+
+        MiniPlayerModel song = MiniPlayerModel(
+            songID: _currentSelectedSong!.id,
+            songName: _currentSelectedSong!.name,
+            songsSingerName: _singerName,
+            songImagePath: _currentSelectedSong!.imageSource,
+            songFilePath: _currentSelectedSong!.fileSource,
+            minute: _currentSelectedSong!.minute,
+            second: _currentSelectedSong!.second,
+            categoryID: 0,
+            albumID: _currentSelectedSong!.albumId,
+            songList: _currentAlbum);
+
+        MiniPlayerRepo().saveToMiniPlayer(song);
+
         await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
         await _playCurrentSong(emit);
         await saveCurrentSongData(_currentSelectedSong!);

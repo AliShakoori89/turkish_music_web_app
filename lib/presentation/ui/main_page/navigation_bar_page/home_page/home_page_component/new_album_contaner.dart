@@ -94,7 +94,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                             'songFile': newPath,
                             'songID': songDataModel.id!,
                             'singerName': songDataModel.singerName,
-                            'songImage': songDataModel.name,
+                            'songImage': songDataModel.imageSource,
                             'albumID': songDataModel.albumId!,
                             'pageName': "NewAlbumContainer",
                             'albumSongList': state.newAlbum[index].musics!.map((newAlbum) => AlbumDataMusicModel.fromNewAlbumDataModel(newAlbum))
@@ -177,7 +177,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                   'songFile': newPath,
                                   'songID': songDataModel.id!,
                                   'singerName': songDataModel.singerName,
-                                  'songImage': songDataModel.name,
+                                  'songImage': songDataModel.imageSource,
                                   'albumID': songDataModel.albumId!,
                                   'pageName': "NewAlbumContainer",
                                   'albumSongList': state.newAlbum[index].musics!.map((newAlbum) => AlbumDataMusicModel.fromNewAlbumDataModel(newAlbum))
