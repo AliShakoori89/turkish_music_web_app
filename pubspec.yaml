@@ -82,7 +82,7 @@ dependencies:
   app_upgrade_flutter_sdk: ^3.0.0
   just_audio: ^0.9.46
   just_audio_background:
-  audio_service:
+  audio_service: ^0.18.17
   flutter_foreground_task:
 
 dev_dependencies:

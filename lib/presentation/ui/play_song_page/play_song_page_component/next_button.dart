@@ -8,22 +8,11 @@ import '../../../bloc/play_button_state_bloc/event.dart';
 
 
 class NextButton extends StatelessWidget {
-  NextButton({super.key, required this.albumSongs, required this.songID, required this.albumID, required this.singerName,
-    required this.audioFileSec, required this.audioFileMin, required this.audioFilePath, required this.imageFilePath, required this.songName,
-    required this.pageName, required this.categoryID});
+  NextButton({super.key, required this.albumSongs, required this.songID, required this.singerName});
 
   final List<AlbumDataMusicModel> albumSongs;
   final int songID;
-  final int albumID;
   final String singerName;
-  final String audioFileSec;
-  final String audioFileMin;
-  final String audioFilePath;
-  final String imageFilePath;
-  final String songName;
-  final String pageName;
-  final int categoryID;
-
 
   @override
   Widget build(BuildContext context) {

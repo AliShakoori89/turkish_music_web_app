@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:app_upgrade_flutter_sdk/app_upgrade_flutter_sdk.dart';
+import 'package:audio_service/audio_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,7 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
+import 'package:turkish_music_app/presentation/helpers/audio_handler.dart';
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
@@ -54,17 +56,26 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/privacy_screen/privacy_screen.dart';
 
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
 FutureOr<void> main() async{
+
+  final MyAudioHandler audioHandler;
 
   WidgetsFlutterBinding.ensureInitialized();
   await requestStoragePermission();
 
   await dotenv.load(fileName: ".env");
 
-  WidgetsFlutterBinding.ensureInitialized();
+  audioHandler = await AudioService.init(
+    builder: () => MyAudioHandler(),
+    config: AudioServiceConfig(
+      androidNotificationChannelId: 'com.mycompany.myapp.channel.audio',
+      androidNotificationChannelName: 'Music playback',
+    ),
+  );
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final bool isAgreed = prefs.getBool('isAgreed') ?? false;
@@ -111,7 +122,7 @@ FutureOr<void> main() async{
         // DevicePreview(
         //   enabled: !kReleaseMode,
         //   builder: (context) =>
-          MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed,)
+          MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed, audioHandler: audioHandler),
         // )
       )
   );
@@ -140,8 +151,9 @@ class MyApp extends StatefulWidget {
 
   final bool isLoggedIn;
   final bool isAgreed;
+  final MyAudioHandler audioHandler;
 
-  MyApp({key, required this.isLoggedIn, required this.isAgreed});
+  MyApp({key, required this.isLoggedIn, required this.isAgreed, required this.audioHandler});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -252,7 +264,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 PlayingSongBloc(IsPlayingMusicRepository())),
         BlocProvider(
             create: (BuildContext context) =>
-                AudioControlBloc()),
+                AudioControlBloc(audioHandler: widget.audioHandler)),
         BlocProvider(
             create: (BuildContext context) =>
                 CategoryBloc(CategoryRepository())),

@@ -117,9 +117,9 @@ class _NewSongState extends State<NewSong>{
                                   strokeAlign: BorderSide.strokeAlignOutside),
                               borderRadius: BorderRadius.circular(25.0),
                               image: DecorationImage(
-                                  image:
-                                      NetworkImage(newSong[index].imageSource!),
-                                  opacity: 0.2,
+                                filterQuality: FilterQuality.low,
+                                  image: NetworkImage(newSong[index].imageSource!),
+                                  colorFilter: ColorFilter.mode(Colors.grey, BlendMode.multiply),
                                   fit: BoxFit.fitWidth)),
                           child: CachedNetworkImage(
                               imageUrl: newSong[index].imageSource!,

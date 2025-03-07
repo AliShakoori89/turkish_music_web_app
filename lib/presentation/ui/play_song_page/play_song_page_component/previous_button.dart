@@ -8,22 +8,11 @@ import '../../../bloc/play_button_state_bloc/bloc.dart';
 import '../../../bloc/play_button_state_bloc/event.dart';
 
 class PreviousButton extends StatelessWidget {
-  PreviousButton({key,
-    required this.albumSongs, required this.songID, required this.albumID, required this.singerName,
-    required this.audioFileSec, required this.audioFileMin, required this.audioFilePath, required this.imageFilePath,
-    required this.songName, required this.pageName, required this.categoryID});
+  PreviousButton({super.key, required this.albumSongs, required this.songID, required this.singerName});
 
   final List<AlbumDataMusicModel> albumSongs;
   final int songID;
-  final int albumID;
   final String singerName;
-  final String audioFileSec;
-  final String audioFileMin;
-  final String audioFilePath;
-  final String imageFilePath;
-  final String songName;
-  final String pageName;
-  final int categoryID;
 
 
   @override
@@ -43,21 +32,6 @@ class PreviousButton extends StatelessWidget {
           context
               .read<PlayButtonStateBloc>()
               .add(SetPlayButtonStateEvent(playButtonState: true));
-
-          MiniPlayerModel song = MiniPlayerModel(
-              songID: songID,
-              songName: songName,
-              songsSingerName: singerName,
-              songImagePath: imageFilePath,
-              songFilePath: audioFilePath,
-              minute: audioFileMin,
-              second: audioFileSec,
-              categoryID: categoryID,
-              albumID: albumID,
-              songList: albumSongs
-          );
-
-          MiniPlayerRepo().saveToMiniPlayer(song);
 
         },
         icon: Container(

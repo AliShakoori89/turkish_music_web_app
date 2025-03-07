@@ -6,11 +6,12 @@ class SaveSongModel {
   String? audioFilePath;
   String? audioFileMin;
   String? audioFileSec;
+  String? albumName;
   int? audioFileAlbumId;
 
   SaveSongModel({this.id, this.songName, this.singerName,
   this.audioFilePath, this.imageFilePath, this.audioFileMin,
-  this.audioFileSec, this.audioFileAlbumId});
+  this.audioFileSec, this.audioFileAlbumId, this.albumName});
 
   Map<String, dynamic> toJson() {
     return {
@@ -21,6 +22,7 @@ class SaveSongModel {
       "audioFilePath": audioFilePath,
       "audioFileMin": audioFileMin,
       "audioFileSec": audioFileSec,
+      "albumName": albumName,
       "audioFileAlbumId": audioFileAlbumId
     };
   }
@@ -34,6 +36,7 @@ class SaveSongModel {
       audioFilePath: parsedJson['audioFilePath'],
       audioFileMin: parsedJson["audioFileMin"],
       audioFileSec: parsedJson['audioFileSec'],
+      albumName: parsedJson['albumName'],
       audioFileAlbumId: parsedJson['audioFileAlbumId']
     );
   }

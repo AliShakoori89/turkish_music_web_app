@@ -139,29 +139,13 @@ class LandscapePlaySongPage extends StatelessWidget {
                                 PreviousButton(
                                     albumSongs: albumAllSongsList,
                                     songID: songID,
-                                    albumID: albumID,
                                     singerName: singerName,
-                                    audioFileSec: second,
-                                    audioFileMin: minute,
-                                    audioFilePath: songFilePath,
-                                    imageFilePath: songImagePath,
-                                    songName: songName,
-                                    pageName: pageName,
-                                    categoryID: categoryID
                                 ),
                                 PlayButton(),
                                 NextButton(
                                     albumSongs : albumAllSongsList,
                                     songID: songID,
-                                    albumID: albumID,
                                     singerName: singerName,
-                                    audioFileSec: second,
-                                    audioFileMin: minute,
-                                    audioFilePath: songFilePath,
-                                    imageFilePath: songImagePath,
-                                    songName: songName,
-                                    pageName: pageName,
-                                    categoryID: categoryID
                                 )
                               ],
                             ),

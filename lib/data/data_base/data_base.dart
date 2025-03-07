@@ -21,6 +21,7 @@ class DatabaseHelper{
   static const columnRecentlyPlayedAudioFilePath = 'audioFilePath';
   static const columnRecentlyPlayedAudioFileMin = 'audioFileMin';
   static const columnRecentlyPlayedAudioFileSec = 'audioFileSec';
+  static const columnRecentlyPlayedAlbumName = 'albumName';
   static const columnRecentlyPlayedAudioFileAlbumId = 'audioFileAlbumId';
 
   DatabaseHelper._privateConstructor();
@@ -48,6 +49,7 @@ class DatabaseHelper{
         '$columnRecentlyPlayedAudioFilePath TEXT,'
         '$columnRecentlyPlayedAudioFileMin TEXT,'
         '$columnRecentlyPlayedAudioFileSec TEXT,'
+        '$columnRecentlyPlayedAlbumName TEXT,'
         '$columnRecentlyPlayedAudioFileAlbumId INTEGER'
         ')'
     );

@@ -57,7 +57,14 @@ class _MiniPlayingContainerState extends State<MiniPlayingContainer> {
                               child: InkWell(
                                 onTap: () {
 
-                                  // var newPath = widget.song.fileSource!.replaceAll(" ", "%20");
+                                  print(currentSong.song!.songID);
+                                  print(currentSong.song!.songName);
+                                  print(currentSong.song!.songImagePath);
+                                  print(currentSong.song!.songFilePath);
+                                  print(currentSong.song!.minute);
+                                  print(currentSong.song!.second);
+                                  print(currentSong.song!.songsSingerName);
+                                  print(currentSong.song!.albumID);
 
                                   SongDataModel songDataModel = SongDataModel(
                                     id : currentSong.song!.songID,

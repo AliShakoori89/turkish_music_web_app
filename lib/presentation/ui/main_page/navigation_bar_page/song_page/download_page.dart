@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -98,19 +99,19 @@ class _DownloadPageState extends State<DownloadPage> {
           : Stack(
         children: [
           ListView.builder(
+              padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20
+              ),
               itemCount: audioFiles!.length,
               itemBuilder: (context, index) {
                 File file = audioFiles![index] as File;
                 return Container(
                   decoration: BoxDecoration(
-                    border: Border.all(),
+                    border: Border.all(
+                      color: Colors.purpleAccent
+                    ),
                     borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.purple.withOpacity(0.5),
-                        blurRadius: 10.0,
-                      ),
-                    ],
                   ),
                   margin: EdgeInsets.only(),
                   child: ListTile(
@@ -122,35 +123,37 @@ class _DownloadPageState extends State<DownloadPage> {
               }),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              color: Colors.purple.withOpacity(0.4),
-              width: size.width,
-              height: size.height / 14,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    key: const Key('play_button'),
-                    onPressed: _isPlaying ? null : () => player.play(),
-                    iconSize: MediaQuery.of(context).size.height / 30,
-                    icon: const Icon(Icons.play_arrow),
-                    color: Colors.white,
-                  ),
-                  IconButton(
-                    key: const Key('pause_button'),
-                    onPressed: _isPlaying ? _pause : null,
-                    iconSize: MediaQuery.of(context).size.height / 30,
-                    icon: const Icon(Icons.pause),
-                    color: Colors.white,
-                  ),
-                  IconButton(
-                    key: const Key('stop_button'),
-                    onPressed: _isPlaying || _isPaused ? _stop : null,
-                    iconSize: MediaQuery.of(context).size.height / 30,
-                    icon: const Icon(Icons.stop),
-                    color: Colors.white,
-                  ),
-                ],
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(Colors.purple, BlendMode.dstIn),
+              child: Container(
+                width: size.width,
+                height: size.height / 14,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      key: const Key('play_button'),
+                      onPressed: _isPlaying ? null : () => player.play(),
+                      iconSize: MediaQuery.of(context).size.height / 30,
+                      icon: const Icon(Icons.play_arrow),
+                      color: Colors.white,
+                    ),
+                    IconButton(
+                      key: const Key('pause_button'),
+                      onPressed: _isPlaying ? _pause : null,
+                      iconSize: MediaQuery.of(context).size.height / 30,
+                      icon: const Icon(Icons.pause),
+                      color: Colors.white,
+                    ),
+                    IconButton(
+                      key: const Key('stop_button'),
+                      onPressed: _isPlaying || _isPaused ? _stop : null,
+                      iconSize: MediaQuery.of(context).size.height / 30,
+                      icon: const Icon(Icons.stop),
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
               ),
             ),
           )

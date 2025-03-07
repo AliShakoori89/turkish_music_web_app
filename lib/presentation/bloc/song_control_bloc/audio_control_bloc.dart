@@ -12,6 +12,7 @@ import '../../../data/model/song_model.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../../../domain/repositories/mini_playing_container_repository.dart';
+import '../../helpers/audio_handler.dart';
 
 part 'audio_control_event.dart';
 part 'audio_control_state.dart';
@@ -20,8 +21,9 @@ enum SongControlStatus { play, pause }
 
 class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
+  List<MediaItem> queue = [];
+
   List<AlbumDataMusicModel>? _currentAlbum;
-  String? _singerName;
 
   double currentSongIndex = 0;
 
@@ -31,18 +33,18 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
   SongDataModel? get currentSelectedSong => _currentSelectedSong;
 
-  Stream<Duration> get positionStream => _audioPlayer.positionStream;
+  Stream<Duration> get positionStream => audioHandler.playbackState
+      .map((state) => state.position)
+      .distinct();
 
   StreamSubscription? _audioStream;
 
-  final _audioPlayer = AudioPlayer();
+  final MyAudioHandler audioHandler;
 
-  AudioPlayer get audioPlayer => _audioPlayer;
+  AudioControlBloc({required this.audioHandler}) : super(AudioControlInitial()) {
 
-  AudioControlBloc() : super(AudioControlInitial()) {
-
-    _audioStream = _audioPlayer.playerStateStream.listen((playerState) {
-      if (playerState.processingState == ProcessingState.completed) {
+    _audioStream = audioHandler.playbackState.listen((playbackState) {
+      if (playbackState.processingState == AudioProcessingState.completed) {
         add(SongCompletedEvent());
       }
     });
@@ -64,19 +66,19 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     });
 
     on<PauseSongEvent>((event, emit) async {
-      await _audioPlayer.pause();
+      await audioHandler.pause();
     });
 
     on<RepeatSongEvent>((event, emit) async {
-      await _audioPlayer.setLoopMode(LoopMode.one);
+      await audioHandler.setRepeatMode(AudioServiceRepeatMode.one); // حالت تکرار یک آهنگ
     });
 
     on<ResumeSongEvent>((event, emit) async {
-      await _audioPlayer.play();
+      await audioHandler.play();
     });
 
     on<StopRepeatingEvent>((event, emit) async {
-      await _audioPlayer.setLoopMode(LoopMode.off);
+      await audioHandler.setRepeatMode(AudioServiceRepeatMode.none);
     });
 
 
@@ -94,7 +96,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
     on<PlayNextSongEvent>((event, emit) async {
       _currentAlbum = event.currentAlbum;
-      _singerName =  event.singerName;
       await _playNextSong(emit);
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
@@ -106,7 +107,6 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
 
     on<PlayPreviousSongEvent>((event, emit) async {
       _currentAlbum = event.currentAlbum;
-      _singerName =  event.singerName;
       await _playPreviousSong(emit);
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
@@ -117,7 +117,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
     });
 
     on<AudioPlayDisposeEvent>((event, emit) async {
-      await _audioPlayer.dispose();
+      await audioHandler.stop();
       emit(AudioPlayedState(songModel: _currentSelectedSong!));
     });
 
@@ -247,7 +247,9 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         await _playCurrentSong(emit);
         await saveCurrentSongData(_currentSelectedSong!);
         await readCurrentSongData();
+
       }else{
+
         currentIndex = _currentAlbum!.length-1;
         final nextSong = _currentAlbum![currentIndex];
         _currentSelectedSong = _mapAlbumDataMusicModelToSongDataModel(nextSong);
@@ -280,48 +282,65 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
         await _playCurrentSong(emit);
         await saveCurrentSongData(_currentSelectedSong!);
         await readCurrentSongData();
+
       }
-      // }
     }
   }
 
   Future<void> _playCurrentSong(Emitter<AudioControlState> emit) async {
-    if (_currentSelectedSong != null) {
-      final String modifiedUrl = _currentSelectedSong!.fileSource!.replaceAll("%20", " ");
+    if (_currentSelectedSong == null) return;
 
-      SaveSongModel saveSongModel = SaveSongModel(
-        id: _currentSelectedSong!.id,
-        singerName: _currentSelectedSong!.singerName,
-        audioFileAlbumId: _currentSelectedSong!.albumId,
-        audioFileMin: _currentSelectedSong!.minute,
-        audioFilePath: _currentSelectedSong!.fileSource,
-        audioFileSec: _currentSelectedSong!.second,
-        imageFilePath: _currentSelectedSong!.imageSource,
-        songName: _currentSelectedSong!.name,
+    // final String cleanedUrl = _currentSelectedSong!.fileSource!.replaceAll("]", "").trim();
+
+    SaveSongModel saveSongModel = SaveSongModel(
+      id: _currentSelectedSong!.id,
+      singerName: _currentSelectedSong!.singerName,
+      audioFileAlbumId: _currentSelectedSong!.albumId,
+      audioFileMin: _currentSelectedSong!.minute,
+      audioFilePath: _currentSelectedSong!.fileSource,
+      audioFileSec: _currentSelectedSong!.second,
+      imageFilePath: _currentSelectedSong!.imageSource,
+      songName: _currentSelectedSong!.name,
+    );
+
+    await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
+
+    List<MediaItem> queue = [];
+    int nowCurrentIndex = 0;
+
+    for (int i = 0; i < _currentAlbum!.length; i++) {
+
+      // String songUrl = _currentAlbum![i].fileSource!.replaceAll("]", "").trim();
+
+      final mediaItem = MediaItem(
+        id: _currentAlbum![i].id.toString(),
+        album: saveSongModel.albumName,
+        title: _currentAlbum![i].name!,
+        artist: _currentAlbum![i].singerName,
+        artUri: Uri.parse(_currentAlbum![i].imageSource!),
+        duration: Duration(minutes: int.parse(_currentAlbum![i].minute!), seconds: int.parse(_currentAlbum![i].second!)),
+        extras: {'url': _currentAlbum![i].fileSource!, 'albumID': _currentAlbum![i].albumId},
       );
 
-      await recentlyPlaySongRepository.saveRecentlyPlayedSong(saveSongModel);
+      queue.add(mediaItem);
+    }
 
-      try {
-        await _audioPlayer.setAudioSource(
-          AudioSource. uri(
-            Uri.parse(modifiedUrl),
-            tag: MediaItem(
-              id: '1',
-              album: "Turkish Music Album",
-              title: saveSongModel.songName!,
-              artist: saveSongModel.singerName,
-              artUri: Uri.parse(saveSongModel.imageFilePath!), // Cover Art
-            ),
-          ),
-        );
-        // await _audioPlayer.setUrl(modifiedUrl);
-        await _audioPlayer.play();
-      } catch (e) {
-        print("Error playing audio: $e");
+    for (int i = 0; i < _currentAlbum!.length; i++) {
+      if (_currentAlbum![i].name == _currentSelectedSong!.name) {
+        print("Current Index: $i");
+        nowCurrentIndex = i;
       }
     }
+
+    try {
+      await audioHandler.setQueue(queue , nowCurrentIndex);
+      await audioHandler.customAction('setUrl', {'url': _currentSelectedSong!.fileSource!});
+      await audioHandler.play();
+    } catch (e) {
+      print("🚨 Error in _playCurrentSong: $e");
+    }
   }
+
 
 
   SongDataModel _mapAlbumDataMusicModelToSongDataModel(AlbumDataMusicModel song) {
@@ -347,11 +366,11 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
   }
 
   stopAudio() async {
-    await _audioPlayer.stop();
+    await audioHandler.stop();
   }
 
   seekTo(Duration position) async {
-    await _audioPlayer.seek(position);
+    await audioHandler.seek(position);
   }
 
   @override
@@ -360,7 +379,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       await _audioStream!.cancel(); // Use await to ensure it finishes
       _audioStream = null; // Optionally set to null for safety
     }
-    await _audioPlayer.dispose(); // Use await for proper disposal
+    await audioHandler.stop(); // Use await for proper disposal
     return super.close();
   }
 

@@ -87,8 +87,8 @@ class ContainerAllSongsList extends StatelessWidget {
                     child: Row(
                       children: [
                         categoryAllSongs.length != 1
-                            ? categoryAllSongs.first.albumId == categoryAllSongs[1].albumId &&
-                            categoryAllSongs.first.albumId == categoryAllSongs.last.albumId
+                            ? categoryAllSongs.first.name == categoryAllSongs[1].name &&
+                            categoryAllSongs.first.singerName == categoryAllSongs.last.singerName
                             ? Container(
                           height: 50,
                         )
@@ -156,8 +156,11 @@ class ContainerAllSongsList extends StatelessWidget {
                         ) ,
                         const SizedBox(width: 5,),
                         categoryAllSongs.length != 1 ?
-                        categoryAllSongs.isNotEmpty && categoryAllSongs.first.albumId != categoryAllSongs[1].albumId &&
-                            categoryAllSongs.first.albumId != categoryAllSongs.last.albumId
+                        categoryAllSongs.isNotEmpty &&
+                            categoryAllSongs.first.name != categoryAllSongs[1].name &&
+                            categoryAllSongs.first.name != categoryAllSongs[2].name &&
+                            categoryAllSongs.first.singerName != categoryAllSongs[3].singerName &&
+                            categoryAllSongs.first.singerName != categoryAllSongs.last.singerName
                             ? Expanded(
                           flex: 4,
                           child: Column(

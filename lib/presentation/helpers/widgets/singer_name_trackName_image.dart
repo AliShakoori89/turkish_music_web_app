@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:turkish_music_app/presentation/const/no_image.dart';
 
 class SingerNameTrackNameImage extends StatelessWidget {
 
@@ -41,7 +42,7 @@ class SingerNameTrackNameImage extends StatelessWidget {
                       fit: BoxFit.fill)
               ),
             ),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+            errorWidget: (context, url, error) => NoImage(),
           )
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.03,),
