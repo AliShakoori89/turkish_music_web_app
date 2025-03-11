@@ -74,52 +74,56 @@ class _MainPageState extends State<MainPage> {
         exit(0);
       },
       child: Scaffold(
-          body: Stack(
-            children: [
-              myRoutes[currentRoute],
-              Positioned(
-                bottom: 100,
-                right: 0,
-                child: VerticalNavBar(
-                  selectedIndex: currentRoute,
-                  height: orientation == Orientation.portrait
-                      ? MediaQuery.of(context).size.height * 0.3
-                      : MediaQuery.of(context).size.height * 0.5,
-                  width: orientation == Orientation.portrait
-                      ? MediaQuery.of(context).size.width * 0.12
-                      : MediaQuery.of(context).size.width * 0.04,
-                  backgroundColor: Colors.purple.withValues(alpha: 0.3),
-                  borderRadius: 15,
-                  onItemSelected: (value) {
-                    setState(() {
-                      currentRoute = value;
-                    });
-                  },
-                  items: const [
-                    VerticalNavBarItem(
-                      title: Icons.home,
-                    ),
-                    VerticalNavBarItem(
-                      title: Icons.person,
-                    ),
-                    VerticalNavBarItem(
-                      title: Icons.music_note,
-                    ),
-                    VerticalNavBarItem(
-                      title: Icons.search,
-                    ),
-                  ],
+          body: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
+              children: [
+                myRoutes[currentRoute],
+                Positioned(
+                  bottom: 100,
+                  right: 0,
+                  child: VerticalNavBar(
+                    selectedIndex: currentRoute,
+                    height: orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.height * 0.3
+                        : MediaQuery.of(context).size.height * 0.5,
+                    width: orientation == Orientation.portrait
+                        ? MediaQuery.of(context).size.width * 0.12
+                        : MediaQuery.of(context).size.width * 0.04,
+                    backgroundColor: Colors.purple.withValues(alpha: 0.3),
+                    borderRadius: 15,
+                    onItemSelected: (value) {
+                      setState(() {
+                        currentRoute = value;
+                      });
+                    },
+                    items: const [
+                      VerticalNavBarItem(
+                        title: Icons.home,
+                      ),
+                      VerticalNavBarItem(
+                        title: Icons.person,
+                      ),
+                      VerticalNavBarItem(
+                        title: Icons.music_note,
+                      ),
+                      VerticalNavBarItem(
+                        title: Icons.search,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              MiniPlayerRepo().song != null
-                  ? currentRoute != 3
-                  ? Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MiniPlayingContainer()
-              )
-                  : Container(height: 0,)
-                  : Container(height: 0,)
-            ],
+                MiniPlayerRepo().song != null
+                    ? currentRoute != 3
+                    ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: MiniPlayingContainer()
+                )
+                    : Center()
+                    : Center()
+              ],
+            ),
           )),
     )
     ;

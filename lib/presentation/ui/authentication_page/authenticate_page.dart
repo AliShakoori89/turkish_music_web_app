@@ -309,7 +309,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
   Widget component2(String string, double width, GlobalKey<FormState> emailFormKey) {
     Size size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
@@ -399,7 +398,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
                                   if(isTrue){
                                     Fluttertoast.showToast(
-                                        msg: "Authentication Success...  WellCome .",
+                                        msg: "Authentication Success...  Welcome .",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 3,

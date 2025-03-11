@@ -84,6 +84,7 @@ dependencies:
   just_audio_background:
   audio_service: ^0.18.17
   flutter_foreground_task:
+  device_preview:
 
 dev_dependencies:
   flutter_test:

@@ -19,11 +19,12 @@ class MusicPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Orientation orientation = MediaQuery.of(context).orientation;
+    var width = double.infinity;
 
     return Scaffold(
         body: SafeArea(
           child: Container(
-            height: 1000,
+            height: double.infinity,
             margin: EdgeInsets.only(
               right: MediaQuery.of(context).size.width * 0.033,
               left: MediaQuery.of(context).size.width * 0.033,
@@ -33,15 +34,15 @@ class MusicPage extends StatelessWidget {
               children: [
                 Expanded(
                     flex: orientation == Orientation.portrait
-                        ? 3
-                        : 10,
+                        ? width < 400 ? 3 : 4
+                        : 5,
                     child: CustomPageWithCards(
                         title: title,
                         customIcon: customIcon,
                         rowNumber: title.length,
                         customColor: Colors.white)),
                 SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 Expanded(
                   flex: 1,

@@ -16,6 +16,8 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           body: Container(
+            width: double.infinity,
+            height: double.infinity,
             margin: EdgeInsets.only(
               top: 10,
               right: 10,

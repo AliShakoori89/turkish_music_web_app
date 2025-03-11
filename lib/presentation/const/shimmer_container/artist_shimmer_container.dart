@@ -28,8 +28,8 @@ class ArtistShimmerContainer extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: Colors.black12,
                           shape: BoxShape.circle),
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      height: MediaQuery.of(context).size.width * 0.2
+                      width: 70,
+                      height: 70
                   ),
                 )
             );

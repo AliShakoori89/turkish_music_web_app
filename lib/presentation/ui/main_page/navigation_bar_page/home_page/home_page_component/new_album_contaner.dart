@@ -31,37 +31,36 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
   @override
   Widget build(BuildContext context) {
 
-    var height = MediaQuery.of(context).size.height;
     Orientation orientation = MediaQuery.of(context).orientation;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: MediaQuery.of(context).size.height / 20),
+        SizedBox(height: 10),
         TitleText(title: "New Album", haveSeeAll: false),
         Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.02,
-            bottom: MediaQuery.of(context).size.height * 0.02,
+            top: 30,
             left: MediaQuery.of(context).size.width * 0.09,
             right: MediaQuery.of(context).size.width * 0.09,
           ),
           child: BlocBuilder<AlbumBloc, AlbumState>(builder: (context, state) {
 
             var newAlbum = state.newAlbum;
+            var width = MediaQuery.of(context).size.width;
+
+            print(MediaQuery.of(context).size.width);
 
             return SizedBox(
               height: orientation == Orientation.portrait
-                  ? height < 670
-                  ? MediaQuery.of(context).size.height * 0.63
-                  : MediaQuery.of(context).size.height * 0.51
-                  : MediaQuery.of(context).size.height / 2,
+                  ? 300
+                  : 220,
               child: orientation == Orientation.portrait
                   ? AnimatedGridView(
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  mainAxisExtent: 220,
-                  crossAxisSpacing: 50,
+                  crossAxisCount: width > 600 ? 4 : 2,
+                  mainAxisExtent: width > 600 ? 250 : 150,
+                  crossAxisSpacing: width > 600 ? 50 : 50,
                   cacheExtent: 1000,
                   children: List.generate(
                       newAlbum.length, (index) {
@@ -110,7 +109,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                              flex: 4,
+                              flex: 5,
                               child: CachedNetworkImage(
                                 imageUrl: newAlbum[index].imageSource!,
                                 imageBuilder: (context, imageProvider) => Container(
@@ -146,7 +145,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                         physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: 4,
                         mainAxisExtent: 220,
-                        crossAxisSpacing: 50,
+                        crossAxisSpacing: 20,
                         cacheExtent: 1000,
                         children: List.generate(newAlbum.length, (index) {
                           return GestureDetector(
@@ -219,7 +218,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                                           Icon(Icons.error),
                                     )),
                                 Expanded(
-                                  flex: 2,
+                                  flex: 1,
                                   child: UnderImageSingerAndSongName(
                                       singerName: newAlbum[index].singer?.name,
                                       albumName: newAlbum[index].name,
@@ -231,6 +230,9 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                         })),
             );
           })
+        ),
+        const SizedBox(
+          height: 10,
         ),
       ],
     );

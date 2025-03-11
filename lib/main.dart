@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:app_upgrade_flutter_sdk/app_upgrade_flutter_sdk.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -119,11 +121,11 @@ FutureOr<void> main() async{
         options.profilesSampleRate = 1.0;
       },
       appRunner: () =>   runApp(
-        // DevicePreview(
-        //   enabled: !kReleaseMode,
-        //   builder: (context) =>
+        DevicePreview(
+          enabled: !kReleaseMode,
+          builder: (context) =>
           MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed, audioHandler: audioHandler),
-        // )
+        )
       )
   );
 }

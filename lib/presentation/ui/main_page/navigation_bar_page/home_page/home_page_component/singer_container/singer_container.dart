@@ -19,6 +19,8 @@ class SingerContainer extends StatelessWidget {
 
     Orientation orientation = MediaQuery.of(context).orientation;
 
+    var width = double.infinity;
+
     BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
     BlocProvider.of<SingerBloc>(context).add(GetAllSingerNameEvent());
     BlocProvider.of<SingerBloc>(context).add(GetAllSingerEvent());
@@ -32,7 +34,7 @@ class SingerContainer extends StatelessWidget {
       return Column(
         children: [
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           TitleText(
             title: "Singer",
@@ -40,13 +42,14 @@ class SingerContainer extends StatelessWidget {
             allSinger: allSinger,
             allSingerName: allSingerName,
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             padding: EdgeInsets.symmetric(
-                horizontal: orientation == Orientation.portrait
-                    ? MediaQuery.of(context).size.width * 0.0052
-                    : MediaQuery.of(context).size.width * 0.1,
-                vertical: MediaQuery.of(context).size.width * 0.0055),
-            height: MediaQuery.of(context).size.height * 0.2,
+                horizontal: 2,
+                vertical: 10),
+            height: MediaQuery.of(context).size.height * 0.15,
             width: double.infinity,
             child: AnimatedListView(
               duration: 100,
@@ -64,9 +67,7 @@ class SingerContainer extends StatelessWidget {
                     );
                   },
                   child: SizedBox(
-                    width: orientation == Orientation.portrait
-                        ? MediaQuery.of(context).size.width * 0.22
-                        : MediaQuery.of(context).size.width * 0.1,
+                    width: 70,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,

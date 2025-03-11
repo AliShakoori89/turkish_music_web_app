@@ -12,7 +12,7 @@ class NewMusicContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.width * 0.011,
+            height: 10,
           ),
           TitleText(
             title: "New Songs",
@@ -20,7 +20,7 @@ class NewMusicContainer extends StatelessWidget {
           ),
           NewSong(),
           SizedBox(
-            height: MediaQuery.of(context).size.width * 0.055,
+            height: 30,
           ),
         ],
       );

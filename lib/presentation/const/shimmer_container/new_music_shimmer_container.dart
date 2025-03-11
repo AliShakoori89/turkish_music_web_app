@@ -7,8 +7,12 @@ class NewSongShimmerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    Orientation orientation = MediaQuery.of(context).orientation;
+
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.2,
+      height: orientation == Orientation.portrait
+          ? 300
+          : 220,
       child: Shimmer.fromColors(
           baseColor: Colors.black12,
           highlightColor: Colors.grey[400]!,

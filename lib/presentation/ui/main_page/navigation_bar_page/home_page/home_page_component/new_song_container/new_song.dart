@@ -42,7 +42,7 @@ class _NewSongState extends State<NewSong>{
           child: CarouselSlider(
               options: CarouselOptions(
                 height: orientation == Orientation.portrait
-                    ? MediaQuery.of(context).size.height / 5
+                    ? MediaQuery.of(context).size.height / 3
                     : width < 700
                         ? MediaQuery.of(context).size.height / 2
                         : MediaQuery.of(context).size.height / 2.5,
@@ -126,6 +126,7 @@ class _NewSongState extends State<NewSong>{
                               imageBuilder: (context, imageProvider) =>
                                   Container(
                                     decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25.0),
                                         image: DecorationImage(
                                       image: NetworkImage(
                                           newSong[index].imageSource!),

@@ -38,9 +38,7 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.0052,
                 vertical: MediaQuery.of(context).size.height * 0.03),
-            height: orientation == Orientation.portrait
-                ? MediaQuery.of(context).size.height * 0.2
-                : MediaQuery.of(context).size.height * 0.35,
+            height: 200,
             width: double.infinity,
             child: AnimatedListView(
               duration: 100,
