@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:app_upgrade_flutter_sdk/app_upgrade_flutter_sdk.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -195,7 +193,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     ConnectivityResult result;
     try {
       result = await Connectivity().checkConnectivity();
-    } on PlatformException catch (e) {
+    } on PlatformException {
       return false;  // Default to false on error
     }
 
