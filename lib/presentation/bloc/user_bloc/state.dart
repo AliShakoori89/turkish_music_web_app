@@ -13,32 +13,37 @@ class UserState extends Equatable{
 
   const UserState({
     required this.status,
+    required this.userExist,
     required this.firstRegisterStatus,
     required this.secondRegisterStatus,
   });
 
   static UserState initial() => UserState(
     status: UserStatus.initial,
+    userExist: '',
     firstRegisterStatus: false,
     secondRegisterStatus: false,
   );
 
   final UserStatus status;
+  final String userExist;
   final bool firstRegisterStatus;
   final bool secondRegisterStatus;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, firstRegisterStatus,
+  List<Object?> get props => [status, userExist, firstRegisterStatus,
     secondRegisterStatus];
 
   UserState copyWith({
     UserStatus? status,
+    String? userExist,
     bool? firstRegisterStatus,
     bool? secondRegisterStatus,
   }) {
     return UserState(
       status: status ?? this.status,
+      userExist: userExist ?? this.userExist,
       firstRegisterStatus: firstRegisterStatus ?? this.firstRegisterStatus,
       secondRegisterStatus: secondRegisterStatus ?? this.secondRegisterStatus,
     );

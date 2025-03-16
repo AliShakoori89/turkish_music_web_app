@@ -25,6 +25,17 @@ class FirstLoginEvent extends UserEvent{
   List<Object> get props => [email];
 }
 
+class UserExistEvent extends UserEvent{
+  final String email;
+
+  UserExistEvent({
+    required this.email,
+  });
+
+  @override
+  List<Object> get props => [email];
+}
+
 class SecondLoginEvent extends UserEvent{
   final String email;
   final String verificationToken;

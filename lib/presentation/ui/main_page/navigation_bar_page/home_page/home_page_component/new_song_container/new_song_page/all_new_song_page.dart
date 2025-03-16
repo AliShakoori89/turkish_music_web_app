@@ -31,6 +31,9 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    var width = double.infinity;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Songs'),
@@ -102,7 +105,7 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
                             width: 10,
                           ),
                           Expanded(
-                            flex: 15,
+                            flex: width > 800 ? 25 : width > 600 ? 15  : 28,
                             child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(

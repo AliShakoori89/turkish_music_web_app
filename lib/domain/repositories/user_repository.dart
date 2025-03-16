@@ -34,8 +34,9 @@ class UserRepository {
     ApiBaseHelper api = ApiBaseHelper();
 
     var body = jsonEncode({'email': email, "verificationToken": apiKey});
-
     final response = await api.post("/api/User/FirstStepLogin", body);
+    var responseData = jsonDecode(response.body);
+    print("Response message: ${responseData['message']}");
 
     if (response.statusCode == 200) {
       return true;
@@ -46,6 +47,20 @@ class UserRepository {
     else if (response.statusCode == 404){
       return false;
     }
+  }
+
+  Future<String> userExist(String email) async{
+    await dotenv.load();
+    final String? apiKey = dotenv.get("apiKey");
+
+    ApiBaseHelper api = ApiBaseHelper();
+
+    var body = jsonEncode({'email': email, "verificationToken": apiKey});
+    final response = await api.post("/api/User/FirstStepLogin", body);
+    var responseData = jsonDecode(response.body);
+    print("Response message: ${responseData['message']}");
+
+    return responseData['message'];
   }
 
   FutureOr<bool> secondLogin(String email, String verificationToken) async {

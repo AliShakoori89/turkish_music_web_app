@@ -145,8 +145,9 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
     return Scaffold(
         backgroundColor: const Color(0xff192028),
-        body: BlocListener<UserBloc, UserState>(
+        body: BlocListener <UserBloc, UserState>(
           listener: (context, state){
+
             if(state.status.isSuccess){
               Fluttertoast.showToast(
                   msg: "Code sent to your email successfully .",
@@ -234,15 +235,15 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             Icons.email_outlined, 'Email...', false, true, emailController, emailFormKey),
                         const SizedBox(height: 10,),
                         component2(
-                            'LOG IN',
-                            2.58,
-                            emailFormKey
+                          'LOG IN',
+                          2.58,
+                          emailFormKey
                         ),
                         const SizedBox(height: 10,),
                         component2(
                           'SIGN UP',
                           2.58,
-                          emailFormKey,
+                          emailFormKey
                         ),
                         const SizedBox(height: 10,),
                       ],
@@ -317,7 +318,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
         child: InkWell(
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
-          onTap: (){
+          onTap: () async {
 
             if (emailFormKey.currentState!.validate()){
               if (_state == 0) {
@@ -328,120 +329,140 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                   registerBloc.add(RegisterUserEvent(email: emailController.text));
 
                 }
-                else if(string == "LOG IN"){
+                else if(string == "LOG IN") {
 
-                  registerBloc.add(FirstLoginEvent(email: emailController.text));
+                  String userExist = await registerBloc.userRepository.userExist(emailController.text);
 
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: Container(
-                          width: size.width / 1.1,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text('Enter Code : '),
-                                  IconButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      icon: Icon(Icons.close))
-                                ],
-                              ),
-                              Text("Please wait for the code by email ...",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey
-                                ),),
-                            ],
-                          ),
-                        ),
-                        content:  Container(
-                          // color: Colors.amber,
-                          height: size.height / 7,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                  height: 5),
-                              OtpTextField(
-                                numberOfFields: 6,
-                                borderColor: Colors.white,
-                                fillColor: Colors.white.withValues(alpha: 0.5),
-                                borderWidth: 0.25,
-                                margin: EdgeInsets.only(
-                                    right: 2,
-                                    left: 2
+                  if(userExist != "رکورد با مشخصات وارد شده یافت نشد"){
+
+                    registerBloc.add(FirstLoginEvent(email: emailController.text));
+
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (_) {
+                        return AlertDialog(
+                          title: Container(
+                            width: size.width / 1.1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Enter Code : '),
+                                    IconButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        icon: Icon(Icons.close))
+                                  ],
                                 ),
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly, // This allows only digits
-                                ],
-                                focusedBorderColor: const Color(0xffb188ef),
-                                keyboardType: TextInputType.number,
-                                fieldWidth: 35,
-                                filled: true,
-                                showFieldAsBox: true,
-                                handleControllers: (controllers) {
-                                  //get all textFields controller, if needed
-                                  verificationCodeController = controllers;
-                                },
-                                onSubmit: (String verificationCode) async{
-
-                                  final registerBloc = BlocProvider.of<UserBloc>(context);
-
-                                  bool isTrue = await registerBloc.userRepository.secondLogin(emailController.text, verificationCode);
-
-                                  if(isTrue){
-                                    Fluttertoast.showToast(
-                                        msg: "Authentication Success...  Welcome .",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 3,
-                                        backgroundColor: const Color(
-                                            0xFF00B01E).withValues(alpha: 0.2),
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => MainPage(),
-                                      ),
-                                    );
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: "Verification code is not true .",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.TOP,
-                                        timeInSecForIosWeb: 3,
-                                        backgroundColor: const Color(
-                                            0xFFC20808).withValues(alpha: 0.2),
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
-                                  }
-                                },
-                              ),
-                              Spacer(),
-                              OtpTimerButton(
-                                controller: controller,
-                                onPressed: () {
-                                  controller.startTimer();
-                                  registerBloc.add(FirstLoginEvent(email: emailController.text));
-                                },
-                                text: Text('Resend OTP'),
-                                duration: 120,
-                              ),
-                            ],
+                                Text("Please wait for the code by email ...",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey
+                                  ),),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
+                          content:  Container(
+                            // color: Colors.amber,
+                            height: size.height / 7,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                    height: 5),
+                                OtpTextField(
+                                  numberOfFields: 6,
+                                  borderColor: Colors.white,
+                                  fillColor: Colors.white.withValues(alpha: 0.5),
+                                  borderWidth: 0.25,
+                                  margin: EdgeInsets.only(
+                                      right: 2,
+                                      left: 2
+                                  ),
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly, // This allows only digits
+                                  ],
+                                  focusedBorderColor: const Color(0xffb188ef),
+                                  keyboardType: TextInputType.number,
+                                  fieldWidth: 35,
+                                  filled: true,
+                                  showFieldAsBox: true,
+                                  handleControllers: (controllers) {
+                                    //get all textFields controller, if needed
+                                    verificationCodeController = controllers;
+                                  },
+                                  onSubmit: (String verificationCode) async{
+
+                                    final registerBloc = BlocProvider.of<UserBloc>(context);
+
+                                    bool isTrue = await registerBloc.userRepository.secondLogin(emailController.text, verificationCode);
+
+                                    if(isTrue){
+                                      Fluttertoast.showToast(
+                                          msg: "Authentication Success...  Welcome .",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 3,
+                                          backgroundColor: const Color(
+                                              0xFF00B01E).withValues(alpha: 0.2),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => MainPage(),
+                                        ),
+                                      );
+                                    } else {
+                                      Fluttertoast.showToast(
+                                          msg: "Verification code is not true .",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.TOP,
+                                          timeInSecForIosWeb: 3,
+                                          backgroundColor: const Color(
+                                              0xFFC20808).withValues(alpha: 0.2),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                    }
+                                  },
+                                ),
+                                Spacer(),
+                                OtpTimerButton(
+                                  controller: controller,
+                                  onPressed: () {
+                                    controller.startTimer();
+                                    registerBloc.add(FirstLoginEvent(email: emailController.text));
+                                  },
+                                  text: Text('Resend OTP'),
+                                  duration: 120,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+
+                  }else{
+
+                    Fluttertoast.showToast(
+                        msg: "The user has not registered with the entered email .",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.TOP,
+                        timeInSecForIosWeb: 3,
+                        backgroundColor: const Color(
+                            0xFFC20808).withValues(alpha: 0.2),
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+
+                  }
+
                 }
               }
             }

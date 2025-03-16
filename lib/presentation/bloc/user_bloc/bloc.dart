@@ -12,6 +12,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       UserState.initial()){
     on<RegisterUserEvent>(_mapRegisterUserEventToState);
     on<FirstLoginEvent>(_mapFirstLoginEventToState);
+    on<UserExistEvent>(_mapUserExistEventToState);
     on<SecondLoginEvent>(_mapSecondLoginEventToState);
   }
 
@@ -43,6 +44,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         state.copyWith(
           status: UserStatus.success,
           firstRegisterStatus: firstLoginStatus
+        ),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: UserStatus.error));
+    }
+  }
+
+  void _mapUserExistEventToState(
+      UserExistEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(state.copyWith(status: UserStatus.loading));
+
+      final String? userExist = await userRepository.userExist(event.email);
+
+      emit(
+        state.copyWith(
+            status: UserStatus.success,
+            userExist: userExist
         ),
       );
     } catch (error) {

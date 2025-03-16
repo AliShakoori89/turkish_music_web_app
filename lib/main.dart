@@ -121,11 +121,11 @@ FutureOr<void> main() async{
         options.profilesSampleRate = 1.0;
       },
       appRunner: () =>   runApp(
-        DevicePreview(
-          enabled: !kReleaseMode,
-          builder: (context) =>
+        // DevicePreview(
+        //   enabled: !kReleaseMode,
+        //   builder: (context) =>
           MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed, audioHandler: audioHandler),
-        )
+        // )
       )
   );
 }
