@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:overflow_text_animated/overflow_text_animated.dart';
 
 class SongCard extends StatelessWidget {
 
