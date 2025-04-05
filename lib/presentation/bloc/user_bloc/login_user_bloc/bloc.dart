@@ -1,40 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
-import '../../../domain/repositories/user_repository.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/state.dart';
+import '../../../../domain/repositories/user_repository.dart';
 import 'event.dart';
 
-class UserBloc extends Bloc<UserEvent, UserState> {
+class LoginUserBloc extends Bloc<LoginUserEvent, LoginUserState> {
 
   UserRepository userRepository = UserRepository();
 
-  UserBloc(this.userRepository) : super(
+  LoginUserBloc(this.userRepository) : super(
 
-      UserState.initial()){
-    on<RegisterUserEvent>(_mapRegisterUserEventToState);
+      LoginUserState.initial()){
     on<FirstLoginEvent>(_mapFirstLoginEventToState);
     on<UserExistEvent>(_mapUserExistEventToState);
     on<SecondLoginEvent>(_mapSecondLoginEventToState);
   }
 
-  void _mapRegisterUserEventToState(
-      RegisterUserEvent event, Emitter<UserState> emit) async {
-    try {
-      emit(state.copyWith(status: UserStatus.loading));
-
-      await userRepository.requestPublic(event.email);
-
-      emit(
-        state.copyWith(
-          status: UserStatus.success,
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: UserStatus.error));
-    }
-  }
-
   void _mapFirstLoginEventToState(
-      FirstLoginEvent event, Emitter<UserState> emit) async {
+      FirstLoginEvent event, Emitter<LoginUserState> emit) async {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
@@ -52,7 +34,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   void _mapUserExistEventToState(
-      UserExistEvent event, Emitter<UserState> emit) async {
+      UserExistEvent event, Emitter<LoginUserState> emit) async {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
@@ -70,7 +52,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   void _mapSecondLoginEventToState(
-      SecondLoginEvent event, Emitter<UserState> emit) async {
+      SecondLoginEvent event, Emitter<LoginUserState> emit) async {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 

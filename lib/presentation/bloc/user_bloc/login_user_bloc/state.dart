@@ -9,16 +9,16 @@ extension UserStatusX on UserStatus {
   bool get isLoading => this == UserStatus.loading;
 }
 
-class UserState extends Equatable{
+class LoginUserState extends Equatable{
 
-  const UserState({
+  const LoginUserState({
     required this.status,
     required this.userExist,
     required this.firstRegisterStatus,
     required this.secondRegisterStatus,
   });
 
-  static UserState initial() => UserState(
+  static LoginUserState initial() => LoginUserState(
     status: UserStatus.initial,
     userExist: '',
     firstRegisterStatus: false,
@@ -35,13 +35,13 @@ class UserState extends Equatable{
   List<Object?> get props => [status, userExist, firstRegisterStatus,
     secondRegisterStatus];
 
-  UserState copyWith({
+  LoginUserState copyWith({
     UserStatus? status,
     String? userExist,
     bool? firstRegisterStatus,
     bool? secondRegisterStatus,
   }) {
-    return UserState(
+    return LoginUserState(
       status: status ?? this.status,
       userExist: userExist ?? this.userExist,
       firstRegisterStatus: firstRegisterStatus ?? this.firstRegisterStatus,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page_widget/about_button.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/profile_page/profile_page_widget/report_button.dart';
-import '../../../../bloc/fetch_user_bloc/event.dart';
+import '../../../../bloc/user_bloc/fetch_user_bloc/bloc.dart';
+import '../../../../bloc/user_bloc/fetch_user_bloc/event.dart';
+import '../../../../bloc/user_bloc/fetch_user_bloc/state.dart';
 import '../../../../const/custom_divider.dart';
 import 'profile_page_widget/exit_account-button.dart';
 import 'profile_page_widget/exit_button.dart';

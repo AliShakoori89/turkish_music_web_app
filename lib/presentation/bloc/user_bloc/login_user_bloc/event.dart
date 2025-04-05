@@ -1,19 +1,9 @@
 
-abstract class UserEvent {
+abstract class LoginUserEvent {
   List<Object> get props => [];
 }
 
-class RegisterUserEvent extends UserEvent{
-  final String email;
-
-  RegisterUserEvent({
-    required this.email});
-
-  @override
-  List<Object> get props => [email];
-}
-
-class FirstLoginEvent extends UserEvent{
+class FirstLoginEvent extends LoginUserEvent{
   final String email;
 
   FirstLoginEvent({
@@ -24,7 +14,7 @@ class FirstLoginEvent extends UserEvent{
   List<Object> get props => [email];
 }
 
-class UserExistEvent extends UserEvent{
+class UserExistEvent extends LoginUserEvent{
   final String email;
 
   UserExistEvent({
@@ -35,7 +25,7 @@ class UserExistEvent extends UserEvent{
   List<Object> get props => [email];
 }
 
-class SecondLoginEvent extends UserEvent{
+class SecondLoginEvent extends LoginUserEvent{
   final String email;
   final String verificationToken;
 

@@ -1,5 +1,3 @@
-import '../../../data/model/user_model.dart';
-
 abstract class FetchUserEvent {
   List<Object> get props => [];
 }

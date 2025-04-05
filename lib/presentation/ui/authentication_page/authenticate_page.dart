@@ -1,21 +1,14 @@
 import 'dart:async';
-import 'dart:ui';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_button.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_toast.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/music_icon_animation.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import '../../bloc/user_bloc/bloc.dart';
-import '../../bloc/user_bloc/event.dart';
+import '../../bloc/user_bloc/login_user_bloc/bloc.dart';
+import '../../bloc/user_bloc/login_user_bloc/state.dart';
 import '../../const/custom_icon/music_icons.dart';
 import '../../helpers/widgets/customTextField.dart';
-import '../main_page/main_page.dart';
 
 class AuthenticatePage extends StatefulWidget {
 
@@ -145,7 +138,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
 
     return Scaffold(
         backgroundColor: const Color(0xff192028),
-        body: BlocConsumer <UserBloc, UserState>(
+        body: BlocConsumer <LoginUserBloc, LoginUserState>(
           listener: (context, state){
 
             if(state.status.isSuccess){

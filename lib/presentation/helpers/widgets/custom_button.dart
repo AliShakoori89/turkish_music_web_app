@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
-
-import '../../bloc/user_bloc/bloc.dart';
-import '../../bloc/user_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/event.dart';
+import '../../bloc/user_bloc/login_user_bloc/bloc.dart';
+import '../../bloc/user_bloc/login_user_bloc/event.dart';
 import '../../ui/main_page/main_page.dart';
 import 'custom_toast.dart';
 
@@ -56,19 +57,26 @@ class _CustomButtonState extends State<CustomButton> {
             if (widget.emailFormKey.currentState!.validate()){
               if (widget.state == 0) {
                 animateButton();
-                final registerBloc = BlocProvider.of<UserBloc>(context);
+
                 if(widget.buttonTitle == "SIGN UP"){
 
-                  registerBloc.add(RegisterUserEvent(email: widget.emailController.text));
+                  final registerBloc = BlocProvider.of<RegisterUserBloc>(context);
+
+                  registerBloc.add(RegistrationUserEvent(email: widget.emailController.text));
+
+                  CustomToast(title: "Registration Success...  Please login this email .", toastColor: const Color(
+                      0xFF00B01E).withValues(alpha: 0.2)).show();
 
                 }
                 else if(widget.buttonTitle == "LOGIN") {
 
-                  String userExist = await registerBloc.userRepository.userExist(widget.emailController.text);
+                  final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
+
+                  String userExist = await loginUserBloc.userRepository.userExist(widget.emailController.text);
 
                   if(userExist != "رکورد با مشخصات وارد شده یافت نشد"){
 
-                    registerBloc.add(FirstLoginEvent(email: widget.emailController.text));
+                    loginUserBloc.add(FirstLoginEvent(email: widget.emailController.text));
 
                     showDialog(
                       context: context,
@@ -130,24 +138,15 @@ class _CustomButtonState extends State<CustomButton> {
                                   },
                                   onSubmit: (String verificationCode) async{
 
-                                    final registerBloc = BlocProvider.of<UserBloc>(context);
+                                    final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
 
-                                    bool isTrue = await registerBloc.userRepository.secondLogin(widget.emailController.text, verificationCode);
+                                    bool isTrue = await loginUserBloc.userRepository.secondLogin(widget.emailController.text, verificationCode);
 
                                     if(isTrue){
 
                                       CustomToast(title: "Authentication Success...  Welcome .", toastColor: const Color(
                                           0xFF00B01E).withValues(alpha: 0.2)).show();
-                                      // Fluttertoast.showToast(
-                                      //     msg: "Authentication Success...  Welcome .",
-                                      //     toastLength: Toast.LENGTH_SHORT,
-                                      //     gravity: ToastGravity.CENTER,
-                                      //     timeInSecForIosWeb: 3,
-                                      //     backgroundColor: const Color(
-                                      //         0xFF00B01E).withValues(alpha: 0.2),
-                                      //     textColor: Colors.white,
-                                      //     fontSize: 16.0
-                                      // );
+
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => MainPage(),
@@ -157,17 +156,6 @@ class _CustomButtonState extends State<CustomButton> {
 
                                       CustomToast(title: "Verification code is not true .", toastColor: const Color(
                                           0xFFC20808).withValues(alpha: 0.2)).show();
-
-                                      // Fluttertoast.showToast(
-                                      //     msg: "Verification code is not true .",
-                                      //     toastLength: Toast.LENGTH_SHORT,
-                                      //     gravity: ToastGravity.TOP,
-                                      //     timeInSecForIosWeb: 3,
-                                      //     backgroundColor: const Color(
-                                      //         0xFFC20808).withValues(alpha: 0.2),
-                                      //     textColor: Colors.white,
-                                      //     fontSize: 16.0
-                                      // );
                                     }
                                   },
                                 ),
@@ -176,7 +164,7 @@ class _CustomButtonState extends State<CustomButton> {
                                   controller: widget.controller,
                                   onPressed: () {
                                     widget.controller.startTimer();
-                                    registerBloc.add(FirstLoginEvent(email: widget.emailController.text));
+                                    loginUserBloc.add(FirstLoginEvent(email: widget.emailController.text));
                                   },
                                   text: Text('Resend OTP'),
                                   duration: 120,

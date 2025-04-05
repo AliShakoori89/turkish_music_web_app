@@ -1,8 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:turkish_music_app/data/model/user_model.dart';
-import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/state.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/state.dart';
-import '../../../domain/repositories/user_repository.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/fetch_user_bloc/state.dart';
+import '../../../../domain/repositories/user_repository.dart';
 import 'event.dart';
 
 class FetchUserBloc extends Bloc<FetchUserEvent, FetchUserState> {

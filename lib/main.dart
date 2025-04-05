@@ -30,7 +30,6 @@ import 'package:turkish_music_app/presentation/bloc/category_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_item_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/category_songs_for_mini_player_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/download_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/internet_conection_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
@@ -40,7 +39,9 @@ import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/fetch_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
 import 'package:turkish_music_app/presentation/helpers/audio_handler.dart';
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
@@ -238,9 +239,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     return MultiBlocProvider(
       providers: [
+
         BlocProvider(
             create: (BuildContext context) =>
-                UserBloc(UserRepository())),
+                RegisterUserBloc(UserRepository())),
+        BlocProvider(
+            create: (BuildContext context) =>
+                LoginUserBloc(UserRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 FetchUserBloc(UserRepository())),
