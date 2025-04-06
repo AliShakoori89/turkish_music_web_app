@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/event.dart';
-import '../../bloc/user_bloc/login_user_bloc/bloc.dart';
 import '../../bloc/user_bloc/login_user_bloc/event.dart';
 import '../../ui/main_page/main_page.dart';
 import 'custom_toast.dart';
@@ -39,6 +40,7 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
 
   late List<TextEditingController?> verificationCodeController;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +54,15 @@ class _CustomButtonState extends State<CustomButton> {
         child: InkWell(
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
-          onTap: () async {
+          onTap: _isLoading ? null : () async {
 
             if (widget.emailFormKey.currentState!.validate()){
+
+              setState(() {
+                _isLoading = true;
+              });
+
               if (widget.state == 0) {
-                animateButton();
 
                 if(widget.buttonTitle == "SIGN UP"){
 
@@ -185,6 +191,11 @@ class _CustomButtonState extends State<CustomButton> {
 
                 }
               }
+
+              setState(() {
+                _isLoading = false;
+              });
+
             }
 
           },
@@ -196,27 +207,32 @@ class _CustomButtonState extends State<CustomButton> {
                 color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Text(
-                widget.buttonTitle,
-                style: TextStyle(color: Colors.white.withValues(alpha: 0.8),),
-              )
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  widget.buttonTitle,
+                  style: TextStyle(
+                    color: Colors.white.withAlpha(200),
+                  ),
+                ),
+                if (_isLoading) ...[
+                  SizedBox(width: 10),
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: LoadingAnimationWidget.staggeredDotsWave(
+                      color: Colors.white,
+                      size: 8,
+                    ),
+                  ),
+                ],
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  void animateButton() {
-    setState(() {
-      widget.state = 1;
-    });
-
-    Timer(const Duration(milliseconds: 3300), () {
-      if (mounted) { // Check if the widget is still mounted before updating the state
-        setState(() {
-          widget.state = 0;
-        });
-      }
-    });
   }
 }
