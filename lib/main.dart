@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:app_upgrade_flutter_sdk/app_upgrade_flutter_sdk.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -56,6 +55,7 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/privacy_screen/privacy_screen.dart';
+import 'package:flutter/foundation.dart';
 
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -131,20 +131,31 @@ FutureOr<void> main() async{
 
 
 Future<void> requestStoragePermission() async {
-  var status = await Permission.storage.status;
-  if (status.isDenied) {
-    // Request the permission
-    if (await Permission.storage.request().isGranted) {
-      // The permission is granted
-      print("Permission Granted");
-    } else {
-      // The permission is denied
-      print("Permission Denied");
+  if (!kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS)) {
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      // Request the permission
+      if (await Permission.storage.request().isGranted) {
+        // The permission is granted
+        print("Permission Granted");
+      } else {
+        // The permission is denied
+        print("Permission Denied");
+      }
+    } else if (status.isGranted) {
+      // The permission is already granted
+      print("Permission Already Granted");
     }
-  } else if (status.isGranted) {
-    // The permission is already granted
-    print("Permission Already Granted");
+
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+  } else if (kIsWeb) {
+    print("Running on web - skipping permission check.");
   }
+
 }
 
 
@@ -226,7 +237,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     AppInfo appInfo = AppInfo(
         appName: 'Turkish Music', // Your app name
         appVersion: '1.0.1', // Your app version
-        platform: Platform.operatingSystem, // App Platform, android or ios
+        platform: kIsWeb
+            ? "web"
+            : defaultTargetPlatform == TargetPlatform.android
+            ? "android"
+            : defaultTargetPlatform == TargetPlatform.iOS
+            ? "ios"
+            : defaultTargetPlatform == TargetPlatform.macOS
+            ? "macos"
+            : defaultTargetPlatform == TargetPlatform.windows
+            ? "windows"
+            : defaultTargetPlatform == TargetPlatform.linux
+            ? "linux"
+            : "unknown",
         environment: 'development', // Environment in which app is running, production, staging or development etc.
         appLanguage: 'en',
         appId: '' // App language ex: en, es etc. Optional.
