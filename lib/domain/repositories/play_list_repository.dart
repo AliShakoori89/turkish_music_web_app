@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/playListSongModel.dart';
 import '../../data/network/api_base_helper.dart';
@@ -11,8 +10,7 @@ class PlayListRepository {
 
   addToPlayList(int musicID) async {
 
-    await dotenv.load();
-    final String? apiKey = dotenv.get("apiKey");
+    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
 
     ApiBaseHelper api = ApiBaseHelper();
 
@@ -42,8 +40,7 @@ class PlayListRepository {
 
   removeFromPlayList(int musicID) async{
 
-    await dotenv.load();
-    final String? apiKey = dotenv.get("apiKey");
+    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
 
     ApiBaseHelper api = ApiBaseHelper();
 

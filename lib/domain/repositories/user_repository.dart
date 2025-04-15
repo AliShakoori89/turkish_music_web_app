@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
@@ -27,8 +26,7 @@ class UserRepository {
 
   firstLogin(String email) async {
 
-    await dotenv.load();
-    final String? apiKey = dotenv.get("apiKey");
+    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
 
     ApiBaseHelper api = ApiBaseHelper();
 
@@ -49,8 +47,9 @@ class UserRepository {
   }
 
   Future<String> userExist(String email) async{
-    await dotenv.load();
-    final String? apiKey = dotenv.get("apiKey");
+
+    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
+
 
     ApiBaseHelper api = ApiBaseHelper();
 

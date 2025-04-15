@@ -5,11 +5,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:turkish_music_app/domain/repositories/album_repository.dart';
 import 'package:turkish_music_app/domain/repositories/category_item_repository.dart';
@@ -54,7 +52,6 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
-import 'package:turkish_music_app/presentation/ui/privacy_screen/privacy_screen.dart';
 import 'package:flutter/foundation.dart';
 
 
@@ -63,12 +60,10 @@ FlutterLocalNotificationsPlugin();
 
 FutureOr<void> main() async{
 
-  final MyAudioHandler audioHandler;
-
+  BindingBase.debugZoneErrorsAreFatal = true;
   WidgetsFlutterBinding.ensureInitialized();
+  final MyAudioHandler audioHandler;
   await requestStoragePermission();
-
-  await dotenv.load(fileName: ".env");
 
   audioHandler = await AudioService.init(
     builder: () => MyAudioHandler(),
@@ -108,24 +103,8 @@ FutureOr<void> main() async{
     initializationSettings,
     onDidReceiveNotificationResponse: onNotificationResponse,);
 
-  await SentryFlutter.init(
-          (options) {
-        options.dsn = 'https://f1cdf7541efb2cab8d645bdbcfa21b5c@o4508205725253632.ingest.us.sentry.io/4508205732265984';
-        // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
-        // We recommend adjusting this value in production.
-        options.tracesSampleRate = 1.0;
-        // The sampling rate for profiling is relative to tracesSampleRate
-        // Setting to 1.0 will profile 100% of sampled transactions:
-        // Note: Profiling alpha is available for iOS and macOS since SDK version 7.12.0
-        options.profilesSampleRate = 1.0;
-      },
-      appRunner: () =>   runApp(
-        // DevicePreview(
-        //   enabled: !kReleaseMode,
-        //   builder: (context) =>
-          MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed, audioHandler: audioHandler),
-        // )
-      )
+  runApp(
+    MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed, audioHandler: audioHandler),
   );
 }
 
@@ -181,9 +160,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     checkInternetConnectionWithErrorHandling();
-
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     requestNotificationPermission();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
@@ -329,13 +307,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 GoRoute(
                     path: "/",
                     builder: (context, state){
-                      return widget.isAgreed
-                          ? isOffline
-                          ? widget.isLoggedIn
+                      return widget.isLoggedIn
                           ? MainPage()
-                          : AuthenticatePage()
-                          : const ErrorInternetConnectionPage()
-                          : TermsAndConditionsPage();
+                          : AuthenticatePage();
                     },
                     routes: [
                       GoRoute(

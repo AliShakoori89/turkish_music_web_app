@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../data/model/singer_model.dart';
 import '../../data/network/api_base_helper.dart';
 
 class SingerRepository {
 
-  final String? apiKey = dotenv.env['map.apikey'];
+  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
+
 
   Future<dynamic> getFamousSinger() async {
 
