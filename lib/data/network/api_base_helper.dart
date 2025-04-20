@@ -29,7 +29,6 @@ class ApiBaseHelper {
 
       final Uri address = Uri(
           host: baseUrl, scheme: "https", query: query, path: url, queryParameters: queryParameters);
-      print("111111111111111"+address.toString());
 
       final response = await http.get(address, headers: headers);
       return response;
@@ -53,7 +52,6 @@ class ApiBaseHelper {
         'Authorization': 'bearer $accessToken'
       };
 
-      print("111111111111111       "+address.toString());
       final response = await http.post(address, body: body, headers: headers);
       var responseJson = _returnResponse(response);
       return responseJson;

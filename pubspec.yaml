@@ -45,7 +45,6 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   circular_seek_bar: ^1.1.1
   search_page: ^2.3.0
-  path_provider: ^2.1.5
   flutter_exit_app: ^1.1.4
   mailer: ^6.3.0
   vertical_nav_bar: ^0.0.1
@@ -64,6 +63,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   delayed_widget: ^1.1.2
   dio: ^5.7.0
+  hive_flutter: ^1.1.0
   fluttertoast: ^8.2.10
   overflow_text_animated: ^0.0.6
   otp_timer_button: ^1.1.1

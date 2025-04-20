@@ -17,7 +17,7 @@ import '../title.dart';
 class PortraitPlaySongPage extends StatelessWidget {
   PortraitPlaySongPage({super.key, required this.songName, required this.singerName,
     required this.songID, required this.controller, required this.songFilePath,
-    required this.saveSongModel, required this.minute, required this.second,
+    required this.minute, required this.second,
     required this.songImagePath, required this.albumAllSongsList,
     required this.albumID, required this.categoryID});
 
@@ -27,7 +27,6 @@ class PortraitPlaySongPage extends StatelessWidget {
   final String songImagePath;
   final String minute;
   final String second;
-  final SaveSongModel saveSongModel;
   final int songID;
   final int albumID;
   final AnimationController controller;
@@ -94,7 +93,6 @@ class PortraitPlaySongPage extends StatelessWidget {
                           DownloadButton(
                               songFilePath: songFilePath,
                               songName: songName,
-                              songModel : saveSongModel
                           ),
                           repeatButton()
                         ],

@@ -13,11 +13,9 @@ class DownloadButton extends StatefulWidget {
 
   final String songFilePath;
   final String songName;
-  final SaveSongModel songModel;
   const DownloadButton({super.key,
     required this.songFilePath,
     required this.songName,
-    required this.songModel
   });
 
   @override

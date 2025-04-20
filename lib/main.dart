@@ -18,7 +18,6 @@ import 'package:turkish_music_app/domain/repositories/play_button_state_reposito
 import 'package:turkish_music_app/domain/repositories/play_list_repository.dart';
 import 'package:turkish_music_app/domain/repositories/new_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/play_song_repository.dart';
-import 'package:turkish_music_app/domain/repositories/recently_play_song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/singer_repository.dart';
 import 'package:turkish_music_app/domain/repositories/song_repository.dart';
 import 'package:turkish_music_app/domain/repositories/user_repository.dart';
@@ -32,14 +31,12 @@ import 'package:turkish_music_app/presentation/bloc/new_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_button_state_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/playing_song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/singer_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/const/error_internet_connection_page.dart';
 import 'package:turkish_music_app/presentation/helpers/audio_handler.dart';
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
@@ -280,9 +277,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BlocProvider(
             create: (BuildContext context) =>
                 DownloadBloc(DownloadRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
-                RecentlyPlaySongBloc(RecentlyPlaySongRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 PlayButtonStateBloc(PlayButtonStateRepository())),

@@ -1,43 +1,61 @@
+import 'package:hive/hive.dart';
+
+@HiveType(typeId: 0)
 class SaveSongModel {
-  int? id;
-  String? songName;
-  String? singerName;
-  String? imageFilePath;
-  String? audioFilePath;
-  String? audioFileMin;
-  String? audioFileSec;
-  String? albumName;
-  int? audioFileAlbumId;
+  @HiveField(0)
+  String songName;
 
-  SaveSongModel({this.id, this.songName, this.singerName,
-  this.audioFilePath, this.imageFilePath, this.audioFileMin,
-  this.audioFileSec, this.audioFileAlbumId, this.albumName});
+  @HiveField(1)
+  String singerName;
 
-  Map<String, dynamic> toJson() {
-    return {
-      "songId": id,
-      "songName": songName,
-      "singerName": singerName,
-      "imageFilePath": imageFilePath,
-      "audioFilePath": audioFilePath,
-      "audioFileMin": audioFileMin,
-      "audioFileSec": audioFileSec,
-      "albumName": albumName,
-      "audioFileAlbumId": audioFileAlbumId
-    };
-  }
+  @HiveField(2)
+  String imageFilePath;
 
-  factory SaveSongModel.fromJson(Map<String, dynamic> parsedJson) {
-    return SaveSongModel(
-      id: parsedJson['songId'],
-      songName: parsedJson['songName'],
-      singerName: parsedJson['singerName'],
-      imageFilePath: parsedJson['imageFilePath'],
-      audioFilePath: parsedJson['audioFilePath'],
-      audioFileMin: parsedJson["audioFileMin"],
-      audioFileSec: parsedJson['audioFileSec'],
-      albumName: parsedJson['albumName'],
-      audioFileAlbumId: parsedJson['audioFileAlbumId']
-    );
-  }
+  @HiveField(3)
+  String audioFilePath;
+
+  @HiveField(4)
+  String audioFileMin;
+
+  @HiveField(5)
+  String audioFileSec;
+
+  @HiveField(6)
+  String albumName;
+
+  @HiveField(7)
+  int audioFileAlbumId;
+
+  SaveSongModel({
+    required this.songName,
+    required this.singerName,
+    required this.imageFilePath,
+    required this.audioFilePath,
+    required this.audioFileMin,
+    required this.audioFileSec,
+    required this.albumName,
+    required this.audioFileAlbumId,
+  });
+
+  factory SaveSongModel.fromJson(Map<String, dynamic> json) => SaveSongModel(
+    songName: json['songName'],
+    singerName: json['singerName'],
+    imageFilePath: json['imageFilePath'],
+    audioFilePath: json['audioFilePath'],
+    audioFileMin: json['audioFileMin'],
+    audioFileSec: json['audioFileSec'],
+    albumName: json['albumName'],
+    audioFileAlbumId: json['audioFileAlbumId'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'songName': songName,
+    'singerName': singerName,
+    'imageFilePath': imageFilePath,
+    'audioFilePath': audioFilePath,
+    'audioFileMin': audioFileMin,
+    'audioFileSec': audioFileSec,
+    'albumName': albumName,
+    'audioFileAlbumId': audioFileAlbumId,
+  };
 }

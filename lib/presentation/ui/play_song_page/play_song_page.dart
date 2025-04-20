@@ -3,13 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_pixels/image_pixels.dart';
 import 'package:turkish_music_app/data/model/miniplayer_model.dart';
-import 'package:turkish_music_app/data/model/save_song_model.dart';
 import 'package:turkish_music_app/data/model/song_model.dart';
 import 'package:turkish_music_app/domain/repositories/mini_playing_container_repository.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/play_list_bloc/event.dart';
-import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/recently_play_song_bloc/event.dart';
 import 'package:turkish_music_app/presentation/ui/component/landscape/landscape_play_song_page.dart';
 import '../../../data/model/album_model.dart';
 import '../../bloc/play_button_state_bloc/bloc.dart';
@@ -103,25 +100,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
 
                   if (state is AudioPlayedState) {
 
-                    var songID = state.songModel.id;
-
-                    var path = state.songModel.fileSource!.replaceRange(4, 5, "");
-
-                    SaveSongModel recentlyPlayedSongIdModel = SaveSongModel(
-                        id: songID,
-                        singerName: state.songModel.singerName,
-                        audioFileAlbumId: albumID,
-                        audioFileSec: state.songModel.second,
-                        audioFileMin: state.songModel.minute,
-                        audioFilePath: path,
-                        imageFilePath: songImage,
-                        songName: songName
-                    );
-
-                    BlocProvider.of<RecentlyPlaySongBloc>(context).add(
-                        SavePlayedSongIDToRecentlyPlayedEvent(
-                            recentlyPlayedSongIdModel: recentlyPlayedSongIdModel));
-
                     return ImagePixels(
                         imageProvider: NetworkImage(state.songModel.imageSource!),
                         builder: (context, img) {
@@ -154,7 +132,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                               songName: state.songModel.name!,
                               singerName: state.songModel.singerName ?? "",
                               songFilePath: state.songModel.fileSource!,
-                              saveSongModel: recentlyPlayedSongIdModel,
                               minute: state.songModel.minute!,
                               second: state.songModel.second!,
                               songImagePath: state.songModel.imageSource!,
@@ -168,7 +145,6 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
                               songName: state.songModel.name!,
                               singerName: state.songModel.singerName ?? "",
                               songFilePath: state.songModel.fileSource!,
-                              saveSongModel: recentlyPlayedSongIdModel,
                               minute: state.songModel.minute!,
                               second: state.songModel.second!,
                               songImagePath: state.songModel.imageSource!,

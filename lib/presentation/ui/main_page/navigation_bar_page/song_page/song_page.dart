@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/recently_played_list.dart';
 
 class MusicPage extends StatelessWidget {
 
@@ -57,7 +56,7 @@ class MusicPage extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 8,
-                  child: RecentlyPlaylist(),
+                  child: Container(),
                 )
               ],
             )

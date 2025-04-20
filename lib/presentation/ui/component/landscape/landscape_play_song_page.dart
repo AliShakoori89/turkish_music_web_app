@@ -16,7 +16,11 @@ import '../../play_song_page/play_song_page_component/progressbar.dart';
 import '../../play_song_page/play_song_page_component/repeat_button.dart';
 
 class LandscapePlaySongPage extends StatelessWidget {
-  const LandscapePlaySongPage({super.key, required this.songName, required this.singerName, required this.songFilePath, required this.songImagePath, required this.minute, required this.second, required this.saveSongModel, required this.songID, required this.albumID, required this.controller, required this.categoryID, required this.albumAllSongsList, required this.orientation, required this.pageName});
+  const LandscapePlaySongPage({super.key, required this.songName, required this.singerName, required this.songFilePath,
+    required this.songImagePath, required this.minute, required this.second,
+    required this.songID, required this.albumID,
+    required this.controller, required this.categoryID, required this.albumAllSongsList,
+    required this.orientation, required this.pageName});
 
   final String songName;
   final String singerName;
@@ -25,7 +29,6 @@ class LandscapePlaySongPage extends StatelessWidget {
   final String minute;
   final String second;
   final String pageName;
-  final SaveSongModel saveSongModel;
   final int songID;
   final int albumID;
   final AnimationController controller;
@@ -117,7 +120,6 @@ class LandscapePlaySongPage extends StatelessWidget {
                                 DownloadButton(
                                     songFilePath: songFilePath,
                                     songName: songName,
-                                    songModel : saveSongModel
                                 ),
                                 repeatButton()
                               ],
