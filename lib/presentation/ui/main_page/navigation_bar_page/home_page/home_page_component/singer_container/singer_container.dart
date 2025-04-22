@@ -53,7 +53,6 @@ class SingerContainer extends StatelessWidget {
             width: double.infinity,
             child: AnimatedListView(
               shrinkWrap: true,
-
               duration: 100,
               scrollDirection: Axis.horizontal,
               cacheExtent: 1000,
