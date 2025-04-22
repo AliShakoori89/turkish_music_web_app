@@ -201,7 +201,6 @@ class _CustomButtonState extends State<CustomButton> {
           },
           child: Container(
               height: 40,
-              width: size.width,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: Colors.white.withValues(alpha: 0.1),

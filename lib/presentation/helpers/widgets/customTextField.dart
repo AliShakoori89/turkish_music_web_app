@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
           sigmaX: 15,
         ),
         child: Container(
-
+          width: 390,
           child: Form(
             key: emailFormKey,
             child: TextFormField(

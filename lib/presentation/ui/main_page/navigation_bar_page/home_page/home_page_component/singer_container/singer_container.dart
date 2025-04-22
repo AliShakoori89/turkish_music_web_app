@@ -47,11 +47,13 @@ class SingerContainer extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.symmetric(
-                horizontal: 2,
+                // horizontal: 2,
                 vertical: 10),
             height: MediaQuery.of(context).size.height * 0.15,
             width: double.infinity,
             child: AnimatedListView(
+              shrinkWrap: true,
+
               duration: 100,
               scrollDirection: Axis.horizontal,
               cacheExtent: 1000,

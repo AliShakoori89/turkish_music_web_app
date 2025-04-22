@@ -157,6 +157,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
             return SingleChildScrollView(
               child: SizedBox(
                 height: size.height,
+                width: size.width,
                 child: Stack(
                   children: [
                     AnimatedBuilder(
@@ -191,11 +192,7 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                     MusicIconAnimation(topValue: .2, leftValue: .6, iconSize: 100.0, animation: animation3, icon: Icons.music_note_outlined),
                     MusicIconAnimation(topValue: .2, leftValue: .6, iconSize: 80.0, animation: animation2, icon: Icons.music_note_outlined),
                     MusicIconAnimation(topValue: .7, leftValue: .7, iconSize: 80.0, animation: animation2, icon: Icons.music_note_outlined),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          right: 35,
-                          left: 35
-                      ),
+                    Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -221,25 +218,35 @@ class _AuthenticatePageState extends State<AuthenticatePage> with TickerProvider
                             emailFormKey: emailFormKey,
                           ),
                           const SizedBox(height: 10,),
-                          CustomButton(
-                              buttonTitle: 'LOGIN',
-                              width: 2.58,
-                              emailFormKey: emailFormKey,
-                              emailController: emailController,
-                              state: _state,
-                              controller: controller),
-                          const SizedBox(height: 10,),
-                          CustomButton(
-                              buttonTitle: 'SIGN UP',
-                              width: 2.58,
-                              emailFormKey: emailFormKey,
-                              emailController: emailController,
-                              state: _state,
-                              controller: controller),
-                          const SizedBox(height: 10,),
+                          Container(
+                            width: 400,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CustomButton(
+                                    buttonTitle: 'LOGIN',
+                                    width: 2.58,
+                                    emailFormKey: emailFormKey,
+                                    emailController: emailController,
+                                    state: _state,
+                                    controller: controller),
+                                const SizedBox(height: 10,),
+                                CustomButton(
+                                    buttonTitle: 'SIGN UP',
+                                    width: 2.58,
+                                    emailFormKey: emailFormKey,
+                                    emailController: emailController,
+                                    state: _state,
+                                    controller: controller),
+                                const SizedBox(height: 10,),
+                              ],
+                            ),
+                          )
+
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
