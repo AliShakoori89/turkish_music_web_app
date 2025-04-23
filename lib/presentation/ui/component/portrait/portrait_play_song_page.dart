@@ -85,19 +85,19 @@ class PortraitPlaySongPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          DownloadButton(
-                              songFilePath: songFilePath,
-                              songName: songName,
-                          ),
-                          repeatButton()
-                        ],
-                      ),
-                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       // DownloadButton(
+                    //       //     songFilePath: songFilePath,
+                    //       //     songName: songName,
+                    //       // ),
+                    //       repeatButton()
+                    //     ],
+                    //   ),
+                    // ),
                     Expanded(
                       flex: 10,
                       child: Progressbar(

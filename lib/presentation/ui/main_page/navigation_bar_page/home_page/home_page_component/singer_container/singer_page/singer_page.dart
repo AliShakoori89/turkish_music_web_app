@@ -6,6 +6,7 @@ import 'package:turkish_music_app/presentation/bloc/album_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/event.dart';
 import 'package:turkish_music_app/presentation/bloc/album_bloc/state.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
+import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page.dart';
 import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../const/generate_new_path.dart';
@@ -44,8 +45,10 @@ class _SingerPageState extends State<SingerPage> {
 
     return WillPopScope(
       onWillPop: () async {
-        context.pop(MainPage.routeName);
-        return false;
+
+          context.replace(HomePage.routeName); // یا context.pop();
+          return true; // یعنی نذار خود Flutter بره عقب
+
       },
       child: Scaffold(
           body: orientation == Orientation.portrait

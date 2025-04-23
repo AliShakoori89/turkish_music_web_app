@@ -112,19 +112,19 @@ class LandscapePlaySongPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Flexible(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                DownloadButton(
-                                    songFilePath: songFilePath,
-                                    songName: songName,
-                                ),
-                                repeatButton()
-                              ],
-                            ),
-                          ),
+                          // Flexible(
+                          //   flex: 1,
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       DownloadButton(
+                          //           songFilePath: songFilePath,
+                          //           songName: songName,
+                          //       ),
+                          //       repeatButton()
+                          //     ],
+                          //   ),
+                          // ),
                           Flexible(
                             flex: 20,
                             child: Progressbar(

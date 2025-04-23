@@ -42,154 +42,108 @@ class _CategorySongPageState extends State<CategorySongPage> {
   @override
   Widget build(BuildContext context) {
 
-    var height = MediaQuery.of(context).size.height;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    var height = double.infinity;
+    var width = double.infinity;
 
     return Scaffold(
-      appBar: orientation != Orientation.portrait
-          ? AppBar(
-        centerTitle: true,
-        title: Text(widget.categoryName,
-        style: TextStyle(
-          color: Colors.white
-        ),),
-      )
-          : null,
-      body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.only(
-              top: 15,
-              left: 15,
-              right: 15
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                orientation == Orientation.portrait
-                    ? Container(
-                  height: height / 3.5,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(image: NetworkImage(widget.imageSource),
-                          fit: BoxFit.fill,
-                          scale: 0.5)
-                  ),
-                )
-                    : Container(),
-                SizedBox(
-                  height: 10,
-                ),
-                BlocBuilder<CategoryItemBloc, CategoryItemState>(
-                  builder: (context, state) {
-
-                    List<CategoryMusicsModel>? categoryAllSongs = state.category.musics;
-
-                    if(state.status.isLoading){
-                      return Padding(
-                          padding: EdgeInsets.only(
-                            top: height / 5
-                          ),
-                          child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: CustomIndicator()));
-                    }else if(state.status.isSuccess && categoryAllSongs != null){
-
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemCount: categoryAllSongs.length,
-                          itemBuilder: (context, index){
-                            return InkWell(
-                              onTap: (){
-
-                                var path = generateNewPath(categoryAllSongs[index].fileSource!);
-
-                                var newPath = path.replaceAll(" ", "%20");
-
-                                SongDataModel songDataModel = SongDataModel(
-                                  id : categoryAllSongs[index].id,
-                                  name: categoryAllSongs[index].name,
-                                  imageSource: categoryAllSongs[index].imageSource,
-                                  fileSource: newPath,
-                                  minute: categoryAllSongs[index].minute,
-                                  second: categoryAllSongs[index].second,
-                                  singerName: categoryAllSongs[index].singerName,
-                                  album: null,
-                                  albumId: categoryAllSongs[index].albumId,
-                                  categories: null,
-                                );
-
-                                context.push(
-                                  '/'+PlaySongPage.routeName,
-                                  extra: {
-                                    'songName': songDataModel.name,
-                                    'songFile': songDataModel.fileSource,
-                                    'songID': songDataModel.id!,
-                                    'singerName': songDataModel.singerName,
-                                    'songImage': songDataModel.imageSource,
-                                    'albumID': songDataModel.albumId!,
-                                    'pageName': "CategorySongPage",
-                                    'albumSongList': state.category.musics!.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
-                                        .toList(),
-                                    'songDataModel': songDataModel,
-                                    'categoryID': widget.categoryID
-                                  },
-                                );
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: 15
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 10),
-                                        child: SizedBox(
-                                            width: 15,
-                                            child: Text((index+1).toString()))
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.sizeOf(context).width - 70,
-                                      child: Container(
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    spreadRadius: 2,
-                                                    blurRadius: 1,
-                                                    offset: Offset(0, 2),
-                                                    color: Colors.purple.withValues(alpha: 0.5),
-                                                )
-                                              ]
-                                          ),
-                                          child: SongCard(
-                                              songName: categoryAllSongs[index].name!,
-                                              imgPath: categoryAllSongs[index].imageSource!,
-                                              singerName: categoryAllSongs[index].singerName!)
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
-                      );
-                    }else if(state.status.isError){
-                      return Center();
-                    }
-                    return Center();
-                  })
-              ],
-            ),
-          ),
+        appBar: AppBar(
+          title: Text(widget.categoryName),
+          centerTitle: true,
         ),
-      )
+      body: BlocBuilder<CategoryItemBloc, CategoryItemState>(
+          builder: (context, state) {
+
+            List<CategoryMusicsModel>? categoryAllSongs = state.category.musics;
+
+            if(state.status.isLoading){
+              return Padding(
+                  padding: EdgeInsets.only(
+                      top: height / 5
+                  ),
+                  child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: CustomIndicator()));
+            }else if(state.status.isSuccess && categoryAllSongs != null){
+
+              return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: categoryAllSongs.length,
+                  itemBuilder: (context, index){
+                    return InkWell(
+                      onTap: (){
+
+                        var path = generateNewPath(categoryAllSongs[index].fileSource!);
+
+                        var newPath = path.replaceAll(" ", "%20");
+
+                        SongDataModel songDataModel = SongDataModel(
+                          id : categoryAllSongs[index].id,
+                          name: categoryAllSongs[index].name,
+                          imageSource: categoryAllSongs[index].imageSource,
+                          fileSource: newPath,
+                          minute: categoryAllSongs[index].minute,
+                          second: categoryAllSongs[index].second,
+                          singerName: categoryAllSongs[index].singerName,
+                          album: null,
+                          albumId: categoryAllSongs[index].albumId,
+                          categories: null,
+                        );
+
+                        context.push(
+                          '/'+PlaySongPage.routeName,
+                          extra: {
+                            'songName': songDataModel.name,
+                            'songFile': songDataModel.fileSource,
+                            'songID': songDataModel.id!,
+                            'singerName': songDataModel.singerName,
+                            'songImage': songDataModel.imageSource,
+                            'albumID': songDataModel.albumId!,
+                            'pageName': "CategorySongPage",
+                            'albumSongList': state.category.musics!.map((categoryMusic) => AlbumDataMusicModel.fromCategoryMusicModel(categoryMusic))
+                                .toList(),
+                            'songDataModel': songDataModel,
+                            'categoryID': widget.categoryID
+                          },
+                        );
+                      },
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                              bottom: 15
+                          ),
+                          child: Container(
+                            width: width,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 15
+                                  ),
+                                  child: Text((index+1).toString()),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                SongCard(
+                                    songName: categoryAllSongs[index].name!,
+                                    imgPath: categoryAllSongs[index].imageSource!,
+                                    singerName: categoryAllSongs[index].singerName!)
+                              ],
+                            ),
+                          )
+                      ),
+                    );
+                  }
+              );
+            }else if(state.status.isError){
+              return Center();
+            }
+            return Center();
+          })
     );
   }
 }

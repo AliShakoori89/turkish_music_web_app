@@ -11,15 +11,20 @@ import '../../../../../../bloc/singer_bloc/event.dart';
 import '../../../../../../bloc/singer_bloc/state.dart';
 import '../../../../../../const/shimmer_container/artist_shimmer_container.dart';
 import '../../../../../../const/title.dart';
+import '../../../../../../helpers/widgets/hoverable_item.dart';
 
-class SingerContainer extends StatelessWidget {
+class SingerContainer extends StatefulWidget {
+
+  @override
+  State<SingerContainer> createState() => _SingerContainerState();
+}
+
+class _SingerContainerState extends State<SingerContainer> {
+
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
-
-    Orientation orientation = MediaQuery.of(context).orientation;
-
-    var width = double.infinity;
 
     BlocProvider.of<SingerBloc>(context).add(GetFamousSingerEvent());
     BlocProvider.of<SingerBloc>(context).add(GetAllSingerNameEvent());
@@ -32,6 +37,8 @@ class SingerContainer extends StatelessWidget {
       List<String> allSingerName = state.allSingerName;
 
       return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
             height: 10,
@@ -45,65 +52,34 @@ class SingerContainer extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-                // horizontal: 2,
-                vertical: 10),
-            height: MediaQuery.of(context).size.height * 0.15,
-            width: double.infinity,
-            child: AnimatedListView(
-              shrinkWrap: true,
-              duration: 100,
-              scrollDirection: Axis.horizontal,
-              cacheExtent: 1000,
-              children: List.generate(artistList.length, (index) {
-                return InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  onTap: () {
-                    context.push(
-                      "/"+SingerPage.routeName, // The path defined in GoRouter
-                      extra: artistList[index], // Pass the artistDetail via extra
-                    );
-                  },
-                  child: SizedBox(
-                    width: 70,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: CachedNetworkImage(
-                            imageUrl: artistList[index].imageSource,
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1,
-                                      color: Colors.purple.withValues(alpha: 0.5),
-                                      strokeAlign: BorderSide.strokeAlignOutside),
-                                  shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(artistList[index].imageSource),
-                                  fit: BoxFit.fitWidth
-                              )),
-                            ),
-                            placeholder: (context, url) => ArtistShimmerContainer(shimmerLength: artistList.length,),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: UnderImageSingerAndSongName(
-                              singerName: artistList[index].name,
-                              isArtist: false),
-                        ),
-                      ],
+          Center(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: 10),
+              height: MediaQuery.of(context).size.height * 0.15,
+              width: 1200,
+              child: AnimatedListView(
+                duration: 100,
+                scrollDirection: Axis.horizontal,
+                cacheExtent: 1000,
+                children: List.generate(artistList.length, (index) {
+                  return InkWell(
+                    mouseCursor: SystemMouseCursors.click,
+                    onTap: () {
+                      context.push(
+                        "/" + SingerPage.routeName,
+                        extra: artistList[index],
+                      );
+                    },
+                    child: HoverableItem(
+                      imageUrl: artistList[index].imageSource,
+                      name: artistList[index].name,
+                      boxShape: BoxShape.circle,
+                      size: 80,
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
           )
         ],
@@ -111,3 +87,5 @@ class SingerContainer extends StatelessWidget {
     });
   }
 }
+
+

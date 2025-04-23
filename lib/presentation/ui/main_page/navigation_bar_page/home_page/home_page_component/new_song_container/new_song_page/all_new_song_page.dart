@@ -87,46 +87,32 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
-                          bottom: 15
+                        left: 10,
+                        right: 10,
+                        bottom: 15
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: 15,
+                      child: Container(
+                        width: width,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
                                   left: 15
-                                ),
-                                child: Text((index+1).toString()),
-                              )),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: width > 800 ? 25 : width > 600 ? 15  : 28,
-                            child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          spreadRadius: 2,
-                                          blurRadius: 1,
-                                          offset: Offset(0, 2),
-                                          color: Colors.purple.withValues(alpha: 0.5),
-                                      )
-                                    ]
-                                ),
-                                child: SongCard(
-                                    songName: state.allNewSong[index].name!,
-                                    imgPath: state.allNewSong[index].imageSource!,
-                                    singerName: state.allNewSong[index].singerName!)
+                              ),
+                              child: Text((index+1).toString()),
                             ),
-                          ),
-                        ],
-                      ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            SongCard(
+                                songName: state.allNewSong[index].name!,
+                                imgPath: state.allNewSong[index].imageSource!,
+                                singerName: state.allNewSong[index].singerName!)
+                          ],
+                        ),
+                      )
                     ),
                   );
                 }

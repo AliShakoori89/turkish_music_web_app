@@ -32,7 +32,7 @@ class AlbumRepository {
     final response = await api.get('/api/Album/GetNewAlbums');
     final productJson = json.decode(response.body);
     var newAlbumData = NewAlbumModel.fromJson(productJson);
-    for(int i = newAlbumData.data!.length-4; i < newAlbumData.data!.length; i++){
+    for(int i = newAlbumData.data!.length-6; i < newAlbumData.data!.length; i++){
       list.add(newAlbumData.data![i]);
     }
     return list;
