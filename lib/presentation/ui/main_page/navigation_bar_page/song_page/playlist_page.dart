@@ -56,9 +56,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                     return GestureDetector(
                       onTap: (){
 
-                        var path = generateNewPath(state.playlistSongs[index].fileSource!);
-
-                        var newPath = path.replaceAll(" ", "%20");
+                        var newPath = state.playlistSongs[index].fileSource!.replaceAll(" ", "%20");
 
                         SongDataModel songDataModel = SongDataModel(
                           id : state.playlistSongs[index].id,
@@ -80,7 +78,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                               id: state.playlistSongs[i].id,
                               name: state.playlistSongs[i].name,
                               imageSource: state.playlistSongs[i].imageSource,
-                              fileSource: path,
+                              fileSource: state.playlistSongs[i].fileSource!.replaceAll(" ", "%20"),
                               singerName: state.playlistSongs[i].singerName,
                               categories: null,
                               album: null,

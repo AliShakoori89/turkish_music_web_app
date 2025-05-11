@@ -117,9 +117,7 @@ class _SingerPageState extends State<SingerPage> {
                         return GestureDetector(
                           onTap: (){
 
-                            var path = generateNewPath(state.singerAllAlbum[index].musics![0].fileSource!);
-
-                            var newPath = path.replaceAll(" ", "%20");
+                            var newPath = state.singerAllAlbum[index].musics![0].fileSource!.replaceAll(" ", "%20");
 
                             SongDataModel songDataModel = SongDataModel(
                               id : state.singerAllAlbum[index].musics![0].id,

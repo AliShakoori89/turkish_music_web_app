@@ -73,9 +73,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
                     return InkWell(
                       onTap: (){
 
-                        var path = generateNewPath(categoryAllSongs[index].fileSource!);
-
-                        var newPath = path.replaceAll(" ", "%20");
+                        var newPath = categoryAllSongs[index].fileSource!.replaceAll(" ", "%20");
 
                         SongDataModel songDataModel = SongDataModel(
                           id : categoryAllSongs[index].id,

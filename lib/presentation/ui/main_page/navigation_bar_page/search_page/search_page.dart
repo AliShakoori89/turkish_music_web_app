@@ -165,9 +165,8 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                           : 50,
                                                       child: InkWell(
                                                         onTap: () {
-                                                          var path = generateNewPath(allSong[index].fileSource);
 
-                                                          var newPath = path.replaceAll(" ", "%20");
+                                                          var newPath = allSong[index].fileSource!.replaceAll(" ", "%20");
 
                                                           SongDataModel songDataModel = SongDataModel(
                                                               id: allSong[index].id,
@@ -294,9 +293,7 @@ class _searchPageState extends State<SearchPage> with SingleTickerProviderStateM
                                                       child: InkWell(
                                                         onTap: () {
 
-                                                          var path = generateNewPath(allAlbum[index].musics![0].fileSource!);
-
-                                                          var newPath = path.replaceAll(" ", "%20");
+                                                          var newPath = allAlbum[index].musics![0].fileSource!.replaceAll(" ", "%20");
 
                                                           SongDataModel
                                                               songDataModel =

@@ -127,9 +127,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
                               return GestureDetector(
                                 onTap: () {
 
-                                  var path = generateNewPath(state.newAlbum[index].musics![0].fileSource!);
-
-                                  var newPath = path.replaceAll(" ", "%20");
+                                  var newPath = state.newAlbum[index].musics![0].fileSource!.replaceAll(" ", "%20");
 
                                   SongDataModel songDataModel = SongDataModel(
                                     id : state.newAlbum[index].musics![0].id,

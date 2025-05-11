@@ -85,13 +85,9 @@ class _MainPageState extends State<MainPage> {
                   right: 0,
                   child: VerticalNavBar(
                     selectedIndex: currentRoute,
-                    height: orientation == Orientation.portrait
-                        ? MediaQuery.of(context).size.height * 0.3
-                        : MediaQuery.of(context).size.height * 0.5,
-                    width: orientation == Orientation.portrait
-                        ? MediaQuery.of(context).size.width * 0.12
-                        : MediaQuery.of(context).size.width * 0.04,
-                    backgroundColor: Colors.purple.withValues(alpha: 0.3),
+                    height: 200,
+                    width: 40,
+                    backgroundColor: Colors.purple.shade700,
                     borderRadius: 15,
                     onItemSelected: (value) {
                       setState(() {
