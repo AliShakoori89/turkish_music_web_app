@@ -67,9 +67,7 @@ class _NewSongState extends State<NewSong>{
                   child: InkWell(
                     onTap: () {
 
-                      var path = generateNewPath(state.newSong[index].fileSource!);
-
-                      var newPath = path.replaceAll(" ", "%20");
+                      var newPath = state.newSong[index].fileSource!.replaceAll(" ", "%20");
 
                       SongDataModel songDataModel = SongDataModel(
                         id: state.newSong[index].id,
