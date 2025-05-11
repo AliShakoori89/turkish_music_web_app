@@ -90,7 +90,7 @@ class _CustomButtonState extends State<CustomButton> {
                       builder: (_) {
                         return AlertDialog(
                           title: Container(
-                            width: size.width / 1.1,
+                            width: 300,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,49 +121,51 @@ class _CustomButtonState extends State<CustomButton> {
                               children: [
                                 SizedBox(
                                     height: 5),
-                                OtpTextField(
-                                  numberOfFields: 6,
-                                  borderColor: Colors.white,
-                                  fillColor: Colors.white.withValues(alpha: 0.5),
-                                  borderWidth: 0.25,
-                                  margin: EdgeInsets.only(
-                                      right: 2,
-                                      left: 2
+                                SizedBox(
+                                  child: OtpTextField(
+                                    numberOfFields: 6,
+                                    borderColor: Colors.white,
+                                    fillColor: Colors.white.withValues(alpha: 0.5),
+                                    borderWidth: 0.25,
+                                    margin: EdgeInsets.only(
+                                        right: 2,
+                                        left: 2
+                                    ),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly, // This allows only digits
+                                    ],
+                                    focusedBorderColor: const Color(0xffb188ef),
+                                    keyboardType: TextInputType.number,
+                                    fieldWidth: 35,
+                                    filled: true,
+                                    showFieldAsBox: true,
+                                    handleControllers: (controllers) {
+                                      //get all textFields controller, if needed
+                                      verificationCodeController = controllers;
+                                    },
+                                    onSubmit: (String verificationCode) async{
+
+                                      final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
+
+                                      bool isTrue = await loginUserBloc.userRepository.secondLogin(widget.emailController.text, verificationCode);
+
+                                      if(isTrue){
+
+                                        CustomToast(title: "Authentication Success...  Welcome .", toastColor: const Color(
+                                            0xFF00B01E).withValues(alpha: 0.2)).show();
+
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => MainPage(),
+                                          ),
+                                        );
+                                      } else {
+
+                                        CustomToast(title: "Verification code is not true .", toastColor: const Color(
+                                            0xFFC20808).withValues(alpha: 0.2)).show();
+                                      }
+                                    },
                                   ),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly, // This allows only digits
-                                  ],
-                                  focusedBorderColor: const Color(0xffb188ef),
-                                  keyboardType: TextInputType.number,
-                                  fieldWidth: 35,
-                                  filled: true,
-                                  showFieldAsBox: true,
-                                  handleControllers: (controllers) {
-                                    //get all textFields controller, if needed
-                                    verificationCodeController = controllers;
-                                  },
-                                  onSubmit: (String verificationCode) async{
-
-                                    final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
-
-                                    bool isTrue = await loginUserBloc.userRepository.secondLogin(widget.emailController.text, verificationCode);
-
-                                    if(isTrue){
-
-                                      CustomToast(title: "Authentication Success...  Welcome .", toastColor: const Color(
-                                          0xFF00B01E).withValues(alpha: 0.2)).show();
-
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => MainPage(),
-                                        ),
-                                      );
-                                    } else {
-
-                                      CustomToast(title: "Verification code is not true .", toastColor: const Color(
-                                          0xFFC20808).withValues(alpha: 0.2)).show();
-                                    }
-                                  },
                                 ),
                                 Spacer(),
                                 OtpTimerButton(

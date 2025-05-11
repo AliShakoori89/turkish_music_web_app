@@ -53,6 +53,7 @@ class _NewAlbumContainerState extends State<NewAlbumContainer> {
 
             return SizedBox(
               height: width > 501 ? 150 : 350,
+              width: 800,
               child: orientation == Orientation.portrait
                   ? Center(
                     child: Container(

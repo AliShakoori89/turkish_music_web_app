@@ -33,12 +33,15 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
 
       return Column(
         children: [
+          SizedBox(
+            height: 100,
+          ),
           TitleText(title: "Category", haveSeeAll: false),
           Container(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width * 0.0052,
                 vertical: MediaQuery.of(context).size.height * 0.03),
-            height: 200,
+            height: 300,
             width: double.infinity,
             child: AnimatedListView(
               duration: 100,
