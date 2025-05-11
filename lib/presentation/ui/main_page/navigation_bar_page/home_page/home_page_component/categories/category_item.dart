@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,22 +36,30 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
       return Column(
         children: [
           SizedBox(
-            height: 100,
+            height: 20,
           ),
           TitleText(title: "Category", haveSeeAll: false),
           Container(
             padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.0052,
-                vertical: MediaQuery.of(context).size.height * 0.03),
-            height: 300,
+              horizontal: MediaQuery.of(context).size.width * 0.0052,
+              vertical: MediaQuery.of(context).size.height * 0.03,
+            ),
+            height: 200,
             width: double.infinity,
-            child: AnimatedListView(
-              duration: 100,
-              scrollDirection: Axis.horizontal,
-              cacheExtent: 1000,
-              children: List.generate(
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(
+                dragDevices: {
+                  PointerDeviceKind.touch,
+                  PointerDeviceKind.mouse,
+                },
+              ),
+              child: AnimatedListView(
+                duration: 100,
+                scrollDirection: Axis.horizontal,
+                cacheExtent: 1000,
+                children: List.generate(
                   state.allCategory.length,
-                      (index){
+                      (index) {
                     return Padding(
                       padding: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.030,
@@ -58,14 +68,14 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                         customBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        onTap: (){
+                        onTap: () {
                           context.push(
-                            "/"+CategorySongPage.routeName, // The path defined in GoRouter
+                            "/" + CategorySongPage.routeName,
                             extra: {
                               'imageSource': state.allCategory[index].imageSource,
                               'categoryName': state.allCategory[index].title,
-                              'categoryID': state.allCategory[index].id
-                            }, // Pass the artistDetail via extra
+                              'categoryID': state.allCategory[index].id,
+                            },
                           );
                         },
                         child: CachedNetworkImage(
@@ -75,27 +85,31 @@ class _CategoryItemContainerState extends State<CategoryItemContainer> {
                                 ? MediaQuery.of(context).size.width * 0.3
                                 : MediaQuery.of(context).size.width * 0.15,
                             decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.purple.withValues(alpha: 0.5),
-                                    blurRadius: 10,
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                    image: NetworkImage(state.allCategory[index].imageSource!),
-                                    fit: BoxFit.fill
-                                )
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.purple.withOpacity(0.5),
+                                  blurRadius: 10,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                image: NetworkImage(state.allCategory[index].imageSource!),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                          placeholder: (context, url) => CategoryShimmerContainer(shimmerLength: 6,),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          placeholder: (context, url) =>
+                              CategoryShimmerContainer(shimmerLength: 6),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
                     );
-                      }),
+                  },
+                ),
+              ),
             ),
-          ),
+          )
+,
         ],
       );
     });

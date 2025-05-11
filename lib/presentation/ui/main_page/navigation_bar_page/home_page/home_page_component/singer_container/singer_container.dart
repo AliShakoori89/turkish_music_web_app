@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,31 +56,38 @@ class _SingerContainerState extends State<SingerContainer> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.symmetric(
-                  vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               height: MediaQuery.of(context).size.height * 0.15,
               width: 1200,
-              child: AnimatedListView(
-                duration: 100,
-                scrollDirection: Axis.horizontal,
-                cacheExtent: 1000,
-                children: List.generate(artistList.length, (index) {
-                  return InkWell(
-                    mouseCursor: SystemMouseCursors.click,
-                    onTap: () {
-                      context.push(
-                        "/" + SingerPage.routeName,
-                        extra: artistList[index],
-                      );
-                    },
-                    child: HoverableItem(
-                      imageUrl: artistList[index].imageSource,
-                      name: artistList[index].name,
-                      boxShape: BoxShape.circle,
-                      size: 80,
-                    ),
-                  );
-                }),
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: AnimatedListView(
+                  duration: 100,
+                  scrollDirection: Axis.horizontal,
+                  cacheExtent: 1000,
+                  children: List.generate(artistList.length, (index) {
+                    return InkWell(
+                      mouseCursor: SystemMouseCursors.click,
+                      onTap: () {
+                        context.push(
+                          "/" + SingerPage.routeName,
+                          extra: artistList[index],
+                        );
+                      },
+                      child: HoverableItem(
+                        imageUrl: artistList[index].imageSource,
+                        name: artistList[index].name,
+                        boxShape: BoxShape.circle,
+                        size: 80,
+                      ),
+                    );
+                  }),
+                ),
               ),
             ),
           )
