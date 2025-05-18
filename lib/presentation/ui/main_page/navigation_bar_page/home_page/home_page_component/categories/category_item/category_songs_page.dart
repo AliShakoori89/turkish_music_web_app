@@ -33,7 +33,6 @@ class _CategorySongPageState extends State<CategorySongPage> {
 
   @override
   void initState() {
-    print(widget.categoryID);
     BlocProvider.of<CategoryItemBloc>(context).add(ResetCategorySongsEvent());
     BlocProvider.of<CategoryItemBloc>(context).add(GetCategorySongsByIDEvent(categoryID: widget.categoryID));
     super.initState();

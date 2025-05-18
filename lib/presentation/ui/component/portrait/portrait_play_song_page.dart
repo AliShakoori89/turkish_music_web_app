@@ -117,9 +117,9 @@ class PortraitPlaySongPage extends StatelessWidget {
                               singerName: singerName),
                           PlayButton(),
                           NextButton(
-                              albumSongs : albumAllSongsList,
-                              songID: songID,
-                              singerName: singerName,
+                            albumSongs : albumAllSongsList,
+                            songID: songID,
+                            singerName: singerName,
                           )
                         ],
                       ),

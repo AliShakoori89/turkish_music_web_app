@@ -51,6 +51,10 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
 import 'package:flutter/foundation.dart';
 
+import 'data/model/album_model.dart';
+import 'data/model/singer_model.dart';
+import 'data/model/song_model.dart';
+
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -323,10 +327,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         },),
                       GoRoute(
                         path: SingerPage.routeName,
-                        builder: (context, state){
-                          return SingerPage();
+                        builder: (context, state) {
+                          final data = state.extra as Map<String, dynamic>;
+                          final singer = SingerDataModel.fromJson(data);
+
+                          return SingerPage(artistDetail: singer);
                         },
                       ),
+
                       GoRoute(
                         path: SearchPage.routeName,
                         builder: (context, state){
@@ -377,9 +385,32 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         path: 'PlaySongPage',
                         name: PlaySongPage.routeName,
                         pageBuilder: (context, state) {
+
+                          final data = state.extra as Map<String, dynamic>;
+
+                          String songName = data['songName'] as String;
+                          int songID = data['songID'] as int;
+                          String singerName = data['singerName'] as String;
+                          String songImage = data['songImage'] as String;
+                          String songFile = data['songFile'] as String;
+                          int categoryID = data["categoryID"] as int;
+                          int albumID = data['albumID'] as int;
+                          List<AlbumDataMusicModel> SongList = data['albumSongList'] as List<AlbumDataMusicModel>;
+                          SongDataModel songDataModel = data['songDataModel'] as SongDataModel;
+
                           return CustomTransitionPage(
                             transitionDuration: Duration(seconds: 1),
-                            child: PlaySongPage(),
+                            child: PlaySongPage(
+                              songID: songID,
+                              albumID: albumID,
+                              categoryID: categoryID,
+                              singerName: singerName,
+                              songFile: songFile,
+                              songImage: songImage,
+                              SongList: SongList,
+                              songName: songName,
+                              songDataModel: songDataModel,
+                            ),
                             transitionsBuilder: (context, animation, secondaryAnimation, child) {
                               const begin = Offset(0.0, 1.0);  // Bottom to top transition
                               const end = Offset.zero;

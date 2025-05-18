@@ -16,6 +16,9 @@ import '../../../../../../play_song_page/play_song_page.dart';
 class SingerPage extends StatefulWidget {
 
   static String routeName = "SingerPage";
+  final SingerDataModel artistDetail;
+
+  const SingerPage({super.key, required this.artistDetail});
 
   @override
   State<SingerPage> createState() => _SingerPageState();
@@ -27,18 +30,12 @@ class _SingerPageState extends State<SingerPage> {
   void initState() {
     super.initState();
 
-    // Accessing context in initState using a post-frame callback
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      var artistDetail = GoRouterState.of(context).extra! as SingerDataModel;
-      BlocProvider.of<AlbumBloc>(context).add(ResetAlbumStateEvent()); // Reset state on navigation.
-      BlocProvider.of<AlbumBloc>(context).add(GetSingerAllAlbumEvent(id: artistDetail.id));
-    });
+    BlocProvider.of<AlbumBloc>(context).add(ResetAlbumStateEvent()); // Reset state on navigation.
+    BlocProvider.of<AlbumBloc>(context).add(GetSingerAllAlbumEvent(id: widget.artistDetail.id));
   }
 
   @override
   Widget build(BuildContext context) {
-
-    var artistDetail = GoRouterState.of(context).extra! as SingerDataModel;
 
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
@@ -60,7 +57,7 @@ class _SingerPageState extends State<SingerPage> {
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
-                    title: Text(artistDetail.name),
+                    title: Text(widget.artistDetail.name),
                     backgroundColor: Colors.black,
                     expandedHeight: orientation == Orientation.portrait
                         ? MediaQuery.of(context).size.height / 4.2
@@ -79,13 +76,13 @@ class _SingerPageState extends State<SingerPage> {
                           placeholderFadeInDuration: Duration(milliseconds: 1),
                           fadeInDuration: Duration(milliseconds: 1),
                           useOldImageOnUrlChange: false,
-                          imageUrl: artistDetail.imageSource,
+                          imageUrl: widget.artistDetail.imageSource,
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
                                 image: DecorationImage(
                                     image: NetworkImage(
-                                      artistDetail.imageSource,
+                                      widget.artistDetail.imageSource,
                                     ),
                                     fit: BoxFit.cover
                                 )
@@ -126,7 +123,7 @@ class _SingerPageState extends State<SingerPage> {
                               fileSource: newPath,
                               minute: state.singerAllAlbum[index].musics![0].minute,
                               second: state.singerAllAlbum[index].musics![0].second,
-                              singerName: artistDetail.name,
+                              singerName: widget.artistDetail.name,
                               album: null,
                               albumId: state.singerAllAlbum[index].id,
                               categories: null,
@@ -138,7 +135,7 @@ class _SingerPageState extends State<SingerPage> {
                                 'songName': songDataModel.name,
                                 'songFile': newPath,
                                 'songID': songDataModel.id!,
-                                'singerName': artistDetail.name,
+                                'singerName': widget.artistDetail.name,
                                 'songImage': state.singerAllAlbum[index].imageSource,
                                 'albumID': songDataModel.albumId!,
                                 'pageName': "SingerPage",

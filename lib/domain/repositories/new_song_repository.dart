@@ -14,7 +14,6 @@ class NewSongRepository {
     ApiBaseHelper api = ApiBaseHelper();
     List<NewSongDataModel> list = [];
     final response = await api.get('/api/Music/GetNewMusics');
-    print("2222222222          "+response.body.toString());
     final productJson = json.decode(response.body);
     var newSongModel = NewSongModel.fromJson(productJson);
     for(int i = newSongModel.data!.length-4; i < newSongModel.data!.length; i++){

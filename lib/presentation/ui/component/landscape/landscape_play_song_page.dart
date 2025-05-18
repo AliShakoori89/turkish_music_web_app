@@ -20,7 +20,7 @@ class LandscapePlaySongPage extends StatelessWidget {
     required this.songImagePath, required this.minute, required this.second,
     required this.songID, required this.albumID,
     required this.controller, required this.categoryID, required this.albumAllSongsList,
-    required this.orientation, required this.pageName});
+    required this.orientation});
 
   final String songName;
   final String singerName;
@@ -28,7 +28,6 @@ class LandscapePlaySongPage extends StatelessWidget {
   final String songImagePath;
   final String minute;
   final String second;
-  final String pageName;
   final int songID;
   final int albumID;
   final AnimationController controller;
@@ -139,15 +138,15 @@ class LandscapePlaySongPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 PreviousButton(
-                                    albumSongs: albumAllSongsList,
-                                    songID: songID,
-                                    singerName: singerName,
+                                  albumSongs: albumAllSongsList,
+                                  songID: songID,
+                                  singerName: singerName,
                                 ),
                                 PlayButton(),
                                 NextButton(
-                                    albumSongs : albumAllSongsList,
-                                    songID: songID,
-                                    singerName: singerName,
+                                  albumSongs : albumAllSongsList,
+                                  songID: songID,
+                                  singerName: singerName,
                                 )
                               ],
                             ),

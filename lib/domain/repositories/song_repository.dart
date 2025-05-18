@@ -16,7 +16,6 @@ class SongRepository {
     try {
       final response = await api.get('/api/Music/GetAll', page: "1", count: "10162", searchChar: char);
 
-      print("2222222222          "+response);
       if (response.statusCode == 200) {
         List<SongDataModel> allSongs = [];
         final data = jsonDecode(response.body);
