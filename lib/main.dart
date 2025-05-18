@@ -45,7 +45,6 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/new_song_container/new_song_page/all_new_song_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/all_singer_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/home_page/home_page_component/singer_container/singer_page/singer_page.dart';
-import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/download_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/search_page/search_page.dart';
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page.dart';
@@ -351,12 +350,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           path: AllNewSongsPage.routeName,
                           builder: (context, state){
                             return AllNewSongsPage();
-                          }
-                      ),
-                      GoRoute(
-                          path: DownloadPage.routeName,
-                          builder: (context, state){
-                            return DownloadPage();
                           }
                       ),
                       GoRoute(

@@ -10,6 +10,7 @@ import 'package:turkish_music_app/presentation/ui/main_page/navigation_bar_page/
 import 'package:turkish_music_app/presentation/ui/play_song_page/play_song_page_component/mini_palying_container.dart';
 import 'package:vertical_nav_bar/vertical_nav_bar.dart';
 import '../../bloc/new_song_bloc/event.dart';
+import 'navigation_bar_page/song_page/playlist_page.dart';
 
 class MainPage extends StatefulWidget {
 
@@ -55,7 +56,7 @@ class _MainPageState extends State<MainPage> {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: MusicPage(),
+          child: PlaylistPage()
         ),
       ),
       Padding(
@@ -102,7 +103,7 @@ class _MainPageState extends State<MainPage> {
                         title: Icons.person,
                       ),
                       VerticalNavBarItem(
-                        title: Icons.music_note,
+                        title: Icons.playlist_play,
                       ),
                       VerticalNavBarItem(
                         title: Icons.search,

@@ -19,8 +19,8 @@ class ReportButton extends StatelessWidget {
         throw Exception('throw first error');
       },
       child: const CustomCard(
-          title: "report",
-          customIcon: Icons.report,
+          title: "Report",
+          customIcon: Icons.report_gmailerrorred,
           customColor: Colors.grey),
     );
   }

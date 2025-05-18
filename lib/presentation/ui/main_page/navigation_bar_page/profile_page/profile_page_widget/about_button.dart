@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../const/custom_divider.dart';
+import '../../../../../helpers/widgets/custom_card.dart';
 
 class AboutButton extends StatelessWidget {
   const AboutButton({
@@ -10,39 +11,13 @@ class AboutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () async {
         return showAlertDialog(context);
       },
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 10,
-                    left: 10,
-                    right: 8,
-                    bottom: 10
-                ),
-                child: Row(
-                  children: [
-                    Image.asset("assets/custom_icons/about.png",width: 20,
-                        color: Colors.white),
-                    const SizedBox(width: 10),
-                    const Text("About"),
-                  ],
-                ),
-              ),
-              const Icon(Icons.arrow_forward_ios,
-                size: 20,)
-            ],
-          ),
-          const CustomDivider(
-              dividerColor : Colors.grey
-          ),
-        ],
-      ),
+      child: const CustomCard(
+          title: "About",
+          customIcon: Icons.help_center_outlined,
+          customColor: Colors.grey),
     );
   }
 
@@ -51,9 +26,29 @@ class AboutButton extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return const AlertDialog(
-          content: Text("app license is 1.0.0 \n\ndirect by : "
-              "\n                           A.Shakoori"
-              "\n                           P.Pourhakim "),
+          content: SizedBox(
+            height: 100,
+            child: Row(
+              children: [
+                Text('direct by : '),
+                SizedBox(
+                  width: 30,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('A.Shakoori'),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('P.Pourhakim'),
+                  ],
+                )
+
+              ],
+            ),
+          ),
         );
       },
     );

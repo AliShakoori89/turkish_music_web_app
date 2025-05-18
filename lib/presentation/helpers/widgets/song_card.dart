@@ -12,7 +12,7 @@ class SongCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      width: MediaQuery.sizeOf(context).width - 100,
+      width: MediaQuery.sizeOf(context).width,
       margin: EdgeInsets.only(
         left: 10,
         right: 10,
@@ -50,10 +50,15 @@ class SongCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  songName,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                SizedBox(
+                  width: 250,
+                  child: Text(
+                    songName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 Text(
                     singerName,

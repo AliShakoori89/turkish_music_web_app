@@ -10,8 +10,8 @@ class HelpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CustomCard(
-        title: "help",
-        customIcon: Icons.help,
+        title: "Help",
+        customIcon: Icons.help_center_outlined,
         customColor: Colors.grey);
   }
 }

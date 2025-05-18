@@ -14,6 +14,7 @@ class UserRepository {
 
     final response = await api.post("/api/User/registerPublic",body);
     if (response.statusCode == 200) {
+      print("121212111212 12121212112 21 21211 21 12 1212 12 12 1");
       return 'sent';
     }
     else {
@@ -33,7 +34,6 @@ class UserRepository {
     var body = jsonEncode({'email': email, "verificationToken": apiKey});
     final response = await api.post("/api/User/FirstStepLogin", body);
     var responseData = jsonDecode(response.body);
-    print("Response message: ${responseData['message']}");
 
     if (response.statusCode == 200) {
       return true;
@@ -56,7 +56,6 @@ class UserRepository {
     var body = jsonEncode({'email': email, "verificationToken": apiKey});
     final response = await api.post("/api/User/FirstStepLogin", body);
     var responseData = jsonDecode(response.body);
-    print("Response message: ${responseData['message']}");
 
     return responseData['message'];
   }

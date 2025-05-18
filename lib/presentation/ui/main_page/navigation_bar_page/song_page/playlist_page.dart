@@ -35,7 +35,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Playlist"),
+        title: Text("My Playlist"),
         centerTitle: true,
       ),
         body: Container(
@@ -121,17 +121,14 @@ class _PlaylistPageState extends State<PlaylistPage> {
                         margin: const EdgeInsets.only(
                           top: 15,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Stack(
                           children: [
-                            Flexible(
-                              child: SongCard(
-                                songName: state.playlistSongs[index].name!,
-                                imgPath: state.playlistSongs[index].imageSource!,
-                                singerName: state.playlistSongs[index].singerName!,),
-                            ),
-                            Flexible(
+                            SongCard(
+                              songName: state.playlistSongs[index].name!,
+                              imgPath: state.playlistSongs[index].imageSource!,
+                              singerName: state.playlistSongs[index].singerName!,),
+                            Align(
+                              alignment: Alignment.topRight,
                               child: IconButton(
                                   onPressed: (){
                                     BlocProvider.of<PlaylistBloc>(context).add(

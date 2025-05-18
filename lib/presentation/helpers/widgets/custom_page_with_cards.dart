@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:turkish_music_app/presentation/helpers/widgets/custom_card.dart';
-
-import '../../ui/main_page/navigation_bar_page/song_page/download_page.dart';
 import '../../ui/main_page/navigation_bar_page/song_page/playlist_page.dart';
 
 class CustomPageWithCards extends StatelessWidget {
@@ -42,13 +40,11 @@ class CustomPageWithCards extends StatelessWidget {
             onTap: (){
               if(title[index] == "Playlist"){
 
-                context.push(
-                    '/'+PlaylistPage.routeName);
+
 
               }else if(title[index] == "Downloads"){
 
-                context.push(
-                    '/'+DownloadPage.routeName);
+
               }
 
             },

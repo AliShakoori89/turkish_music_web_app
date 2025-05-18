@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:turkish_music_app/presentation/helpers/widgets/custom_page_with_cards.dart';
+
+import '../../../../helpers/widgets/custom_page_with_cards.dart';
 
 class MusicPage extends StatelessWidget {
 
@@ -40,24 +41,6 @@ class MusicPage extends StatelessWidget {
                         customIcon: customIcon,
                         rowNumber: title.length,
                         customColor: Colors.white)),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text("Recently Playlist",
-                        style: TextStyle(
-                            color: Colors.grey
-                        ),
-                      )
-                  ),
-                ),
-                Expanded(
-                  flex: 8,
-                  child: Container(),
-                )
               ],
             )
           )
