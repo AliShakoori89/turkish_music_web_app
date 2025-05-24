@@ -9,7 +9,7 @@ import '../../../../const/custom_divider.dart';
 import 'profile_page_widget/exit_account-button.dart';
 import 'profile_page_widget/exit_button.dart';
 import 'profile_page_widget/help_button.dart';
-import 'profile_page_widget/share_button.dart';
+import 'profile_page_widget/download_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
