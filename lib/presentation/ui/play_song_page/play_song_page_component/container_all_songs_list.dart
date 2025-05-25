@@ -168,7 +168,7 @@ class ContainerAllSongsList extends StatelessWidget {
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold
                                 ),),
-                              Text(categoryAllSongs[index].singerName!,
+                              Text(categoryAllSongs[index].singerName ?? "",
                                 style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.white54

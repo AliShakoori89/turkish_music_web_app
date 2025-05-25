@@ -296,7 +296,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         xApiKey: 'YTgxN2RhYmYtMzllYi00MGUwLTkyZTYtMDhmOGI1NmJiMWFj',
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
           theme: ThemeData(brightness: Brightness.dark),
           themeMode: ThemeMode.dark,
           routerConfig: GoRouter(

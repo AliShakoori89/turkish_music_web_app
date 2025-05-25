@@ -216,40 +216,74 @@ class _SingerPageState extends State<SingerPage> {
                         mainAxisExtent: size.width / 3
                     ),
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Flexible(
-                            flex: 5,
-                            child: CachedNetworkImage(
-                              imageUrl: singerAllAlbum[index]
-                                  .imageSource!,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                    width: MediaQuery.of(context).size.width * 0.3,
-                                    height: MediaQuery.of(context).size.width * 0.6,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(Radius.circular(8)),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                              singerAllAlbum[index]
-                                                  .imageSource!),
-                                          fit: BoxFit.fill,
-                                        )
+                      return GestureDetector(
+                        onTap: (){
+                          var newPath = state.singerAllAlbum[index].musics![0].fileSource!.replaceAll(" ", "%20");
+
+                          SongDataModel songDataModel = SongDataModel(
+                            id : state.singerAllAlbum[index].musics![0].id,
+                            name: state.singerAllAlbum[index].musics![0].name,
+                            imageSource: state.singerAllAlbum[index].musics![0].imageSource,
+                            fileSource: newPath,
+                            minute: state.singerAllAlbum[index].musics![0].minute,
+                            second: state.singerAllAlbum[index].musics![0].second,
+                            singerName: widget.artistDetail.name,
+                            album: null,
+                            albumId: state.singerAllAlbum[index].id,
+                            categories: null,
+                          );
+
+                          context.push(
+                            '/'+PlaySongPage.routeName,
+                            extra: {
+                              'songName': songDataModel.name,
+                              'songFile': newPath,
+                              'songID': songDataModel.id!,
+                              'singerName': widget.artistDetail.name,
+                              'songImage': state.singerAllAlbum[index].imageSource,
+                              'albumID': songDataModel.albumId!,
+                              'pageName': "SingerPage",
+                              'albumSongList': state.singerAllAlbum[index].musics!,
+                              'songDataModel': songDataModel,
+                              'categoryID': 0
+                            },
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Flexible(
+                              flex: 5,
+                              child: CachedNetworkImage(
+                                imageUrl: singerAllAlbum[index]
+                                    .imageSource!,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                      width: MediaQuery.of(context).size.width * 0.3,
+                                      height: MediaQuery.of(context).size.width * 0.6,
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                singerAllAlbum[index]
+                                                    .imageSource!),
+                                            fit: BoxFit.fill,
+                                          )
+                                      ),
                                     ),
-                                  ),
-                              placeholder: (context, url) =>
-                                  SingerPageShimmerContainer(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                placeholder: (context, url) =>
+                                    SingerPageShimmerContainer(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.02,
-                          ),
-                          Flexible(
-                              flex: 1,
-                              child: Text(singerAllAlbum[index].name!))
-                        ],
+                            SizedBox(
+                              height: MediaQuery.of(context).size.width * 0.02,
+                            ),
+                            Flexible(
+                                flex: 1,
+                                child: Text(singerAllAlbum[index].name!))
+                          ],
+                        ),
                       );
                     });
               })
