@@ -7,7 +7,6 @@ import '../../../../bloc/user_bloc/fetch_user_bloc/event.dart';
 import '../../../../bloc/user_bloc/fetch_user_bloc/state.dart';
 import '../../../../const/custom_divider.dart';
 import 'profile_page_widget/exit_account-button.dart';
-import 'profile_page_widget/exit_button.dart';
 import 'profile_page_widget/help_button.dart';
 import 'profile_page_widget/download_button.dart';
 
@@ -73,7 +72,6 @@ class _ProfilePageState extends State<ProfilePage>{
                   HelpButton(),
                   AboutButton(),
                   ExitAccountButton(),
-                  ExitButton()
                 ],
               ),
             ),

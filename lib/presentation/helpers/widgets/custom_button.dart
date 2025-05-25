@@ -1,13 +1,11 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/event.dart';
 import '../../bloc/user_bloc/login_user_bloc/event.dart';
@@ -89,7 +87,7 @@ class _CustomButtonState extends State<CustomButton> {
                       barrierDismissible: false,
                       builder: (_) {
                         return AlertDialog(
-                          title: Container(
+                          title: SizedBox(
                             width: 300,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -100,81 +98,93 @@ class _CustomButtonState extends State<CustomButton> {
                                   children: [
                                     const Text('Enter Code : '),
                                     IconButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        icon: Icon(Icons.close))
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: Icon(Icons.close),
+                                    ),
                                   ],
                                 ),
-                                Text("Please wait for the code by email ...",
+                                const Text(
+                                  "Please check your email and enter the code",
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey
-                                  ),),
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                          content:  Container(
-                            // color: Colors.amber,
-                            height: size.height / 7,
+                          content: SizedBox(
+                            height: size.height / 5.5,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                SizedBox(
-                                    height: 5),
-                                SizedBox(
-                                  child: OtpTextField(
-                                    numberOfFields: 6,
-                                    borderColor: Colors.white,
-                                    fillColor: Colors.white.withValues(alpha: 0.5),
-                                    borderWidth: 0.25,
-                                    margin: EdgeInsets.only(
-                                        right: 2,
-                                        left: 2
-                                    ),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly, // This allows only digits
-                                    ],
-                                    focusedBorderColor: const Color(0xffb188ef),
-                                    keyboardType: TextInputType.number,
-                                    fieldWidth: 35,
-                                    filled: true,
-                                    showFieldAsBox: true,
-                                    handleControllers: (controllers) {
-                                      //get all textFields controller, if needed
-                                      verificationCodeController = controllers;
-                                    },
-                                    onSubmit: (String verificationCode) async{
-
-                                      final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
-
-                                      bool isTrue = await loginUserBloc.userRepository.secondLogin(widget.emailController.text, verificationCode);
-
-                                      if(isTrue){
-
-                                        CustomToast(title: "Authentication Success...  Welcome .", toastColor: const Color(
-                                            0xFF00B01E).withValues(alpha: 0.2)).show();
-
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) => MainPage(),
-                                          ),
-                                        );
-                                      } else {
-
-                                        CustomToast(title: "Verification code is not true .", toastColor: const Color(
-                                            0xFFC20808).withValues(alpha: 0.2)).show();
-                                      }
-                                    },
+                                const Spacer(),
+                                PinCodeTextField(
+                                  appContext: context,
+                                  length: 6,
+                                  obscureText: false,
+                                  animationType: AnimationType.fade,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
+                                  autoFocus: true,
+                                  textStyle: const TextStyle(
+                                    color: Colors.black, // 👈 این خط رنگ اعداد رو مشکی می‌کنه
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
                                   ),
+                                  pinTheme: PinTheme(
+                                    shape: PinCodeFieldShape.box,
+                                    borderRadius: BorderRadius.circular(5),
+                                    fieldHeight: 40,
+                                    fieldWidth: 35,
+                                    activeColor: const Color(0xffb188ef),
+                                    selectedColor: Colors.white,
+                                    inactiveColor: Colors.white.withOpacity(0.5),
+                                    activeFillColor: Colors.white,
+                                    selectedFillColor: Colors.white,
+                                    inactiveFillColor: Colors.white.withOpacity(0.5),
+                                  ),
+                                  animationDuration: const Duration(milliseconds: 300),
+                                  enableActiveFill: true,
+                                  onCompleted: (String verificationCode) async {
+                                    final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
+
+                                    bool isTrue = await loginUserBloc.userRepository.secondLogin(
+                                        widget.emailController.text, verificationCode);
+
+                                    if (isTrue) {
+                                      CustomToast(
+                                        title: "Authentication Success...  Welcome .",
+                                        toastColor: const Color(0xFF00B01E).withOpacity(0.2),
+                                      ).show();
+
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) => MainPage()),
+                                      );
+                                    } else {
+                                      CustomToast(
+                                        title: "Verification code is not true .",
+                                        toastColor: const Color(0xFFC20808).withOpacity(0.2),
+                                      ).show();
+                                    }
+                                  },
+                                  onChanged: (value) {
+                                    // Optional
+                                  },
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 OtpTimerButton(
                                   controller: widget.controller,
                                   onPressed: () {
                                     widget.controller.startTimer();
-                                    loginUserBloc.add(FirstLoginEvent(email: widget.emailController.text));
+                                    loginUserBloc.add(
+                                      FirstLoginEvent(email: widget.emailController.text),
+                                    );
                                   },
-                                  text: Text('Resend OTP'),
+                                  text: const Text('Resend OTP'),
                                   duration: 120,
                                 ),
                               ],
@@ -183,6 +193,7 @@ class _CustomButtonState extends State<CustomButton> {
                         );
                       },
                     );
+
 
                   }else{
 

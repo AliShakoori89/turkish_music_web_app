@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../bloc/user_bloc/fetch_user_bloc/bloc.dart';
 import '../../../../../bloc/user_bloc/fetch_user_bloc/event.dart';
 import '../../../../../helpers/widgets/custom_card.dart';
@@ -27,7 +28,7 @@ class ExitAccountButton extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   BlocProvider.of<FetchUserBloc>(context).add(ExitAccountEvent());
-                  FlutterExitApp.exitApp();
+                  context.go("/AuthenticatePage");
                   },
                 child: Text("Yes")),
             ElevatedButton(
