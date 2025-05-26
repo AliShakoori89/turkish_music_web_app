@@ -50,8 +50,7 @@ class SongRepository {
           minute: song['minute'],
           imageSource: song['imageSource'],
           id: song['id'],
-          fileSource: song['fileSource'].substring(0, 4) + "s"
-              +song['fileSource'].substring(4, song['fileSource'].length),
+          fileSource: song['fileSource'],
           albumId: song['albumId']
         );
 
@@ -62,8 +61,7 @@ class SongRepository {
             minute: song1.minute,
             imageSource: song1.imageSource,
             id: song1.id,
-            fileSource: song['fileSource'].substring(0, 4) + "s"
-                +song['fileSource'].substring(4, song['fileSource'].length),
+            fileSource: song['fileSource'],
             albumId: song1.albumId
         );
 
