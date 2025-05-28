@@ -11,6 +11,7 @@ import '../../../../../../../../data/model/singer_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../const/generate_new_path.dart';
 import '../../../../../../../const/shimmer_container/singer_page_shimmer_container.dart';
+import '../../../../../../../helpers/widgets/back_button_if_ios_web.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
 class SingerPage extends StatefulWidget {
@@ -57,6 +58,7 @@ class _SingerPageState extends State<SingerPage> {
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    leading: buildBackButtonIfIosWeb(),
                     title: Text(widget.artistDetail.name),
                     backgroundColor: Colors.black,
                     expandedHeight: orientation == Orientation.portrait

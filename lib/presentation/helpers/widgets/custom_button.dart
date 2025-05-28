@@ -150,7 +150,6 @@ class _CustomButtonState extends State<CustomButton> {
                                   animationDuration: const Duration(milliseconds: 300),
                                   enableActiveFill: true,
                                   onCompleted: (String verificationCode) async {
-                                    final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
 
                                     bool isTrue = await loginUserBloc.userRepository.secondLogin(
                                         widget.emailController.text, verificationCode);

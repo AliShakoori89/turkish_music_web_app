@@ -1,9 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../../../data/model/album_model.dart';
-import '../../../../data/model/save_song_model.dart';
+import '../../../helpers/widgets/back_button_if_ios_web.dart';
 import '../../play_song_page/play_song_page_component/container_all_songs_list.dart';
-import '../../play_song_page/play_song_page_component/download_button.dart';
 import '../../play_song_page/play_song_page_component/favorite.dart';
 import '../../play_song_page/play_song_page_component/loop_button.dart';
 import '../../play_song_page/play_song_page_component/next_button.dart';
@@ -11,8 +10,9 @@ import '../../play_song_page/play_song_page_component/play_button.dart';
 import '../../play_song_page/play_song_page_component/play_list_button.dart';
 import '../../play_song_page/play_song_page_component/previous_button.dart';
 import '../../play_song_page/play_song_page_component/progressbar.dart';
-import '../../play_song_page/play_song_page_component/repeat_button.dart';
 import '../title.dart';
+
+
 
 class PortraitPlaySongPage extends StatelessWidget {
   PortraitPlaySongPage({super.key, required this.songName, required this.singerName,
@@ -34,6 +34,8 @@ class PortraitPlaySongPage extends StatelessWidget {
   final List<AlbumDataMusicModel> albumAllSongsList;
 
 
+
+
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
@@ -49,34 +51,37 @@ class PortraitPlaySongPage extends StatelessWidget {
                 heightSize: 50,
               ),
               SizedBox(height: 50,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        songName,
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height / 60,
-                            color: Colors.white),
-                      ),
-                      Text(
-                        singerName,
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height / 70,
-                            color: Colors.white60),
-                      ),
-                    ],
-                  ),
-                  Spacer(flex: 10,),
-                  FavoriteButton(
-                    controller: controller,
-                    songID: songID,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          songName,
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 60,
+                              color: Colors.white),
+                        ),
+                        Text(
+                          singerName,
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height / 70,
+                              color: Colors.white60),
+                        ),
+                      ],
+                    ),
+                    Spacer(flex: 10,),
+                    FavoriteButton(
+                      controller: controller,
+                      songID: songID,
+                    ),
+                  ],
+                ),
               ),
               Container(
                 height: 500,

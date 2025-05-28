@@ -12,6 +12,7 @@ import '../../../data/model/album_model.dart';
 import '../../bloc/play_button_state_bloc/bloc.dart';
 import '../../bloc/play_button_state_bloc/event.dart';
 import '../../bloc/song_control_bloc/audio_control_bloc.dart';
+import '../../helpers/widgets/back_button_if_ios_web.dart';
 import '../component/portrait/portrait_play_song_page.dart';
 
 class PlaySongPage extends StatefulWidget {
@@ -80,6 +81,9 @@ class PlaySongPageState extends State<PlaySongPage> with WidgetsBindingObserver 
   Widget build(BuildContext context) {
 
     return Scaffold(
+      appBar: AppBar(
+        leading: buildBackButtonIfIosWeb(),
+      ),
         body: SafeArea(
           child: BlocBuilder<AudioControlBloc, AudioControlState>(
               builder: (context, state) {

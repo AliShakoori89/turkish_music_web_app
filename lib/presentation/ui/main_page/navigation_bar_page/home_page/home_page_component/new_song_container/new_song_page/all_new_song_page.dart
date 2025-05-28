@@ -8,6 +8,7 @@ import 'package:turkish_music_app/presentation/bloc/new_song_bloc/state.dart';
 import '../../../../../../../../data/model/album_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../const/generate_new_path.dart';
+import '../../../../../../../helpers/widgets/back_button_if_ios_web.dart';
 import '../../../../../../../helpers/widgets/song_card.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
@@ -38,6 +39,7 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
       appBar: AppBar(
         title: const Text('New Songs'),
         centerTitle: true,
+        leading: buildBackButtonIfIosWeb(),
       ),
       body: BlocBuilder<NewSongBloc, NewSongState>(
 
@@ -104,10 +106,12 @@ class _AllNewSongsPageState extends State<AllNewSongsPage> {
                             SizedBox(
                               width: 10,
                             ),
-                            SongCard(
-                                songName: state.allNewSong[index].name!,
-                                imgPath: state.allNewSong[index].imageSource!,
-                                singerName: state.allNewSong[index].singerName!)
+                            Expanded(
+                              child: SongCard(
+                                  songName: state.allNewSong[index].name!,
+                                  imgPath: state.allNewSong[index].imageSource!,
+                                  singerName: state.allNewSong[index].singerName!),
+                            )
                           ],
                         ),
                       )

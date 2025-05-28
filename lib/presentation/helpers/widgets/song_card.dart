@@ -34,42 +34,41 @@ class SongCard extends StatelessWidget {
             height: 60,
             width: 60,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: DecorationImage(
-                    image: NetworkImage(imgPath),
-                    fit: BoxFit.cover)),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Container(
-            margin: EdgeInsets.only(
-                right: 10
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(imgPath),
+                fit: BoxFit.cover,
+              ),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 250,
-                  child: Text(
+          ),
+          const SizedBox(width: 5),
+          Expanded( // ⬅️ اضافه شد
+            child: Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
                     songName,
-                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
+                  Text(
                     singerName,
                     style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white54
-                    )
-                )
-              ],
+                      fontSize: 14,
+                      color: Colors.white54,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -44,7 +44,7 @@ class ContainerAllSongsList extends StatelessWidget {
               fileSource: newPath,
               minute: categoryAllSongs[index].minute,
               second: categoryAllSongs[index].second,
-              singerName: singerName,
+              singerName: categoryAllSongs[index].singerName,
               album: null,
               albumId: categoryAllSongs[index].albumId,
               categories: null,

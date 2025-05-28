@@ -283,7 +283,7 @@ class AudioControlBloc extends Bloc<AudioControlEvent, AudioControlState> {
       id: song.id,
       name: song.name,
       imageSource: song.imageSource,
-      fileSource: song.fileSource!.replaceFirst('http', 'https'),
+      fileSource: song.fileSource!,
       singerName: song.singerName,
       minute: song.minute,
       second: song.second,

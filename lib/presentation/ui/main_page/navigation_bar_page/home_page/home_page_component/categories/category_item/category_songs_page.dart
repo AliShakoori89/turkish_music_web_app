@@ -9,7 +9,7 @@ import '../../../../../../../../data/model/category_model.dart';
 import '../../../../../../../../data/model/song_model.dart';
 import '../../../../../../../bloc/category_item_bloc/bloc.dart';
 import '../../../../../../../bloc/category_item_bloc/event.dart';
-import '../../../../../../../const/generate_new_path.dart';
+import '../../../../../../../helpers/widgets/back_button_if_ios_web.dart';
 import '../../../../../../play_song_page/play_song_page.dart';
 
 class CategorySongPage extends StatefulWidget {
@@ -48,6 +48,7 @@ class _CategorySongPageState extends State<CategorySongPage> {
         appBar: AppBar(
           title: Text(widget.categoryName),
           centerTitle: true,
+          leading: buildBackButtonIfIosWeb(),
         ),
       body: BlocBuilder<CategoryItemBloc, CategoryItemState>(
           builder: (context, state) {
@@ -125,10 +126,12 @@ class _CategorySongPageState extends State<CategorySongPage> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                SongCard(
-                                    songName: categoryAllSongs[index].name!,
-                                    imgPath: categoryAllSongs[index].imageSource!,
-                                    singerName: categoryAllSongs[index].singerName!)
+                                Expanded(
+                                  child: SongCard(
+                                      songName: categoryAllSongs[index].name!,
+                                      imgPath: categoryAllSongs[index].imageSource!,
+                                      singerName: categoryAllSongs[index].singerName!),
+                                )
                               ],
                             ),
                           )
