@@ -68,7 +68,7 @@ class _CustomButtonState extends State<CustomButton> {
 
                   registerBloc.add(RegistrationUserEvent(email: widget.emailController.text));
 
-                  CustomToast(title: "Registration Success...  Please login this email .", toastColor: const Color(
+                  CustomToast(title: "Registration Success...", toastColor: const Color(
                       0xFF00B01E).withValues(alpha: 0.2)).show();
 
                   Navigator.of(context).push(

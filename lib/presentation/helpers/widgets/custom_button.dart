@@ -83,7 +83,7 @@ class _CustomButtonState extends State<CustomButton> {
 
                   if(userExist != "رکورد با مشخصات وارد شده یافت نشد"){
 
-                    loginUserBloc.add(FirstLoginEvent(email: widget.emailController.text));
+                    BlocProvider.of<LoginUserBloc>(context).add(FirstLoginEvent(email: widget.emailController.text));
 
                     showDialog(
                       context: context,

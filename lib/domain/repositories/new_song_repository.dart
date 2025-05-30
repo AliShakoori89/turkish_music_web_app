@@ -16,6 +16,7 @@ class NewSongRepository {
     var newSongModel = NewSongModel.fromJson(productJson);
     for(int i = newSongModel.data!.length-4; i < newSongModel.data!.length; i++){
       list.add(newSongModel.data![i]);
+      print(newSongModel.data![i]);
     }
     return list;
   }

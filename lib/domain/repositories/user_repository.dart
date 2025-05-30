@@ -32,7 +32,9 @@ class UserRepository {
 
     ApiBaseHelper api = ApiBaseHelper();
 
-    var body = jsonEncode({'email': email, "verificationToken": ConstApiKey.constApiKey});
+    print("111111111111111111111111111111111111111                                "+ConstApiKey.constApiKey);
+
+    var body = jsonEncode({'email': email, "verificationToken": 'string'});
     final response = await api.post("/api/User/FirstStepLogin", body);
     var responseData = jsonDecode(response.body);
 

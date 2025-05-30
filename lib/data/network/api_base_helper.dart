@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:turkish_music_app/presentation/const/const_api.dart';
 import 'http_exception.dart';
 
 class ApiBaseHelper {
 
   final String baseUrl = 'api.turkishmusicapi.ir';
-  final String apiKey = "b2e0e4d33c0ed8ae75e1f4f15d29a56702fbae4a9ce018a7567f5848e55407ac";
   // final String baseUrl = '194.5.195.145';
 
   FutureOr<dynamic> get(String url,
@@ -23,7 +23,7 @@ class ApiBaseHelper {
 
       headers = {
         'Content-Type': 'application/json',
-        'ApiKey': '$apiKey',
+        'ApiKey': ConstApiKey.constApiKey,
         'Authorization': 'bearer $accessToken',
       };
 
@@ -48,7 +48,7 @@ class ApiBaseHelper {
 
       headers = {
         'Content-type': 'application/json',
-        'ApiKey': '$apiKey',
+        'ApiKey': ConstApiKey.constApiKey,
         'Authorization': 'bearer $accessToken'
       };
 
