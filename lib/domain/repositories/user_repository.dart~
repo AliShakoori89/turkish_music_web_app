@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
-import '../../presentation/const/const_api.dart';
 
 class UserRepository {
 
@@ -30,9 +29,11 @@ class UserRepository {
 
   firstLogin(String email) async {
 
+    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
+
     ApiBaseHelper api = ApiBaseHelper();
 
-    var body = jsonEncode({'email': email, "verificationToken": ConstApiKey.constApiKey});
+    var body = jsonEncode({'email': email, "verificationToken": apiKey});
     final response = await api.post("/api/User/FirstStepLogin", body);
     var responseData = jsonDecode(response.body);
 
@@ -49,9 +50,12 @@ class UserRepository {
 
   Future<String> userExist(String email) async{
 
+    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
+
+
     ApiBaseHelper api = ApiBaseHelper();
 
-    var body = jsonEncode({'email': email, "verificationToken": ConstApiKey.constApiKey});
+    var body = jsonEncode({'email': email, "verificationToken": apiKey});
     final response = await api.post("/api/User/FirstStepLogin", body);
     var responseData = jsonDecode(response.body);
 

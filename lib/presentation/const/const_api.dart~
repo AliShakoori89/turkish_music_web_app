@@ -1,0 +1,4 @@
+class ConstApi{
+
+  static String const_api = ;
+}

@@ -7,7 +7,6 @@ import '../../data/network/api_base_helper.dart';
 
 class SongRepository {
 
-  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
 
 
   FutureOr<dynamic> getAllSongs(String char) async {

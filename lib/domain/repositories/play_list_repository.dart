@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/model/playListSongModel.dart';
 import '../../data/network/api_base_helper.dart';
+import '../../presentation/const/const_api.dart';
 
 class PlayListRepository {
 
@@ -10,13 +11,11 @@ class PlayListRepository {
 
   addToPlayList(int musicID) async {
 
-    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
-
     ApiBaseHelper api = ApiBaseHelper();
 
     var body = jsonEncode({
       "musicId": musicID,
-      "apiKey": apiKey
+      "apiKey": ConstApiKey.constApiKey
     });
 
     String accessToken = await getAccessTokenValue();
@@ -40,13 +39,11 @@ class PlayListRepository {
 
   removeFromPlayList(int musicID) async{
 
-    final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
-
     ApiBaseHelper api = ApiBaseHelper();
 
     var body = jsonEncode({
       "musicId": musicID,
-      "apiKey": apiKey
+      "apiKey": ConstApiKey.constApiKey
     });
 
     String accessToken = await getAccessTokenValue();

@@ -8,8 +8,6 @@ class NewSongRepository {
 
   final cache = DefaultCacheManager();
 
-  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
-
   FutureOr<List<NewSongDataModel>> getNewMusic() async {
     ApiBaseHelper api = ApiBaseHelper();
     List<NewSongDataModel> list = [];

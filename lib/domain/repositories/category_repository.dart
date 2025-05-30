@@ -6,8 +6,6 @@ import '../../data/network/api_base_helper.dart';
 
 class CategoryRepository {
 
-  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
-
   FutureOr<List<CategoryDataModel>> getAllCategory() async {
     ApiBaseHelper api = ApiBaseHelper();
     final response = await api.get('/api/Category/GetAll');

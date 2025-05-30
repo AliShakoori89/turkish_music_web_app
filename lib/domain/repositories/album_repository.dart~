@@ -7,6 +7,8 @@ import '../../data/network/api_base_helper.dart';
 
 class AlbumRepository {
 
+  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
+
   FutureOr<dynamic> getAllAlbum(String char) async {
     ApiBaseHelper api = ApiBaseHelper();
 

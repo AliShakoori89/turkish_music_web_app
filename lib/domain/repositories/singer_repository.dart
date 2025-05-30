@@ -5,9 +5,6 @@ import '../../data/network/api_base_helper.dart';
 
 class SingerRepository {
 
-  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
-
-
   Future<dynamic> getFamousSinger() async {
 
     ApiBaseHelper api = ApiBaseHelper();

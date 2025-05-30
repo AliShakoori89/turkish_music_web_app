@@ -5,6 +5,9 @@ import '../../data/network/api_base_helper.dart';
 
 class SearchRepository {
 
+  final String apiKey = "YekAdadApiKeyMibashadKeBarayeApplicationTurkishMusicJahatEstefadehAsApiHaSakhteShodeAst";
+
+
 FutureOr<dynamic> getSearchSong(String searchWord) async {
 
     ApiBaseHelper api = ApiBaseHelper();
