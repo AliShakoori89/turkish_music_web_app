@@ -18,12 +18,11 @@ class RegisterUserBloc extends Bloc<RegisterUserEvent, RegisterUserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      var requestPublic = await userRepository.requestPublic(event.email);
+      await userRepository.requestPublic(event.email);
 
       emit(
         state.copyWith(
           status: UserStatus.success,
-          requestPublic: requestPublic == 'success' ? true : false
         ),
       );
     } catch (error) {

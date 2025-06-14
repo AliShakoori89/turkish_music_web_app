@@ -12,3 +12,14 @@ class RegistrationUserEvent extends RegisterUserEvent{
   @override
   List<Object> get props => [email];
 }
+
+class UserExistEvent extends RegisterUserEvent{
+  final String email;
+
+  UserExistEvent({
+    required this.email,
+  });
+
+  @override
+  List<Object> get props => [email];
+}

@@ -13,14 +13,12 @@ class RegisterUserState extends Equatable{
 
   const RegisterUserState({
     required this.status,
-    required this.requestPublic,
     required this.firstRegisterStatus,
     required this.secondRegisterStatus,
   });
 
   static RegisterUserState initial() => RegisterUserState(
     status: UserStatus.initial,
-    requestPublic: false,
     firstRegisterStatus: false,
     secondRegisterStatus: false,
   );
@@ -28,22 +26,19 @@ class RegisterUserState extends Equatable{
   final UserStatus status;
   final bool firstRegisterStatus;
   final bool secondRegisterStatus;
-  final bool requestPublic;
 
   @override
   // TODO: implement props
-  List<Object?> get props => [status, requestPublic, firstRegisterStatus,
+  List<Object?> get props => [status, firstRegisterStatus,
     secondRegisterStatus];
 
   RegisterUserState copyWith({
     UserStatus? status,
-    bool? requestPublic,
     bool? firstRegisterStatus,
     bool? secondRegisterStatus,
   }) {
     return RegisterUserState(
       status: status ?? this.status,
-      requestPublic: requestPublic ?? this.requestPublic,
       firstRegisterStatus: firstRegisterStatus ?? this.firstRegisterStatus,
       secondRegisterStatus: secondRegisterStatus ?? this.secondRegisterStatus,
     );

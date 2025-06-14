@@ -36,9 +36,8 @@ import 'package:turkish_music_app/presentation/bloc/song_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/song_control_bloc/audio_control_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/fetch_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_exist_bloc/login_user_bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
-import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_exist_bloc/reg_user_bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/user_exist_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/helpers/audio_handler.dart';
 import 'package:turkish_music_app/presentation/ui/authentication_page/authenticate_page.dart';
 import 'package:turkish_music_app/presentation/ui/main_page/main_page.dart';
@@ -251,10 +250,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 LoginUserBloc(UserRepository())),
         BlocProvider(
             create: (BuildContext context) =>
-                RegUserExistBloc(UserRepository())),
-        BlocProvider(
-            create: (BuildContext context) =>
-                LoginUserExistBloc(UserRepository())),
+                UserExistBloc(UserRepository())),
         BlocProvider(
             create: (BuildContext context) =>
                 FetchUserBloc(UserRepository())),

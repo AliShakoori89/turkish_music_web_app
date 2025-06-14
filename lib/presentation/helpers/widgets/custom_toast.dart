@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:another_flushbar/flushbar.dart';
 
-class CustomToast {
-
+class WebToast {
   final String title;
-  final Color toastColor;
+  final Color backgroundColor;
+  final IconData icon;
 
-  CustomToast({required this.title, required this.toastColor});
+  WebToast({
+    required this.title,
+    this.backgroundColor = Colors.green,
+    this.icon = Icons.check_circle,
+  });
 
-  void show() {
-    Fluttertoast.showToast(
-      msg: title,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 3,
-      backgroundColor: toastColor,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+  void show(BuildContext context) {
+    Flushbar(
+      margin: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(12),
+      backgroundColor: backgroundColor,
+      icon: Icon(icon, color: Colors.white),
+      messageText: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 16),
+      ),
+      duration: const Duration(seconds: 3),
+      flushbarPosition: FlushbarPosition.TOP,
+    ).show(context);
   }
 }

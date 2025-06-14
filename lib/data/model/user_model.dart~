@@ -1,0 +1,66 @@
+import 'package:equatable/equatable.dart';
+
+class UserModel<T> extends Equatable {
+  final T? data;
+  final bool? success;
+  final String? message;
+  final int? lastPage;
+
+  const UserModel({this.data, this.success, this.message, this.lastPage});
+
+  factory UserModel.fromJson(Map<String, dynamic> json, T Function(dynamic)? fromDataJson) {
+    return UserModel<T>(
+      data: fromDataJson != null && json['data'] != null ? fromDataJson(json['data']) : null,
+      success: json['success'],
+      message: json['message'],
+      lastPage: json['lastPage'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data is Equatable ? (data as dynamic).toJson() : data,
+      'success': success,
+      'message': message,
+      'lastPage': lastPage,
+    };
+  }
+
+  @override
+  List<Object?> get props => [data, success, message, lastPage];
+}
+
+class UserDataModel extends Equatable {
+  final int id;
+  final String email;
+  final String creationDate;
+  final bool isAdmin;
+
+  const UserDataModel({
+    required this.id,
+    required this.email,
+    required this.creationDate,
+    required this.isAdmin,
+  });
+
+  factory UserDataModel.fromJson(Map<String, dynamic> json) {
+    return UserDataModel(
+      id: json['id'],
+      email: json['email'],
+      creationDate: json['creationDate'],
+      isAdmin: json['isAdmin'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'creationDate': creationDate,
+      'isAdmin': isAdmin,
+    };
+  }
+
+  @override
+  List<Object?> get props => [id, email, creationDate, isAdmin];
+}

@@ -39,12 +39,12 @@ class LoginUserBloc extends Bloc<LoginUserEvent, LoginUserState> {
     try {
       emit(state.copyWith(status: UserStatus.loading));
 
-      final String? secondLoginStatus = await userRepository.secondLogin(event.email, event.verificationToken);
+      final bool? secondLoginStatus = await userRepository.secondLogin(event.email, event.verificationToken);
 
       emit(
         state.copyWith(
             status: UserStatus.success,
-            secondRegisterStatus: secondLoginStatus == 'success' ? true : false
+            secondRegisterStatus: secondLoginStatus
         ),
       );
     } catch (error) {

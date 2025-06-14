@@ -1,0 +1,46 @@
+import 'package:equatable/equatable.dart';
+
+enum UserExistStatus { initial, success, error, loading }
+
+extension USerExistStatusX on UserExistStatus {
+  bool get isInitial => this == UserExistStatus.initial;
+  bool get isSuccess => this == UserExistStatus.success;
+  bool get isError => this == UserExistStatus.error;
+  bool get isLoading => this == UserExistStatus.loading;
+}
+
+class UserExistState extends Equatable{
+
+  const UserExistState({
+    required this.status,
+    required this.userExistMessage,
+    required this.userStatus
+  });
+
+  static UserExistState initial() => UserExistState(
+    status: UserExistStatus.initial,
+    userExistMessage: '',
+    userStatus: false
+  );
+
+  final UserExistStatus status;
+  final String userExistMessage;
+  final bool userStatus;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [status, userExistMessage, userStatus];
+
+  UserExistState copyWith({
+    UserExistStatus? status,
+    String? userExist,
+    bool? userStatus
+
+  }) {
+    return UserExistState(
+      status: status ?? this.status,
+      userExistMessage: userExist ?? this.userExistMessage,
+      userStatus: userStatus ?? this.userStatus
+    );
+  }
+}

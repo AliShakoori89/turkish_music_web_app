@@ -6,9 +6,13 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/login_user_bloc/state.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/bloc.dart';
 import 'package:turkish_music_app/presentation/bloc/user_bloc/register_user_bloc/event.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/user_exist_bloc/bloc.dart';
+import 'package:turkish_music_app/presentation/bloc/user_bloc/user_exist_bloc/event.dart';
 import '../../bloc/user_bloc/login_user_bloc/event.dart';
+import '../../bloc/user_bloc/user_exist_bloc/state.dart';
 import '../../ui/main_page/main_page.dart';
 import 'custom_toast.dart';
 
@@ -43,81 +47,162 @@ class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
 
-    Size size = MediaQuery.of(context).size;
+    return widget.buttonTitle == "SIGN UP"
+        ? BlocListener<UserExistBloc, UserExistState>(
+        listener: (context, state){
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
-        child: InkWell(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onTap: _isLoading ? null : () async {
+          if (state.status == UserExistStatus.loading) {
+            Center(child: CircularProgressIndicator());
+          }else if (state.status == UserExistStatus.success) {
+            if (state.userExistStatus) {
+              // ✅ کاربر وجود ندارد -> ثبت نام کن
+              context.read<RegisterUserBloc>().add(
+                RegistrationUserEvent(email: widget.emailController.text),
+              );
 
-            if (widget.emailFormKey.currentState!.validate()){
+              WebToast(
+                title: 'Registration successful.',
+                backgroundColor: Color(0xFF00B01E),
+                icon: Icons.check_circle,
+              ).show(context);
 
-              setState(() {
-                _isLoading = true;
-              });
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
+            } else {
+              WebToast(
+                title: 'The entered email is existing.',
+                backgroundColor: Color(0xFFC20808),
+                icon: Icons.error,
+              ).show(context);
+            }
+          }else if (state.status == UserExistStatus.error) {
+            WebToast(
+              title: 'Error.',
+              backgroundColor: Color(0xFFC20808),
+              icon: Icons.error,
+            ).show(context);
+          }
 
-              if (widget.state == 0) {
+        },
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaY: 15, sigmaX: 15),
+            child: InkWell(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              onTap: _isLoading ? null : () async {
 
-                if(widget.buttonTitle == "SIGN UP"){
+                if (widget.emailFormKey.currentState!.validate()){
 
-                  final registerBloc = BlocProvider.of<RegisterUserBloc>(context);
+                  setState(() {
+                    _isLoading = true;
+                  });
 
-                  registerBloc.add(RegistrationUserEvent(email: widget.emailController.text));
+                  if (widget.state == 0 && widget.buttonTitle == "SIGN UP") {
 
-                  CustomToast(title: "Registration Success...", toastColor: const Color(
-                      0xFF00B01E).withValues(alpha: 0.2)).show();
+                      context.read<UserExistBloc>().add(CheckUserExistEvent(email: widget.emailController.text));
 
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MainPage()));
+
+                    }else if(widget.state == 0 && widget.buttonTitle == "LOGIN") {
+
+                    context.read<UserExistBloc>().add(CheckUserExistEvent(email: widget.emailController.text));
+
+                  }
+
+                  setState(() {
+                    _isLoading = false;
+                  });
 
                 }
-                else if(widget.buttonTitle == "LOGIN") {
 
-                  final loginUserBloc = BlocProvider.of<LoginUserBloc>(context);
+              },
+              child: Container(
+                height: 40,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      widget.buttonTitle,
+                      style: TextStyle(
+                        color: Colors.white.withAlpha(200),
+                      ),
+                    ),
+                    if (_isLoading) ...[
+                      SizedBox(width: 10),
+                      SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: LoadingAnimationWidget.staggeredDotsWave(
+                          color: Colors.white,
+                          size: 8,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+    )
+        : BlocListener<UserExistBloc, UserExistState>(
+      listener: (context, state){
+        print('1111111111111111111');
+        if (state.status == UserExistStatus.loading) {
+          Center(child: CircularProgressIndicator());
+        }else if (state.status == UserExistStatus.success) {
+          if (!state.userExistStatus) {
 
-                  String userExist = await loginUserBloc.userRepository.userExist(widget.emailController.text);
+            String userExist = state.userExistMessage;
 
-                  if(userExist != "رکورد با مشخصات وارد شده یافت نشد"){
+            if(userExist != "رکورد با مشخصات وارد شده یافت نشد"){
 
-                    loginUserBloc.add(FirstLoginEvent(email: widget.emailController.text));
+              BlocProvider.of<LoginUserBloc>(context).add(FirstLoginEvent(email: widget.emailController.text));
 
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (_) {
-                        return AlertDialog(
-                          title: SizedBox(
-                            width: 300,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) {
+                  return AlertDialog(
+                      title: SizedBox(
+                        width: 300,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('Enter Code : '),
-                                    IconButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      icon: Icon(Icons.close),
-                                    ),
-                                  ],
-                                ),
-                                const Text(
-                                  "Please check your email and enter the code",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                  ),
+                                const Text('Enter Code : '),
+                                IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: Icon(Icons.close),
                                 ),
                               ],
                             ),
-                          ),
-                          content: SizedBox(
-                            height: size.height / 5.5,
+                            const Text(
+                              "Please check your email and enter the code",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      content: BlocBuilder<LoginUserBloc, LoginUserState>(
+                        builder: (context, state){
+
+                          return SizedBox(
+                            height: double.infinity / 5.5,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -154,23 +239,31 @@ class _CustomButtonState extends State<CustomButton> {
                                   enableActiveFill: true,
                                   onCompleted: (String verificationCode) async {
 
-                                    bool isTrue = await loginUserBloc.userRepository.secondLogin(
-                                        widget.emailController.text, verificationCode);
+                                    context.read<LoginUserBloc>().add(
+                                        SecondLoginEvent(email: widget.emailController.text, verificationToken: verificationCode)
+                                    );
+
+                                    bool isTrue = state.secondRegisterStatus;
 
                                     if (isTrue) {
-                                      CustomToast(
+
+                                      WebToast(
                                         title: "Authentication Success...  Welcome .",
-                                        toastColor: const Color(0xFF00B01E).withOpacity(0.2),
-                                      ).show();
+                                        backgroundColor: Color(0xFF00B01E),
+                                        icon: Icons.check_circle,
+                                      ).show(context);
 
                                       Navigator.of(context).push(
                                         MaterialPageRoute(builder: (context) => MainPage()),
                                       );
                                     } else {
-                                      CustomToast(
+
+                                      WebToast(
                                         title: "Verification code is not true .",
-                                        toastColor: const Color(0xFFC20808).withOpacity(0.2),
-                                      ).show();
+                                        backgroundColor: Color(0xFFC20808),
+                                        icon: Icons.check_circle,
+                                      ).show(context);
+
                                     }
                                   },
                                   onChanged: (value) {
@@ -182,8 +275,8 @@ class _CustomButtonState extends State<CustomButton> {
                                   controller: widget.controller,
                                   onPressed: () {
                                     widget.controller.startTimer();
-                                    loginUserBloc.add(
-                                      FirstLoginEvent(email: widget.emailController.text),
+                                    context.read<LoginUserBloc>().add(
+                                        FirstLoginEvent(email: widget.emailController.text)
                                     );
                                   },
                                   text: const Text('Resend OTP'),
@@ -191,61 +284,38 @@ class _CustomButtonState extends State<CustomButton> {
                                 ),
                               ],
                             ),
-                          ),
-                        );
-                      },
-                    );
+                          );
+                        },
+                      )
+                  );
+                },
+              );
 
-                  }else{
+            }else{
 
-                    CustomToast(title: "The user has not registered with the entered email .", toastColor: const Color(
-                        0xFFC20808).withValues(alpha: 0.2)).show();
-
-                  }
-
-                }
-              }
-
-              setState(() {
-                _isLoading = false;
-              });
+              WebToast(
+                title: "The user has not registered with the entered email .",
+                backgroundColor: Color(0xFFC20808),
+                icon: Icons.check_circle,
+              ).show(context);
 
             }
 
-          },
-          child: Container(
-              height: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(15),
-              ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  widget.buttonTitle,
-                  style: TextStyle(
-                    color: Colors.white.withAlpha(200),
-                  ),
-                ),
-                if (_isLoading) ...[
-                  SizedBox(width: 10),
-                  SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: Colors.white,
-                      size: 8,
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ),
-      ),
+          } else {
+            WebToast(
+              title: 'The entered email is not exist.',
+              backgroundColor: Color(0xFFC20808),
+              icon: Icons.error,
+            ).show(context);
+          }
+        }else if (state.status == UserExistStatus.error) {
+          WebToast(
+            title: 'Error.',
+            backgroundColor: Color(0xFFC20808),
+            icon: Icons.error,
+          ).show(context);
+        }
+      }
     );
   }
 }

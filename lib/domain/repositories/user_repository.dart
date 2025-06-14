@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:turkish_music_app/data/model/register_model.dart';
+import 'package:turkish_music_app/data/model/user_exist_model.dart';
+import '../../data/model/login_model.dart';
 import '../../data/model/user_model.dart';
 import '../../data/network/api_base_helper.dart';
-import '../../presentation/const/const_api.dart';
 
 class UserRepository {
 
@@ -14,69 +16,65 @@ class UserRepository {
       'email': email});
 
     final response = await api.post("/api/User/registerPublic",body);
-    if (response.statusCode == 200) {
-      var parsedJson = json.decode(response.body);
-      var accessToken = parsedJson['data'];
-      await savedAccessTokenValue(accessToken);
-      return 'sent';
+    var responseModel = RegisterModel.fromJson(jsonDecode(response.body));
+    if (responseModel.success!) {
+      var accessToken = responseModel.data;
+      await savedAccessTokenValue(accessToken!);
+      return 'success';
     }
     else {
-      var parsedJson = json.decode(response.body);
-      var message = parsedJson['message'];
-      return message;
+      var parsedJson = RegisterModel.fromJson(jsonDecode(response.body));
+      return parsedJson.message;
     }
   }
 
 
-  firstLogin(String email) async {
+  FutureOr<String?> firstStepLogin(String email) async {
 
     ApiBaseHelper api = ApiBaseHelper();
 
-    print("111111111111111111111111111111111111111                                "+ConstApiKey.constApiKey);
+    var body = jsonEncode({
+      'email': email,
+      "verificationToken": 'string'});
 
-    var body = jsonEncode({'email': email, "verificationToken": 'string'});
     final response = await api.post("/api/User/FirstStepLogin", body);
-    var responseData = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      return true;
+    var responseModel = LoginModel.fromJson(jsonDecode(response.body));
+    if (responseModel.success!) {
+      return 'success';
     }
-    else if (response.statusCode == 401){
-      return false;
-    }
-    else if (response.statusCode == 404){
-      return false;
+    else {
+      var parsedJson = RegisterModel.fromJson(jsonDecode(response.body));
+      return parsedJson.message;
     }
   }
 
-  Future<String> userExist(String email) async{
+  Future<Map<String, dynamic>> userExist(String email) async{
 
     ApiBaseHelper api = ApiBaseHelper();
 
-    var body = jsonEncode({'email': email, "verificationToken": ConstApiKey.constApiKey});
-    final response = await api.post("/api/User/FirstStepLogin", body);
-    var responseData = jsonDecode(response.body);
-
-    return responseData['message'];
+    var body = jsonEncode({'email': email, "isAdmin": false});
+    final response = await api.post("/api/User/registerPublic", body);
+    var responseModel = UserExistModel.fromJson(jsonDecode(response.body));
+    return {"message": responseModel.message!, "statusCode": responseModel.success};
   }
 
-  FutureOr<bool> secondLogin(String email, String verificationToken) async {
+  FutureOr<String?> secondLogin(String email, String verificationToken) async {
 
     ApiBaseHelper api = ApiBaseHelper();
     var body = jsonEncode({
       'email': email,
       "verificationToken": verificationToken});
     final response = await api.post("/api/User/SecondStepLogin", body);
-    var parsedJson = json.decode(response.body);
+    var responseModel = RegisterModel.fromJson(jsonDecode(response.body));
 
-    var accessToken = parsedJson['data'];
-
-    if (response.statusCode == 200) {
-      await savedAccessTokenValue(accessToken);
-      return true;
+    if (responseModel.success!) {
+      var accessToken = responseModel.data;
+      await savedAccessTokenValue(accessToken!);
+      return 'success';
     }
     else {
-      return false;
+      var parsedJson = RegisterModel.fromJson(jsonDecode(response.body));
+      return parsedJson.message;
     }
   }
 

@@ -1,0 +1,22 @@
+class UserExistModel {
+  String? data;
+  bool? success;
+  String? message;
+  int? lastPage;
+
+  UserExistModel({this.data, this.success, this.message, this.lastPage});
+
+  UserExistModel.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? json['data'] : '';
+    success = json['success'];
+    message = json['message'];
+    lastPage = json['lastPage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    data['data'] = data;
+    data['success'] = success;
+    data['message'] = message;
+    data['lastPage'] = lastPage;
+  }
+}
